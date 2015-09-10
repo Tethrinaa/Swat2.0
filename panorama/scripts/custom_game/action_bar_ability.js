@@ -119,16 +119,14 @@ function RightClickAbility()
 
 function RebuildAbilityUI()
 {
-	var abilityLevelContainer = $( "#AbilityLevelContainer" );
-	abilityLevelContainer.RemoveAndDeleteChildren();
 	var currentLevel = Abilities.GetLevel( m_Ability );
-	for ( var lvl = 0; lvl < Abilities.GetMaxLevel( m_Ability ); lvl++ )
+/* 	for ( var lvl = 0; lvl < Abilities.GetMaxLevel( m_Ability ); lvl++ )
 	{
 		var levelPanel = $.CreatePanel( "Panel", abilityLevelContainer, "" );
 		levelPanel.AddClass( "LevelPanel" );
 		levelPanel.SetHasClass( "active_level", ( lvl < currentLevel ) );
 		levelPanel.SetHasClass( "next_level", ( lvl == currentLevel ) );
-	}
+	} */
 }
 
 (function()

@@ -1,0 +1,37 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/class_select.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/class_select.js" />
+	</scripts>
+	<Panel class="AbilityOverlayRoot">
+		<Panel id="ability_list" />
+      <Button id="SelectMaverickButton" onactivate="SelectMaverickButtonPressed()">
+         <Label text="Maverick" />
+      </Button>
+      <Button id="SelectCovertSniperButton" onactivate="SelectCovertSniperButtonPressed()">
+         <Label text="Covert Sniper" />
+      </Button>
+      <Button id="SelectTacticianButton" onactivate="SelectTacticianButtonPressed()">
+         <Label text="Tactician" />
+      </Button>
+      <Button id="SelectHeavyOrdnanceButton" onactivate="SelectHeavyOrdnanceButtonPressed()">
+         <Label text="Heavy Ordnance" />
+      </Button>
+      <Button id="SelectPsychologistButton" onactivate="SelectPsychologistButtonPressed()">
+         <Label text="Psychologist" />
+      </Button>
+      <Button id="SelectCyborgButton" onactivate="SelectCyborgButtonPressed()">
+         <Label text="Cyborg" />
+      </Button>
+      <Button id="SelectFieldMedicButton" onactivate="SelectFieldMedicButtonPressed()">
+         <Label text="FieldMedic" />
+      </Button>
+      <Button id="SelectDemolitionsButton" onactivate="SelectDemolitionsButtonPressed()">
+         <Label text="Demolitions" />
+      </Button>
+	</Panel>
+</root>
+
