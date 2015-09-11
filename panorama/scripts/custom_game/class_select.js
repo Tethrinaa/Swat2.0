@@ -1,91 +1,161 @@
 "use strict";
 
-var m_AbilityPanels = []; // created up to a high-water mark, but reused when selection changes
+// Scriptwide variables for selections
+var playerClass = "";
+var playerWeapon = "";
+var playerArmor = "";
 
-function OnLevelUpClicked()
+//Called when any button is pressed, routes the call to handlers based on panel (class\armor\weapon)
+function Selected(selection, PanelSelected)
 {
-	if ( Game.IsInAbilityLearnMode() )
-	{
-		Game.EndAbilityLearnMode();
-	}
-	else
-	{
-		Game.EnterAbilityLearnMode();
-	}
-}
-
-function OnAbilityLearnModeToggled( bEnabled )
-{
-	UpdateAbilityList();
-}
-
-function UpdateAbilityList()
-{
-	var abilityListPanel = $( "#ability_list" );
-	if ( !abilityListPanel )
-		return;
-
-	var queryUnit = Players.GetLocalPlayerPortraitUnit();
-
-	// see if we can level up
-	var nRemainingPoints = Entities.GetAbilityPoints( queryUnit );
-	var bPointsToSpend = ( nRemainingPoints > 0 );
-	var bControlsUnit = Entities.IsControllableByPlayer( queryUnit, Game.GetLocalPlayerID() );
-	$.GetContextPanel().SetHasClass( "could_level_up", ( bControlsUnit && bPointsToSpend ) );
-
-	// update all the panels
-	var nUsedPanels = 0;
-	for ( var i = 0; i < Entities.GetAbilityCount( queryUnit ); ++i )
-	{
-		var ability = Entities.GetAbility( queryUnit, i );
-		if ( ability == -1 )
-			continue;
-
-		if ( !Abilities.IsDisplayedAbility(ability) )
-			continue;
-		
-		if ( nUsedPanels >= m_AbilityPanels.length )
-		{
-			// create a new panel
-			var abilityPanel = $.CreatePanel( "Panel", abilityListPanel, "" );
-			abilityPanel.BLoadLayout( "file://{resources}/layout/custom_game/action_bar_ability.xml", false, false );
-			m_AbilityPanels.push( abilityPanel );
-		}
-
-		// update the panel for the current unit / ability
-		var abilityPanel = m_AbilityPanels[ nUsedPanels ];
-		abilityPanel.data().SetAbility( ability, queryUnit, Game.IsInAbilityLearnMode() );
-		
-		nUsedPanels++;
-	}
-
-	// clear any remaining panels
-	for ( var i = nUsedPanels; i < m_AbilityPanels.length; ++i )
-	{
-		var abilityPanel = m_AbilityPanels[ i ];
-		abilityPanel.data().SetAbility( -1, -1, false );
-	}
-}
-
-function SelectPsychologistButtonPressed()
-{
-   $.Msg("hello")
+   var PanelSelected = $.GetContextPanel().FindChild(PanelSelected);
+   switch (PanelSelected.id) {
+      case "ClassesPanel":
+         ClassSelected(selection, PanelSelected);
+         PanelSelected.visible = false;
+         break;
+      case "WeaponsPanel":
+         WeaponSelected(selection);
+         PanelSelected.visible = false;
+      case "ArmorPanel":
+         playerArmor = selection; 
+         PanelSelected.visible = false;
+      case "ConfirmResetPanel":
+         ConfirmResetSelected(selection, PanelSelected);
+   }
+   $.Msg(selection);
 	var iPlayerID = Players.GetLocalPlayer();
-   GameEvents.SendCustomGameEventToServer( "class_setup_complete", { playerId: iPlayerID, class: "psychologist", weapon: "assault_rifle1", armor:"light", trait:"none", spec:"none" })
-	$.GetContextPanel().visible = false;
-   
    return;
 }
 
-(function()
+// Called when a class button is pressed, pass in the onActivate text and the class panel.
+function ClassSelected(selection, PanelSelected)
 {
-    $.RegisterForUnhandledEvent( "DOTAAbility_LearnModeToggled", OnAbilityLearnModeToggled);
+   playerClass = selection;
+   var RootPanel = PanelSelected.GetParent();
+   var WeaponsPanel = RootPanel.FindChild("WeaponsPanel");
+   var ArmorPanel = RootPanel.FindChild("ArmorPanel");
+   WeaponsPanel.visible = true;
+   ArmorPanel.visible = true;
+   //Set up the weapons and armor panels based on the class selected.
+      switch(selection) {
+      case "sniper":
+         HideAllWeapons(WeaponsPanel);
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("SniperRifleButton").visible = true;
+         break;
+      //Silly cyborg has weird armor
+      case "cyborg":
+         HideAllWeapons(WeaponsPanel);
+         WeaponsPanel.FindChild("VindicatorButton").visible = true;
+         ArmorPanel.FindChild("LightArmorButton").visibile = false;
+         ArmorPanel.FindChild("MediumArmorButton").visibile = false;
+         ArmorPanel.FindChild("HeavyArmorButton").visibile = false;
+         ArmorPanel.FindChild("AdvancedArmorButton").visibile = true;
+         break;
+      case "demo":
+         HideAllWeapons(WeaponsPanel);
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("RocketButton").visible = true;
+         break;
+      case "medic":
+         HideAllWeapons(WeaponsPanel);
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("AssaultRifleButton").visible = true;
+         break;
+      // Silly maverick can use all the weapons
+      case "maverick":
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("AssaultRifleButton").visible = true;
+         WeaponsPanel.FindChild("ChaingunButton").visible = true;
+         WeaponsPanel.FindChild("VindicatorButton").visible = false;
+         WeaponsPanel.FindChild("FlamethrowerButton").visible = true;
+         WeaponsPanel.FindChild("RocketButton").visible = true;
+         WeaponsPanel.FindChild("SniperRifleButton").visible = true;
+         break;
+      case "ho":
+         HideAllWeapons(WeaponsPanel);
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("ChaingunButton").visible = true;
+         break;
+      case "psychologist":
+         HideAllWeapons(WeaponsPanel);
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("AssaultRifleButton").visible = true;
+         break;
+      case "tactician":
+         HideAllWeapons(WeaponsPanel);
+         ShowStandardArmor(ArmorPanel);
+         WeaponsPanel.FindChild("AssaultRifleButton").visible = true;
+         break;
+   }
+   $.Msg(playerClass);
+}
 
-	GameEvents.Subscribe( "dota_portrait_ability_layout_changed", UpdateAbilityList );
-	GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateAbilityList );
-	GameEvents.Subscribe( "dota_player_update_query_unit", UpdateAbilityList );
-	GameEvents.Subscribe( "dota_ability_changed", UpdateAbilityList );
-	GameEvents.Subscribe( "dota_hero_ability_points_changed", UpdateAbilityList );
-	
-	UpdateAbilityList(); // initial update
-})();
+function HideAllWeapons(Panel)
+{
+   Panel.FindChild("AssaultRifleButton").visible = false;
+   Panel.FindChild("ChaingunButton").visible = false;
+   Panel.FindChild("VindicatorButton").visible = false;
+   Panel.FindChild("FlamethrowerButton").visible = false;
+   Panel.FindChild("RocketButton").visible = false;
+   Panel.FindChild("SniperRifleButton").visible = false;
+}
+
+function WeaponSelected(selection)
+{
+   //Cyborg weapon has no versions
+   if (playerClass != "cyborg")
+   {
+      playerWeapon = selection + "I";
+   }
+   // Maverick gets mark 2 weapons
+   if (playerClass == "maverick")
+   {
+      playerWeapon = playerWeapon+"I";
+   }
+   // Medic gets this goofy thing
+   if (playerClass == "medic")
+   {
+      playerWeapon = "assault_rifle_urban";
+   }
+   $.Msg(playerWeapon);
+}
+
+// Sets up the armor panel for everyone but the cyborg
+function ShowStandardArmor(Panel)
+{
+   Panel.FindChild("LightArmorButton").visibile = true;
+   Panel.FindChild("MediumArmorButton").visibile = true;
+   Panel.FindChild("HeavyArmorButton").visibile = true;
+   Panel.FindChild("AdvancedArmorButton").visibile = false;
+}
+
+function ConfirmResetSelected(selection, Panel)
+{
+   switch (selection)
+   {
+      case "confirm":
+         // verify the player has selected everything
+         if ((playerClass != "" ) && (playerWeapon != "") && (playerArmor != ""))
+         {
+            GameEvents.SendCustomGameEventToServer( "class_setup_complete", { playerId: Players.GetLocalPlayer(), class: playerClass, weapon: playerWeapon, armor:playerArmor, trait:"none", spec:"none" });
+            Panel.visible=false
+            Panel.GetParent().enabled = false;
+         }
+         break;
+      // User jacked it up, show them the class panel again, but hide weapons and armor
+      case "reset":
+         var RootPanel = Panel.GetParent();
+         RootPanel.FindChild("ClassesPanel").visible = true;
+         RootPanel.FindChild("WeaponsPanel").visible = false;
+         RootPanel.FindChild("ArmorPanel").visible = false;
+         break;
+   }
+}
+
+//(function()
+//{
+//	
+	//UpdateClassSelect(); // initial update
+//})();
