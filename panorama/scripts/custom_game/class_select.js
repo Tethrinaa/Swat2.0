@@ -35,6 +35,7 @@ function ClassSelected(selection, PanelSelected)
    var RootPanel = PanelSelected.GetParent();
    var WeaponsPanel = RootPanel.FindChild("WeaponsPanel");
    var ArmorPanel = RootPanel.FindChild("ArmorPanel");
+   $.Msg(ArmorPanel);
    WeaponsPanel.visible = true;
    ArmorPanel.visible = true;
    //Set up the weapons and armor panels based on the class selected.
@@ -47,11 +48,15 @@ function ClassSelected(selection, PanelSelected)
       //Silly cyborg has weird armor
       case "cyborg":
          HideAllWeapons(WeaponsPanel);
+         $.Msg("1");
          WeaponsPanel.FindChild("VindicatorButton").visible = true;
-         ArmorPanel.FindChild("LightArmorButton").visibile = false;
-         ArmorPanel.FindChild("MediumArmorButton").visibile = false;
-         ArmorPanel.FindChild("HeavyArmorButton").visibile = false;
-         ArmorPanel.FindChild("AdvancedArmorButton").visibile = true;
+         ArmorPanel.FindChild("LightArmorButton").visible = false;
+         ArmorPanel.FindChild("MediumArmorButton").visible = false;
+         $.Msg("2")
+         $.Msg(ArmorPanel);
+         $.Msg(ArmorPanel.FindChild("LightArmorButton"));
+         ArmorPanel.FindChild("HeavyArmorButton").visible = false;
+         ArmorPanel.FindChild("AdvancedArmorButton").visible = true;
          break;
       case "demo":
          HideAllWeapons(WeaponsPanel);
@@ -104,15 +109,17 @@ function HideAllWeapons(Panel)
 
 function WeaponSelected(selection)
 {
+   
+   playerWeapon = selection;
    //Cyborg weapon has no versions
    if (playerClass != "cyborg")
    {
-      playerWeapon = selection + "I";
+      playerWeapon = playerWeapon + "I";
    }
    // Maverick gets mark 2 weapons
    if (playerClass == "maverick")
    {
-      playerWeapon = playerWeapon+"I";
+      playerWeapon = playerWeapon + "I";
    }
    // Medic gets this goofy thing
    if (playerClass == "medic")
@@ -123,12 +130,14 @@ function WeaponSelected(selection)
 }
 
 // Sets up the armor panel for everyone but the cyborg
-function ShowStandardArmor(Panel)
+function ShowStandardArmor(APanel)
 {
-   Panel.FindChild("LightArmorButton").visibile = true;
-   Panel.FindChild("MediumArmorButton").visibile = true;
-   Panel.FindChild("HeavyArmorButton").visibile = true;
-   Panel.FindChild("AdvancedArmorButton").visibile = false;
+   $.Msg("showing standard armor")
+   $.Msg(APanel)
+   APanel.FindChild("LightArmorButton").visible = true;
+   APanel.FindChild("MediumArmorButton").visible = true;
+   APanel.FindChild("HeavyArmorButton").visible = true;
+   APanel.FindChild("AdvancedArmorButton").visible = false;
 }
 
 function ConfirmResetSelected(selection, Panel)
