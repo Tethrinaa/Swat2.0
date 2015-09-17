@@ -1,0 +1,390 @@
+//Generated using Dota Custom File Generator by cris9696
+"DOTAHeroes"
+{
+	"npc_swat_hero_tactician"
+	{
+		"override_hero" "npc_dota_hero_sniper"
+	
+		"AbilityLayout"	"6"
+	
+		"Ability1"	"assault_rifle_datadriven"
+      "AttackDamageMin"            "90"       // Damage range min.
+      "AttackDamageMax"            "124"      // Damage range max.
+      "AttackRate"                 "1.86"     // Speed of attack.
+      "AttackAcquisitionRange"     "900"     // Range within a target can be acquired.
+      "AttackRange"                "900"     // Range within a target can be attacked.
+      
+      "AttributePrimary"             "DOTA_ATTRIBUTE_STRENGTH"
+      "AttributeBaseStrength"        "20"            // Base strength
+      "AttributeStrengthGain"        "0.6"            // Strength bonus per level.
+      "AttributeBaseAgility"         "12"            // Base agility
+      "AttributeAgilityGain"         "0.6"            // Agility bonus per level.
+      "AttributeBaseIntelligence"    "110"            // Base intelligence
+      "AttributeIntelligenceGain"    "0.72"            // Intelligence bonus per level.
+      "StatusMana" "1000"
+
+	}
+   
+   "npc_swat_hero_psychologist"
+	{
+		//"override_hero" "npc_dota_hero_lina"
+      "HeroID" "114"
+		"AbilityLayout"	"6"
+	
+      // General
+		//"BaseClass"				"npc_dota_creature"	               // Class of entity of link to.
+		"Model"						"models/heroes/sniper/sniper.vmdl"	// Model.
+		"SoundSet"					"Hero_Sniper"					         // Name of sound set.
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_sniper"
+		}
+      
+      "AbilityLayout"	"6" // Number of panes to put in the UI
+      
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"assault_rifle_datadriven"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"MagicalResistance"			"0"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"90"		// Damage range min.
+		"AttackDamageMax"			"124"		// Damage range max.
+		"AttackRate"				"1.86"		// Speed of attack.
+		"AttackAnimationPoint"		"0.17"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"900"		// Range within a target can be acquired.
+		"AttackRange"				"900"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"	// Particle system model for projectile.
+		"ProjectileSpeed"			"3000"			// Speed of projectile.
+
+      "AttributePrimary"             "DOTA_ATTRIBUTE_INTELLIGENCE"
+      "AttributeBaseStrength"        "18"            // Base strength
+      "AttributeStrengthGain"        "0.15"            // Strength bonus per level.
+      "AttributeBaseAgility"         "11"            // Base agility
+      "AttributeAgilityGain"         "0.6"            // Agility bonus per level.
+      "AttributeBaseIntelligence"    "111"            // Base intelligence
+      "AttributeIntelligenceGain"    "0.80"            // Intelligence bonus per level.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"500"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"1000"		// Base mana.
+		"StatusManaRegen"			"6"			// Mana regeneration rate.
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"1000"		// Range of vision at night time.
+	}
+	//=================================================================================================================
+	// HERO: Covert Sniper
+	//=================================================================================================================
+	"npc_swat_hero_covert_sniper_lua"
+	{
+		"override_hero"				"npc_dota_hero_abaddon"			// Hero to override
+		"Ability1"					"sneak_datadriven"	// Concussion Gernade
+		"Ability2"					"mana_shield_light_datadriven"	// Aim
+		"Ability3"					"sprint_datadriven"	// Marksman
+		"Ability4"					""	// Critical Shot
+		"Ability5"					""	// Nanites (Armor_Dependant)
+		// Item Teleport (Rank_Dependant)
+		// Construct Camera
+		// Sneak
+		// Sprint (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+	}
+
+	//=================================================================================================================
+	// HERO: Field Medic
+	//=================================================================================================================
+	"npc_swat_hero_field_medic_lua"
+	{
+		"override_hero"				"npc_dota_hero_alchemist"			// Hero to override
+		"Ability1"					""	// Nano-Injection
+		"Ability2"					""	// Mend Wounds
+		"Ability3"					""	// Adrenaline Junkie
+		"Ability4"					"assault_rifle_datadriven"	// Refined Rifle
+		"Ability5"					"mana_shield_light_datadriven"	// Nanites (Armor_Dependant)
+		// Adrenaline	(Set_Level_Relation)
+		// Rapid Therapy (Rank_Dependant)
+		// Mending Station
+		// Revive (Set_Level_Relation)
+		// Antipersonnel Rounds
+		// Sprint (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+
+	}
+
+	//=================================================================================================================
+	// HERO: Tactician
+	//=================================================================================================================
+	"npc_swat_hero_tactician_lua"
+	{
+		"override_hero"				"npc_dota_hero_ancient_apparition"			// Hero to override
+		"Ability1"					""	// Weakpoint
+		"Ability2"					""	// Blitz
+		"Ability3"					""	// Endurance
+		"Ability4"					"assault_rifle_datadriven"	// Refined Rifle
+		"Ability5"					"mana_shield_light_datadriven"	// Nanites (Armor_Dependant)
+		// Pep Talk (Set_Level_Relation)
+		// Ion Strike (Rank_Dependant)
+		// Recruit
+		// Rad Away
+		// Sprint (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+	}
+
+	//=================================================================================================================
+	// HERO: Psychologist
+	//=================================================================================================================
+	"npc_swat_hero_psychologist_lua"
+	{
+		"override_hero"					"npc_dota_hero_antimage"			// Hero to override
+		"Ability1"					""	// Mental Clarity
+		"Ability2"					""	// Confidence
+		"Ability3"					""	// Self-Motivation
+		"Ability4"					"assault_rifle_datadriven"	// Refined Rifle
+		"Ability5"					"mana_shield_light_datadriven"	// Nanites (Armor_Dependant)
+		// Mind Slay
+		// Mind Rot (Set_Level_Relation)
+		// Re-specialize
+		// Awareness
+		// Clairvoyance
+		// Spring (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+	}
+	
+	//=================================================================================================================
+	// HERO: Maverick
+	//=================================================================================================================
+	"npc_swat_hero_maverick_lua"
+	{
+		"override_hero"					"npc_dota_hero_axe"			// Hero to override
+		"Ability1"					""	// Plasma Gernade
+		"Ability2"					""	// Robodog
+		"Ability3"					""	// Advanced Generator
+		"Ability4"					""	// (Weapon_Dependant)Refined Rifle/Critical Shot/Plasma Rounds/Lock-Down/Advanced Fuel
+		"Ability5"					"mana_shield_light_datadriven"	// Nanites (Armor_Dependant)
+		// Nano-Injection
+		// Reprogram
+		// Target Ground
+		// Mutate
+		// Sprint (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+	}
+	
+	//=================================================================================================================
+	// HERO: Heavy Ordnance
+	//=================================================================================================================
+	"npc_swat_hero_heavy_ordnance_lua"
+	{
+		"override_hero"					"npc_dota_hero_bane"			// Hero to override
+		"Ability1"					""	// Plasma Shield
+		"Ability2"					""	// Storage Cells
+		"Ability3"					""	// Driod Integrity
+		"Ability4"					""	// Driod Ammo
+		// Driod Mobility
+		// Power Grid
+		// Plasma Rounds
+		// Nanites (Armor_Dependant)
+		// Construct Driod (Set_Level_Relation)
+		// XLR8
+		// Recharge Battery
+		// Phased Driods
+		// Sprint (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+	}
+
+	//=================================================================================================================
+	// HERO: Demolitions
+	//=================================================================================================================
+	"npc_swat_hero_demolitions_lua"
+	{
+		"override_hero"					"npc_dota_hero_batrider"			// Hero to override
+		"Ability1"					""	// M.I.R.V
+		"Ability2"					""	// Place C4
+		"Ability3"					""	// Advanced Generator
+		"Ability4"					""	// Lock-Down
+		// Nanites (Armor_Dependant)
+		// BioChemical Energy (Rank_Dependant)
+		// Gear Mod.
+		// Mini-Nuke (Rank_Dependant)
+		// S.M.A.
+		// Sprint (Armor_Dependant)
+		// Frag. Locator (Rank_Dependant)
+	}
+	
+	//=================================================================================================================
+	// HERO: Cyborg
+	//=================================================================================================================
+	"npc_swat_hero_cyborg_lua"
+	{
+		"override_hero"					"npc_dota_hero_beastmaster"			// Hero to override
+		"Ability1"					""	// Cluster Rockets
+		"Ability2"					""	// Xtreme Combat Mode
+		"Ability3"					""	// Organic Replacement
+		"Ability4"					""	// Plasma-V Rounds
+		// Nanites (Advanced)
+		// Pheromones
+		// Emergency Power (Set_Level_Relation)
+		// Goliath Modification
+		// Force Field
+		// Vindicator
+		// Frag. Locator (Rank_Dependant)
+	}
+
+	//=================================================================================================================
+	// HERO: Pyrotechnician
+	//=================================================================================================================
+	"npc_swat_hero_pyrotechnician_lua"
+	{
+		"override_hero"					"npc_dota_hero_bloodseeker"			// Hero to override
+		"Ability1"					"" 	// Molotov
+		"Ability2"					""	// Microwave
+		"Ability3"					""	// Incendiary Rocket
+		"Ability4"					""	// Advanced Fuel
+		// Nanites (Armor_Dependant)
+		// Firefly
+		// Combustion (Set_Level_Relation)
+		// Turn Up the Heat
+		// Reinforced Plating
+		// Sprint (Armor_Dependant
+		// Frag. Locator (Rank_Dependant)
+	}
+	
+	//=================================================================================================================
+	// HERO: Watchman
+	//=================================================================================================================
+	"npc_swat_hero_watchman_lua"
+	{
+		"override_hero"					"npc_dota_hero_bounty_hunter"			// Hero to override
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+	}
+
+	//=================================================================================================================
+	// HERO: Tech Ops
+	//=================================================================================================================
+	"npc_swat_hero_tech_ops_lua"
+	{
+		"override_hero"					"npc_dota_hero_brewmaster"			// Hero to override
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+	}
+	
+	//=================================================================================================================
+	// HERO: Umbrella Clone
+	//=================================================================================================================
+	"npc_swat_hero_umbrella_clone_lua"
+	{
+		"override_hero"					"npc_dota_hero_bristleback"			// Hero to override
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+	}
+	
+	//=================================================================================================================
+	// HERO: Cadet
+	//=================================================================================================================
+	"npc_swat_hero_cadet_lua"
+	{
+		"override_hero"					"npc_dota_hero_broodmother"			// Hero to override
+		"Ability1"					"assault_rifle_datadriven"	// Refined Rifle
+		"Ability2"					"mana_shield_light_datadriven"	// Nanites Light
+		"Ability3"					""	// Beginner's Luck
+		"Ability4"					""	// Use Drug
+		// Use Vest
+		// Use Shield Cap.
+		// Equalize Energy
+		// Sprint Light
+	}
+	
+	//=================================================================================================================
+	// HERO: Chrome Retriever
+	//=================================================================================================================
+	"npc_swat_hero_chrome_retriever_lua"
+	{
+		"override_hero"					"npc_dota_hero_centaur"			// Hero to override
+		"Ability1"					""	// Turbo
+		"Ability2"					""	// Advanced Generator
+		"Ability3"					""	// Thrash
+		"Ability4"					"mana_shield_light_datadriven"	// Nanites Light
+		// A.R.S. (Dog_Level_Relation)
+		// Retrieve Items
+		// Evasion (Dog_Level_Relation)
+		// Cloak (Dog_Level_Relation)
+		// Reconnaissance (Dog_Level_Relation)
+		// Inventory (Dog_Level_Relation)
+	}
+	
+	//=================================================================================================================
+	// HERO: Mecha Mutt
+	//=================================================================================================================
+	"npc_swat_hero_mecha_mutt_lua"
+	{
+		"override_hero"					"npc_dota_hero_chaos_knight"			// Hero to override
+		"Ability1"					""	// Turbo
+		"Ability2"					""	// Advanced Generator
+		"Ability3"					""	// Thrash
+		"Ability4"					""	// Nanites Advanced
+		// A.R.S. (Dog_Level_Relation)
+		// Retrieve Items
+		// Evasion (Dog_Level_Relation)
+		// Armor (Dog_Level_Relation)
+		// Integrate Shield Capacitor (Dog_Level_Relation)
+	}
+	
+	//=================================================================================================================
+	// HERO: Kamikaze Canine
+	//=================================================================================================================
+	"npc_swat_hero_kamikaze_canine_lua"
+	{
+		"override_hero"					"npc_dota_hero_chen"			// Hero to override
+		"Ability1"					""	// Turbo
+		"Ability2"					""	// Advanced Generator
+		"Ability3"					""	// Thrash
+		"Ability4"					"mana_shield_light_datadriven"	// Nanites Light
+		// A.R.S. (Dog_Level_Relation)
+		// Retrieve Items
+		// Evasion (Dog_Level_Relation)
+		// Hyper-Thrash (Dog_Level_Relation)
+		// Shadow Pack (Dog_Level_Relation)
+		// Return
+	}
+	
+	//=================================================================================================================
+	// HERO: Mini Droid
+	//=================================================================================================================
+	"npc_swat_hero_mini_driod_lua"
+	{
+		"override_hero"					"npc_dota_hero_clinkz"			// Hero to override
+		"Ability1"					""	// Storage Cells
+		"Ability2"					""	// Energy Beam
+		"Ability3"					""	// Plasma Rounds
+		"Ability4"					""	// Plasma Shield
+		// Nanites (Armor_Dependant)
+		// A.R.S.
+		// Defense Matrix
+	}
+}
