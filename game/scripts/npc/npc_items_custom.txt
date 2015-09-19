@@ -1,3 +1,53 @@
 "DOTAAbilities"
 {
+    "item_storage_cell"
+    {
+        "ID"                            "1250" // anything above 1250 should be safe to use.
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_storage_cell"
+		
+		"ItemCost" "500"
+		"ItemKillable" "0" 
+		"ItemSellable" "1"
+		"ItemPurchasable" "1"
+		"ItemDroppable" "1"
+		
+		
+		"ItemStockMax" "1" 
+		"ItemStockTime" "100"
+		"ItemStockInitial" "3"
+		
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+		
+		"ItemAliases" "Storage Cell"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+		
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"scripts/vscripts/itemfunctions.lua"
+				"Function"			"DropItemOnDeath"
+			}
+		}
+		
+
+		"Modifiers"
+		{
+			"modifier_item_storagecell_datadriven"
+			{
+				"Passive"   "1"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"  "250"
+				}
+			}
+		}
+    }
+	
+	
 }
