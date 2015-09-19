@@ -422,6 +422,10 @@ function GameMode:BuildMarine( event )
    
    hero:SetAbilityPoints(1) -- This will change based on rank
 
+   hero:AddAbility("covert_sniper_sneak"):SetLevel(1)
+   hero:AddAbility("covert_sniper_marksman"):SetLevel(12)
+   hero:AddAbility("covert_sniper_concussion_grenade"):SetLevel(12)
+   
    GameMode:ModifyStatBonuses(hero)
    
    -- set trait TODO
