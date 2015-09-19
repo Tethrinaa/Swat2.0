@@ -83,7 +83,7 @@
          "ModifierName" "modifier_concussion_grenade_stun"
          "Target"
          {
-            "Center"    "TARGET"
+            "Center"    "POINT"
             "Radius"    "%radius"
  				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -95,7 +95,7 @@
 			"ModifierName" "modifier_concussion_grenade"
 			"Target"
 			{
-				"Center"	   "TARGET"
+				"Center"	   "POINT"
 				"Radius"	   "%radius"
 				"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -111,7 +111,7 @@
       {
          "IsDebuff"  "1"
          
-         "Properties"
+         "States"
          {
             "MODIFIER_STATE_STUNNED"      "MODIFIER_STATE_VALUE_ENABLED"
          }
@@ -130,7 +130,7 @@
          "RunScript"
          {
             "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/concussion_grenade.lua"
-            "Function"		"slowAttackSpeed"
+            "Function"	   "slowAttackSpeed"
          }
          
 			"Properties"
