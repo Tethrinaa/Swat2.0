@@ -1,4 +1,7 @@
 -- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
+Global_Radiation = 0
+Global_Fallout = 0
+Global_Radiation_Bracket = 0
 
 Global_Consts = {}
    Global_Consts.classes = {}
@@ -178,6 +181,7 @@ function GameMode:InitGameMode()
    spawnPower()
    local RoomToPass = getRandomRoom()
 	spawnZombies(10, RoomToPass)
+   SpawnRads(40)
   
 end
 
@@ -229,7 +233,7 @@ function spawnZombies(NumberToSpawn, RoomToSpawn)
 	local r = randomCreature[RandomInt(1,#randomCreature)]
 	if RoomToSpawn then
       for i = 1, NumberToSpawn do
-         local unit = CreateUnitByName( "npc_dota_creature_" ..r , RoomToSpawn:GetAbsOrigin() + RandomVector( RandomFloat( 0, 300 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+         local unit = CreateUnitByName( "npc_dota_creature_" ..r , RoomToSpawn:GetAbsOrigin() + RandomVector( RandomFloat( 0, 600 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
         
          if RandomEnemyHeroInRange ( unit, 500000) then
             ExecuteOrderFromTable({ UnitIndex = unit:entindex(),
@@ -269,12 +273,14 @@ function refreshZombieOrders()
  
    -- Make the found units move to (0, 0, 0)
    for _,unit in pairs(direUnits) do
-      if RandomEnemyHeroInRange ( unit, 500000) then
+      if unit:HasAttackCapability() then
+         if RandomEnemyHeroInRange ( unit, 500000) then
            ExecuteOrderFromTable({ UnitIndex = unit:entindex(),
 		                             OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
 								           TargetIndex = (RandomEnemyHeroInRange ( unit, 500000)):entindex(),
                                    queue = true})
-        end
+         end
+      end
    end
 
 
@@ -367,8 +373,9 @@ function GameMode:BuildMarine( event )
    hero.AttributeAgilityGain = Global_Consts.classes[event.class].agilityPerLevel
    hero:SetBaseIntellect(Global_Consts.classes[event.class].intellect)
    hero.AttributeIntellectGain = Global_Consts.classes[event.class].intellectPerLevel
-   hero:SetMaxHealth(500)
-
+   hero:SetBaseManaRegen(6)
+   hero:SetBaseHealthRegen(0)
+   
    -- -- Set weapon stats -Why no SetAttackRange???
    hero:SetBaseAttackTime(Global_Consts.weapons[event.weapon].bat)
    hero:SetBaseDamageMin(Global_Consts.weapons[event.weapon].damageMin)
@@ -401,6 +408,8 @@ function GameMode:BuildMarine( event )
    hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)
    hero:SetAbilityPoints(1) -- This will change based on rank
 
+   GameMode:ModifyStatBonuses(hero)
+   
    -- set trait TODO
       -- set maverick mutate TODO
    -- set spec TODO
@@ -419,6 +428,22 @@ function RemoveAllSkills(hero)
          hero:RemoveAbility(hero:GetAbilityByIndex(index):GetAbilityName())
       end
    end
+end
+
+-- count is non-optional, location is optional (for walkers)
+-- TODO: location -BDO
+function SpawnRads(count, location)
+   for index = 1, count do
+      local Room = getRandomRoom()
+      local Unit = CreateUnitByName( "npc_dota_creature_rad_frag", Room:GetAbsOrigin() + RandomVector( RandomFloat( 0, 600 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+      -- Apply rad modifier to unit to reduce rad count on death and update bracket
+      Unit:AddAbility("rad_frag_datadriven")
+      Unit:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
+      Global_Radiation = Global_Radiation + 1
+      print ("rad spawn", Global_Radiation)
+   end
+   -- calculate rad count
+   -- rad count to UI?
 end
 
 CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))

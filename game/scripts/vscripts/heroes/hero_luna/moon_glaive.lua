@@ -1,5 +1,5 @@
 particle_names = {base = "particles/units/heroes/hero_lina/lina_base_attack.vpcf"}
-projectile_speeds = {base = 250}
+projectile_speeds = {base = 500}
 
 --[[
 	original author: jacklarnes

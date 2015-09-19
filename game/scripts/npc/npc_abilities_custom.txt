@@ -435,21 +435,9 @@
       "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
       "SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
 
-      "precache"
-      {
-         "soundfile"			"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
-         "particle"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
-      }
-
       "OnProjectileHitUnit"
       {
          "DeleteOnHit"	"1"
-
-         "FireSound"
-         {
-            "EffectName"	"Hero_Luna.MoonGlaive.Impact"
-            "Target" 		"TARGET"
-         }
          
          "RunScript"
          {
@@ -1454,4 +1442,34 @@
 			}
 		}
 	}	
+   
+   //=================================================================================================================
+	// Ability: Radiation Fragment
+	//=================================================================================================================	
+	"rad_frag_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"		"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 	"viper_corrosive_skin"
+		"MaxLevel"	"1"
+
+		"Modifiers"
+		{
+			"modifier_rad_frag_datadriven"
+			{
+				"Passive" "1"
+
+				"OnDeath"
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "units/rad_frag.lua"
+                  "Function"   "RadRemoved"
+               }
+            }
+			}
+		}
+	}
 }

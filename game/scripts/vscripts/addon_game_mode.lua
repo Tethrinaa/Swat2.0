@@ -3,6 +3,7 @@
 require('libraries/timers')
 require('internal/util')
 require('gamemode')
+require('stats')
 
 if GameMode == nil then
 	GameMode = class({})
@@ -18,9 +19,9 @@ function Precache( context )
 	]]
 	
 	PrecacheUnitByNameSync("npc_dota_creature_basic_zombie", context)
+   PrecacheUnitByNameSync("npc_dota_create_rad_frag", context)
    PrecacheUnitByNameSync("npc_dota_hero_lina", context)
    PrecacheUnitByNameSync("npc_dota_hero_luna", context)
-	PrecacheModel( "npc_dota_creature_basic_zombie", context)
    PrecacheUnitByNameSync("npc_power_core_damaged", context)
    PrecacheResource( "particle", "*.vpcf", context )
    PrecacheResource( "particle_folder", "particles/folder", context)

@@ -7,7 +7,6 @@
 	
 		"AbilityLayout"	"6"
 	
-		"Ability1"	"assault_rifle_datadriven"
       "AttackDamageMin"            "90"       // Damage range min.
       "AttackDamageMax"            "124"      // Damage range max.
       "AttackRate"                 "1.86"     // Speed of attack.
@@ -22,6 +21,7 @@
       "AttributeBaseIntelligence"    "110"            // Base intelligence
       "AttributeIntelligenceGain"    "0.72"            // Intelligence bonus per level.
       "StatusMana" "1000"
+      "StatusHealth" "500"
 
 	}
    

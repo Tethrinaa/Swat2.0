@@ -36,7 +36,8 @@ function ManaShield( event )
 		else
 			-- User doesn't have enough mana, remove all of their mana and damage them appropriately
 			caster:SpendMana(caster_mana, ability)
-			local hp_to_remove = (mana_needed - caster_mana) * damage_per_mana * armor_percent
+			local hp_to_remove = (mana_needed - caster_mana) * damage_per_mana * (1 - armor_percent)
+         print("hp to remove:" ..hp_to_remove,mana_needed,caster_mana,damage_per_mana,armor_percent)
 			if hp_to_remove < health then
 				local newHealth = health - hp_to_remove
 				caster:SetHealth(newHealth)
