@@ -251,7 +251,7 @@
 		"Ability1" 					"swat_ability_mana_drain"
 		"Ability2"					"centaur_stomp"
 		"Ability3"					"true_sight"	// Needed to drain from invis
-		"Ability4"					"swat_ability_power_core_mod" // Modifiers.
+		"Ability4"					"swat_ability_invulnerable_object" // Modifiers.
       "Ability5"              "" // Mana degen (based on damaged/badly/severly
 		
 		// Armor	

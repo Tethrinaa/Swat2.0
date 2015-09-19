@@ -2,6 +2,7 @@
 Global_Radiation = 0
 Global_Fallout = 0
 Global_Radiation_Bracket = 0
+Global_Rad_Handler = nil
 
 Global_Consts = {}
    Global_Consts.classes = {}
@@ -14,23 +15,23 @@ Global_Consts = {}
       Global_Consts.classes.sniper=       {strength = 22, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 100, intellectPerLevel = 0.31}
       Global_Consts.classes.tactician =   {strength = 20, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 110, intellectPerLevel = 0.72}
    Global_Consts.weapons = {}
-      Global_Consts.weapons.assault_rifleI =      {bat= 1.86, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "assault_rifleI"}
-      Global_Consts.weapons.assault_rifleII =     {bat= 1.69, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "assault_rifleII"}
-      Global_Consts.weapons.assault_rifle_urban = {bat= 1.69, damageMin =  99, damageMinUpgrade = 1, damageMax = 156, damageMaxUp = 20, range =  900, weaponSkill = "assault_rifle_urban"}
-      Global_Consts.weapons.chaingunI =           {bat= 0.62, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  550, weaponSkill = "chaingunI"}
-      Global_Consts.weapons.chaingunII =          {bat= 0.56, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  625, weaponSkill = "chaingunII"}
-      Global_Consts.weapons.vindicator=           {bat= 0.76, damageMin =  55, damageMinUpgrade = 1, damageMax =  64, damageMaxUp = 10, range =  550, weaponSkill = "vindicator"}
-      Global_Consts.weapons.flamethrowerI=        {bat= 0.26, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "flamethrower"}
-      Global_Consts.weapons.flamethrowerII=       {bat= 0.23, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "flamethrower"}
-      Global_Consts.weapons.rocketI=              {bat= 3.10, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "rocket"}
-      Global_Consts.weapons.rocketII=             {bat= 2.82, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "rocket"}
-      Global_Consts.weapons.sniper_rifleI=        {bat= 2.57, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleI"}
-      Global_Consts.weapons.sniper_rifleII=       {bat= 2.14, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleII"}
+      Global_Consts.weapons.assault_rifleI =      {bat= 1.860, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "assault_rifleI"}
+      Global_Consts.weapons.assault_rifleII =     {bat= 1.691, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "assault_rifleII"}
+      Global_Consts.weapons.assault_rifle_urban = {bat= 1.860, damageMin =  99, damageMinUpgrade = 1, damageMax = 156, damageMaxUp = 20, range =  900, weaponSkill = "assault_rifle_urban"}
+      Global_Consts.weapons.chaingunI =           {bat= 0.620, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  550, weaponSkill = "chaingunI"}
+      Global_Consts.weapons.chaingunII =          {bat= 0.564, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  625, weaponSkill = "chaingunII"}
+      Global_Consts.weapons.vindicator=           {bat= 0.760, damageMin =  55, damageMinUpgrade = 1, damageMax =  64, damageMaxUp = 10, range =  550, weaponSkill = "vindicator"}
+      Global_Consts.weapons.flamethrowerI=        {bat= 0.260, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "flamethrower"}
+      Global_Consts.weapons.flamethrowerII=       {bat= 0.236, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "flamethrower"}
+      Global_Consts.weapons.rocketI=              {bat= 3.100, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "rocketI"}
+      Global_Consts.weapons.rocketII=             {bat= 2.818, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "rocketII"}
+      Global_Consts.weapons.sniper_rifleI=        {bat= 2.570, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleI"}
+      Global_Consts.weapons.sniper_rifleII=       {bat= 2.142, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleII"}
    Global_Consts.armors = {}
-      Global_Consts.armors.light    = {moveSpeed = 290, absorption = 1.4, armor = 0, armorSkill = 1, nanitesSkill = "nanites_compact"}
-      Global_Consts.armors.medium   = {moveSpeed = 250, absorption = 2.1, armor = 0, armorSkill = 2, nanitesSkill = "nanites_standard"}
-      Global_Consts.armors.heavy    = {moveSpeed = 220, absorption = 2.8, armor = 0, armorSkill = 3, nanitesSkill = "nanites_heavy"}
-      Global_Consts.armors.advanced = {moveSpeed = 230, absorption = 2.8, armor = 1, armorSkill = 0, nanitesSkill = "nanites_heavy"}
+      Global_Consts.armors.light    = {moveSpeed = 290, absorption = 1.4, armor = 0, sprintSkill = 3, nanitesSkill = "nanites_compact"}
+      Global_Consts.armors.medium   = {moveSpeed = 250, absorption = 2.1, armor = 0, sprintSkill = 2, nanitesSkill = "nanites_standard"}
+      Global_Consts.armors.heavy    = {moveSpeed = 220, absorption = 2.8, armor = 0, sprintSkill = 1, nanitesSkill = "nanites_heavy"}
+      Global_Consts.armors.advanced = {moveSpeed = 230, absorption = 2.8, armor = 1, sprintSkill = 0, nanitesSkill = "nanites_heavy"}
    Global_Consts.traits = {}
    Global_Consts.specs = {}
 
@@ -181,8 +182,13 @@ function GameMode:InitGameMode()
    spawnPower()
    local RoomToPass = getRandomRoom()
 	spawnZombies(10, RoomToPass)
+   --Dummy to manage radiation
+   --TODO: Move this somewhere less cluttery -BDO
+   Global_Rad_Handler = CreateUnitByName("npc_dummy_blank",Entities:FindByName( nil, "room_lab"):GetAbsOrigin(),true, nil, nil, DOTA_TEAM_NEUTRALS)
+   Global_Rad_Handler:AddAbility("global_radiation_damage")
+   Global_Rad_Handler:AddAbility("swat_ability_invulnerable_object")
+   Global_Rad_Handler:FindAbilityByName("swat_ability_invulnerable_object"):SetLevel(1)
    SpawnRads(40)
-  
 end
 
 -- This is an example console command
@@ -383,7 +389,7 @@ function GameMode:BuildMarine( event )
    hero:SetAcquisitionRange(Global_Consts.weapons[event.weapon].range) -- can't actually set range?  Doing this with weapon skills
    hero:AddAbility(Global_Consts.weapons[event.weapon].weaponSkill)
    hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill):SetLevel(1)
-   hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 16
+   --hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 16
    print(hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill):GetMaxLevel())
    
    print(event.weapon)
@@ -397,6 +403,7 @@ function GameMode:BuildMarine( event )
    hero:SetBaseMoveSpeed(Global_Consts.armors[event.armor].moveSpeed)
    print(hero:GetBaseMoveSpeed())
    hero:SetPhysicalArmorBaseValue(Global_Consts.armors[event.armor].armor)
+   hero:SetBaseMagicalResistanceValue(0)
    hero:AddAbility(sprint_datadriven)
    -- armorSkill of 0 represents advanced power armor, which doesn't get sprint
    if (armorSkill) then
@@ -406,6 +413,13 @@ function GameMode:BuildMarine( event )
    hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
    -- This will change based on rank and trait
    hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)
+   
+   -- Add the appropriate sprint
+   if (event.class ~= "cyborg") then
+      hero:AddAbility("sprint_datadriven")
+      hero:FindAbilityByName("sprint_datadriven"):SetLevel(Global_Consts.armors[event.armor].sprintSkill)
+   end
+   
    hero:SetAbilityPoints(1) -- This will change based on rank
 
    GameMode:ModifyStatBonuses(hero)
@@ -439,11 +453,23 @@ function SpawnRads(count, location)
       -- Apply rad modifier to unit to reduce rad count on death and update bracket
       Unit:AddAbility("rad_frag_datadriven")
       Unit:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
-      Global_Radiation = Global_Radiation + 1
-      print ("rad spawn", Global_Radiation)
    end
+   UpdateRadiation(count)
    -- calculate rad count
    -- rad count to UI?
+end
+
+function UpdateRadiation(rad_change)
+   Global_Radiation = Global_Radiation + rad_change
+   if Global_Radiation > 0 then
+      Global_Radiation_Bracket = math.floor(Global_Radiation / 20)
+      print("1",math.floor(Global_Radiation / 20))
+   else
+      print("2", Global_Radiation)
+      Global_Radiation_Bracket = 0
+   end
+   print ("Updating radiation bracket to:", Global_Radiation_Bracket, Global_Radiation)
+   Global_Rad_Handler:FindAbilityByName("global_radiation_damage"):SetLevel(Global_Radiation_Bracket)
 end
 
 CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
