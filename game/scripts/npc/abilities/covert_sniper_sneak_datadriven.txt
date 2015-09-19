@@ -16,11 +16,11 @@
 	// Precache
 	//-------------------------------------------------------------------------------------------------------------
 	"precache"
-	 {
+   {
 	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
 	  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
 	  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"	 
-	 }
+   }
 
 	// Time		
 	//-------------------------------------------------------------------------------------------------------------
@@ -37,6 +37,7 @@
       {
          "var_type"              "FIELD_FLOAT"
          "fade_delay"            "6.0"
+      }
 		"02"
 		{
 			"var_type"					"FIELD_FLOAT"
@@ -46,45 +47,49 @@
    //"OnOwnerSpawned"   // Set the initial toggle state if needed.
    //{
    //}
-   "OnToggle" 
-   {
-      "RunScript"
-      {
-         "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
-         "Function"		"toggleSneak"
-      }         
-   }
-   "OnAttackLanded"
-   {
-      // if toggle state enabled
-         // reset modifiers to revealed
-      // else
-         // pass
-      "RunScript"
-      {
-         "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
-         "Function"		"actionMade"
-      }         
-   }
-   "OnAbilityExecuted"
-   {
-      // if toggle state enabled
-         // reset modifiers to revealed
-      // else
-         // pass
-      "RunScript"
-      {
-         "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
-         "Function"		"actionMade"
-      }         
-   }
    
 	"Modifiers"
    { 
-      "modifier_covert_sniper_revealed_datadriven"
+      "modifier_sneak_toggle"
+      {
+         "Passive"   "1"
+         "IsHidden"  "1"
+
+         "OnToggle" 
+         {
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
+               "Function"		"toggleSneak"
+            }         
+         }
+      }
+      "modifier_sneak_watcher"
       {
          "Passive"   "0"
          "IsHidden"  "1"
+         
+         "OnAttackLanded"
+         {
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
+               "Function"		"actionMade"
+            }         
+         }
+         "OnAbilityExecuted"
+         {
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
+               "Function"		"actionMade"
+            }         
+         }
+      }
+      "modifier_covert_sniper_revealed_datadriven"
+      {
+         "Passive"   "0"
+         "IsHidden"  "0"
          
          "DelayedAction"
          {
@@ -108,7 +113,7 @@
       "modifier_covert_sniper_fade_datadriven"
       {
          "Passive"   "0"
-         "IsHidden"  "1"
+         "IsHidden"  "0"
          
 			"Duration"	"%fade_time"
 			"isBuff"	"1"
@@ -136,14 +141,11 @@
       "modifier_covert_sniper_invis_datadriven"
       {
          "Passive"   "0"
-         "IsHidden"  "0"       
-         "Properties"
+         "IsHidden"  "0" 
+         
+         "States"
          {
             "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
-         }
-         "OnDestroy"
-         {
-            "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_DISABLED"
          }
       }
 	}

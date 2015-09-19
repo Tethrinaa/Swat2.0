@@ -7,21 +7,13 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				      "ability_datadriven"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
    "MaxLevel"                 "16"
    "LevelsBetweenUpgrades"    "0"
 	"AbilityTextureName"			"sniper_take_aim"
 
-   // Ability Levels   
-	"AoERadius"						"264"
-   "AbilityCastRange"         "650"
-	"AbilityCastPoint"			"0.4"
-	"AbilityCooldown"				"3"
-	"AbilityManaCost"				"80"		
-
 	// Special
-   // Each level swaps between upgrading duration (and stun) or the slow effects.
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
@@ -32,11 +24,12 @@
 		}
       "02"
       {
+         // Pierce only occurs on kills.
          "var_type"                 "FIELD_INTEGER"
          "pierce_chance"            "15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90"
       }
       "03"
-      {
+      {  // Crit (& crit_damage) are only when Aiming.
          "var_type"                 "FIELD_INTEGER"
          "crit_chance"              "20"
       }
@@ -51,12 +44,12 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"Modifiers"
 	{
-		"modifier_marksman"
+		"modifier_marksman_range"
 		{
 			"Passive"			"1"
 			"IsPurgable"		"0"
 			"IsHidden"			"1"
-			
+
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
@@ -66,7 +59,64 @@
       {
          "Passive"         "1"
          "IsHidden"        "1"
-         
+
+         "OnAttackLanded"
+         {
+           "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+               "Function"		"GetTargetLocation"
+            }
+            "LinearProjectile"
+            {
+               "Target"      	   "TARGET"
+               "EffectName"  	   "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+               "MoveSpeed"   	   "400"
+               "StartRadius"    "64"
+               "StartPosition"  "attach_origin"
+               "EndRadius"      "64"
+               "FixedDistance"  "2000"
+               "TargetTeams"    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+               "TargetTypes"    "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+               "TargetFlags"    "DOTA_UNIT_TARGET_FLAG_NONE"
+               "HasFrontalCone" "0"
+               "ProvidesVision"	"1"
+               "VisionRadius"	"500"
+            }
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+               //"Function"		"Pierce"
+               "Function"     "LaunchArrow"   
+            }
+            
+         }
+         "OnKill"
+         {
+            // Chance to pierce
+            "Random"
+            {
+               "Chance"		"%pierce_chance"
+               "OnSuccess"
+               {
+                  "RunScript"
+                  {
+                     "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+                     "Function"		"Pierce"
+
+                  }
+               }
+            }
+         }
+         "OnProjectileHitUnit"
+         {
+            "RunScript"
+            {
+               "ScriptFile"			"scripts/vscripts/heroes/hero_mirana/arrow.lua"
+               "Function"				"PierceHit"
+               "Target"				   "TARGET"
+            }
+         }
       }
 	}
 }
