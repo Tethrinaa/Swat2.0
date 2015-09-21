@@ -1,0 +1,153 @@
+// Covert Sniper Sneak
+// Author: Dokuno
+// Date: 15.09.2015.
+// Note: At Epic levels the cloak delay should go down. This is not currently implemented.
+// Note: Also at Epic levels movement speed should increase (not based on sneak). May add a modifier in here to keep the epic mods together.
+"covert_sniper_sneak_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+   "MaxLevel"                 "1"
+   "AbilityTextureName"			"bounty_hunter_wind_walk"
+   
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+   {
+	  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+	  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+	  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"	 
+   }
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+	
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+      "01"
+      {
+         "var_type"              "FIELD_FLOAT"
+         "fade_delay"            "6.0"
+      }
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"fade_time"					"0.5"
+		}
+	}
+   //"OnOwnerSpawned"   // Set the initial toggle state if needed.
+   //{
+   //}
+   
+	"Modifiers"
+   { 
+      "modifier_sneak_toggle"
+      {
+         "Passive"   "1"
+         "IsHidden"  "1"
+
+         "OnToggle" 
+         {
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
+               "Function"		"toggleSneak"
+            }         
+         }
+      }
+      "modifier_sneak_watcher"
+      {
+         "Passive"   "0"
+         "IsHidden"  "1"
+         
+         "OnAttackLanded"
+         {
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
+               "Function"		"actionMade"
+            }         
+         }
+         "OnAbilityExecuted"
+         {
+            "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/sneak.lua"
+               "Function"		"actionMade"
+            }         
+         }
+      }
+      "modifier_covert_sniper_revealed_datadriven"
+      {
+         "Passive"   "0"
+         "IsHidden"  "0"
+         
+         "DelayedAction"
+         {
+            "Delay"	"%fade_delay"
+
+            "Action" 
+            {
+               "ApplyModifier"
+               {
+                  "Target"	"CASTER"
+                  "ModifierName"	"modifier_covert_sniper_fade_datadriven"
+               }
+               "RemoveModifier"
+               {
+                  "Target"	"CASTER"
+                  "ModifierName"	"modifier_covert_sniper_revealed_datadriven"
+               }
+            }  
+         }  
+      }
+      "modifier_covert_sniper_fade_datadriven"
+      {
+         "Passive"   "0"
+         "IsHidden"  "0"
+         
+			"Duration"	"%fade_time"
+			"isBuff"	"1"
+			"EffectName"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"EffectAttachType"	"follow_origin"
+         
+         "DelayedAction"
+         {
+            "Delay"	"%fade_time"
+            "Action" 
+            {
+               "ApplyModifier"
+               {
+                  "Target"	"CASTER"
+                  "ModifierName"	"modifier_covert_sniper_invis_datadriven"
+               }
+               "RemoveModifier"
+               {
+                  "Target"	"CASTER"
+                  "ModifierName"	"modifier_covert_sniper_fade_datadriven"
+               }
+            }  
+         }
+      }
+      "modifier_covert_sniper_invis_datadriven"
+      {
+         "Passive"   "0"
+         "IsHidden"  "0" 
+         
+         "States"
+         {
+            "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+         }
+      }
+	}
+}
+
