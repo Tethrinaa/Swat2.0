@@ -4,7 +4,7 @@
     {
         "ID"                            "1250" // anything above 1250 should be safe to use.
         "BaseClass"                     "item_datadriven"
-        "AbilityTextureName"            "item_storage_cell"
+        "AbilityTextureName"            "item_storage-cell"
 		
 		"ItemCost" "500"
 		"ItemKillable" "0" 
@@ -13,9 +13,9 @@
 		"ItemDroppable" "1"
 		
 		
-		"ItemStockMax" "1" 
-		"ItemStockTime" "100"
-		"ItemStockInitial" "3"
+		"ItemStockMax" "10"
+		"ItemStockTime" "180"
+		"ItemStockInitial" "0"
 		
 		"ItemShareability" "ITEM_FULLY_SHAREABLE"
 		
