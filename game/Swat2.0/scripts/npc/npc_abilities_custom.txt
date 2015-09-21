@@ -1,0 +1,1874 @@
+// Dota Heroes File
+
+//https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools/Scripting/Abilities_Data_Driven
+
+"DOTAAbilities"
+{
+	"Version"		"1"
+   
+	//=================================================================================================================
+	// Ability: assault_rifleI // Mark 1 Assault Rifle skill
+	//=================================================================================================================
+	"assault_rifleI"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Refined Rifle"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "19"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "sniper_assassinate"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 155"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 65 45"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_bonus"	         "0  12 18 24 30 36 42 48 54 60 66 72 78 84 90 96 102 108 114"
+         }
+         "04"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"0 15 30 45 60 75 90 105 120 135 150 165 180 195 210 225 240 255 270 285"
+		   }
+		}
+      
+		"Modifiers"
+		{
+			"modifier_assault_rifleI_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            "Properties"
+			   {
+				   "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+               "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
+			   }
+			}
+		}
+	}
+   
+	//=================================================================================================================
+	// Ability: assault_rifleII // Mark 2 Assault Rifle skill
+	//=================================================================================================================
+	"assault_rifleII"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Refined Rifle"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "19"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "sniper_assassinate"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 155"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 90 50"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_bonus"	         "0  12 18 24 30 36 42 48 54 60 66 72 78 84 90 96 102 108 114"
+         }
+         "04"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"0 15 30 45 60 75 90 105 120 135 150 165 180 195 210 225 240 255 270 285"
+		   }
+		}
+      
+		"Modifiers"
+		{
+			"modifier_assault_rifleII_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            "Properties"
+			   {
+				   "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+               "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
+			   }
+			}
+		}
+   }
+   //=================================================================================================================
+	// Ability: assault_rifle_urban // Medic Urban Assault Rifle skill
+	//=================================================================================================================
+	"assault_rifle_urban"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Refined AntiPersonnel Rifle"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "19"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "sniper_assassinate"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 155"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 45 25"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_bonus"	         "0  12 18 24 30 36 42 48 54 60 66 72 78 84 90 96 102 108 114"
+         }
+         "04"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"0 15 30 45 60 75 90 105 120 135 150 165 180 195 210 225 240 255 270 285"
+		   }
+		}
+      
+		"Modifiers"
+		{
+			"modifier_assault_rifle_urban_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            "Properties"
+			   {
+				   "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+               "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
+			   }
+			}
+		}
+   }
+   //=================================================================================================================
+	// Ability: chaingunI // Mark 1 Chaingun skill
+	//=================================================================================================================
+	"chaingunI"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Plasma Rounds"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "17"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "clinkz_searing_arrows"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 120"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 90 15"
+         }
+         "03"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"-350"
+		   }
+		}
+      
+		"Modifiers"
+		{
+			"modifier_chaingunI_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+            }
+			}
+		}
+   }
+   //=================================================================================================================
+	// Ability: chaingunII // Mark 2 chaingun skill
+	//=================================================================================================================
+	"chaingunII"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Plasma Rounds"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "19"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "clinkz_searing_arrows"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 120"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 90 15"
+         }
+         "03"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"-275"
+		   }
+		}
+      
+		"Modifiers"
+		{
+			"modifier_chaingunII_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+            }
+			}
+		}
+   }
+   //=================================================================================================================
+	// Ability: vindicator // Cyborg vindicator skill
+	//=================================================================================================================
+	"vindicator"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Plasma-V Rounds"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "17"
+		"LevelsBetweenUpgrades"    "0"
+		"AbilityTextureName"       "clinkz_searing_arrows"
+      "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 120"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 90 15"
+         }
+         "03"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"-350"
+		   }
+         "04"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_damage"		      "75 75 9 13 17 21 25 29 33 37 41 45 49 53 57 61 65"
+		   }
+         "05"
+         {
+            "var_type"					"FIELD_INTEGER"
+			   "attack_speed_slow"		"0 -4 -5 -5 -6 -6 -7 -7 -8 -8 -9 -9 -10 -10 -11 -11 -12"
+         }
+         "06"
+         {
+            "var_type"					"FIELD_INTEGER"
+			   "movement_speed_slow"	"0 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20"
+         }
+         "07"
+         {
+            "var_type"					"FIELD_FLOAT"
+			   "slow_duration"	      "0 0.25 0.28 0.31 0.34 0.37 0.40 0.43 0.46 0.49 0.52 0.55 0.58 0.61 0.64 0.67 0.70"
+         }
+         "08"
+         {
+            "var_type"					"FIELD_INTEGER"
+			   "mana_cost"	            "1"
+         }
+		}
+      
+      // Casting
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilityCastRange"				"550"
+      "AbilityCastPoint"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
+
+      // Time		
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilityCooldown"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
+
+      // Cost
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilityManaCost"				"%mana_cost"
+      
+      "OnToggleOn"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_vindicator_on_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      "OnToggleOff"
+      {
+         "RemoveModifier"
+         {
+            "ModifierName" "modifier_vindicator_on_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      
+		"Modifiers"
+		{
+			"modifier_vindicator_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+            }
+            
+            "Orb"
+            {
+               "Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+               "ProjectileName"	"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
+               "CastAttack"		"1"
+            }
+            "OnOrbFire"
+            {
+               "SpendMana"
+               {
+                  "Mana"	"%AbilityManaCost"
+               }
+            }
+            "OnOrbImpact"
+            {
+               "ApplyModifier"
+               {
+                  "ModifierName" "modifier_plasma_slow_datadriven"
+                  "Target"
+                  {
+                     "Center" "TARGET"
+                     "Radius" "120"
+                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
+                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                  }
+                  "Duration" "%slow_duration"
+               }
+               "Damage"
+               {
+                  "Type" "DAMAGE_TYPE_PHYSICAL"
+                  "Damage" "%bonus_damage"
+                  "Target"
+                  {
+                     "Center" "TARGET"
+                     "Radius" "120"
+                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
+                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                  }
+               }
+            }
+			}
+         
+         "modifier_plasma_slow_datadriven"
+         {
+            "IsDebuff" "1"
+            
+            //"EffectName" "particles/generic_gameplay/generic_slowed_cold.vpcf"
+            //"EffectAttachType" "follow_origin"
+            
+            "Properties"
+            {
+              "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow"
+              "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_slow"
+            }
+         }
+		}
+   }
+   //=================================================================================================================
+	// Ability: flamethrower // Mark 1 & 2 flamethrower skill
+	//=================================================================================================================
+	"flamethrower"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Advanced Fuel"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "17"
+		"LevelsBetweenUpgrades"    "0"
+		"AbilityTextureName"       "luna_moon_glaive"
+      "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+      "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+      
+      "precache"
+      {
+         "particle"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+      }
+
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "range"						"200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "bounces"					"9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_bonus"	         "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19"
+         }
+         "04"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"-200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200 -200"
+		   }
+      }
+
+      "Modifiers"
+      {
+         "modifier_flamethrower_datadriven"
+         {
+            "Passive"         "1"
+            "IsPurgable"		"0"
+			   "IsHidden"			"1"
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
+                  "Function"		"moon_glaive_start_create_dummy"
+               }
+            }
+			
+			   "Properties"
+			   {
+				   "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+               "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE" "%damage_bonus"
+			   }
+         }
+      }
+   }
+   
+   // This is just for use with flamethrower bouncy stuff
+   
+   "luna_moon_glaive_dummy_datadriven"
+   {
+      // General
+      //-------------------------------------------------------------------------------------------------------------
+      "BaseClass"				"ability_datadriven"
+      "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+      "SpellImmunityType"	"SPELL_IMMUNITY_ENEMIES_YES"
+
+      "OnProjectileHitUnit"
+      {
+         "DeleteOnHit"	"1"
+         
+         "RunScript"
+         {
+            "ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
+            "Function"		"moon_glaive_dummy_created"
+         }
+
+      }
+
+      "Modifiers"
+      {
+         "modifier_moon_glaive_dummy_unit"
+         {
+            "States"
+            {
+               "MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_FLYING"							"MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnCreated"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
+                  "Function"		"moon_glaive_dummy_created"
+               }
+            }
+         }
+      }
+   }
+   
+   //=================================================================================================================
+	// Ability: rocketI // Mark 1 rocket skill
+	//=================================================================================================================
+	"rocketI"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Lock-Down"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "9"
+		"LevelsBetweenUpgrades"    "0"
+		"AbilityTextureName"       "gyrocopter_rocket_barrage"
+
+      
+      // Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+      "AbilityCooldown"				"6"
+		
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"96 192 264"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 66 33"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_increase"				"0 10 16 22 28 34 40 46 52 58"
+         }
+         "04"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "attack_speed_increase"		"0 3 6 9 12 15 18 21 24 27"
+         }
+         "05"
+         {
+            "var_type" "FIELD_FLOAT"
+            "base_attack_time" "3.1 3.010 2.925 2.844 2.768 2.696 2.627 2.562 2.500 2.441"
+         }
+         "06"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"600"
+		   }
+		}
+      
+      "OnToggleOn"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_datadriven"
+            "Target" "CASTER"
+         }
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_disarm_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      
+      "OnToggleOff"
+      {
+         "RemoveModifier"
+         {
+            "ModifierName" "modifier_lockdown_datadriven"
+            "Target" "CASTER"
+         }
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_disarm_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      
+		"Modifiers"
+		{
+			"modifier_rocket_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+            }
+			}
+         "modifier_lockdown_datadriven"
+         {
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_increase"
+               "MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "%base_attack_time"
+            }
+            "States"
+            {
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+         "modifier_lockdown_disarm_datadriven"
+         {
+            "Duration" "3"
+            "States"
+            {
+               "MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+         
+		}
+   }
+   //=================================================================================================================
+	// Ability: rocketII // Mark 2 rocket skill
+	//=================================================================================================================
+	"rocketII"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Lock-Down"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "11"
+		"LevelsBetweenUpgrades"    "0"
+		"AbilityTextureName"       "gyrocopter_rocket_barrage"
+
+      
+      // Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+      "AbilityCooldown"				"6"
+		
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"96 192 264"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 66 33"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_increase"				"0 10 16 22 28 34 40 46 52 58 64"
+         }
+         "04"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "attack_speed_increase"		"0 3 6 9 12 15 18 21 24 27 30"
+         }
+         "05"
+         {
+            "var_type" "FIELD_FLOAT"
+            "base_attack_time" "2.818 2.738 2.658 2.585 2.516 2.45 2.388 2.329 2.273 2.219 2.168"
+         }
+         "06"
+		   {
+			   "var_type"					"FIELD_INTEGER"
+			   "bonus_attack_range"		"600"
+		   }
+		}
+      
+      "OnToggleOn"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_datadriven"
+            "Target" "CASTER"
+         }
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_disarm_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      
+      "OnToggleOff"
+      {
+         "RemoveModifier"
+         {
+            "ModifierName" "modifier_lockdown_datadriven"
+            "Target" "CASTER"
+         }
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_disarm_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      
+		"Modifiers"
+		{
+			"modifier_rocket_datadriven"
+			{
+            "Passive"	"1"
+				"IsHidden"	"1"
+            
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+            
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+            }
+			}
+         "modifier_lockdown_datadriven"
+         {
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_increase"
+               "MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "%base_attack_time"
+            }
+            "States"
+            {
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+         "modifier_lockdown_disarm_datadriven"
+         {
+            "Duration" "3"
+            "States"
+            {
+               "MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+         
+		}
+   }
+   
+   //=================================================================================================================
+	// Ability: sniper_rifleI // Mark 1 Sniper Rifle skill
+	//=================================================================================================================
+	"sniper_rifleI"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Refined Rifle"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "19"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "sven_great_cleave"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+         "04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"0 10 15 20 25 30 35 40 45 50 55 60"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_damage"				"100 200 220 240 260 280 300 320 340 360 380 400"
+			}
+      }
+      "Modifiers"
+      {
+         "modifier_chance_to_crit_sniper1_datadriven"
+         {
+            "IsHidden"		"1"
+            "OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_sniper1_crit_datadriven"
+						"Target"		"CASTER"
+					}
+	
+					"Random"
+					{
+						"Chance"		"%crit_chance"
+	
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_sniper1_crit_datadriven"
+								"Target"		"CASTER"
+							}
+						}
+					}
+				}
+         }
+      	"modifier_sniper1_crit_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnAttackLanded"
+				// "%attack_damage" is set to the damage value before mitigation
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_sniper1_crit_datadriven"
+						"Target" 		"CASTER"
+					}
+				}
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+				}
+			}
+      }
+   }
+   //=================================================================================================================
+	// Ability: sniper_rifleII // Mark 2 Sniper Rifle skill
+	//=================================================================================================================
+	"sniper_rifleII"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityName"              "Refined Rifle"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"                 "19"
+		"LevelsBetweenUpgrades"    "1"
+		"AbilityTextureName"       "sven_great_cleave"
+
+      
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+      }
+      "Modifiers"
+      {
+      }
+   }
+	//=================================================================================================================
+	// Ability: Power_Core_Mod // Based on Overthrow treasure courier ability
+	//=================================================================================================================
+	"swat_ability_invulnerable_object"
+	{
+		"BaseClass"          			    "ability_datadriven"
+		"AbilityName"           			"dota_ability_health_granter"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"Modifiers"
+		{
+			"modifier_swat_ability_invulnerable_object"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				
+				"Aura"					""
+				"Aura_Radius"			"10"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_NONE"
+				"Aura_Types"			"DOTA_UNIT_TARGET_NONE"
+				"Aura_ApplyToCaster"	"1"
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: Power_Core_Damaged (Power Core)
+	//=================================================================================================================
+	"swat_ability_power_core_damaged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
+      "MaxLevel"                 "1"
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"			"FIELD_FLOAT"
+            "mana_regen"		"-30"
+         }
+      }     
+      // Data driven
+      //-------------------------------------------------------------------------------------------------------------
+      "Modifiers"
+      {
+         "modifier_swat_ability_power_core_degen"
+         {
+            "Passive"				"1"
+            "IsPurgable"			"0"
+            "IsHidden"				"0"
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+            }
+         }
+      }
+   }
+	//=================================================================================================================
+	// Ability: Mana_Drain_Badly_Damaged (Power Core)
+	//=================================================================================================================
+	"swat_ability_power_core_badly_damaged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+      "AbilityTextureName"			"crystal_maiden_brilliance_aura" 
+      "MaxLevel"                 "1"      
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"			"FIELD_FLOAT"
+            "mana_regen"		"-45"
+         }
+      }     
+      // Data driven
+      //-------------------------------------------------------------------------------------------------------------
+      "Modifiers"
+      {
+         "modifier_swat_ability_power_core_degen"
+         {
+            "Passive"				"1"
+            "IsPurgable"			"0"
+            "IsHidden"				"0"
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+            }
+         }
+      }      
+   }
+	//=================================================================================================================
+	// Ability: Mana_Drain_Severly_Damaged (Power Core)
+	//=================================================================================================================
+	"swat_ability_power_core_severly_damaged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+      "AbilityTextureName"			"crystal_maiden_brilliance_aura" 
+      "MaxLevel"                 "1"
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"			"FIELD_FLOAT"
+            "mana_regen"		"-55"
+         }
+      }     
+      // Data driven
+      //-------------------------------------------------------------------------------------------------------------
+      "Modifiers"
+      {
+         "modifier_swat_ability_power_core_degen"
+         {
+            "Passive"				"1"
+            "IsPurgable"			"0"
+            "IsHidden"				"0"
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+            }
+         }
+      }      
+   }
+	//=================================================================================================================
+	// Ability: Mana_Drain (Power Core)
+	//=================================================================================================================
+	"swat_ability_mana_drain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"lion_mana_drain"
+      "MaxLevel"                 "1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"30.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"5.0"	// better then the mana cost implies
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"30.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_per_second"			"60"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"break_distance"			"650"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"			"0.25"
+			}
+		}
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.ManaDrain"
+				"Target"		   "TARGET"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_drain"
+				"Target"			"TARGET"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+				"Function"		"mana_drain_stop_sound"
+				"sound"			"Hero_Lion.ManaDrain"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_drain"
+				"Target"			"TARGET"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+				"Function"		"mana_drain_stop_sound"
+				"sound"			"Hero_Lion.ManaDrain"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_drain"
+				"Target"			"TARGET"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_mana_drain"
+			{
+				"IsHidden"	"1"
+            "IsDebuff"	"1"
+				"Duration"	"%duration"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	      "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target"		         "TARGET"
+
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"CASTER"	"attach_hitloc"
+						}
+					}
+				}
+				"ThinkInterval"	"%tick_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+						"Function"		"mana_drain"
+					}
+				}
+			}
+         "modifier_mana_drain_autocast"
+         {
+            "Passive"   "1"
+            "IsHidden"  "1"
+            "ThinkInterval"   "1"
+            "OnIntervalThink"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"   "scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+                  "Function"     "auto_cast"
+               }
+            }
+         }
+		}
+	}
+	
+   //=================================================================================================================
+   // Ability: Mana Shield Light (Nanites-Light Armor)
+   // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
+   //=================================================================================================================
+   "nanites_compact"
+   {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"medusa_mana_shield"
+		"MaxLevel"                 "20"
+		"LevelsBetweenUpgrades"    "0"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				   "FIELD_FLOAT"
+				//"damage_per_mana"		"0.25 0.285 0.333 0.370 0.417 0.476 0.541 0.606 0.690 0.80 0.909 1.053 1.25 1.429 1.667 2.0 2.5 2.857"
+            // Putting 21 values here crashes it - don't know why - BDO
+				"efficiency"            "4.0 3.5 3.0 2.7 2.4 2.1 1.85 1.65 1.45 1.25 1.10 0.95 0.80 0.70 0.60 0.50 0.45 0.40 0.35 0.32"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"absorption_tooltip"		"90 90 90 90 90 90 91 91 91 91 91 91 91 91 91 91 91 92 92 92"
+			}
+         "03"
+         {
+            "var_type"           "FIELD_FLOAT"
+            "damage_reduction_percent" "-90 -90 -90 -90 -90 -90 -91 -91 -91 -91 -91 -91 -91 -91 -91 -91 -91 -92 -92 -92"
+         }
+		}
+		"OnToggleOn"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"Target" 		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_shield_datadriven"
+				"Target" 		"CASTER"
+			}
+		}
+		"OnToggleOff"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.Off"
+				"Target" 		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_shield_datadriven"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_mana_shield_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			   "1"
+				
+				"Properties"
+				{
+					// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
+					// and preventing heroes from dying when they shouldn't, requires calculating back out later in lua
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction_percent"
+				}
+
+				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"OnTakeDamage"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Medusa.ManaShield.Proc"
+						"Target" 		"UNIT"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medusa/mana_shield.lua"
+						"Function"		"ManaShield"
+						"Damage"		   "%attack_damage"
+					}
+				}
+			}
+		}
+   }
+	
+      //=================================================================================================================
+   // Ability: Mana Shield Standard (Nanites-Standard Armor)
+   // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
+   //=================================================================================================================
+   "nanites_standard"
+   {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"medusa_mana_shield"
+		"MaxLevel"                 "18"
+		"LevelsBetweenUpgrades"    "0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"efficiency" 			"4.0 3.5 3.0 2.66 2.33 2.00 1.75 1.50 1.25 1.00 0.8 0.6 0.5 0.4 0.35 0.30 0.28 0.26 0.24 0.22"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"absorption_tooltip"		"90 90 90 90 90 91 91 91 91 91 91 91 91 92 92 92 92 92 93 93"
+			}
+			"03"
+			{
+				"var_type"           "FIELD_FLOAT"
+				"damage_reduction_percent" "-90 -90 -90 -90 -90 -91 -91 -91 -91 -91 -91 -91 -91 -92 -92 -92 -92 -92 -93 -93"
+			}
+		}
+		"OnToggleOn"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"Target" 		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_shield_datadriven"
+				"Target" 		"CASTER"
+			}
+		}
+		"OnToggleOff"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.Off"
+				"Target" 		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_shield_datadriven"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_mana_shield_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			   "1"
+				
+				"Properties"
+				{
+					// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
+					// and preventing heroes from dying when they shouldn't, requires calculating back out later in lua
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction_percent"
+				}
+
+				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"OnTakeDamage"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Medusa.ManaShield.Proc"
+						"Target" 		"UNIT"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medusa/mana_shield.lua"
+						"Function"		"ManaShield"
+						"Damage"		   "%attack_damage"
+					}
+				}
+			}
+		}
+	}
+
+   //=================================================================================================================
+   // Ability: Mana Shield Heavy (Nanites-Heavy Armor)
+   // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
+   //=================================================================================================================
+   "nanites_heavy"
+   {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"medusa_mana_shield"
+		"MaxLevel"                 "18"
+		"LevelsBetweenUpgrades"    "0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"efficiency" 			"2.33 2.00 1.75 1.50 1.25 1.00 0.8 0.6 0.5 0.4 0.35 0.30 0.27 0.24 0.22 0.20 0.18 0.17 0.16 0.15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"absorption_tooltip"		"90 91 91 91 91 91 91 91 91 92 92 92 92 93 93 93 93 93 94 94"
+			}
+			"03"
+			{
+				"var_type"           "FIELD_FLOAT"
+				"damage_reduction_percent" "-90 -91 -91 -91 -91 -91 -91 -91 -91 -92 -92 -92 -92 -93 -93 -93 -93 -93 -94 -94"
+			}
+		}
+		"OnToggleOn"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"Target" 		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_shield_datadriven"
+				"Target" 		"CASTER"
+			}
+		}
+		"OnToggleOff"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.Off"
+				"Target" 		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_shield_datadriven"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_mana_shield_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			   "1"
+				
+				"Properties"
+				{
+					// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
+					// and preventing heroes from dying when they shouldn't, requires calculating back out later in lua
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction_percent"
+				}
+
+				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"OnTakeDamage"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Medusa.ManaShield.Proc"
+						"Target" 		"UNIT"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medusa/mana_shield.lua"
+						"Function"		"ManaShield"
+						"Damage"		   "%attack_damage"
+					}
+				}
+			}
+		}
+	}
+   
+	//=================================================================================================================
+	// Ability: Sprint (Light,Medium,Heavy)
+	//=================================================================================================================	
+	"sprint_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"		"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName" 	"slardar_sprint"
+		"MaxLevel"	"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150 30 20"
+		
+		"AbilitySpecial"	
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_speed"				"80 60 50"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"6.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion"				"100"
+			}
+		}
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target" "CASTER"
+				"ModifierName" "modifier_sprint_datadriven"
+			}
+			"FireSound"
+			{
+				"EffectName" "Hero_Slardar.Sprint"
+				"Target"	 "CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_sprint_datadriven"
+			{
+				"IsBuff" "1"
+				"Duration" "%duration"
+				"EffectName"	"particles/units/heroes/hero_slardar/slardar_sprint.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_speed"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT" "%bonus_evasion"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"1"
+				}
+            "States"
+            {
+               "MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+            }
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Sneak (Covert Sniper)
+	//=================================================================================================================
+	"sneak_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"	"riki_permanent_invisibility"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_delay"				"6.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_health_regen"		"0"
+			}
+		}
+	}	
+   
+   //=================================================================================================================
+	// Ability: Radiation Fragment
+	//=================================================================================================================	
+	"rad_frag_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"		"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 	"viper_corrosive_skin"
+		"MaxLevel"	"1"
+
+		"Modifiers"
+		{
+			"modifier_rad_frag_datadriven"
+			{
+				"Passive" "1"
+
+				"OnDeath"
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "units/rad_frag.lua"
+                  "Function"   "RadRemoved"
+               }
+            }
+			}
+		}
+	}
+   
+      //=================================================================================================================
+	// Ability: Radiation Fragment
+	//=================================================================================================================	
+	"global_radiation_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"		"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName" 	"necrolyte_heartstopper_aura"
+      "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"	"5"
+
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				"FIELD_INTEGER"
+            "damage_per_second"		"0 1 2 12 25"
+         }
+      }
+      
+		"Modifiers"
+		{
+			"modifier_rad_damage_datadriven"
+			{
+				"Passive" "1"
+            
+				"ThinkInterval" "1.0"
+            "OnIntervalThink"
+            {
+               "ActOnTargets"
+               {
+                  "Target"
+                  {
+                     "Center" "CASTER"
+                     "Radius" "20000"
+                     "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                     "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                  }
+                  "Action"
+                  {
+                     "Damage"
+                     {
+                        "Target" "TARGET"
+                        "Type" "DAMAGE_TYPE_MAGICAL"
+                        "Damage" "%damage_per_second"
+                     }
+                  }
+               }
+            }
+			}
+		}
+	}
+}
