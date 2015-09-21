@@ -4,7 +4,7 @@
     {
         "ID"                            "1250" // anything above 1250 should be safe to use.
         "BaseClass"                     "item_datadriven"
-        "AbilityTextureName"            "item_storage-cell"
+        "AbilityTextureName"            "item_storage_cell"
 		
 		"ItemCost" "500"
 		"ItemKillable" "0" 
