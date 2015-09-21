@@ -1,29 +1,37 @@
 --[[Concussion Grenade
 	Author: Dokuno
 	Date: 17.09.2015.]]
-
+-- Pre fetch damage delt and target location (before it gets deadz)
+-- On kills with a pierce roll create a linear projectile at the dead location in a line between
+-- the caster and corpse. Max projectile range = caster attack range. 
+   
+   
 -- Gets target AbsOrigin before it dies.   
-function GetTargetLocation( params )
+function getTargetLocation( params )
    target_abs_origin = params.target:GetAbsOrigin()
-   print ("Attack Landed. Target AbsOrigin = ", target_abs_origin)
+   --print ("Attack Landed. Target AbsOrigin = ", target_abs_origin)
    return target_abs_origin
+end
+
+-- Gets the damage delt (after damage mitigation)
+function getDamageDealt( params )
+   kill_damage = params.kill_damage
+   --print("Kill Damage: ", kill_damage)
+   return kill_damage
 end
 
 -- Create a linear projectile for the piecred shot
 function Pierce( params )
-   if ( target_abs_origin == nil ) then
-      print("No Target AbsOrigin", target_abs_origin)
+   if (target_abs_origin == nil) then
       return 0
-   else
-      print("Target Killed. AbsOrigin = ", target_abs_origin)
    end
    local target = params.target
    local caster = params.caster
-   --local shot_path = target:GetAbsOrigin() - caster:GetAbsOrigin()
    local shot_path = target_abs_origin - caster:GetAbsOrigin()
-   kill_damage = caster:GetAttackDamage()
-   print("Kill Damage: ", kill_damage)
-   
+   if (kill_damage == nil) then
+      kill_damage = caster:GetAttackDamage()
+   end
+
    -- Info for a CreateLinearProjectile
    local info = 
    {
@@ -38,14 +46,12 @@ function Pierce( params )
       iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
       iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
       iUnitTargetType =  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-      bDeleteOnHit = false,
-      vVelocity = shot_path,
+      bDeleteOnHit = true,
+      vVelocity = shot_path * (caster:GetProjectileSpeed()/shot_path:Length2D()),
       bProvidesVision = false
-      --iMoveSpeed = caster:GetProjectileSpeed()
    }
    if ( info.fDistance > 0 ) then
       projectile = ProjectileManager:CreateLinearProjectile(info)
-      print("Launch Projectile", projectile)
    end
    return 0
 end
@@ -54,8 +60,6 @@ function PierceHit( params )
    if ( kill_damage == nil ) then
       print("No Damage Found")
       kill_damage = params.caster:GetAttackDamage()
-   else  
-      print("Killing Damage: ", kill_damage)
    end
    
 	local damage_table = {}
@@ -67,41 +71,10 @@ function PierceHit( params )
 	ApplyDamage(damage_table)
 end
 
---Creates a projectile that will travel 2000 units
-function fire_arrow(args)
-   print({})
-	local caster = args.caster
-	--A Liner Projectile must have a table with projectile info
-	local info = 
-	{
-		Ability = args.ability,
-      EffectName = "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf",
-      vSpawnOrigin = caster:GetAbsOrigin(),
-      fDistance = 2000,
-      fStartRadius = 64,
-      fEndRadius = 64,
-      Source = caster,
-      bHasFrontalCone = false,
-      bReplaceExisting = false,
-      iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-      iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-      iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-      fExpireTime = GameRules:GetGameTime() + 10.0,
-		bDeleteOnHit = true,
-		vVelocity = caster:GetForwardVector() * 1800,
-		bProvidesVision = true,
-		iVisionRadius = 1000,
-		iVisionTeamNumber = caster:GetTeamNumber()
-	}
-	projectile = ProjectileManager:CreateLinearProjectile(info)
-end
-
-arrowTable = arrowTable or {}
-function LaunchArrow( keys )
-	local caster = keys.caster
-	local caster_location = caster:GetAbsOrigin()
-
-	arrowTable[caster] = arrowTable[caster] or {}
-
-	arrowTable[caster].location = caster_location
+-- Function not currently used.
+function EndPierce( params )
+   if (projectile == nil ) then
+      return 0
+   end
+   ProjectileManager:DestroyLinearProjectile(projectile)
 end

@@ -164,6 +164,7 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
   GameMode = self
+    
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
@@ -189,6 +190,10 @@ function GameMode:InitGameMode()
    Global_Rad_Handler:AddAbility("swat_ability_invulnerable_object")
    Global_Rad_Handler:FindAbilityByName("swat_ability_invulnerable_object"):SetLevel(1)
    SpawnRads(40)
+   
+   --load item table
+   self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" ) 
+   
 end
 
 -- This is an example console command
@@ -422,6 +427,10 @@ function GameMode:BuildMarine( event )
    
    hero:SetAbilityPoints(1) -- This will change based on rank
 
+   hero:AddAbility("covert_sniper_sneak"):SetLevel(1)
+   hero:AddAbility("covert_sniper_marksman"):SetLevel(12)
+   hero:AddAbility("covert_sniper_concussion_grenade"):SetLevel(12)
+   
    GameMode:ModifyStatBonuses(hero)
    
    -- set trait TODO
