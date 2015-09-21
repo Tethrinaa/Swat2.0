@@ -164,6 +164,7 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
   GameMode = self
+    
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
@@ -189,6 +190,10 @@ function GameMode:InitGameMode()
    Global_Rad_Handler:AddAbility("swat_ability_invulnerable_object")
    Global_Rad_Handler:FindAbilityByName("swat_ability_invulnerable_object"):SetLevel(1)
    SpawnRads(40)
+   
+   --load item table
+   self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" ) 
+   
 end
 
 -- This is an example console command
