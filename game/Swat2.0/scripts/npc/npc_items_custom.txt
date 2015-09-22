@@ -31,6 +31,15 @@
 			}
 		}
 		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
 		"OnOwnerDied"
 		{
 			"RunScript"
@@ -39,22 +48,31 @@
 				"Function"	"DropItemOnDeath"
 			}
 		}
-		
-
 		"Modifiers"
 		{
-			"modifier_item_storagecell_datadriven"
+			"modifier_item_add_datadriven"
 			{
-				"Passive"   "1"
+				"Passive"   "0"
 				"IsHidden"   "1"
-				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
-
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_BONUS"  "250"
 				}
 			}
+			"modifier_item_remove_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"  "-250"
+				}
+			}
 		}
+
+		
     }
 	"item_duo_cell"
     {
@@ -87,6 +105,15 @@
 			}
 		}
 		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
 		"OnOwnerDied"
 		{
 			"RunScript"
@@ -96,21 +123,32 @@
 			}
 		}
 		
-
 		"Modifiers"
 		{
-			"modifier_item_storagecell_datadriven"
+			 
+			"modifier_item_add_datadriven"
 			{
-				"Passive"   "1"
+				"Passive"   "0"
 				"IsHidden"   "1"
-				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
-
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_BONUS"  "500"
 				}
 			}
+			"modifier_item_remove_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"  "-500"
+				}
+			}
 		}
+
+		
     }
 	
 	
