@@ -3,6 +3,12 @@ Global_Radiation = 0
 Global_Fallout = 0
 Global_Radiation_Bracket = 0
 Global_Rad_Handler = nil
+Global_Max_Player_Count = 0
+--[[Global Uber will end up being a two dimensional array of [total players][2].  First element will be whether the player
+    is connected.  If they are connected, it will be an integer value of 1, otherwise an integer value of 0.  This will allow 
+	us to turn their Uber off if the disconnect.  Second element is the player's uber contribution]]
+Global_Uber = {}
+Global_Max_Player_Count = 0
 
 Global_Consts = {}
    Global_Consts.classes = {}
@@ -76,6 +82,8 @@ require('internal/events')
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
+--uber.lua contains most of the code relating to uber.
+require('uber')
 
 
 --[[
@@ -481,4 +489,16 @@ function UpdateRadiation(rad_change)
    Global_Rad_Handler:FindAbilityByName("global_radiation_damage"):SetLevel(Global_Radiation_Bracket)
 end
 
+--PlayerFirstSpawnUber is called every time a new hero is created at the start of the game
+--This sets the inital uber value for the players, and creates the array.
+function GameMode:PlayerFirstSpawnUber()
+   --Set the correct indexed player ID.  The +1 is needed since the ID is being passed from javascript.  Requires a re-index
+   local plyid = event.playerId+1
+   Global_Uber[plyid] = {}
+   Global_Uber[plyid][1] = 1
+   Global_Uber[plyid][2] = 0
+   Global_Max_Player_Count = Global_Max_Player_Count + 1
+end
+
 CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
+CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'PlayerFirstSpawnUber'))
