@@ -6,6 +6,7 @@
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				      "ability_datadriven"
+   "AbilityName"              "Concussion Grenade"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -29,7 +30,7 @@
       "01"
       {
          "var_type"              "FIELD_INTEGER"
-         "attack_slow"           "30 30 32 32 34 34 36 36 38 38 40 40 42 42 45 45"
+         "attack_slow"           "-30 -30 -32 -32 -34 -34 -36 -36 -38 -38 -40 -40 -42 -42 -45 -45"
       }
       "02"
       {
@@ -55,12 +56,7 @@
       {
          "var_type"              "FIELD_FLOAT"
          "stun_duration"         "0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0 1.0 1.0 2.0 2.0 3.0"
-      }
-		"07"
-		{
-			"var_type"				   "FIELD_INTEGER"
-			"attack_slow_per_stack"	"-1"
-		}      
+      }  
 	}
 
 	"precache"
@@ -118,36 +114,18 @@
       "modifier_concussion_grenade"
 		{
 			"IsDebuff"	"1"
-
 			"EffectName"			   "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
 			"EffectAttachType"		"follow_origin"
-
 			"StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
 			"StatusEffectPriority"	"5"
-
-         // Attack speed slow% function (dota only works in integer attackspeed modifiers)
-         "RunScript"
-         {
-            "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/concussion_grenade.lua"
-            "Function"	   "slowAttackSpeed"
-         }
          
 			"Properties"
 			{
             "MODIFIER_PROPERTY_MISS_PERCENTAGE"				   "%miss_chance"
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+            "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "%attack_slow"
 			}
 		}
-      "modifier_concussion_grenade_attackspeed_slow_stack"
-      {
-			"IsDebuff"	"1"
-			"Duration"	"%duration"
-
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_slow_per_stack"
-			}
-      }
 	}
 }
 

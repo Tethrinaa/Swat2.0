@@ -1898,6 +1898,7 @@
       // General
       //-------------------------------------------------------------------------------------------------------------
       "BaseClass"						"ability_datadriven"
+      "AbilityName"              "Sneak"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
       "SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
       "MaxLevel"                 "6"
@@ -2028,115 +2029,224 @@
       }
    }
    //=================================================================================================================
-	// Ability: Marksman (Covert Sniper)
-	//=================================================================================================================   
-   "covert_sniper_marksman"
+	// Ability: Critical Shot (Covert Sniper)
+	//=================================================================================================================  
+   "covert_sniper_critical_shot"
    {
       // General
       //-------------------------------------------------------------------------------------------------------------
       "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Critical Shot"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-      "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-      "MaxLevel"                 "16"
+      "SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+      "MaxLevel"                 "8"
       "LevelsBetweenUpgrades"    "0"
-      "AbilityTextureName"			"sniper_take_aim"
-
+      "AbilityTextureName"       "chaos_knight_chaos_strike"
+     
       // Special
       //-------------------------------------------------------------------------------------------------------------
       "AbilitySpecial"
       {
          "01"
          {
-            "var_type"						"FIELD_INTEGER"
-            "bonus_attack_range"			"40 80 120 160 200 240 280 320 360 400 440 480 520 560 600 640"
+            "var_type"					"FIELD_INTEGER"
+            "crit_chance"				"0 10 15 20 25 30 35 40 45 50 55 60"
          }
          "02"
          {
-            // Pierce only occurs on kills.
-            "var_type"                 "FIELD_INTEGER"
-            "pierce_chance"            "15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90"
+            "var_type"					"FIELD_INTEGER"
+            "crit_damage"				"100 200 220 240 260 280 300 320 340 360 380 400"
          }
          "03"
-         {  // Crit (& crit_damage) are only when Aiming.
-            "var_type"                 "FIELD_INTEGER"
-            "crit_chance"              "20"
-         }
-         "04"
          {
-            "var_type"                 "FIELD_INTEGER"
-            "crit_damage"              "120"
+            "var_type"					"FIELD_INTEGER"
+            "aim_crit_damage"			"100 260 320 480 440 500 560 620 680 740 800 860"
          }
       }
-      "OnProjectileHitUnit"
-      {
-        "RunScript"
-         {
-            "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
-            "Function"		"GetTargetLocation"
-         }          
-         "RunScript"
-         {
-            "ScriptFile"			"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
-            "Function"				"PierceHit"
-            "Target"				   "TARGET"
-         }
-      }	
-      // Data driven
-      //-------------------------------------------------------------------------------------------------------------
       "Modifiers"
       {
-         "modifier_marksman_range"
+         "modifier_crit_chance"
          {
-            "Passive"			"1"
-            "IsPurgable"		"0"
-            "IsHidden"			"1"
-
-            "Properties"
+            "Passive"   "1"
+            "IsHidden"	"1"
+            "OnAttackStart"
             {
-               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
-            }
-         }
-         "modifier_marksman_pierce"
-         {
-            "Passive"         "1"
-            "IsHidden"        "1"
-            "OnAttackLanded"
-            {
-              "RunScript"
+               "RemoveModifier"
                {
-                  "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
-                  "Function"		"getTargetLocation"
-               }   
-            }
-            "OnDealDamage"
-            {
-              "RunScript"
-               {
-                  "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
-                  "Function"		"getDamageDealt"
-                  "kill_damage"  "%attack_damage"
-               }            
-            }
-            "OnKill"
-            {
-               // Chance to pierce
+                  "ModifierName"	"modifier_crit"
+                  "Target"		"CASTER"
+               }
                "Random"
                {
-                  "Chance"		"%pierce_chance"
+                  "Chance"		"%crit_chance"
+
                   "OnSuccess"
                   {
-                     "RunScript"
+                     "ApplyModifier"
                      {
-                        "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
-                        "Function"		"Pierce"
+                        "ModifierName"	"modifier_crit"
+                        "Target"		"CASTER"
                      }
+                  }
+               }
+               "RunScript"
+               {
+                  "ScriptFile"   "scripts/vscripts/heroes/hero_covert_sniper/critical_shot.lua"
+                  "Function"     "aimCheck"
+               }
+            }
+         }
+         "modifier_crit"
+         {
+            "IsHidden"		"1"
+            "IsPurgable"	"0"	
+            "OnAttackLanded"
+            // "%attack_damage" is set to the damage value before mitigation
+            {
+               "RemoveModifier"
+               {
+                  "ModifierName"	"modifier_crit"
+                  "Target" 		"CASTER"
+               }
+            }	
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+            }
+         }
+         "modifier_aim_crit"
+         {
+            "IsHidden"		"1"
+            "IsPurgable"	"0"	
+            "OnAttackLanded"
+            // "%attack_damage" is set to the damage value before mitigation
+            {
+               "RemoveModifier"
+               {
+                  "ModifierName"	"modifier_aim_crit"
+                  "Target" 		"CASTER"
+               }
+            }	
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%aim_crit_damage"
+            }
+         }
+      }
+   }
+   //=================================================================================================================
+	// Ability: Marksman (Covert Sniper)
+	//=================================================================================================================   
+"covert_sniper_marksman"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				      "ability_datadriven"
+   "AbilityName"              "Marksman"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+   "MaxLevel"                 "16"
+   "LevelsBetweenUpgrades"    "0"
+	"AbilityTextureName"			"sniper_take_aim"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"bonus_range"			      "40 80 120 160 200 240 280 320 360 400 440 480 520 560 600 640"
+		}
+      "02"
+      {
+         // Pierce only occurs on kills.
+         "var_type"                 "FIELD_INTEGER"
+         "pierce_chance"            "15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90"
+      }
+      "03"
+      {  // Crit (& crit_damage) are only when Aiming.
+         "var_type"                 "FIELD_INTEGER"
+         "crit_chance"              "20"
+      }
+      "04"
+      {
+         "var_type"                 "FIELD_INTEGER"
+         "crit_damage"              "120"
+      }
+   }
+   "OnProjectileHitUnit"
+   {
+     "RunScript"
+      {
+         "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+         "Function"		"GetTargetLocation"
+      }          
+      "RunScript"
+      {
+         "ScriptFile"			"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+         "Function"				"PierceHit"
+         "Target"				   "TARGET"
+      }
+   }	
+	// Data driven
+	//-------------------------------------------------------------------------------------------------------------
+	"Modifiers"
+	{
+		"modifier_marksman_range"
+		{
+			"Passive"			"1"
+			"IsPurgable"		"0"
+			"IsHidden"			"1"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_range"
+            "MODIFIER_PROPERTY_BONUS_DAY_VISION"   "%bonus_range"
+            "MODIFIER_PROPERTY_BONUS_DAY_VISION"   "%bonus_range"
+			}
+		}
+      "modifier_marksman_pierce"
+      {
+         "Passive"         "1"
+         "IsHidden"        "1"
+         "OnAttackLanded"
+         {
+           "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+               "Function"		"getTargetLocation"
+            }   
+         }
+         "OnDealDamage"
+         {
+           "RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+               "Function"		"getDamageDealt"
+               "kill_damage"  "%attack_damage"
+            }            
+         }
+         "OnKill"
+         {
+            // Chance to pierce
+            "Random"
+            {
+               "Chance"		"%pierce_chance"
+               "OnSuccess"
+               {
+                  "RunScript"
+                  {
+                     "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
+                     "Function"		"Pierce"
                   }
                }
             }
          }
       }
-   }
+}
+	}
    //=================================================================================================================
 	// Ability: Concussion Grenade (Covert Sniper)
 	//=================================================================================================================    
@@ -2145,6 +2255,7 @@
       // General
       //-------------------------------------------------------------------------------------------------------------
       "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Concussion Grenade"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
       "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
       "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -2168,7 +2279,7 @@
          "01"
          {
             "var_type"              "FIELD_INTEGER"
-            "attack_slow"           "30 30 32 32 34 34 36 36 38 38 40 40 42 42 45 45"
+            "attack_slow"           "-30 -30 -32 -32 -34 -34 -36 -36 -38 -38 -40 -40 -42 -42 -45 -45"
          }
          "02"
          {
@@ -2194,12 +2305,7 @@
          {
             "var_type"              "FIELD_FLOAT"
             "stun_duration"         "0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0 1.0 1.0 2.0 2.0 3.0"
-         }
-         "07"
-         {
-            "var_type"				   "FIELD_INTEGER"
-            "attack_slow_per_stack"	"-1"
-         }      
+         }    
       }
 
       "precache"
@@ -2240,8 +2346,7 @@
                "Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
             }
             "Duration"		"%duration"
-         }
-         
+         }     
       }
 
       "Modifiers"
@@ -2258,36 +2363,80 @@
          "modifier_concussion_grenade"
          {
             "IsDebuff"	"1"
-
             "EffectName"			   "particles/units/heroes/hero_brewmaster/brewmaster_drunken_haze_debuff.vpcf"
             "EffectAttachType"		"follow_origin"
-
             "StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
             "StatusEffectPriority"	"5"
-
-            // Attack speed slow% function (dota only works in integer attackspeed modifiers)
-            "RunScript"
-            {
-               "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/concussion_grenade.lua"
-               "Function"	   "slowAttackSpeed"
-            }
             
             "Properties"
             {
                "MODIFIER_PROPERTY_MISS_PERCENTAGE"				   "%miss_chance"
                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
+               "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "%attack_slow"
             }
          }
-         "modifier_concussion_grenade_attackspeed_slow_stack"
+      }
+   } 
+   //=================================================================================================================
+	// Ability: Aim (Covert Sniper)
+	//================================================================================================================= 
+   "covert_sniper_aim"
+   {
+      // General
+      //-------------------------------------------------------------------------------------------------------------
+      "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Aim"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+      "MaxLevel"                 "16"
+      "LevelsBetweenUpgrades"    "0"
+      "AbilityTextureName"			"sniper_assassinate"
+
+      // Casting
+      "AbilityCastPoint"			"0.0"
+      "AbilityCooldown"				"89.0 81.0 73.0 65.0 57.0 49.0 41.0 33.0 32.0 31.0 30.0 29.0 28.0 27.0 26.0 25.0"
+      "AbilityManaCost"				"0"
+      // Special	
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				   "FIELD_FLOAT"
+            "duration"				   "20.0"
+         }
+         "02"
+         {
+            "var_type"              "FIELD_INTEGER"
+            "attack_slow"           "-45 -45 -45 -45 -45 -45 -45 -45 -41 -37 -33 -29 -25 -21 -17 -13"
+         }
+         "03"
+         {
+            "var_type"              "FIELD_INTEGER"
+            "movespeed_slow"         "-14"
+         }
+      }
+      "OnSpellStart"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_aim"
+            "Target"       "CASTER"
+            "Duration"     "%duration"
+         }
+      }
+        
+      "Modifiers"
+      {
+         "modifier_aim"
          {
             "IsDebuff"	"1"
-            "Duration"	"%duration"
-
+            "IsHidden"  "0"
             "Properties"
             {
-               "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_slow_per_stack"
-            }
-         }
+               "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	   "%movespeed_slow"
+               "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"     "%attack_slow"
+            }       
+         }   
       }
    }   
 }

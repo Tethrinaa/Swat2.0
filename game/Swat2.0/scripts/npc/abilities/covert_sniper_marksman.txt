@@ -6,6 +6,7 @@
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				      "ability_datadriven"
+   "AbilityName"              "Marksman"
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -20,7 +21,7 @@
 		"01"
 		{
 			"var_type"						"FIELD_INTEGER"
-			"bonus_attack_range"			"40 80 120 160 200 240 280 320 360 400 440 480 520 560 600 640"
+			"bonus_range"			      "40 80 120 160 200 240 280 320 360 400 440 480 520 560 600 640"
 		}
       "02"
       {
@@ -65,7 +66,9 @@
 
 			"Properties"
 			{
-				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
+				"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_range"
+            "MODIFIER_PROPERTY_BONUS_DAY_VISION"   "%bonus_range"
+            "MODIFIER_PROPERTY_BONUS_DAY_VISION"   "%bonus_range"
 			}
 		}
       "modifier_marksman_pierce"
