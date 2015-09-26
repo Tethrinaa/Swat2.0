@@ -17,7 +17,7 @@ function SetAbility( ability, queryUnit, bInLevelUp )
 	$.GetContextPanel().SetHasClass( "no_ability", ( ability == -1 ) );
 	$.GetContextPanel().SetHasClass( "learnable_ability", bInLevelUp && canUpgrade );
 
-	RebuildAbilityUI();
+	//RebuildAbilityUI();
 	UpdateAbility();
 }
 
@@ -117,9 +117,9 @@ function RightClickAbility()
 	}
 }
 
-function RebuildAbilityUI()
-{
-	var currentLevel = Abilities.GetLevel( m_Ability );
+//function RebuildAbilityUI()
+//{
+	//var currentLevel = Abilities.GetLevel( m_Ability );
 /* 	for ( var lvl = 0; lvl < Abilities.GetMaxLevel( m_Ability ); lvl++ )
 	{
 		var levelPanel = $.CreatePanel( "Panel", abilityLevelContainer, "" );
@@ -127,11 +127,11 @@ function RebuildAbilityUI()
 		levelPanel.SetHasClass( "active_level", ( lvl < currentLevel ) );
 		levelPanel.SetHasClass( "next_level", ( lvl == currentLevel ) );
 	} */
-}
+//}
 
 (function()
 {
 	$.GetContextPanel().data().SetAbility = SetAbility;
-	GameEvents.Subscribe( "dota_ability_changed", RebuildAbilityUI ); // major rebuild
+	//GameEvents.Subscribe( "dota_ability_changed", RebuildAbilityUI ); // major rebuild
 	AutoUpdateAbility(); // initial update of dynamic state
 })();
