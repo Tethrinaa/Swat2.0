@@ -487,7 +487,7 @@ end
 
 --PlayerFirstSpawnUber is called every time a new hero is created at the start of the game
 --This sets the inital uber value for the players, and creates the array.
-function GameMode:PlayerFirstSpawnUber()
+function GameMode:PlayerFirstSpawnUber(event)
    --Set the correct indexed player ID.  The +1 is needed since the ID is being passed from javascript.  Requires a re-index
    local plyid = event.playerId+1
    Global_Uber[plyid] = {}
@@ -497,5 +497,4 @@ function GameMode:PlayerFirstSpawnUber()
 end
 
 CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
--- Function called by line causes error, commenting out BDO
---CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'PlayerFirstSpawnUber'))
+CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'PlayerFirstSpawnUber'))
