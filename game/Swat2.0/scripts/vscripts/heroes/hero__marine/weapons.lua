@@ -3,7 +3,7 @@
 	Deals splash auto attack damage to nearby targets depending on distance]]
 function Splash( keys )
 	-- Variables
-	print "start splash"
+	--print "start splash"
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability

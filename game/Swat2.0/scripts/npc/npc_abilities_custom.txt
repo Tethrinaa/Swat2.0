@@ -83,7 +83,7 @@
 		"AbilityName"              "Refined Rifle"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"                 "17"
+		"MaxLevel"                 "19"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sniper_assassinate"
 
@@ -380,7 +380,7 @@
 		"AbilityName"              "Plasma Rounds"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"                 "17"
+		"MaxLevel"                 "19"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "clinkz_searing_arrows"
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -1104,7 +1104,7 @@
 		"AbilityName"              "Refined Rifle"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"                 "12"
+		"MaxLevel"                 "9"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sven_great_cleave"
      
@@ -1182,7 +1182,7 @@
 		"AbilityName"              "Refined Rifle"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"                 "12"
+		"MaxLevel"                 "11"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sven_great_cleave"
      

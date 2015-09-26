@@ -408,8 +408,20 @@ function GameMode:BuildMarine( event )
    print(event.weapon)
    
    if ((event.weapon == "flamethrowerI") or (event.weapon == "flamethrowerII")) then
-      print("debugstep")
       hero:SetRangedProjectileName("particles/units/heroes/hero_lina/lina_base_attack.vpcf")
+      if (event.class == "maverick") then
+         hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 19
+      end
+   end
+   if ((event.weapon == "rocketI") or (event.weapon == "rocketII")) then
+      hero:SetRangedProjectileName("particles/units/heroes/hero_techies/techies_base_attack.vpcf")
+      print(hero:GetProjectileSpeed())
+      print(hero.ProjectileSpeed)
+      hero.ProjectileSpeed=200
+      for k,v in pairs(hero) do
+         print(k, v)
+      end
+      print(hero:GetProjectileSpeed())
    end
    
    --set armor stats
