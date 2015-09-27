@@ -2623,12 +2623,18 @@
          "02"
          {
             "var_type"              "FIELD_INTEGER"
-            "attack_slow"           "-45 -45 -45 -45 -45 -45 -45 -45 -41 -37 -33 -29 -25 -21 -17 -13"
+            "movespeed_slow"         "-14"
          }
          "03"
          {
-            "var_type"              "FIELD_INTEGER"
-            "movespeed_slow"         "-14"
+            "var_type"              "FIELD_FLOAT"
+            "cs_base_attack_speed"  "2.57"
+         }
+         "04"
+         {
+            "var_type"              "FIELD_FLOAT"
+            // Percent attack slow  "-45 -45 -45 -45 -45 -45 -45 -45 -41 -37 -33 -29 -25 -21 -17 -13"
+            "base_attack_slow"      ".55 .55 .55 .55 .55 .55 .55 .55 .59 .63 .67 .71 .75 .79 .83 .87"
          }
       }
       "OnSpellStart"
@@ -2650,9 +2656,66 @@
             "Properties"
             {
                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	   "%movespeed_slow"
-               "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"     "%attack_slow"
+               "MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"      "%cs_base_attack_speed*%base_attack_slow"
             }       
          }   
       }
    }   
+   //=================================================================================================================
+	// Ability: Construct Camera (Covert Sniper)
+	//=================================================================================================================
+   "covert_sniper_construct_camera"
+   {
+      // General
+      //-------------------------------------------------------------------------------------------------------------
+      "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Construct Camera"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+      "MaxLevel"						"1"
+      "AbilityTextureName"			"techies_stasis_trap"
+      
+      // Casting
+      //-------------------------------------------------------------------------------------------------------------   
+      "AbilityCastPoint"			"0.0"
+      "AbilityCastRange"			"100"
+      "AbilityCooldown"				"6.0"
+      "AbilityManaCost"				"100"
+
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"					"FIELD_FLOAT"
+            "duration"					"600.0"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "vision_radius"			"1500"   // Don't know what the vision range was in swat
+         }
+      }
+      "OnSpellStart"
+      {
+         "RunScript"
+         {
+            "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/construct_camera.lua"
+            "Function"		"DeployCamera"
+            "Target"		   "POINT"
+         }
+      }
+      "Modifiers"
+      {   
+            "modifier_camera_invis"
+         {
+            "IsHidden"		"1"
+            "IsPurgable"	"0"
+            "States"
+            {
+               "MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+      }
+   }
 }
