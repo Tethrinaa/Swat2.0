@@ -1,0 +1,110 @@
+//Generated using Dota Custom File Generator by cris9696
+"DOTAHeroes"
+{
+	"npc_swat_hero_tactician"
+	{
+		"override_hero" "npc_dota_hero_sniper"
+	
+		"AbilityLayout"	"6"
+	
+      "AttackDamageMin"            "90"      // Damage range min.
+      "AttackDamageMax"            "124"     // Damage range max.
+      "AttackRate"                 "1.86"    // Speed of attack.
+      "AttackAcquisitionRange"     "900"     // Range within a target can be acquired.
+      "AttackRange"                "900"     // Range within a target can be attacked.
+      
+      "AttributePrimary"             "DOTA_ATTRIBUTE_STRENGTH"
+      "AttributeBaseStrength"        "20"           // Base strength
+      "AttributeStrengthGain"        "0"            // Strength bonus per level.
+      "AttributeBaseAgility"         "12"           // Base agility
+      "AttributeAgilityGain"         "0"            // Agility bonus per level.
+      "AttributeBaseIntelligence"    "110"          // Base intelligence
+      "AttributeIntelligenceGain"    "0"            // Intelligence bonus per level.
+      "StatusMana" "1000"
+      "StatusHealth" "500"
+	}
+	
+	//=================================================================================================================
+	// HERO: Cadet
+	//=================================================================================================================
+	"npc_swat_hero_cadet_lua"
+	{
+		"override_hero"					"npc_dota_hero_broodmother"			// Hero to override
+		"Ability1"					"assault_rifle_datadriven"	// Refined Rifle
+		"Ability2"					"mana_shield_light_datadriven"	// Nanites Light
+		"Ability3"					""	// Beginner's Luck
+		"Ability4"					""	// Use Drug
+		// Use Vest
+		// Use Shield Cap.
+		// Equalize Energy
+		// Sprint Light
+	}
+	
+	//=================================================================================================================
+	// HERO: Chrome Retriever
+	//=================================================================================================================
+	"npc_swat_hero_chrome_retriever_lua"
+	{
+		"override_hero"					"npc_dota_hero_centaur"			// Hero to override
+		"Ability1"					""	// Turbo
+		"Ability2"					""	// Advanced Generator
+		"Ability3"					""	// Thrash
+		"Ability4"					"mana_shield_light_datadriven"	// Nanites Light
+		// A.R.S. (Dog_Level_Relation)
+		// Retrieve Items
+		// Evasion (Dog_Level_Relation)
+		// Cloak (Dog_Level_Relation)
+		// Reconnaissance (Dog_Level_Relation)
+		// Inventory (Dog_Level_Relation)
+	}
+	
+	//=================================================================================================================
+	// HERO: Mecha Mutt
+	//=================================================================================================================
+	"npc_swat_hero_mecha_mutt_lua"
+	{
+		"override_hero"					"npc_dota_hero_chaos_knight"			// Hero to override
+		"Ability1"					""	// Turbo
+		"Ability2"					""	// Advanced Generator
+		"Ability3"					""	// Thrash
+		"Ability4"					""	// Nanites Advanced
+		// A.R.S. (Dog_Level_Relation)
+		// Retrieve Items
+		// Evasion (Dog_Level_Relation)
+		// Armor (Dog_Level_Relation)
+		// Integrate Shield Capacitor (Dog_Level_Relation)
+	}
+	
+	//=================================================================================================================
+	// HERO: Kamikaze Canine
+	//=================================================================================================================
+	"npc_swat_hero_kamikaze_canine_lua"
+	{
+		"override_hero"					"npc_dota_hero_chen"			// Hero to override
+		"Ability1"					""	// Turbo
+		"Ability2"					""	// Advanced Generator
+		"Ability3"					""	// Thrash
+		"Ability4"					"mana_shield_light_datadriven"	// Nanites Light
+		// A.R.S. (Dog_Level_Relation)
+		// Retrieve Items
+		// Evasion (Dog_Level_Relation)
+		// Hyper-Thrash (Dog_Level_Relation)
+		// Shadow Pack (Dog_Level_Relation)
+		// Return
+	}
+	
+	//=================================================================================================================
+	// HERO: Mini Droid
+	//=================================================================================================================
+	"npc_swat_hero_mini_driod_lua"
+	{
+		"override_hero"					"npc_dota_hero_clinkz"			// Hero to override
+		"Ability1"					""	// Storage Cells
+		"Ability2"					""	// Energy Beam
+		"Ability3"					""	// Plasma Rounds
+		"Ability4"					""	// Plasma Shield
+		// Nanites (Armor_Dependant)
+		// A.R.S.
+		// Defense Matrix
+	}
+}

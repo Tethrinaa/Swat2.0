@@ -1,0 +1,17 @@
+"Items"
+{
+    "item_storage_cell" //change it to a custom items
+    {
+        "intRequired" "105" 
+		"ModifiersAdd" "modifier_item_add_datadriven"		
+		"ModifiersRemove" "modifier_item_remove_datadriven"			
+    }
+
+    "item_duo_cell" 
+    {
+        "intRequired" "115"
+		"ModifiersAdd" "modifier_item_add_datadriven"
+		"ModifiersRemove" "modifier_item_remove_datadriven"
+    }
+	
+}
