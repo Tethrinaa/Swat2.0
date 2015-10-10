@@ -20,11 +20,8 @@ function FixAngleRad(angle)
   return angle
 end
 
-function OnMIRVHit( keys )
+function OnSpellStart( keys )
 	-- Setup your source dist and initial trajectory if you don't already have them
-	if not keys.src then
-		keys.src = keys.caster:GetAbsOrigin()
-	end
     if not keys.dest then
 		keys.dest = keys.target_points[1]
 	end
@@ -43,14 +40,13 @@ function OnMIRVHit( keys )
 	
 	-- Else pick a new location and recurse after a delay
 	local castDistance = RandomInt( keys.minDistance, keys.maxDistance )
-	v = (keys.dest - keys.src)
 	print(math.deg(keys.nTrajectory))
   local angle = FixAngleRad( keys.nTrajectory + math.rad(math.random(-1 * keys.slop,keys.slop)))
 	print(math.deg(angle))
 	
   keys.dest = PolarOffset(keys.dest, castDistance, angle)
   Timers:CreateTimer( keys.delay, function()
-		OnMIRVHit( keys )
+		OnSpellStart( keys )
 	end )
 end
 

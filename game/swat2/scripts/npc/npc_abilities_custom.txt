@@ -217,7 +217,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "clinkz_searing_arrows"
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
-      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_BUILDING"
 
       
 		// Special
@@ -335,7 +335,7 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                   "Duration" "%slow_duration"
                }
@@ -348,7 +348,7 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                }
             }
@@ -384,7 +384,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "clinkz_searing_arrows"
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
-      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_BUILDING"
 
       
 		// Special
@@ -502,7 +502,7 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                   "Duration" "%slow_duration"
                }
@@ -515,7 +515,7 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                }
             }
@@ -551,7 +551,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "clinkz_searing_arrows"
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
-      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_BUILDING"
 
       
 		// Special
@@ -673,7 +673,7 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                   "Duration" "%slow_duration"
                }
@@ -686,7 +686,7 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                }
             }
@@ -721,7 +721,7 @@
 		"MaxLevel"                 "17"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "luna_moon_glaive"
-      "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+      "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL | DOTA_UNIT_TARGET_BUILDING"
       "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
       
       "precache"
@@ -1405,7 +1405,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"lion_mana_drain"
@@ -2088,7 +2088,7 @@
                      "Center" "CASTER"
                      "Radius" "20000"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                     "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
                   }
                   "Action"
                   {
@@ -2547,7 +2547,7 @@
                "Center"    "POINT"
                "Radius"    "%radius"
                "Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-               "Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+               "Types"		"DOTA_UNIT_TARGET_ALL"
             }
             "Duration"     "%stun_duration"
          }
@@ -2559,7 +2559,7 @@
                "Center"	   "POINT"
                "Radius"	   "%radius"
                "Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-               "Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+               "Types"		"DOTA_UNIT_TARGET_ALL"
             }
             "Duration"		"%duration"
          }     
@@ -2667,7 +2667,7 @@
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"morphling_morph_agi"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
@@ -2784,7 +2784,7 @@
 			"LinearProjectile"
 			{
 				"Target"			"POINT"
-				"EffectName"		"models/heroes/techies/techies_bomb_projectile.vmdl"
+				"EffectName"		"particles/units/heroes/hero_lion/lion_spell_impale.vpcf"
 				"StartRadius"		"125"
 				"EndRadius"			"125"
 				"MoveSpeed"			"1600"
@@ -2799,8 +2799,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"        "heroes/hero_demolitions/mirv.lua"
-				"Function"          "OnMIRVHit"
+				"ScriptFile"        "heroes/DOTA_UNIT_TARGET_ALL/mirv.lua"
+				"Function"          "OnSpellStart"
 				"iMIRV"				"%iMIRV"
 				"Target"			"POINT"
 				"slop"				"%slop"
@@ -2821,7 +2821,7 @@
 				"Aura" "modifier_demo_mirv_napalm"
 				"Aura_Radius" "%outer_radius"
 				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
 				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
 				"Duration" "%duration"
 				
@@ -2829,9 +2829,14 @@
 				{
 					"AttachEffect"
 					{
-						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
-						"EffectAttachType" "follow_origin"
-						"Target" "TARGET"
+						"EffectName"		"particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+	
+						"ControlPoints"
+						{
+							"01"	"%outer_radius 0 0"
+						}
 					}
 					
 					"Damage"
@@ -2840,8 +2845,8 @@
 						{
 							"Center"  	"TARGET"
 							"Radius" 	"%outer_radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
 						}
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
@@ -2853,8 +2858,8 @@
 						{
 							"Center"  	"TARGET"
 							"Radius" 	"%inner_radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
 						}
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%inner_damage"
@@ -2871,7 +2876,7 @@
 				{
 					"AttachEffect"
 					{
-						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpc"
 						"EffectAttachType" "follow_origin"
 						"Target" "TARGET"
 					}
@@ -2885,6 +2890,132 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Demolitions: Mini-Nuke
+	//=================================================================================================================
+	"demo_mini_nuke"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"morphling_morph_agi"
+		"MaxLevel"						"3"
+		"LevelsBetweenUpgrades"  	"0"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "0.3"
+		"AbilityCastRange"  "65534"
+		"FightRecapLevel"				"1"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"600 550 500"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"250"
+			
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"models/heroes/techies/techies_bomb_projectile.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+		}
+		
+		// Special    
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_radius"              "1200 1400 1600"
+			}
+			"02"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_radius"              "336 372 372"
+			}
+			"03"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_damage"              "3000"
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_damage"              "3000"
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_damage_display"      "6000" // This is only because so the two add correctly for the display
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "heroes/DOTA_UNIT_TARGET_ALL/mini-nuke.lua"
+				"Function"          "OnSpellStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_demo_mini_nuke_thinker"
+			{
+				"Duration" "%duration"
+				
+				"OnDestroy"
+				{
+				
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%outer_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%outer_damage"
+					}
+					
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%inner_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%inner_damage"
+					}
 				}
 			}
 		}

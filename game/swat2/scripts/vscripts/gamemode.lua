@@ -105,7 +105,6 @@ function GameMode:PostLoadPrecache()
   DebugPrint("[BAREBONES] Performing Post-Load precache")    
   --PrecacheItemByNameAsync("item_example_item", function(...) end)
   --PrecacheItemByNameAsync("example_ability", function(...) end)
-	PrecacheItemByNameAsync("demo_mirv", function() end)
 
   --PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
   --PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
@@ -434,6 +433,7 @@ function GameMode:BuildMarine( event )
    -- else if cyborg, get rank and increase movespeed
 
    hero:AddAbility("demo_mirv")
+   hero:AddAbility("demo_mini_nuke")
    
    hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
    -- This will change based on rank and trait
