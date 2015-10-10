@@ -28,7 +28,9 @@ function Precache( context )
    PrecacheResource( "particle", "*.vpcf", context )
    PrecacheResource( "particle_folder", "particles/folder", context)
    PrecacheUnitByNameSync("npc_dota_hero_medusa", context)
+	 PrecacheUnitByNameSync("npc_dota_hero_batrider", context)
    PrecacheUnitByNameSync("npc_dota_hero_brewmaster", context)
+	 PrecacheItemByNameSync("demo_mirv", context)
    
    
 end
