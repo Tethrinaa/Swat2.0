@@ -20,7 +20,7 @@ function FixAngleRad(angle)
   return angle
 end
 
-function OnMIRVHit( keys )
+function OnProjectileFinish( keys )
 	-- Setup your source dist and initial trajectory if you don't already have them
 	if not keys.src then
 		keys.src = keys.caster:GetAbsOrigin()
@@ -50,7 +50,7 @@ function OnMIRVHit( keys )
 	
   keys.dest = PolarOffset(keys.dest, castDistance, angle)
   Timers:CreateTimer( keys.delay, function()
-		OnMIRVHit( keys )
+		OnProjectileFinish( keys )
 	end )
 end
 

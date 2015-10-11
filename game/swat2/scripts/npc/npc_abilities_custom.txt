@@ -2667,7 +2667,7 @@
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"morphling_morph_agi"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
@@ -2784,7 +2784,7 @@
 			"LinearProjectile"
 			{
 				"Target"			"POINT"
-				"EffectName"		"models/heroes/techies/techies_bomb_projectile.vmdl"
+				"EffectName"		"particles\units\heroes\hero_lion\lion_spell_impale.vpcf"
 				"StartRadius"		"125"
 				"EndRadius"			"125"
 				"MoveSpeed"			"1600"
@@ -2799,8 +2799,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"        "heroes/hero_demolitions/mirv.lua"
-				"Function"          "OnMIRVHit"
+				"ScriptFile"        "heroes/hero_demo/mirv.lua"
+				"Function"          "OnProjectileFinish"
 				"iMIRV"				"%iMIRV"
 				"Target"			"POINT"
 				"slop"				"%slop"
@@ -2821,7 +2821,7 @@
 				"Aura" "modifier_demo_mirv_napalm"
 				"Aura_Radius" "%outer_radius"
 				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
 				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
 				"Duration" "%duration"
 				
@@ -2829,7 +2829,7 @@
 				{
 					"AttachEffect"
 					{
-						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
+						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
 						"EffectAttachType" "follow_origin"
 						"Target" "TARGET"
 					}
@@ -2840,8 +2840,8 @@
 						{
 							"Center"  	"TARGET"
 							"Radius" 	"%outer_radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
 						}
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
@@ -2853,8 +2853,8 @@
 						{
 							"Center"  	"TARGET"
 							"Radius" 	"%inner_radius"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
 						}
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%inner_damage"
