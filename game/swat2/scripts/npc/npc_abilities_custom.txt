@@ -2654,5 +2654,108 @@
             }       
          }   
       }
-   }   
+   }
+   
+   	//=================================================================================================================
+	// Cybrog: Cluster Rockets
+	//=================================================================================================================
+	"cyborg_cluster_rockets_lua_ability"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"        		"heroes/hero_cyborg/cyborg_cluster_rockets_lua_ability.lua"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"morphling_morph_agi"
+		"AoERadius"					"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+		"MaxLevel"						"16"
+		"LevelsBetweenUpgrades"  	"0"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "0.3"
+		"AbilityCastRange"  "1000"
+		"FightRecapLevel"				"1"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		// "AbilityDamage"				"250" calculated by script mainly
+			
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+
+		
+		// Special    
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"total_damage_cap"          "1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000 3200 3400 3600 3800 4000"
+			}
+			"02"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"unit_damage_cap"          	"250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000"
+			}
+			"03"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"tick_rate"           		"0.10"
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"damage_duration"           "0.51"
+			}
+			"05"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"rockets"              		"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+			}
+			"06"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"delay"                		"0.75"
+			}
+			"07"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+			}
+			"07"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_cyborg_cluster_rockets_stunned"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_duration"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"			
+				}
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"
+			}
+		}
+	}
 }
