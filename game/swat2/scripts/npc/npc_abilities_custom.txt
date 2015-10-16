@@ -2665,12 +2665,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_lua"
 		"ScriptFile"        		"heroes/hero_cyborg/cyborg_cluster_rockets_lua_ability.lua"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"morphling_morph_agi"
-		"AoERadius"					"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
 		

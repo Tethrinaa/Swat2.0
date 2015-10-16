@@ -1,8 +1,7 @@
-modifier_cyborg_cluster_rockets_thinker_lua = class({})
+modifier_cyborg_cluster_rockets_damager_lua = class({})
 LinkLuaModifier( "modifier_cyborg_cluster_rockets_stunned_lua", "heroes/hero_cyborg/modifier_cyborg_cluster_rockets_stunned_lua", LUA_MODIFIER_MOTION_NONE )
 
-function modifier_cyborg_cluster_rockets_thinker_lua:OnIntervalThink()
-	print("Think!")
+function modifier_cyborg_cluster_rockets_damager_lua:OnIntervalThink()
 	local params = self.params
 	if IsServer() then
 		local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, self:GetParent():GetOrigin(), nil, params.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -20,7 +19,6 @@ function modifier_cyborg_cluster_rockets_thinker_lua:OnIntervalThink()
 		for _,unit in pairs(units) do
 			if unit ~= nil then
 				if unit:GetModifierStackCount("modifier_cyborg_cluster_rockets_stunned_lua", self:GetCaster()) < 1 then
-				  print("Stunning!")
 				  unit:AddNewModifier( self:GetCaster(), self:GetAbility(), "modifier_cyborg_cluster_rockets_stunned_lua", { duration = params.stun_duration} )
 				end
 				
@@ -37,12 +35,12 @@ function modifier_cyborg_cluster_rockets_thinker_lua:OnIntervalThink()
 	end
 end
 
-function modifier_cyborg_cluster_rockets_thinker_lua:OnCreated(params)
-	DeepPrintTable(params)
+function modifier_cyborg_cluster_rockets_damager_lua:OnCreated(params)
+	-- Save the params that got passed in from the creation call in the cyborg_cluster_rockets_lua_ability
 	self.params = params
 	if IsServer() then
+		-- Start the thinker ticking
 		self:SetDuration( params.damage_duration, true )
 		self:StartIntervalThink( params.tick_rate )
 	end
-	print("Thinker Created:\n\n\n\n\n\n\n")
 end
