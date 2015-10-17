@@ -17,11 +17,14 @@ function Selected(selection, PanelSelected)
       case "WeaponsPanel":
          WeaponSelected(selection);
          PanelSelected.visible = false;
+         break;
       case "ArmorPanel":
          playerArmor = selection; 
          PanelSelected.visible = false;
+         break;
       case "ConfirmResetPanel":
          ConfirmResetSelected(selection, PanelSelected);
+         break;
    }
    $.Msg(selection);
 	var iPlayerID = Players.GetLocalPlayer();
