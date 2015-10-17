@@ -2762,7 +2762,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_phantom_assassin/blur2.lua"
+						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/blur2.lua"
 						"Function"		"Blur2"
 					}
 				
@@ -2794,8 +2794,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
-			"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+
 		}
 	
 		// Casting
@@ -2831,13 +2830,11 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_KeeperOfTheLight.ChakraMagic.Target"
 				"Target"		"TARGET"
 			}
 	
 			"FireEffect"
 			{
-				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
 				"EffectAttachType"	"start_at_customorigin"
 	
 				"ControlPointEntities"
@@ -2849,29 +2846,13 @@
 	
 			"RunScript"
 			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_keeper_of_the_light/chakra_magic2.lua"
-				"Function"		"ChakraMagic2"
+				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/EmergencyPower.lua"
+				"Function"		"EmergencyPower"
 			}
 		}
 	}
 	
-	"keeper_of_the_light_empty1_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-	}
-	
-	"keeper_of_the_light_empty2_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-	}
+
 	
     //=================================================================================================================
 	// Ability: Pheromones (Cyborg)
@@ -2924,14 +2905,14 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"heroes/hero_cyborg/unstable_concoction2.lua"
-				"Function"				"StartBrewing2"
+				"ScriptFile"			""
+				"Function"				""
 				"sub_ability_name"		"Cyborg_Release"
 			}
 	
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_unstable_concoction_brewing"
+				"ModifierName"	""
 				"Target"		"CASTER"
 			}
 		}
