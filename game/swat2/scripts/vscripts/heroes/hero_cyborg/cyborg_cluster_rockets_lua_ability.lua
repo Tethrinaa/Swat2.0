@@ -22,13 +22,13 @@ function cyborg_cluster_rockets_lua_ability:GetAbilityDamageType()
 end
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
--- Shows PURE damage for the tooltip
+-- Shows team as BOTH for the tooltip
 function cyborg_cluster_rockets_lua_ability:GetAbilityTargetTeam()
 	return DOTA_UNIT_TARGET_TEAM_BOTH
 end
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
--- Shows PURE damage for the tooltip
+-- Shows target as UNITS for the tooltip
 function cyborg_cluster_rockets_lua_ability:GetAbilityTargetType()
 	return DOTA_UNIT_TARGET_ALL
 end
