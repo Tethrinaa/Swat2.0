@@ -432,6 +432,9 @@ function GameMode:BuildMarine( event )
    
    -- else if cyborg, get rank and increase movespeed
 
+   for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
+		hero:AddAbility(abil)
+   end
    hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
    -- This will change based on rank and trait
    hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)

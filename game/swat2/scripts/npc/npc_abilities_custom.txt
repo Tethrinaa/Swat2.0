@@ -310,6 +310,7 @@
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
             
             "Orb"
@@ -338,18 +339,6 @@
                      "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
                   }
                   "Duration" "%slow_duration"
-               }
-               "Damage"
-               {
-                  "Type" "DAMAGE_TYPE_PHYSICAL"
-                  "Damage" "%bonus_damage"
-                  "Target"
-                  {
-                     "Center" "TARGET"
-                     "Radius" "120"
-                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-                  }
                }
             }
 			}
@@ -477,6 +466,7 @@
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
             
             "Orb"
@@ -505,18 +495,6 @@
                      "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
                   }
                   "Duration" "%slow_duration"
-               }
-               "Damage"
-               {
-                  "Type" "DAMAGE_TYPE_PHYSICAL"
-                  "Damage" "%bonus_damage"
-                  "Target"
-                  {
-                     "Center" "TARGET"
-                     "Radius" "120"
-                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-                  }
                }
             }
 			}
@@ -551,7 +529,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "clinkz_searing_arrows"
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
-      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL"
 
       
 		// Special
@@ -648,6 +626,7 @@
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
             
             "Orb"
@@ -660,7 +639,7 @@
             {
                "SpendMana"
                {
-                  "Mana"	"%AbilityManaCost"
+                  "Mana"	"%mana_cost"
                }
             }
             "OnOrbImpact"
@@ -676,18 +655,6 @@
                      "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
                   }
                   "Duration" "%slow_duration"
-               }
-               "Damage"
-               {
-                  "Type" "DAMAGE_TYPE_PHYSICAL"
-                  "Damage" "%bonus_damage"
-                  "Target"
-                  {
-                     "Center" "TARGET"
-                     "Radius" "120"
-                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-                  }
                }
             }
 			}
@@ -2680,38 +2647,46 @@
          "01"
          {
             "var_type"				   "FIELD_FLOAT"
-            "duration"				   "20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 31.0 35.0 39.0 43.0 47.0 51.0 55.0 59.01"
+            "duration"				   "20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 31.0 35.0 39.0 43.0 47.0 51.0 55.0 59.0"
          }
          "02"
          {
             "var_type"              "FIELD_INTEGER"
-            "damage_percent"           "19 21 23 25 27 29 31 33 36 40 45 51 58 66 75 85"
+            "bonus_damage_percent"           "19 21 23 25 27 29 31 33 36 40 45 51 58 66 75 85"
          }
          "03"
          {
-            "var_type"              "FIELD_INTEGER"
-            "movespeed_slow"         "-14"
+            "var_type"              "FIELD_FLOAT"
+            "bonus_health_regen"         "0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0"
+         }
+		 "04"
+         {
+            "var_type"              "FIELD_FLOAT"
+            "bonus_armor"         "1 2 3 4 5 6 7 8 8 8 8 8 8 8 8 8"
          }
       }
       "OnSpellStart"
       {
          "ApplyModifier"
          {
-            "ModifierName" "modifier_aim"
+            "ModifierName" "modifier_cyborg_xtreme_combat_mode"
             "Target"       "CASTER"
             "Duration"     "%duration"
          }
       }
         
-
-            "Properties"
-            {
-			
-			    "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   ".5 .6 .7 .8 .9 1 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0"
-			
-            }       
-         
-  
+		"Modifiers"
+		{
+			"modifier_cyborg_xtreme_combat_mode"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%bonus_health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" "%bonus_damage_percent"
+				}       
+			}
+        }
    }   
       //=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
@@ -2745,10 +2720,10 @@
 			}
 			
 			"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"bonus_health"			"25 50 75 100 125 150 175 200"
-		}
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"25 50 75 100 125 150 175 200"
+			}
 			
 		}
 	
@@ -2758,21 +2733,11 @@
 			{
 				"Passive"	"1"
 				"IsHidden"	"1"
-	
-
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/blur2.lua"
-						"Function"		"Blur2"
-					}
-				
-	
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
 				    "MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
 				}
-	
 			}
 		}
 	}
@@ -2851,251 +2816,4 @@
 			}
 		}
 	}
-	
-
-	
-    //=================================================================================================================
-	// Ability: Pheromones (Cyborg)
-   //================================================================================================================= 
-  "cyborg_pheromones"
-{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"alchemist_unstable_concoction"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1600"
-			}
-		}
-	
-		"precache"
-		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf"
-	
-			// This particle isn't used because it would need a separate rule to attach to the hands or weapons for each hero
-			// CP1 and CP2 are left and right hands respectively
-			"particle"  "particles/units/heroes/hero_alchemist/alchemist_unstableconc_bottles.vpcf" 
-		}
-	
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			""
-				"Function"				""
-				"sub_ability_name"		"Cyborg_Release"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	""
-				"Target"		"CASTER"
-			}
-		}
-	
-		
-	}
-	
-	"Cyborg_Release"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"axe_berserkers_call"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
-			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-			"particle"			"particles/status_fx/status_effect_beserkers_call.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 14 12 10"
-	
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"0 0 0 0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 90 100 110"	
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"40"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0 2.4 2.8 3.2"
-			}	
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Axe.Berserkers_Call"
-				"Target" 		"CASTER"
-			}
-	
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
-				"Target" 		"CASTER"
-			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_berserkers_call_caster_datadriven"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
-			}
-	
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  	"CASTER"
-					"Radius" 	"%radius"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-			
-				"Action"    
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_beserkers_call_enemy_datadriven"
-						"Target" 		"TARGET"
-						"Duration"		"%duration"
-					}
-				}
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_berserkers_call_caster_datadriven"
-			{
-				"IsPurgable"		"0"
-				"IsBuff"			"1"
-		
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-						"EffectAttachType" 	"follow_origin"
-						"ControlPoints"
-						{
-							"02"		"%radius 1 1"	//Required for Rampant Outrage (axe immortal)
-						}
-						"ControlPointEntities"
-						{
-							"CASTER"	"follow_origin"
-							"CASTER"	"follow_origin"
-							"CASTER"	"follow_origin"
-						}
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
-				}
-			}
-	
-			"modifier_beserkers_call_enemy_datadriven"
-			{
-				"IsPurgable"		"0"
-				"IsDebuff"			"1"
-	
-				"StatusEffectName" 		"particles/status_fx/status_effect_beserkers_call.vpcf" 	   
-				"StatusEffectPriority"  "10"
-	
-				"ThinkInterval"  "0.1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
-						"Function"		"BerserkersCall"
-						"Function"		"ConcoctionHit"
-					}
-					
-				"RunScript"
-				    {
-					"ScriptFile"			"heroes/hero_cyborg/unstable_concoction2.lua"
-					"Function"				"EndBrewing"
-					"main_ability_name"		"cyborg_pheromones"
-			}
-					
-				}
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_axe/berserkers_call.lua"
-						"Function"		"BerserkersCallEnd"
-							
-					}
-				}
-			}
-		}
-	}
-	
-   
-   
-   
-   
-   
 }
