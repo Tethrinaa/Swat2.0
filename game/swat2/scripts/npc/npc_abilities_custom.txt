@@ -305,6 +305,7 @@
                {
                   "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
                   "Function"		"Splash"
+				  "hits_player_units" "0"
                }
             }
             "Properties"
@@ -461,6 +462,7 @@
                {
                   "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
                   "Function"		"Splash"
+				  "hits_player_units" "0"
                }
             }
             "Properties"
@@ -621,6 +623,7 @@
                {
                   "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
                   "Function"		"Splash"
+				  "hits_player_units" "0"
                }
             }
             "Properties"
