@@ -1,3 +1,4 @@
+-- Author: NSEnigma
 modifier_cyborg_cluster_rockets_waiter_lua = class({})
 LinkLuaModifier( "modifier_cyborg_cluster_rockets_damager_lua", "heroes/hero_cyborg/modifier_cyborg_cluster_rockets_damager_lua", LUA_MODIFIER_MOTION_NONE )
 

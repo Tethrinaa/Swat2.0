@@ -1,10 +1,9 @@
+-- Author: NSEnigma
 cyborg_cluster_rockets_lua_ability = class ({})
 LinkLuaModifier( "modifier_cyborg_cluster_rockets_waiter_lua", "heroes/hero_cyborg/modifier_cyborg_cluster_rockets_waiter_lua", LUA_MODIFIER_MOTION_NONE )
---[[Author: NSEnigma
-	Date: 2015.10.7
-	]]
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
+-- TODO The targetting tooltips are screwed up on the lua_abilities
 function cyborg_cluster_rockets_lua_ability:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE
 end
