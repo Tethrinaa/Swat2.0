@@ -305,11 +305,13 @@
                {
                   "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
                   "Function"		"Splash"
+				  "hits_player_units" "0"
                }
             }
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
             
             "Orb"
@@ -335,21 +337,10 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
+					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"  
                   }
                   "Duration" "%slow_duration"
-               }
-               "Damage"
-               {
-                  "Type" "DAMAGE_TYPE_PHYSICAL"
-                  "Damage" "%bonus_damage"
-                  "Target"
-                  {
-                     "Center" "TARGET"
-                     "Radius" "120"
-                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-                  }
                }
             }
 			}
@@ -472,11 +463,13 @@
                {
                   "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
                   "Function"		"Splash"
+				  "hits_player_units" "0"
                }
             }
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
             
             "Orb"
@@ -502,21 +495,10 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
+					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"  
                   }
                   "Duration" "%slow_duration"
-               }
-               "Damage"
-               {
-                  "Type" "DAMAGE_TYPE_PHYSICAL"
-                  "Damage" "%bonus_damage"
-                  "Target"
-                  {
-                     "Center" "TARGET"
-                     "Radius" "120"
-                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-                  }
                }
             }
 			}
@@ -546,12 +528,11 @@
 		"BaseClass"				      "ability_datadriven"
 		"AbilityName"              "Plasma-V Rounds"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 		"MaxLevel"                 "17"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "clinkz_searing_arrows"
-      "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
-      "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL"
 
       
 		// Special
@@ -643,11 +624,13 @@
                {
                   "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
                   "Function"		"Splash"
+				  "hits_player_units" "0"
                }
             }
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
             
             "Orb"
@@ -660,7 +643,7 @@
             {
                "SpendMana"
                {
-                  "Mana"	"%AbilityManaCost"
+                  "Mana"	"%mana_cost"
                }
             }
             "OnOrbImpact"
@@ -673,21 +656,10 @@
                      "Center" "TARGET"
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
+					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"  
                   }
                   "Duration" "%slow_duration"
-               }
-               "Damage"
-               {
-                  "Type" "DAMAGE_TYPE_PHYSICAL"
-                  "Damage" "%bonus_damage"
-                  "Target"
-                  {
-                     "Center" "TARGET"
-                     "Radius" "120"
-                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-                  }
                }
             }
 			}
@@ -2654,8 +2626,422 @@
             }       
          }   
       }
-   }
-   	
+   }   
+    //=================================================================================================================
+	// Ability: Xtreme Combat Mode (Cyborg)
+	//================================================================================================================= 
+   "cyborg_xtreme_combat_mode"
+   {
+      // General
+      //-------------------------------------------------------------------------------------------------------------
+      "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Xtreme Combat Mode"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+      "MaxLevel"                 "16"
+      "LevelsBetweenUpgrades"    "0"
+      "AbilityTextureName"			"sven_warcry"
+
+      // Casting
+      "AbilityCastPoint"			"0.0"
+      "AbilityCooldown"				"21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 31.0 36.0 40.0 44.0 48.0 52.0 56.0 60.0"
+      "AbilityManaCost"				"90 92 94 96 98 100 102 104 106 108 110 112 114 116 118 120"
+      // Special	
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				   "FIELD_FLOAT"
+            "duration"				   "20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 31.0 35.0 39.0 43.0 47.0 51.0 55.0 59.0"
+         }
+         "02"
+         {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage_percent"           "19 21 23 25 27 29 31 33 36 40 45 51 58 66 75 85"
+         }
+         "03"
+         {
+            "var_type"              "FIELD_FLOAT"
+            "bonus_health_regen"         "0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0"
+         }
+		 "04"
+         {
+            "var_type"              "FIELD_FLOAT"
+            "bonus_armor"         "1 2 3 4 5 6 7 8 8 8 8 8 8 8 8 8"
+         }
+      }
+      "OnSpellStart"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_cyborg_xtreme_combat_mode"
+            "Target"       "CASTER"
+            "Duration"     "%duration"
+         }
+      }
+        
+		"Modifiers"
+		{
+			"modifier_cyborg_xtreme_combat_mode"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%bonus_health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" "%bonus_damage_percent"
+				}       
+			}
+        }
+   }   
+      //=================================================================================================================
+	// Ability: Organic Replacement(Cyborg)
+	//================================================================================================================= 
+  "cyborg_organic_replacement"
+   {
+  	// General
+		//-------------------------------------------------------------------------------------------------------------
+		 "AbilityName"              "cyborg_organic_replacement"
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		 "MaxLevel"                 "8"
+
+		"AbilityTextureName"			"centaur_return"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		}
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion"				"7 13 19 24 29 33 37 40"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"25 50 75 100 125 150 175 200"
+			}
+			
+		}
+	
+		"Modifiers"
+		{
+			"modifier_blur_datadriven"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
+				    "MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+				}
+			}
+		}
+	}
+
+   
+    //=================================================================================================================
+	// Ability: Emergency Power(Cyborg)
+   //================================================================================================================= 
+  "cyborg_emergency_power"
+   {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				      "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"                 "6"
+		"AbilityTextureName"			"tinker_rearm"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150 115 95 80 70 60"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_restore"			"500"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectAttachType"	"start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"TARGET"	"follow_origin"
+				}
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power_lua"
+				"Function"		"OnSpellStart"
+			}
+		}
+	}
+   	//=================================================================================================================
+	// Cybrog: Cluster Rockets
+	//=================================================================================================================
+	"cyborg_cluster_rockets_lua_ability"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"        		"heroes/hero_cyborg/cyborg_cluster_rockets_lua_ability.lua"
+		"AbilityTextureName"			"morphling_morph_agi"
+		"MaxLevel"						"16"
+		"LevelsBetweenUpgrades"  	"0"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "0"
+		"AbilityCastRange"  "1000"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		// "AbilityDamage"				"250" calculated by script mainly
+			
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+
+		
+		// Special 
+			//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"total_damage_cap"          "1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000 3200 3400 3600 3800 4000"
+			}
+			"02"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"unit_damage_cap"          	"250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000"
+			}
+			"03"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"tick_rate"           		"0.10"
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"damage_duration"           "0.51"
+			}
+			"05"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"rockets"              		"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+			}
+			"06"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"delay"                		"0.75"
+			}
+			"07"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+			}
+			"07"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
+			}
+		}
+	}
+	
+   	//=================================================================================================================
+	// Cybrog: Pheromones
+	//=================================================================================================================
+	"cyborg_pheromones"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+		"AbilityManaCost"		"200"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"6"
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_TrollWarlord.BerserkersRage.Toggle"
+				"Target" 		"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
+				"Function"		"SwapAbilities"
+				"sub_ability_name"		"cyborg_pheromones_off"
+			}
+		}
+	}
+	
+	"cyborg_pheromones_off"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityManaCost"		"0"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"        "FIELD_INTEGER"
+				"radius"          "1600"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_TrollWarlord.BerserkersRage.Toggle"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
+				"Function"		"OnSpellStart"
+				"main_ability_name"		"cyborg_pheromones"
+				"radius"		"%radius"
+			}
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Cyborg: Forcefield
+	//=================================================================================================================
+	"cyborg_forcefield_lua_ability"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_lua_ability.lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+		"AbilityManaCost"		"120"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"2"
+	}
+	
+	"cyborg_forcefield_off_lua_ability"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_off_lua_ability.lua"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityManaCost"		"0"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"0"
+	}
+	
 	//=================================================================================================================
 	// Demolitions: MIRV
 	//=================================================================================================================
@@ -2885,6 +3271,138 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Demolitions: Mini-Nuke
+	//=================================================================================================================
+	"demo_mini_nuke"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"morphling_morph_agi"
+		"MaxLevel"						"3"
+		"LevelsBetweenUpgrades"  	"0"
+		"AoERadius" 				"%outer_radius"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "00"
+		"AbilityCastRange"  "65534"
+		"FightRecapLevel"				"1"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"600 550 500"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"6000"
+			
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"models/heroes/techies/techies_bomb_projectile.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+		}
+		
+		// Special    
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_radius"              "1200 1400 1600"
+			}
+			"02"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_radius"              "336 372 372"
+			}
+			"03"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_damage"              "3000"
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_damage"              "6000"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
+				"Function"          "OnSpellStart"
+				"Target"			"POINT"
+				"duration"			"%duration"
+				"inner_damage"		"%inner_damage"
+				"inner_radius"      "%inner_radius"
+				"outer_damage"      "%outer_damage"
+				"outer_radius"	    "%outer_radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_demo_mini_nuke_thinker"
+			{
+				"Duration" "%duration"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
+						"Function"          "setActive"
+					}
+				
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%outer_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%outer_damage"
+					}
+					
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%inner_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%inner_damage"
+					}
 				}
 			}
 		}
