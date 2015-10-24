@@ -1,0 +1,130 @@
+// Covert Sniper Sneak
+// Author: Dokuno
+// Date: 15.09.2015.
+// Note: Epic Levels: reduced fade delay and increased move speed. (Exact values unknown)
+"sniper_sneak"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+   "AbilityName"              "Sneak"
+   "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+   "MaxLevel"                 "6"
+   "AbilityTextureName"			"mirana_invis"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+      "01"
+      {
+         "var_type"              "FIELD_FLOAT"
+         "fade_delay"            "6.0 5.25 4.5 3.75 3.0 2.25"
+      }
+      "02"
+      {
+         "var_type"              "FIELD_INTEGER"
+         "move_speed"            "0 5 10 15 20 25"
+      }
+	}
+
+   "OnToggleOn" 
+   {
+      "ApplyModifier"
+      {
+         "ModifierName" "modifier_sneak_watcher"
+         "Target" "CASTER"
+      }
+      "ApplyModifier"
+      {
+         "ModifierName" "modifier_sneak_revealed"
+         "Target" "CASTER"
+      }
+   }
+   "OnToggleOff"
+   {
+      "RemoveModifier"
+      {
+         "ModifierName" "modifier_sneak_watcher"
+         "Target" "CASTER"
+      }  
+      "RemoveModifier"
+      {
+         "ModifierName" "modifier_sneak_revealed"
+         "Target" "CASTER"
+      }  
+      "RemoveModifier"
+      {
+         "ModifierName" "modifier_sneak_invis"
+         "Target" "CASTER"
+      }  
+   }
+   
+	"Modifiers"
+   { 
+      "modifier_sneak_movespeed"
+      {
+         "Passive"   "1"
+         "IsHidden"  "1"
+         "Properties"
+         {
+            "MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" "%move_speed"
+         }
+      }
+      "modifier_sneak_watcher"
+      {
+         "IsHidden"  "1"         
+         "OnAttackLanded"
+         {  
+            "ApplyModifier"
+            {
+               "ModifierName" "modifier_sneak_revealed"
+               "Target" "CASTER"
+            }             
+         }
+         "OnAbilityExecuted"
+         {  
+            "ApplyModifier"
+            {
+               "ModifierName" "modifier_sneak_revealed"
+               "Target" "CASTER"
+            }         
+         }
+      }
+      "modifier_sneak_revealed"
+      {
+         "IsHidden"  "1"
+			"Duration"	"%fade_delay"
+			"OnCreated"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_sneak_invis"
+					"Target"		"TARGET"
+				}
+			}
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_sneak_invis"
+					"Target"		"TARGET"
+				}
+			}           
+      }
+      "modifier_sneak_invis"
+      {
+         "IsHidden"  "0" 
+         "States"
+         {
+            "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+         }
+      }
+	}
+}
+

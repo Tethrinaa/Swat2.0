@@ -1,0 +1,53 @@
+// Covert Sniper Item Teleport
+// Author: Dokuno
+// Date: 23.09.2015.
+"sniper_item_teleport"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				      "ability_datadriven"
+   "AbilityName"              "Item Teleport"
+   "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	"MaxLevel"						"11"
+	"AbilityTextureName"			"keeper_of_the_light_recall"
+   
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------   
+   "AbilityCastPoint"			"0.3 0.3 0.3 0.3"
+	//"AbilityCastRange"			"0" // Global
+	"AbilityCooldown"				"3.0"
+	"AbilityManaCost"				"0" 
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+	{
+      "01"
+      {
+         "var_type"           "FIELD_FLOAT"
+         "tele_mana_cost"     "150.0 150.0 150.0 120.0 120.0 120.0 100.0 100.0 100.0 90.0 90.0" 
+      }
+      "02"
+      {
+         "var_type"            "FIELD_INTEGER"
+         "tele_small_cost"    "90"  // Always 90 for: drugs, implants, antidotes.
+      }
+   }
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_KeeperOfTheLight.Recall.Cast"
+			"Target"		   "CASTER"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/item_teleport.lua"
+			"Function"		"pickAction"
+         "Target"       "POINT"
+		}
+	}  
+}

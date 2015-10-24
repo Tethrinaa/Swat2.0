@@ -28,6 +28,8 @@ function Pierce( params )
    local target = params.target
    local caster = params.caster
    local shot_path = target_abs_origin - caster:GetAbsOrigin()
+   shot_path[3]=0 -- Zero the z vector. LinearProjectile threw soft errors with a non-zero z
+   -- Will come back later and try to get LinProj to work better with differnt elevations.
    if (kill_damage == nil) then
       kill_damage = caster:GetAttackDamage()
    end
