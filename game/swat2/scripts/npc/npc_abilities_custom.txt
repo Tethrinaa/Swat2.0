@@ -3407,4 +3407,130 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Demolitions: Biochemical Energy
+	// This levels up with AdvGen and needs to level DOWN when lockdown gets toggled off
+	//=================================================================================================================
+	"demo_biochemical_energy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"	"troll_warlord_whirling_axes_melee"
+		"AbilityManaCost"		"0"
+		"MaxLevel"              "18"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"20"
+		
+		// Special    
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"base_efficiency"  			".35"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"max_life_percent"  		".5"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"base_loss"  				".5"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"loss_factor" 		 		"2"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"min_eps"  					"2"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"heroes/hero_demo/biochem.lua"
+				"Function" 		"OnSpellStart"
+				"Target" 		"TARGET"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Demolitions: Advanced Generator
+	//=================================================================================================================
+	"demo_advanced_generator"
+	{
+  	// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		 "MaxLevel"                 "16"
+
+		"AbilityTextureName"			"centaur_return"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		}
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_regen"				"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" "CASTER"
+				"AbilityName" "demo_biochemical_energy"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_demo_advanced_generator"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+				}
+			}
+		}
+	}
 }
