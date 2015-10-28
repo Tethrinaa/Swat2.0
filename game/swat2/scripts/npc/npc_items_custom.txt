@@ -50,7 +50,7 @@
 		}
 		"Modifiers"
 		{
-			"modifier_item_add_datadriven"
+			"modifier_item_add_storage_cell_datadriven"
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"
@@ -60,7 +60,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"  "250"
 				}
 			}
-			"modifier_item_remove_datadriven"
+			"modifier_item_remove_storage_cell_datadriven"
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"
@@ -126,7 +126,7 @@
 		"Modifiers"
 		{
 			 
-			"modifier_item_add_datadriven"
+			"modifier_item_add_duo_cell_datadriven"
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"
@@ -136,7 +136,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"  "500"
 				}
 			}
-			"modifier_item_remove_datadriven"
+			"modifier_item_remove_duo_cell_datadriven"
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"

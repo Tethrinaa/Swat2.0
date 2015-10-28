@@ -3,15 +3,15 @@
     "item_storage_cell" //change it to a custom items
     {
         "intRequired" "105" 
-		"ModifiersAdd" "modifier_item_add_datadriven"		
-		"ModifiersRemove" "modifier_item_remove_datadriven"			
+		"ModifiersAdd" "modifier_item_add_storage_cell_datadriven"		
+		"ModifiersRemove" "modifier_item_remove_storage_cell_datadriven"			
     }
 
     "item_duo_cell" 
     {
         "intRequired" "115"
-		"ModifiersAdd" "modifier_item_add_datadriven"
-		"ModifiersRemove" "modifier_item_remove_datadriven"
+		"ModifiersAdd" "modifier_item_add_duo_cell_datadriven"
+		"ModifiersRemove" "modifier_item_remove_duo_cell_datadriven"
     }
 	
 }
