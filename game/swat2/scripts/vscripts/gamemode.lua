@@ -1,14 +1,13 @@
 -- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
-Global_Radiation = 0
 Global_Fallout = 0
-Global_Radiation_Bracket = 0
-Global_Rad_Handler = nil
 Global_Max_Player_Count = 0
 --[[Global Uber will end up being a two dimensional array of [total players][2].  First element will be whether the player
-    is connected.  If they are connected, it will be an integer value of 1, otherwise an integer value of 0.  This will allow 
+    is connected.  If they are connected, it will be an integer value of 1, otherwise an integer value of 0.  This will allow
 	us to turn their Uber off if the disconnect.  Second element is the player's uber contribution]]
 Global_Uber = {}
 Global_Max_Player_Count = 0
+Global_Radiation_Manager = nil
+Global_Locations = nil
 
 function bit(p)
   return 2 ^ (p - 1)  -- 1-based indexing
@@ -16,7 +15,7 @@ end
 
 -- Typical call:  if hasbit(x, bit(3)) then ...
 function hasbit(x, p)
-  return x % (p + p) >= p       
+  return x % (p + p) >= p
 end
 
 Global_Consts = {}
@@ -65,7 +64,7 @@ Global_Consts.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}
 
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
-BAREBONES_DEBUG_SPEW = false 
+BAREBONES_DEBUG_SPEW = false
 
 if GameMode == nil then
     DebugPrint( '[BAREBONES] creating barebones game mode' )
@@ -93,6 +92,9 @@ require('settings')
 require('events')
 --uber.lua contains most of the code relating to uber.
 require('uber')
+require('game/Locations')
+-- This contains the radiation code
+require('game/objectives/RadiationManager')
 
 
 --[[
@@ -100,8 +102,8 @@ require('uber')
 
   In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
   after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
-  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
-  precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
+  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will
+  precache the precache{} block statement of the unit and all precache{} block statements for every Ability#
   defined on the unit.
 
   This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
@@ -111,7 +113,7 @@ require('uber')
   This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
 function GameMode:PostLoadPrecache()
-  DebugPrint("[BAREBONES] Performing Post-Load precache")    
+  DebugPrint("[BAREBONES] Performing Post-Load precache")
   --PrecacheItemByNameAsync("item_example_item", function(...) end)
   --PrecacheItemByNameAsync("example_ability", function(...) end)
 
@@ -171,7 +173,7 @@ function GameMode:OnGameInProgress()
   Timers:CreateTimer(30, -- Start this timer 30 game-time seconds later
     function()
       DebugPrint("This function is called 30 seconds after the game begins, and every 30 seconds thereafter")
-      return 30.0 -- Rerun this timer every 30 game-time seconds 
+      return 30.0 -- Rerun this timer every 30 game-time seconds
     end)
 end
 
@@ -181,7 +183,7 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
   GameMode = self
-    
+
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
@@ -193,24 +195,25 @@ function GameMode:InitGameMode()
   Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
 
   DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
-  
+
   	print( "Template addon is loaded." )
 	--BDO what is this?  Didn't work after i switched us to barebones
    --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
    spawnPower()
    local RoomToPass = getRandomRoom()
 	spawnZombies(10, RoomToPass)
-   --Dummy to manage radiation
-   --TODO: Move this somewhere less cluttery -BDO
-   Global_Rad_Handler = CreateUnitByName("npc_dummy_blank",Entities:FindByName( nil, "room_lab"):GetAbsOrigin(),true, nil, nil, DOTA_TEAM_NEUTRALS)
-   Global_Rad_Handler:AddAbility("global_radiation_damage")
-   Global_Rad_Handler:AddAbility("swat_ability_invulnerable_object")
-   Global_Rad_Handler:FindAbilityByName("swat_ability_invulnerable_object"):SetLevel(1)
-   SpawnRads(40)
-   
+
+    Global_Locations = Locations:new()
+
+    -- Initialize the radiation manager
+    Global_Radiation_Manager = RadiationManager:new()
+    Global_Radiation_Manager:setup() -- make sure this is called after rooms have been created
+
+    Global_Radiation_Manager:setDifficulty(2, false) -- TODO: Call this when we actually set difficulty
+
    --load item table
-   self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" ) 
-   
+   self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
+
 end
 
 -- This is an example console command
@@ -247,14 +250,15 @@ function spawnPower()
       powerCore:AddAbility(degen)
       powerCore:FindAbilityByName(degen):SetLevel(1)
    end
-end   
+end
 
 --This function spawns the selected number of zombies and sets them moving towards a random player
 --NumberToSpawn - number of zombies to spawnZombies
 --RoomToSpawn - room entity to spawn the zombies around
 function spawnZombies(NumberToSpawn, RoomToSpawn)
 
-    local randomCreature = 
+    print("Spawning zombies!")
+    local randomCreature =
     	{
 			"basic_zombie"
 	   }
@@ -262,7 +266,7 @@ function spawnZombies(NumberToSpawn, RoomToSpawn)
 	if RoomToSpawn then
       for i = 1, NumberToSpawn do
          local unit = CreateUnitByName( "npc_dota_creature_" ..r , RoomToSpawn:GetAbsOrigin() + RandomVector( RandomFloat( 0, 600 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
-        
+
          if RandomEnemyHeroInRange ( unit, 500000) then
             ExecuteOrderFromTable({ UnitIndex = unit:entindex(),
 		                              OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
@@ -298,7 +302,7 @@ function refreshZombieOrders()
                                  DOTA_UNIT_TARGET_FLAG_NONE,
                                  FIND_ANY_ORDER,
                                  false)
- 
+
    -- Make the found units move to (0, 0, 0)
    for _,unit in pairs(direUnits) do
       if unit:HasAttackCapability() then
@@ -318,8 +322,8 @@ end
 These are the valid orders, in case you want to use them (easier here than to find them in the C code):
 
 DOTA_UNIT_ORDER_NONE
-DOTA_UNIT_ORDER_MOVE_TO_POSITION 
-DOTA_UNIT_ORDER_MOVE_TO_TARGET 
+DOTA_UNIT_ORDER_MOVE_TO_POSITION
+DOTA_UNIT_ORDER_MOVE_TO_TARGET
 DOTA_UNIT_ORDER_ATTACK_MOVE
 DOTA_UNIT_ORDER_ATTACK_TARGET
 DOTA_UNIT_ORDER_CAST_POSITION
@@ -379,16 +383,16 @@ function GameMode:BuildMarine( event )
    -- Get the player entity from the playerid
    local entIndex = event.playerId+1
    local ply = EntIndexToHScript(entIndex)
-   
+
    -- Create the default hero
    --local hero = CreateHeroForPlayer("npc_dota_hero_sniper", ply)
 
    --Get hero instead TODO
    hero = ply:GetAssignedHero()
-   
+
    --Clean the hero up first
    RemoveAllSkills(hero)
-   
+
    -- -- set abilities
    -- for key,value in pairs(Global_Consts.classes[event.class].abilities) do
      -- hero:AddAbility(value)
@@ -403,7 +407,7 @@ function GameMode:BuildMarine( event )
    hero.AttributeIntellectGain = Global_Consts.classes[event.class].intellectPerLevel
    hero:SetBaseManaRegen(6)
    hero:SetBaseHealthRegen(0)
-   
+
    -- -- Set weapon stats -Why no SetAttackRange???
    hero:SetBaseAttackTime(Global_Consts.weapons[event.weapon].bat)
    hero:SetBaseDamageMin(Global_Consts.weapons[event.weapon].damageMin)
@@ -413,9 +417,9 @@ function GameMode:BuildMarine( event )
    hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill):SetLevel(1)
    --hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 16
    print(hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill):GetMaxLevel())
-   
+
    print(event.weapon)
-   
+
    if ((event.weapon == "flamethrowerI") or (event.weapon == "flamethrowerII")) then
       hero:SetRangedProjectileName("particles/units/heroes/hero_lina/lina_base_attack.vpcf")
       if (event.class == "maverick") then
@@ -432,19 +436,19 @@ function GameMode:BuildMarine( event )
       end
       print(hero:GetProjectileSpeed())
    end
-   
+
    --set armor stats
    hero:SetBaseMoveSpeed(Global_Consts.armors[event.armor].moveSpeed)
    print(hero:GetBaseMoveSpeed())
    hero:SetPhysicalArmorBaseValue(Global_Consts.armors[event.armor].armor)
    hero:SetBaseMagicalResistanceValue(0)
-   
+
    -- else if cyborg, get rank and increase movespeed
 
    for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
 		hero:AddAbility(abil)
 		local ability = hero:FindAbilityByName(abil)
-		if ability then 
+		if ability then
 			if hasbit(ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE) then
 				ability:SetLevel(1)
 			end
@@ -456,17 +460,17 @@ function GameMode:BuildMarine( event )
    hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
    -- This will change based on rank and trait
    hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)
-   
+
    -- Add the appropriate sprint
    if (event.class ~= "cyborg") then
       hero:AddAbility("sprint_datadriven")
       hero:FindAbilityByName("sprint_datadriven"):SetLevel(Global_Consts.armors[event.armor].sprintSkill)
    end
-   
+
    hero:SetAbilityPoints(1) -- This will change based on rank
-   
+
    GameMode:ModifyStatBonuses(hero)
-   
+
    -- set trait TODO
       -- set maverick mutate TODO
    -- set spec TODO
@@ -485,34 +489,6 @@ function RemoveAllSkills(hero)
          hero:RemoveAbility(hero:GetAbilityByIndex(index):GetAbilityName())
       end
    end
-end
-
--- count is non-optional, location is optional (for walkers)
--- TODO: location -BDO
-function SpawnRads(count, location)
-   for index = 1, count do
-      local Room = getRandomRoom()
-      local Unit = CreateUnitByName( "npc_dota_creature_rad_frag", Room:GetAbsOrigin() + RandomVector( RandomFloat( 0, 600 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
-      -- Apply rad modifier to unit to reduce rad count on death and update bracket
-      Unit:AddAbility("rad_frag_datadriven")
-      Unit:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
-   end
-   UpdateRadiation(count)
-   -- calculate rad count
-   -- rad count to UI?
-end
-
-function UpdateRadiation(rad_change)
-   Global_Radiation = Global_Radiation + rad_change
-   if Global_Radiation > 0 then
-      Global_Radiation_Bracket = math.floor(Global_Radiation / 20)
-      print("1",math.floor(Global_Radiation / 20))
-   else
-      print("2", Global_Radiation)
-      Global_Radiation_Bracket = 0
-   end
-   print ("Updating radiation bracket to:", Global_Radiation_Bracket, Global_Radiation)
-   Global_Rad_Handler:FindAbilityByName("global_radiation_damage"):SetLevel(Global_Radiation_Bracket)
 end
 
 --PlayerFirstSpawnUber is called every time a new hero is created at the start of the game
