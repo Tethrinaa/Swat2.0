@@ -7,6 +7,7 @@ Global_Max_Player_Count = 0
 Global_Uber = {}
 Global_Max_Player_Count = 0
 Global_Radiation_Manager = nil
+Global_Locations = nil
 
 function bit(p)
   return 2 ^ (p - 1)  -- 1-based indexing
@@ -14,7 +15,7 @@ end
 
 -- Typical call:  if hasbit(x, bit(3)) then ...
 function hasbit(x, p)
-  return x % (p + p) >= p       
+  return x % (p + p) >= p
 end
 
 Global_Consts = {}
@@ -91,6 +92,7 @@ require('settings')
 require('events')
 --uber.lua contains most of the code relating to uber.
 require('uber')
+require('game/Locations')
 -- This contains the radiation code
 require('game/objectives/RadiationManager')
 
@@ -200,6 +202,8 @@ function GameMode:InitGameMode()
    spawnPower()
    local RoomToPass = getRandomRoom()
 	spawnZombies(10, RoomToPass)
+
+    Global_Locations = Locations:new()
 
     -- Initialize the radiation manager
     Global_Radiation_Manager = RadiationManager:new()
@@ -444,7 +448,7 @@ function GameMode:BuildMarine( event )
    for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
 		hero:AddAbility(abil)
 		local ability = hero:FindAbilityByName(abil)
-		if ability then 
+		if ability then
 			if hasbit(ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE) then
 				ability:SetLevel(1)
 			end
