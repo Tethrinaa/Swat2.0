@@ -29,14 +29,14 @@ function Splash( keys )
 
 	--loop for doing the splash damage while ignoring the original target
 	for i,v in ipairs(splash_radius_small) do
-		if v ~= target then 
+		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then 
 			damage_table.victim = v
 			ApplyDamage(damage_table)
 		end
 	end
 	--loop for doing the medium splash damage
 	for i,v in ipairs(splash_radius_medium) do
-		if v ~= target then
+		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then
 			--loop for checking if the found target is in the splash_radius_small
 			for c,k in ipairs(splash_radius_small) do
 				if v == k then
@@ -57,7 +57,7 @@ function Splash( keys )
 	end
 	--loop for doing the damage if targets are found in the splash_damage_big but not in the splash_damage_medium
 	for i,v in ipairs(splash_radius_big) do
-		if v ~= target then
+		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then
 			--loop for checking if the found target is in the splash_radius_medium
 			for c,k in ipairs(splash_radius_medium) do				
 				if v == k then

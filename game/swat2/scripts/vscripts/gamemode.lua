@@ -8,6 +8,15 @@ Global_Uber = {}
 Global_Max_Player_Count = 0
 Global_Radiation_Manager = nil
 
+function bit(p)
+  return 2 ^ (p - 1)  -- 1-based indexing
+end
+
+-- Typical call:  if hasbit(x, bit(3)) then ...
+function hasbit(x, p)
+  return x % (p + p) >= p       
+end
+
 Global_Consts = {}
    Global_Consts.classes = {}
       Global_Consts.classes.cyborg=       {strength = 30, strengthPerLevel=1.10, agility = 14, agilityPerLevel = 0.36, intellect = 105, intellectPerLevel = 0.62}
@@ -39,7 +48,7 @@ Global_Consts = {}
    Global_Consts.traits = {}
    Global_Consts.specs = {}
 
-Global_Consts.classes.cyborg.abilities = {"cyborg_cluster_rockets","cyborg_xtreme_combat_mode","cyborg_organic_replacement","cyborg_pheromones","cyborg_emergency_power","cyborg_goliath_modification"}
+Global_Consts.classes.cyborg.abilities = {"cyborg_cluster_rockets_lua_ability","cyborg_xtreme_combat_mode","cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield_lua_ability", "cyborg_forcefield_off_lua_ability"}
 Global_Consts.classes.demo.abilities = {"demo_mirv","demo_place_c4","demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"}
 Global_Consts.classes.ho.abilities = {"ho_plasma_shield","ho_storage_cells","ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
 Global_Consts.classes.maverick.abilities = {"maverick_plasma_grenade","maverick_robodog","maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"}
@@ -432,6 +441,18 @@ function GameMode:BuildMarine( event )
 
    -- else if cyborg, get rank and increase movespeed
 
+   for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
+		hero:AddAbility(abil)
+		local ability = hero:FindAbilityByName(abil)
+		if ability then 
+			if hasbit(ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE) then
+				ability:SetLevel(1)
+			end
+			if string.find(abil, "_off") then
+				hero:SwapAbilities(abil,abil,false,false)
+			end
+		end
+   end
    hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
    -- This will change based on rank and trait
    hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)
