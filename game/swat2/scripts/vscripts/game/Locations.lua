@@ -48,6 +48,12 @@ function Locations:new(o)
     return o
 end
 
+-- Needs to be called to initialize the global locations
+-- Call after Entities exists!
+function initializeGlobalLocations()
+    Locations = Locations:new()
+end
+
 -- We'll randomize the order of the regions in each of the groups
 -- This is useful for anyone who wants to get a random subset of distinct regions in a group (then can just grab a contiguous series and it will be random)
 function Locations:randomizeRegions(regions)
@@ -77,51 +83,51 @@ end
 
 -- Returns a random warehouse entity (warehouses do not include power plants)
 function GetRandomWarehouse()
-    return Global_Locations.warehouses[RandomInt(1, #Global_Locations.warehouses)]
+    return Locations.warehouses[RandomInt(1, #Locations.warehouses)]
 end
 
 -- Returns a random point in a warehouse region (warehouses do not include power plants)
 function GetRandomPointInWarehouse()
-    return GetRandomPointInRegionGroup(Global_Locations.warehouses)
+    return GetRandomPointInRegionGroup(Locations.warehouses)
 end
 
 -- Returns the graveyard region
 function GetGraveyard()
-    return Global_Locations.graveyard
+    return Locations.graveyard
 end
 
 -- Returns a random vector of a location in the graveyard
 function GetRandomPointInGraveyard()
-    return GetRandomPointInRegion(Global_Locations.graveyard)
+    return GetRandomPointInRegion(Locations.graveyard)
 end
 
 -- Returns a random park region
 function GetRandomParkRegion()
-    return Global_Locations.park_regions[RandomInt(1, #Global_Locations.park_regions)]
+    return Locations.park_regions[RandomInt(1, #Locations.park_regions)]
 end
 
 -- Returns a random point in the park
 -- TODO: This is currently a bit biased as we park regions have different sizes. Fix this
 function GetRandomPointInPark()
-    return GetRandomPointInRegionGroup(Global_Locations.park_regions)
+    return GetRandomPointInRegionGroup(Locations.park_regions)
 end
 
 -- Returns the lab region
 function GetLab()
-    return Global_Locations.lab
+    return Locations.lab
 end
 
 -- Returns a random vector of a location in the lab
 function GetRandomPointInLab()
-    return GetRandomPointInRegion(Global_Locations.lab)
+    return GetRandomPointInRegion(Locations.lab)
 end
 
 -- Returns the lab region
 function GetGroundZero()
-    return Global_Locations.ground_zero
+    return Locations.ground_zero
 end
 
 -- Returns a random vector of a location in the lab
 function GetRandomPointInGroundZero()
-    return GetRandomPointInRegion(Global_Locations.ground_zero)
+    return GetRandomPointInRegion(Locations.ground_zero)
 end

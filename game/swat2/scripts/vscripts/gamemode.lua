@@ -6,8 +6,8 @@ Global_Max_Player_Count = 0
 	us to turn their Uber off if the disconnect.  Second element is the player's uber contribution]]
 Global_Uber = {}
 Global_Max_Player_Count = 0
-Global_Radiation_Manager = nil
-Global_Locations = nil
+
+g_GameManager = nil
 
 function bit(p)
   return 2 ^ (p - 1)  -- 1-based indexing
@@ -92,9 +92,9 @@ require('settings')
 require('events')
 --uber.lua contains most of the code relating to uber.
 require('uber')
-require('game/Locations')
--- This contains the radiation code
-require('game/objectives/RadiationManager')
+
+-- Contains game logic and game systems (like spawning, radiation...etc)
+require('game/GameManager')
 
 
 --[[
@@ -203,13 +203,8 @@ function GameMode:InitGameMode()
    local RoomToPass = getRandomRoom()
 	spawnZombies(10, RoomToPass)
 
-    Global_Locations = Locations:new()
-
-    -- Initialize the radiation manager
-    Global_Radiation_Manager = RadiationManager:new()
-    Global_Radiation_Manager:setup() -- make sure this is called after rooms have been created
-
-    Global_Radiation_Manager:setDifficulty(2, false) -- TODO: Call this when we actually set difficulty
+    g_GameManager = GameManager:new()
+    g_GameManager:setDifficulty("insane")
 
    --load item table
    self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
