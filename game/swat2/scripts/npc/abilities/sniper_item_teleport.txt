@@ -1,15 +1,31 @@
 // Covert Sniper Item Teleport
 // Author: Dokuno
 // Date: 23.09.2015.
+
+// Testing notes. 
+// D_A_B_U_T allows direct targeting of units. No items, No allies, No point. 
+//    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+//    "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_CUSTOM" 
+//    "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_NONE" No allies, No item, No point
+//    "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_NONE" No allies, No item, No point
+//    "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY" No hero, No item, No point
+//    "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL" Yes Hero, No item, No point
+//    "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_NONE" Yes Hero, No item, No point
+//    "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_OTHER" Yes Hero, No item, No point
+//    "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_OTHER"
+// Attacking an item gets: [   General              ]: PROJECTILE STUCKINESS: TARGET (Not a BaseNPC) HAS RADIUS OF 0!!
+//    "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+//    "AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_ALL"
+
 "sniper_item_teleport"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
 	"BaseClass"				      "ability_datadriven"
    "AbilityName"              "Item Teleport"
-   "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+   "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
 	"MaxLevel"						"11"
 	"AbilityTextureName"			"keeper_of_the_light_recall"
    

@@ -18,7 +18,7 @@ function DeployCamera( keys )
    -- find clear space for unit
 	local camera = CreateUnitByName("npc_dota_observer_wards", target_point, false, nil, nil, caster:GetTeamNumber())
    -- Apply invis to the camera...
-   ability:ApplyDataDrivenModifier(caster, camera, modifier_camera_invis, {})
+   ability:ApplyDataDrivenModifier(caster, camera, "modifier_camera_invis", {})
    return 0
 end
 

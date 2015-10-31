@@ -20,17 +20,17 @@
       "01"
       {
          "var_type"					"FIELD_INTEGER"
-         "crit_chance"				"0 10 15 20 25 30 35 40 45 50 55 60"
+         "crit_chance"				"10 15 20 25 30 35 40 45 50 55 60"
       }
       "02"
       {
          "var_type"					"FIELD_INTEGER"
-         "crit_damage"				"100 200 220 240 260 280 300 320 340 360 380 400"
+         "crit_damage"				"200 220 240 260 280 300 320 340 360 380 400"
       }
       "03"
       {
          "var_type"					"FIELD_INTEGER"
-         "aim_crit_damage"			"100 260 320 480 440 500 560 620 680 740 800 860"
+         "aim_crit_damage"			"260 320 480 440 500 560 620 680 740 800 860"
       }
    }
    "Modifiers"

@@ -14,56 +14,92 @@ print("teleport_to: ", teleport_to)
 function pickAction( keys )
    local caster = keys.caster
 	local ability = keys.ability
-	local point = keys.target_points[1]
-   --print("Target_Points[1]: ", keys.target_points[1]) -- Vector
-   
-   -- Find the target closest to point
-   local targets = FindUnitsInRadius(
-      caster:GetTeam(), point, nil, 100.0, ability:GetAbilityTargetTeam(), --iTeamNumber--vPosition--hCacheUnit--flRadius--iTeamFilter 
-      ability:GetAbilityTargetType(), --iTypeFilter
-      ability:GetAbilityTargetFlags(), FIND_CLOSEST, false --iFlagFilter--iOrder--bCanGrowCache 
-   )
-   --print("targets: ", targets) -- Table
-   for k,v in ipairs(targets) do
-      print("Target k,v", k, v)
-   end
+	local point = keys.target_points[1] -- Vector
+   --print("Target_Points[1]: ", keys.target_points[1]) 
 
-   -- Determine what was targeted using:
-   -- CBaseEntity:IsAlive()
-   -- CDOTA_Item:IsItem()
-   -- CDOTA_BaseNPC:IsRealHero()
-   -- CDOTA_BaseNPC:HasInventory()  
-   local target = targets[1]
+   -- Find the entities closest to the target point
+   -- handle FindInSphere(handle startFrom, Vector origin, float maxRadius)
+   -- Appears to notice items and heros. Rerturns nil when nothing is near the target point
+   -- but returns a table when a hero or item is near. However the table appears to be empty...
+   local targets = Entities:FindInSphere(nil, point, 128.0) -- Table or nil
+   print("Sphere target:", targets)
+   if ( not targets == nil ) then
+      --for k,v in ipairs(targets) do
+      --   print("Target k,v", k, v)
+      --end
+      for x in targets do
+         print("Targets[x]", x)
+      end
+   end
+   --if ( targets == nil ) then
+      --handle FindByClassnameWithin(handle startFrom, string className, Vector origin, float maxRadius)
+   -- -- NO RESPONSE TO ITEMS (dota or swat)
+   -- targets = Entities:FindByClassnameWithin(nil, "item_datadriven", point, 128.0)
+   -- print ("item_datadriven targets:", targets)
+   -- if ( not targets == nil ) then
+      -- for k,v in ipairs(targets) do
+         -- print("Target k,v", k, v)
+      -- end
+   -- end
+      --target = targets[1]
+      --print("item_datadriven target:", target)
+   --end 
+   --if ( targets == nil ) then
+   -- -- NO RESPONSE TO ITEMS (dota or swat)
+   -- targets = Entities:FindByClassnameWithin(nil, "CDOTA_Item", point, 128.0)
+   -- print ("CDOTA_Item targets:", targets)
+   -- if ( not targets == nil ) then
+      -- for k,v in ipairs(targets) do
+         -- print("Target k,v", k, v)
+      -- end
+   -- end
+      --target = targets[1]
+      --print("CDOTA_Item target:", target)      
+   --end
+
    -- Ability targeted ground. Set teleport_to to that spot
-   if (target == nil) then
+   if (targets == nil) then
       print("Setting Teleport To Location")
+      teleport_to = point  
+   -- Ability targeted an entity. Determine what kind
+   elseif( targets[1] == nil ) then
       teleport_to = point
+   else
+      local target = targets[1]
+      --local target = ipairs(targets)[1][2]
+      for k,v in ipairs(targets) do
+         print("Target k,v", k, v)
+      end
       --Teleport(keys,caster) -- Self teleport for "testing"
-   -- Ability targeted something. Hero, Item, ABM, Storage
-   elseif( target.IsItem ) then
-      print("Target has IsItem")
-      Teleport(keys, target)
-   elseif( target.IsRealHero ) then
-      print("Target has .IsRealHero")  
-      if(target:IsRealHero() and target:IsAlive()) then
-         -- Set target_to to follow that hero
-         print("Target is RealHero,Alive")
-      elseif(target:HasInventory()) then
-         -- Set target_to to that Storage
-         print("Target is Storage/ABM")
+      -- Determine what was targeted using:
+      -- CBaseEntity:IsAlive()
+      -- CDOTA_Item:IsItem()
+      -- CDOTA_BaseNPC:IsRealHero()
+      -- CDOTA_BaseNPC:HasInventory()  
+   
+      -- Ability targeted something. Hero, Item, ABM, Storage
+      if( target.IsItem ) then
+         print("Target has IsItem")
+         Teleport(keys, target)
+      elseif( target.IsRealHero ) then 
+         if(target:IsRealHero() and target:IsAlive()) then
+            -- Set target_to to follow that hero
+            print("Target is RealHero,Alive")
+         end
+      elseif( target.HasInventory ) then
+         if (target:HasInventory()) then
+            -- Set target_to to that Storage
+            print("Target is Storage")
+         end
       else
-         print("AMB case?")
+         print("Target is AMB??")
          --Need a sell (and delete depending on how sell works) item function
       end
-   else
-      print("No Matches") -- Or ABM case
-   end 
+   end
 end
 
 -- Move the target item to the set destination.
 function Teleport( keys, item )
-   
-   -- Teleport the item
    --if ( item is hazmat ) then
    --    return 0
    --end
@@ -71,12 +107,12 @@ function Teleport( keys, item )
    
    -- Spend the mana (mana spent only on item teleport)
    -- Always 90 for: drugs, implants, antidotes.
-   -- CDOTA_BaseNPC:SpendMana(int nActivity)
-   --Get item name, check agaist list for special mana cost
+   -- Get item name, check agaist list for special mana cost
    --if (item name in cheapList) then
    --    mana = keys.ability:GetLevelSpecialValueFor("tele_small_cost", (keys.ability:GetLevel() - 1))
    --else
-   mana = keys.ability:GetLevelSpecialValueFor("tele_mana_cost", (keys.ability:GetLevel() - 1))
+   local mana = keys.ability:GetLevelSpecialValueFor("tele_mana_cost", (keys.ability:GetLevel() - 1))
    --end
+   -- CDOTA_BaseNPC:SpendMana(int nActivity)
    keys.caster:SpendMana(mana, keys.ability)
 end
