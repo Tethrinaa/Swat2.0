@@ -83,6 +83,9 @@ function GameManager:initializeSystems()
     g_EnemyUpgrades = EnemyUpgrades:new()
     g_EnemySpawner = EnemySpawner:new()
     g_EnemyCommander = EnemyCommander:new()
+
+    -- Move to start spawning
+    g_EnemyCommander:startCollectEmUpCycle()
 end
 
 -- Sets the game to one of the selectable options
