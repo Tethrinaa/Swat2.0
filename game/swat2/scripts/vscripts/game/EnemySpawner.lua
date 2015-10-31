@@ -84,17 +84,17 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
 
         -- 75% of the wave is always zombies (and maybe one mutant based on radiation level)
         local j = Round(groupSize * .25) + 1
-        if self.minionCount < EnemySpawner.MAX_MINIONS and groupSize > j and RandomInt(1, 4) < g_RadiationManager.radiationLevel then
+        if groupSize > j and RandomInt(1, 4) < g_RadiationManager.radiationLevel then
             groupSize = groupSize - 1
             self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location))
         end
-        while self.minionCount < EnemySpawner.MAX_MINIONS and groupSize > j do
+        while groupSize > j do
             groupSize = groupSize - 1
             self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), 0)
         end
 
         -- The rest of the wave can be anything
-        while self.minionCount < EnemySpawner.MAX_MINIONS and groupSize > 0 do
+        while groupSize > 0 do
             groupSize = groupSize - 1
             j = RandomInt(0, 9)
             local position = GetRandomPointInRegion(location)
@@ -115,13 +115,6 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
             end
         end
 
-        if groupSize > 0 and shouldAddToMinionQueueIfFail then
-            print("EnemySpawner | Adding " .. groupSize .. " enemies to minion queue!")
-            -- We failed to spawn some units because we have hit the minion cap
-            -- Nauty players will be punished, but the minions now go into the minion queue
-            self.minionQueue = self.minionQueue + groupSize
-        end
-
     else
         -- Nemesis fight spawns minions in graveyard
         -- TODO
@@ -136,11 +129,14 @@ end
 
 
 -- Generic enemy spawner. Should pass in an enemy code defined here
-function EnemySpawner:spawnEnemy(enemy, position, specialType)
+function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMibionQueueIfFail)
     if self.minionCount >= EnemySpawner.MAX_MINIONS then
         -- Too many units in play, just add this unit to the minion queue
         -- Nauty players will be punished, but the minions now go into the minion queue
-        self.minionQueue = self.minionQueue + 1
+        if(shouldAddToMinionQueueIfFail) then
+            print("EnemySpawner | Adding enemy to minion queue!")
+            self.minionQueue = self.minionQueue + 1
+        end
     else
         -- We can spawn this unit
 
@@ -186,28 +182,28 @@ end
 
 function EnemySpawner:spawnMutant(position)
     print("EnemySpawner | Spawning Mutant")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = CreateUnitByName( "npc_dota_creature_basic_mutant", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnDog(position, specialType)
     print("EnemySpawner | Spawning Dog(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = CreateUnitByName( "npc_dota_creature_basic_dog", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnGrotesque(position, specialType)
     print("EnemySpawner | Spawning Grotesque(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = CreateUnitByName( "npc_dota_creature_basic_garg", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnBeast(position, specialType)
     print("EnemySpawner | Spawning Beast(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = CreateUnitByName( "npc_dota_creature_basic_beast", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
