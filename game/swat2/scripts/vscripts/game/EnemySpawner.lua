@@ -5,6 +5,7 @@
 EnemySpawner = {}
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
+EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
 EnemySpawner.MAX_GROUP_SIZE = 21 -- The largest size a minion group can be
 
 -- An enum for the type of enemy to spawn
@@ -37,7 +38,7 @@ function EnemySpawner:new(o)
 end
 
 -- Should be called when the difficulty is set in GameManager
-function EnemyUpgrades:onDifficultySet(difficulty)
+function EnemySpawner:onDifficultySet(difficulty)
     if difficulty == "normal" then
         -- Normal mode
         self.innardsChance = 1
@@ -66,6 +67,11 @@ function EnemyUpgrades:onDifficultySet(difficulty)
         -- Unknown? Error! (Shouldn't happen)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
+
+    -- Start wave spawning in 30 seconds
+    --Timers:CreateTimer(30.0, function()
+        self:startWaveSpawning()
+    --end)
 end
 
 -- Spawns a group of minions at the provided location
@@ -80,17 +86,23 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
         if groupSize > EnemySpawner.MAX_GROUP_SIZE then
             groupSize = EnemySpawner.MAX_GROUP_SIZE
         end
-        print("EnemySpawner | Spawning WaveGroup of " .. groupSize .. " enemies")
+        if shouldAddToMinionQueueIfFail then
+            print("EnemySpawner | Spawning WaveGroup of " .. groupSize .. " enemies")
+        else
+            print("EnemySpawner | Spawning Queue WaveGroup of " .. groupSize .. " enemies. Queue size = " .. self.minionQueue)
+        end
+
+        local spawnedUnits = {}
 
         -- 75% of the wave is always zombies (and maybe one mutant based on radiation level)
         local j = Round(groupSize * .25) + 1
         if groupSize > j and RandomInt(1, 4) < g_RadiationManager.radiationLevel then
             groupSize = groupSize - 1
-            self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location))
+            table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail))
         end
         while groupSize > j do
             groupSize = groupSize - 1
-            self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), 0)
+            table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail))
         end
 
         -- The rest of the wave can be anything
@@ -100,20 +112,29 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
             local position = GetRandomPointInRegion(location)
 
             if j < 1 then
-                self:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77))
+                table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail))
             elseif j < 2 then
-                self:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 30)
+                table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 30, shouldAddToMinionQueueIfFail))
             elseif j < 4 then
-                self:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77))
+                table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail))
             else
                 -- TODO: Not 100% this is radiationLevel (which it is in source) and not radiationFragments
                 if RandomInt(-1, 43) < g_RadiationManager.radiationLevel then
-                    self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location))
+                    table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail))
                 else
-                    self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), RandomInt(1, 13))
+                    table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), RandomInt(1, 13), shouldAddToMinionQueueIfFail))
                 end
             end
         end
+
+        -- Tell the group where to go
+        -- Issueing an order to a unit immediately afte rit spawns seems to not consistently work
+        -- so we'll wait a second before telling the group where to go
+        Timers:CreateTimer(1.0, function()
+            for _,unit in pairs(spawnedUnits) do
+                g_EnemyCommander:doMobAction(unit, nil)
+            end
+        end)
 
     else
         -- Nemesis fight spawns minions in graveyard
@@ -121,6 +142,110 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
     end
 end
 
+-- This method will go through the actions of a single wave
+function EnemySpawner:spawnWave()
+    if self.minionCount > EnemySpawner.MAX_MINIONS_WAVE_START then
+        -- Too many minions out to spawn a new wave!
+        print("EnemySpawner | Too many minions out to start a new wave")
+        -- Wait 15 seconds
+        Timers:CreateTimer(15, function()
+            -- Buff the zombies and try to spawn a wave
+            g_EnemyUpgrades.mobSpeed = g_EnemyUpgrades.mobSpeed + 0.5
+            self:spawnWave()
+        end)
+    else
+        print("EnemySpawner | New Wave Started")
+        -- Begin the wave!
+        self.minionQueue = 0
+        g_EnemyUpgrades.mobSpeed = 0 -- Reset the buffs we gave to the previous wave while we waited
+
+        local numberOfWaveGroups = 51 + g_GameManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+        print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
+        Timers:CreateTimer(0, function()
+            -- There is a random chance we don't do anything
+            local i = 0
+            if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then
+                i = 18 - (g_GameManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+            else
+                i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_GameManager.playerCount / 4))
+            end
+
+            if RandomInt(1 + g_GameManager.survivalValue, 100) > i then
+                -- We passed our random chance.
+                numberOfWaveGroups = numberOfWaveGroups - 1
+                if numberOfWaveGroups < 0 then
+                    -- We're done spawning waves, start spawning the minion queue
+                    print("EnemySpawner | Spawn from the minion queue!")
+                    self:spawnQueueGroups()
+                else
+                    -- Spawn a wave group!
+
+                    -- Figure out a location for the spawn group
+                    local location = nil
+                    if g_GameManager.lastBuildingEntered ~= nil then
+                        print("EnemySpawner | Spawning in last entered warehouse!")
+                        location = g_GameManager.lastBuildingEntered
+                        g_GameManager.lastBuildingEntered = nil
+                    else
+                        print("EnemySpawner | Spawning in random warehouse!")
+                        location = GetRandomWarehouse()
+                    end
+
+                    self:spawnMinionGroup(location, true)
+
+                    -- We have more wave groups. Just restart this timer
+                    return self.waveGroupDelay
+                end
+            else
+                -- We failed the roll. Wait waveGroupDelay and try again
+                return self.waveGroupDelay
+            end
+        end)
+    end
+end
+
+-- Begins summoning from the queue until the queue is empty
+-- Once the queue is empty, we summon another wave
+function EnemySpawner:spawnQueueGroups()
+    if self.minionQueue > 0 then
+        print("EnemySpawner | Spawning from Queue")
+        local waitTimeBetweenQueueWaves = self.waveGroupDelay - g_GameManager.difficultyValue
+        Timers:CreateTimer(waitTimeBetweenQueueWaves, function()
+            if self.minionQueue  > 0 then
+                if self.minionCount >= EnemySpawner.MAX_MINIONS then
+                    print("EnemySpawner | Queue Waiting - too many enemies already out")
+                    -- Too many minions for the queue
+                    -- Collect up the current zombies (which minorly buffs them) and wait to try again
+                    g_EnemyCommander:collectEmUp()
+                    return 48 - (2 * g_GameManager.playerCount)
+                else
+                    -- Spawn a full wave group regardless of how many are in the minion queue
+                    local location = GetRandomWarehouse()
+                    self:spawnMinionGroup(location, false)
+
+                    return waitTimeBetweenQueueWaves
+                end
+            else
+                print("EnemySpawner | Queue now empty")
+                self:spawnWave()
+            end
+        end)
+    else
+        -- No queue, we can just start the next wave
+        self:spawnWave()
+    end
+
+end
+
+function EnemySpawner:startWaveSpawning()
+    print("EnemySpawner | Starting Wave Spawning")
+
+    -- Start the CollectEmUp cycle
+    g_EnemyCommander:startCollectEmUpCycle()
+
+    -- Start the wave spawning
+    self:spawnWave()
+end
 
 
 ----------------------
@@ -129,13 +254,15 @@ end
 
 
 -- Generic enemy spawner. Should pass in an enemy code defined here
-function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMibionQueueIfFail)
+function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinionQueueIfFail)
     if self.minionCount >= EnemySpawner.MAX_MINIONS then
         -- Too many units in play, just add this unit to the minion queue
         -- Nauty players will be punished, but the minions now go into the minion queue
         if(shouldAddToMinionQueueIfFail) then
-            print("EnemySpawner | Adding enemy to minion queue!")
             self.minionQueue = self.minionQueue + 1
+            print("EnemySpawner | Adding enemy to minion queue! Queue size = " .. self.minionQueue)
+        else
+            print("EnemySpawner | Couldn't spawn queued enemy!")
         end
     else
         -- We can spawn this unit
@@ -163,9 +290,8 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMibion
         unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
         -- Set its speed
         unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
-        -- Tell it to go fight the targetted hero
-        g_EnemyCommander:doMobAction(unit, nil)
 
+        return unit
     end
 
 end

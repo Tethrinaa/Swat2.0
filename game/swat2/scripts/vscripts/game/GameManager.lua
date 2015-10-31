@@ -68,6 +68,11 @@ function GameManager:new(o)
     self.nemesisStage = 0
 
 
+    -- Keeps track of the last building a player walked in
+    -- This should store the Entity Trigger itself, not an index!
+    -- TODO: Update this
+    self.lastBuildingEntered = nil
+
     -- Boot up the systems
     self:initializeSystems()
 
@@ -83,9 +88,6 @@ function GameManager:initializeSystems()
     g_EnemyUpgrades = EnemyUpgrades:new()
     g_EnemySpawner = EnemySpawner:new()
     g_EnemyCommander = EnemyCommander:new()
-
-    -- Move to start spawning
-    g_EnemyCommander:startCollectEmUpCycle()
 end
 
 -- Sets the game to one of the selectable options
@@ -133,6 +135,7 @@ function GameManager:setDifficulty(difficulty)
     -- Now tell whoever needs to know about the difficulty changing
     g_RadiationManager:onDifficultySet(difficulty)
     g_EnemyUpgrades:onDifficultySet(difficulty)
+    g_EnemySpawner:onDifficultySet(difficulty)
 
 end
 

@@ -56,6 +56,7 @@ end
 
 -- Starts the cycle which calls collectEmUp() periodically
 function EnemyCommander:startCollectEmUpCycle()
+    print("EnemyCommander | Starting collectEmUp cycle")
     Timers:CreateTimer( 0.0, function()
         self:collectEmUp()
         return 75.00 - 15 * (g_GameManager.difficultyValue - g_GameManager.survivalValue)
@@ -78,12 +79,10 @@ function EnemyCommander:doMobAction(unit, target)
     local position = nil
     if target ~= nil and target:GetHealth() > 0 then
         -- Attack move to that targets locations
-        print("DEBUG EnemyCommander | doMobAction() target")
         position = target:GetAbsOrigin() + RandomVector(499)
     else
-        print("DEBUG EnemyCommander | doMobAction() graveyard")
         -- Just go to the graveyard
         position = GetRandomPointInGraveyard()
     end
-    ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = position, Queue = true})
+    ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = position, Queue = false})
 end

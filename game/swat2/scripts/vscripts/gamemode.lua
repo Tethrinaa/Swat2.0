@@ -257,8 +257,8 @@ end
 --NumberToSpawn - number of zombies to spawnZombies
 --RoomToSpawn - room entity to spawn the zombies around
 function spawnZombies(NumberToSpawn, RoomToSpawn)
-    print("Spawning zombies!")
-    g_EnemySpawner:spawnMinionGroup(GetRandomWarehouse(), true)
+    --print("Spawning zombies!")
+    --g_EnemySpawner:spawnMinionGroup(GetRandomWarehouse(), true)
 
     --local randomCreature =
         --{
@@ -278,12 +278,12 @@ function spawnZombies(NumberToSpawn, RoomToSpawn)
       --end
    --end
 	-- Spawn more in 10 seconds
-	Timers:CreateTimer( 10.0, function()
+	--Timers:CreateTimer( 10.0, function()
        --refreshZombieOrders()
    --local RoomToPass = getRandomRoom()
-        spawnZombies(10, nil)
+        --spawnZombies(10, nil)
    --GameRules:GetGameModeEntity():SendCustomMessage
-	end)
+	--end)
 end
 
 function getRandomRoom()

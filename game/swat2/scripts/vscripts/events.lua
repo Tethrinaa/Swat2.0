@@ -69,7 +69,7 @@ end
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
   DebugPrint( '[BAREBONES] OnPlayerReconnect' )
-  DebugPrintTable(keys) 
+  DebugPrintTable(keys)
 end
 
 -- An item was purchased by a player
@@ -82,11 +82,11 @@ function GameMode:OnItemPurchased( keys )
   if not plyID then return end
 
   -- The name of the item purchased
-  local itemName = keys.itemname 
-  
+  local itemName = keys.itemname
+
   -- The cost of the item purchased
   local itemcost = keys.itemcost
-  
+
 end
 
 -- An ability was used by a player
@@ -222,7 +222,7 @@ function GameMode:OnEntityKilled( keys )
   DebugPrintTable( keys )
 
   GameMode:_OnEntityKilled( keys )
-  
+
 
   -- The Unit that was Killed
   local killedUnit = EntIndexToHScript( keys.entindex_killed )
@@ -243,11 +243,14 @@ function GameMode:OnEntityKilled( keys )
   local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
   -- Put code here to handle when an entity gets killed
+
+  print("DEBUG | Enemy Killed, decrement minion count")
+  g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
 end
 
 
 
--- This function is called 1 to 2 times as the player connects initially but before they 
+-- This function is called 1 to 2 times as the player connects initially but before they
 -- have completely connected
 function GameMode:PlayerConnect(keys)
   DebugPrint('[BAREBONES] PlayerConnect')
@@ -260,11 +263,11 @@ function GameMode:OnConnectFull(keys)
   DebugPrintTable(keys)
 
   GameMode:_OnConnectFull(keys)
-  
+
   local entIndex = keys.index+1
   -- The Player entity of the joining user
   local ply = EntIndexToHScript(entIndex)
-  
+
   -- The Player ID of the joining player
   local playerID = ply:GetPlayerID()
 end
@@ -288,8 +291,8 @@ function GameMode:OnItemCombined(keys)
   local player = PlayerResource:GetPlayer(plyID)
 
   -- The name of the item purchased
-  local itemName = keys.itemname 
-  
+  local itemName = keys.itemname
+
   -- The cost of the item purchased
   local itemcost = keys.itemcost
 end
@@ -313,7 +316,7 @@ function GameMode:OnTowerKill(keys)
   local team = keys.teamnumber
 end
 
--- This function is called whenever a player changes there custom team selection during Game Setup 
+-- This function is called whenever a player changes there custom team selection during Game Setup
 function GameMode:OnPlayerSelectedCustomTeam(keys)
   DebugPrint('[BAREBONES] OnPlayerSelectedCustomTeam')
   DebugPrintTable(keys)
