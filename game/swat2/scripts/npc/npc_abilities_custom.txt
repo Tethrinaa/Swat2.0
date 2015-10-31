@@ -1222,13 +1222,13 @@
       }
    }
 	//=================================================================================================================
-	// Ability: Power_Core_Mod // Based on Overthrow treasure courier ability
+	// Ability: Power_Core_Mod (Generator)
 	//=================================================================================================================
 	"swat_ability_invulnerable_object"
 	{
 		"BaseClass"          			    "ability_datadriven"
 		"AbilityName"           			"dota_ability_health_granter"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"Modifiers"
 		{
@@ -1254,13 +1254,14 @@
 		}
 	}
 	//=================================================================================================================
-	// Ability: Power_Core_Damaged (Power Core)
+	// Ability: Power Core Damaged Degen (Generator)
 	//=================================================================================================================
 	"swat_ability_power_core_damaged"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
+      "AbilityName"              "Damaged"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
       "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
       "AbilityTextureName"			"crystal_maiden_brilliance_aura"
@@ -1292,13 +1293,14 @@
       }
    }
 	//=================================================================================================================
-	// Ability: Mana_Drain_Badly_Damaged (Power Core)
+	// Ability: Power Core Badly Damaged Degen (Generator)
 	//=================================================================================================================
 	"swat_ability_power_core_badly_damaged"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
+      "AbilityName"              "Badly Damaged"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
       "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
       "AbilityTextureName"			"crystal_maiden_brilliance_aura"
@@ -1330,13 +1332,14 @@
       }
    }
 	//=================================================================================================================
-	// Ability: Mana_Drain_Severly_Damaged (Power Core)
+	// Ability: Power Core Severly Damaged Degen (Generator)
 	//=================================================================================================================
 	"swat_ability_power_core_severly_damaged"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
+      "AbilityName"              "Severly Damaged"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
       "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
       "AbilityTextureName"			"crystal_maiden_brilliance_aura"
@@ -1368,13 +1371,14 @@
       }
    }
 	//=================================================================================================================
-	// Ability: Mana_Drain (Power Core)
+	// Ability: Mana_Drain (Generator)
 	//=================================================================================================================
 	"swat_ability_mana_drain"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
+      "AbilityName"              "Siphon Power"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1385,12 +1389,12 @@
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
-		"precache"
+      "precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
-			"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+			//"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
 		}
-
+      
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
@@ -1440,8 +1444,7 @@
 			{
 				"EffectName"	"Hero_Lion.ManaDrain"
 				"Target"		   "TARGET"
-			}
-
+			}         
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_mana_drain"
