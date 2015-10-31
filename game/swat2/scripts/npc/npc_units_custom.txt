@@ -663,7 +663,7 @@
 			
 			"States"
 			{
-			MODIFIER_STATE_NO_HEALTH_BAR
+			
 				"Invade"
 				{
 					"Name"				"Invade"
