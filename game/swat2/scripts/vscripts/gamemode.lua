@@ -7,6 +7,8 @@ Global_Max_Player_Count = 0
 Global_Uber = {}
 Global_Max_Player_Count = 0
 
+Global_Player_Heroes = {}
+
 g_GameManager = nil
 
 function bit(p)
@@ -81,6 +83,10 @@ require('libraries/projectiles')
 require('libraries/notifications')
 -- This library can be used for starting customized animations on units from lua
 require('libraries/animations')
+
+-- Load utils
+require('util/Utils')
+require('util/Queue')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -201,7 +207,6 @@ function GameMode:InitGameMode()
    --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
    spawnPower()
    local RoomToPass = getRandomRoom()
-	spawnZombies(10, RoomToPass)
 
     g_GameManager = GameManager:new()
     g_GameManager:setDifficulty("insane")
@@ -209,6 +214,7 @@ function GameMode:InitGameMode()
    --load item table
    self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
 
+   spawnZombies(10, RoomToPass)
 end
 
 -- This is an example console command
@@ -251,30 +257,31 @@ end
 --NumberToSpawn - number of zombies to spawnZombies
 --RoomToSpawn - room entity to spawn the zombies around
 function spawnZombies(NumberToSpawn, RoomToSpawn)
-
     print("Spawning zombies!")
-    local randomCreature =
-    	{
-			"basic_zombie"
-	   }
-	local r = randomCreature[RandomInt(1,#randomCreature)]
-	if RoomToSpawn then
-      for i = 1, NumberToSpawn do
-         local unit = CreateUnitByName( "npc_dota_creature_" ..r , RoomToSpawn:GetAbsOrigin() + RandomVector( RandomFloat( 0, 600 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+    g_EnemySpawner:spawnMinionGroup(GetRandomWarehouse(), true)
 
-         if RandomEnemyHeroInRange ( unit, 500000) then
-            ExecuteOrderFromTable({ UnitIndex = unit:entindex(),
-		                              OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-								            TargetIndex = (RandomEnemyHeroInRange ( unit, 500000)):entindex(),
-                                    queue = true})
-         end
-      end
-   end
+    --local randomCreature =
+        --{
+			--"basic_zombie"
+	   --}
+	--local r = randomCreature[RandomInt(1,#randomCreature)]
+	--if RoomToSpawn then
+      --for i = 1, NumberToSpawn do
+         --local unit = CreateUnitByName( "npc_dota_creature_" ..r , RoomToSpawn:GetAbsOrigin() + RandomVector( RandomFloat( 0, 600 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+
+         --if RandomEnemyHeroInRange ( unit, 500000) then
+            --ExecuteOrderFromTable({ UnitIndex = unit:entindex(),
+									  --OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+											--TargetIndex = (RandomEnemyHeroInRange ( unit, 500000)):entindex(),
+                                    --queue = true})
+         --end
+      --end
+   --end
 	-- Spawn more in 10 seconds
 	Timers:CreateTimer( 10.0, function()
-   refreshZombieOrders()
-   local RoomToPass = getRandomRoom()
-	spawnZombies(10, RoomToPass)
+       --refreshZombieOrders()
+   --local RoomToPass = getRandomRoom()
+        spawnZombies(10, nil)
    --GameRules:GetGameModeEntity():SendCustomMessage
 	end)
 end
@@ -465,6 +472,8 @@ function GameMode:BuildMarine( event )
    hero:SetAbilityPoints(1) -- This will change based on rank
 
    GameMode:ModifyStatBonuses(hero)
+
+   table.insert(Global_Player_Heroes, hero)
 
    -- set trait TODO
       -- set maverick mutate TODO

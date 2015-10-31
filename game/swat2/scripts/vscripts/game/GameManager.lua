@@ -5,10 +5,16 @@ GameManager = {}
 
 -- Systems GameManager is responsible for
 require('game/Locations')
+require('game/EnemyUpgrades')
+require('game/EnemySpawner')
+require('game/EnemyCommander')
 require('game/objectives/RadiationManager')
 
 -- The systems instances stored as global variables
 g_RadiationManager = {}
+g_EnemyUpgrades = {}
+g_EnemySpawner = {}
+g_EnemyCommander = {}
 
 function GameManager:new(o)
     o = o or {}
@@ -24,6 +30,11 @@ function GameManager:new(o)
     --      1 = insane, nightmare, extinction
     --      (note: survival will change this value as time goes on)
     self.difficultyValue = 3
+
+    -- Special survival value. (used in calculations)
+    --      0 = Normal, Hard, Insane, Nightmare, Extinction
+    --      1+ = Survival (increases as time goes on)
+    self.survivalValue = 0
 
     -- Special nightmare value. (used in calculations)
     --      0 = Normal, Hard, Insane, Survival
@@ -53,7 +64,8 @@ function GameManager:new(o)
     --                - HIGHER == MORE DIFFICULT
     self.difficultyTime = 3.0
 
-
+    -- Keeps track of the nemesis fight's stage.
+    self.nemesisStage = 0
 
 
     -- Boot up the systems
@@ -68,6 +80,9 @@ function GameManager:initializeSystems()
 
 
     g_RadiationManager = RadiationManager:new()
+    g_EnemyUpgrades = EnemyUpgrades:new()
+    g_EnemySpawner = EnemySpawner:new()
+    g_EnemyCommander = EnemyCommander:new()
 end
 
 -- Sets the game to one of the selectable options
@@ -113,7 +128,8 @@ function GameManager:setDifficulty(difficulty)
     end
 
     -- Now tell whoever needs to know about the difficulty changing
-    g_RadiationManager:onDifficultySet()
+    g_RadiationManager:onDifficultySet(difficulty)
+    g_EnemyUpgrades:onDifficultySet(difficulty)
 
 end
 
