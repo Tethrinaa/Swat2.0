@@ -63,6 +63,8 @@ function RadiationManager:new(o)
     --      Rads killed by nukes will *halve* the current count
     self.poppedRads = 0
 
+    -- Horror rads - rads contributed by a currently alive horror
+    self.horrorRads = 0
 
     ------------
     -- SETUP

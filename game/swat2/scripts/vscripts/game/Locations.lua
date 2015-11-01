@@ -69,6 +69,10 @@ end
     --for i = 1,number do
         --self.
 --end
+function GetCenterInRegion(region)
+    local bounds = region:GetBounds()
+    return region:GetAbsOrigin()
+end
 
 function GetRandomPointInRegion(region)
     local bounds = region:GetBounds()

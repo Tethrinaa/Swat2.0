@@ -1,8 +1,12 @@
 -- This file will be responsible spawning waves.
 --
 
-
 EnemySpawner = {}
+
+-- Require the minion and boss files we'll be using
+require("game/bosses/abomination")
+require("game/bosses/horror")
+require("game/bosses/tyrant")
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
@@ -33,6 +37,23 @@ function EnemySpawner:new(o)
 
     -- Chance of spawning innards (higher == more chance)
     self.innardsChance = 0
+
+
+    -- Boss parameters
+    self.abomsCurrentlyAlive = 0
+
+    self.abomSpawner = Abomination:new() -- There are situations where we just need to spawn an abom
+    self.tyrantSpawner = Tyrant:new() -- There are situations where we just need to spawn an abom
+
+    -- Create the bosses list
+    self.bosses = {}
+    table.insert(self.bosses, Horror:new())
+    table.insert(self.bosses, self.abomSpawner)
+
+    -- Normal can only get a few bosses
+    self.normalDiffBosses = {}
+    table.insert(self.normalDiffBosses, Horror:new())
+    table.insert(self.normalDiffBosses, self.abomSpawner)
 
     return o
 end
@@ -69,6 +90,7 @@ function EnemySpawner:onDifficultySet(difficulty)
     end
 
     -- Start wave spawning in 30 seconds
+    -- TODO: Uncomment this
     --Timers:CreateTimer(30.0, function()
         self:startWaveSpawning()
     --end)
@@ -127,8 +149,10 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
             end
         end
 
+        self:spawnBoss()
+
         -- Tell the group where to go
-        -- Issueing an order to a unit immediately afte rit spawns seems to not consistently work
+        -- Issueing an order to a unit immediately after it spawns seems to not consistently work
         -- so we'll wait a second before telling the group where to go
         Timers:CreateTimer(1.0, function()
             for _,unit in pairs(spawnedUnits) do
@@ -332,4 +356,31 @@ function EnemySpawner:spawnBeast(position, specialType)
     local unit = CreateUnitByName( "npc_dota_creature_basic_beast", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
+end
+
+
+----------------------
+------- BOSS SPAWN FUNCTIONS
+----------------------
+
+function EnemySpawner:spawnBoss()
+    local boss = nil
+    if g_GameManager.currentDay == 1 then
+        -- We can only spawn Aboms on day 1
+        boss = self.abomSpawner:spawnBoss()
+    elseif g_GameManager.difficultyName == "normal" then
+        -- Normal mode can only get Aboms and Horrors on Day > 1
+        for _,bossSpawner in pairs(self.normalDiffBosses) do
+            if bossSpawner:rollToSpawn() then
+                boss = bossSpawner:spawnBoss()
+            end
+        end
+    else
+        -- Pick a random boss
+        for _,bossSpawner in pairs(self.bosses) do
+            if bossSpawner:rollToSpawn() then
+                boss = bossSpawner:spawnBoss()
+            end
+        end
+    end
 end

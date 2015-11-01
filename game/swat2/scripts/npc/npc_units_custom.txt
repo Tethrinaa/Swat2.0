@@ -804,9 +804,9 @@
 		}
 	}
 	//=================================================================================
-	// Creature: AMOMB
+	// Creature: ABOMINATION
 	//=================================================================================
-		"npc_dota_creature_basic_boss"
+		"npc_dota_creature_basic_abomination"
 	{
 		// General
 
@@ -814,7 +814,7 @@
 		"Model"						"models/heroes/undying/undying_flesh_golem.vmdl"	// Model.
 		"SoundSet"					"Undying_Zombie"					// Name of sound set.
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
-		"ModelScale"				"4.5"
+		"ModelScale"				"2"
 		"Level"						"1"
 
 		// Abilities

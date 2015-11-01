@@ -16,7 +16,6 @@ end
 
 -- Gets all of the units on the map and tells them to target an area near the current targetted hero
 function EnemyCommander:collectEmUp()
-    -- TODO
     print("EnemyCommander | collectEmUp()")
 
     self:pickHeroToKill()
