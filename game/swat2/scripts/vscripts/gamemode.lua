@@ -135,6 +135,10 @@ end
 ]]
 function GameMode:OnAllPlayersLoaded()
   DebugPrint("[BAREBONES] All Players have loaded into the game")
+  
+  --Initiates Radiation UI
+  --TODO: Fix bug where there is delay in UI update
+  Global_Radiation_Manager:updateRadiationDisplay()
 end
 
 --[[
@@ -471,7 +475,8 @@ function GameMode:BuildMarine( event )
 
    GameMode:ModifyStatBonuses(hero)
 
-   -- set trait TODO
+
+  -- set trait TODO
       -- set maverick mutate TODO
    -- set spec TODO
    -- set maverick dog TODO
