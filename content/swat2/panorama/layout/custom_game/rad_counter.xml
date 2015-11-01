@@ -1,0 +1,19 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/rad_counter.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/rad_counter.js" /> 
+	</scripts>
+	<Panel hittest="false" class="BaseHud">		
+		<Panel hittest="false" id="RadCounterBox" class="RadCounterBox">
+			<Label id="RadCount" text=" "/>
+			<Label id="SafeRadCount" text=" "/>   
+			<Image id="HazMatIconOn" src="file://{images}/haz_materials_on.png" />
+			<Image id="HazMatIconOff" src="file://{images}/haz_materials_off.png" />
+			
+		</Panel>	
+			
+	</Panel>
+</root>
