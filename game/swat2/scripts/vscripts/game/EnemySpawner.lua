@@ -12,6 +12,11 @@ EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
 EnemySpawner.MAX_GROUP_SIZE = 21 -- The largest size a minion group can be
 
+-- At least one of these conditions needs to be met for a boss to spawn
+EnemySpawner.BOSS_CHECK_MINION_COUNT = EnemySpawner.MAX_MINIONS / 4 * 3 -- The current number of minions must be less than this
+EnemySpawner.BOSS_CHECK_QUEUE_COUNT = EnemySpawner.MAX_MINIONS / 8 -- The minion queue must be lower than this
+EnemySpawner.BOSS_CHECK_TYRANT_QUEUE_COUNT = EnemySpawner.MAX_MINIONS / 8  * 7 -- The minion queue + this amount must be less than last queue amount when we spawned a tyrant
+
 -- An enum for the type of enemy to spawn
 EnemySpawner.ENEMY_CODE_ZOMBIE = 0
 EnemySpawner.ENEMY_CODE_GROTESQUE = 1
@@ -54,6 +59,10 @@ function EnemySpawner:new(o)
     self.normalDiffBosses = {}
     table.insert(self.normalDiffBosses, Horror:new())
     table.insert(self.normalDiffBosses, self.abomSpawner)
+
+    self.survivalDoubleBoss = false -- true if the last boss spawn was a double boss
+    self.useTyrantTrack = 0 -- Used for tracking tyrant spawning
+    self.useTyrantQueue = 0 -- Stores the minion queue count when we last spawned a tyrant
 
     return o
 end
@@ -120,11 +129,17 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
         local j = Round(groupSize * .25) + 1
         if groupSize > j and RandomInt(1, 4) < g_RadiationManager.radiationLevel then
             groupSize = groupSize - 1
-            table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail))
+            local unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail)
+            if unit ~= nil then
+                table.insert(spawnedUnits, unit)
+            end
         end
         while groupSize > j do
             groupSize = groupSize - 1
-            table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail))
+            local unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail)
+            if unit ~= nil then
+                table.insert(spawnedUnits, unit)
+            end
         end
 
         -- The rest of the wave can be anything
@@ -133,23 +148,25 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
             j = RandomInt(0, 9)
             local position = GetRandomPointInRegion(location)
 
+            local unit = nil
             if j < 1 then
-                table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail))
+                unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail)
             elseif j < 2 then
-                table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 30, shouldAddToMinionQueueIfFail))
+                unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 30, shouldAddToMinionQueueIfFail)
             elseif j < 4 then
-                table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail))
+                unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail)
             else
                 -- TODO: Not 100% this is radiationLevel (which it is in source) and not radiationFragments
                 if RandomInt(-1, 43) < g_RadiationManager.radiationLevel then
-                    table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail))
+                    unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
                 else
-                    table.insert(spawnedUnits, self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), RandomInt(1, 13), shouldAddToMinionQueueIfFail))
+                    unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), RandomInt(1, 13), shouldAddToMinionQueueIfFail)
                 end
             end
+            if unit ~= nil then
+                table.insert(spawnedUnits, unit)
+            end
         end
-
-        self:spawnBoss()
 
         -- Tell the group where to go
         -- Issueing an order to a unit immediately after it spawns seems to not consistently work
@@ -261,6 +278,106 @@ function EnemySpawner:spawnQueueGroups()
 
 end
 
+-- Function related to boss cycle
+-- This function will spin up a timer and periodically spawn bosses
+function EnemySpawner:startBossCycle()
+    -- Bosses will not spawn if the minion count is too high, but we'll only wait so long...
+    local waitCount = 11 - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+
+    if self.useTyrantTrack > 1 then
+        waitCount = waitCount + 15 - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+    end
+
+    if (not self.survivalDoubleBoss)
+        and (g_GameManager.currentDay > 1)
+        and (g_GameManager.nightmareOrSurvivalValue > 0)
+        and (RandomInt(0, 4) < g_GameManager.nightmareOrSurvivalValue) then
+        -- Spawn this boss really quickly (the ole Survival double boss)
+        self.survivalDoubleBoss = true
+        waitCount = waitCount + 5
+
+        -- Wait for a bit then call the bossWaitForMinions
+        Timers:CreateTimer(30 - (24 * g_GameManager.nightmareValue / 2), function()
+            self:bossWaitForMinions(waitCount)
+        end)
+    elseif g_GameManager.isSurvival then
+        -- Survival Mode
+        self.survivalDoubleBoss = false
+
+        local waitTimeFirst = math.max(40, (2 + g_GameManager.difficultyValue) * 60.0 - RandomInt(-10 * g_GameManager.difficultyValue, 10) - Round(g_GameManager.difficultyTime * 10.0))
+        Timers:CreateTimer(waitTimeFirst, function()
+            -- Now we wait again
+            local waitTimeSecond = math.max(40, (2 + g_GameManager.difficultyValue) * 60.0 - RandomInt(-10 * g_GameManager.difficultyValue, 10) - Round(g_GameManager.difficultyTime * 5.0))
+            Timers:CreateTimer(waitTimeSecond, function()
+                self:bossWaitForMinions(waitCount)
+            end)
+        end)
+    else
+        -- Other modes
+        self.survivalDoubleBoss = false
+
+        local waitTimeFirst = math.max(90, (2 + g_GameManager.difficultyValue) * 60.0 - RandomInt(-10 * g_GameManager.difficultyValue, 10) - Round(g_GameManager.difficultyTime * 6.0))
+        --print("EnemySpawner | Boss Spawning: First Wait: " .. waitTimeFirst)
+        Timers:CreateTimer(waitTimeFirst, function()
+            -- Now we wait again
+            local waitTimeSecond = math.max(30 * g_GameManager.difficultyValue, (2 + g_GameManager.difficultyValue) * 60.0 - RandomInt(-10 * g_GameManager.difficultyValue, 10) - Round(g_GameManager.difficultyTime * 2.0))
+            --print("EnemySpawner | Boss Spawning: Second Wait: " .. waitTimeSecond)
+            Timers:CreateTimer(waitTimeSecond, function()
+                self:bossWaitForMinions(waitCount)
+            end)
+        end)
+    end
+end
+
+-- When we try to spawn a boss, we need to wait for the minion count to drop
+-- We'll only wait `waitCount` amount of times before just spawning a Tyrant (and then the boss anyways)
+function EnemySpawner:bossWaitForMinions(waitCount)
+    Timers:CreateTimer(0, function()
+        -- TODO: fix the second line to include something about queued lives
+        -- exitwhen (udg_MinionQueue - udg_QLi/8*7) < (udg_MinionMax / 8) //queue is low, reincarnates counted against you only 12.5%
+        if (self.minionCount < EnemySpawner.BOSS_CHECK_MINION_COUNT)
+            or (self.minionQueue < EnemySpawner.BOSS_CHECK_QUEUE_COUNT)
+            or (self.minionQueue + EnemySpawner.BOSS_CHECK_TYRANT_QUEUE_COUNT < self.useTyrantQueue) then
+            -- We can spawn a boss
+
+            -- Reset the tyrant variables
+            self.useTyrantQueue = 0
+            self.useTyrantTrack = 0
+
+            -- Spawn the boss
+            self:spawnBoss()
+
+            -- Start the next boss cycle
+            self:startBossCycle()
+        else
+            print("Boss is waiting to spawn! waitCount=" .. waitCount)
+            -- we can't spawn a boss, if we have wait counts we can wait
+            if waitCount > 0 then
+                waitCount = waitCount - 1
+                return 8.5
+            else
+                -- We can't wait anymore, spawn a tyrant
+                self.useTyrantQueue = self.minionQueue
+                if self.useTyrantTrack < 2 then
+                    self.useTyrantTrack = 3
+                end
+                self.tyrantSpawner:spawnBoss()
+
+                -- Wait 20 seconds
+                Timers:CreateTimer(20, function()
+                    self.useTyrantTrack = 2
+                    -- Lol, we'll still spawn a boss on them. No buddy puts baby in a corner
+                    self:spawnBoss()
+
+                    -- Start the next boss cycle
+                    self:startBossCycle()
+                end)
+            end
+        end
+
+    end)
+end
+
 function EnemySpawner:startWaveSpawning()
     print("EnemySpawner | Starting Wave Spawning")
 
@@ -269,8 +386,13 @@ function EnemySpawner:startWaveSpawning()
 
     -- Start the wave spawning
     self:spawnWave()
-end
 
+    -- TODO set to 45, not 0
+    Timers:CreateTimer(0, function()
+        print("EnemySpawner | Starting Boss Spawn Cycle")
+        self:startBossCycle()
+    end)
+end
 
 ----------------------
 ------- MINION SPAWN FUNCTIONS
@@ -324,35 +446,35 @@ end
 --  @param position | A vector where the enemy should be spawned
 --  @param specialType | A value that is used to determine what type of zombie to spawn (flaming, TNT, rad...etc)
 function EnemySpawner:spawnZombie(position, specialType)
-    print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
+    --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
     local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnMutant(position)
-    print("EnemySpawner | Spawning Mutant")
+    --print("EnemySpawner | Spawning Mutant")
     local unit = CreateUnitByName( "npc_dota_creature_basic_mutant", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnDog(position, specialType)
-    print("EnemySpawner | Spawning Dog(" .. specialType .. ")")
+    --print("EnemySpawner | Spawning Dog(" .. specialType .. ")")
     local unit = CreateUnitByName( "npc_dota_creature_basic_dog", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnGrotesque(position, specialType)
-    print("EnemySpawner | Spawning Grotesque(" .. specialType .. ")")
+    --print("EnemySpawner | Spawning Grotesque(" .. specialType .. ")")
     local unit = CreateUnitByName( "npc_dota_creature_basic_garg", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit
 end
 
 function EnemySpawner:spawnBeast(position, specialType)
-    print("EnemySpawner | Spawning Beast(" .. specialType .. ")")
+    --print("EnemySpawner | Spawning Beast(" .. specialType .. ")")
     local unit = CreateUnitByName( "npc_dota_creature_basic_beast", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     return unit

@@ -55,10 +55,9 @@ function GameMode:OnThink()
 end
 
 function HeroLeveledUp( keys )
-	print( "Somebody leveled up!" )
+	--print( "Somebody leveled up!" )
 	local hero = PlayerResource:GetPlayer(keys.player-1):GetAssignedHero()
 	ItemCheck(hero)
-
 end
 
 

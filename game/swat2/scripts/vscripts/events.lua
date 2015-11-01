@@ -11,6 +11,8 @@ function GameMode:OnDisconnect(keys)
   local reason = keys.reason
   local userid = keys.userid
 
+  -- TODO: Not sure if this is called correctly (UNTESTED)
+  EnemyUpgrades:onPlayerLeavesGame(keys.player)
 end
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
@@ -140,6 +142,8 @@ function GameMode:OnPlayerLevelUp(keys)
 
   local player = EntIndexToHScript(keys.player)
   local level = keys.level
+
+  g_EnemyUpgrades:onPlayerLevelUp(keys.player, level)
 end
 
 -- A player last hit a creep, a tower, or a hero

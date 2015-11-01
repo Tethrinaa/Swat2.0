@@ -54,14 +54,18 @@ function Abomination:spawnAbomMinionGroup(warehouse)
     for i = 1, numberOfMinions do
         local j = RandomInt(0, 9)
         local position = warehouseCenter + RandomVector(270)
+        local unit = nil
         if j < 1 then
-            table.insert(spawnedUnits, g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, 0, true))
+            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, 0, true)
         elseif j < 2 then
-            table.insert(spawnedUnits, g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 0, true))
+            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 0, true)
         elseif j < 4 then
-            table.insert(spawnedUnits, g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, 0, true))
+            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, 0, true)
         else
-            table.insert(spawnedUnits, g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, position, 0, true))
+            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, position, 0, true)
+        end
+        if unit ~= nil then
+            table.insert(spawnedUnits, unit)
         end
     end
 
