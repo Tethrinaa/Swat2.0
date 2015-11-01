@@ -60,7 +60,7 @@ function GameManager:new(o)
     -- difficultyBase - A constant value (except on survival), which scales the difficulty of the game over time
     --                - LOWER == MORE DIFFICULT
     self.difficultyBase = 0.0
-    -- difficultyTime - This difficulty value increases over time (sunrise and sunset) based on the baseDifficulty value
+    -- difficultyTime - This difficulty value increases over time (sunrise and sunset) based on the difficultyBase value
     --                - HIGHER == MORE DIFFICULT
     self.difficultyTime = 3.0
 

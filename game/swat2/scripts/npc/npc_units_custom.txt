@@ -3,6 +3,22 @@
 {
 	"Version"	"1"
 
+    //=================================================================================
+    // Dummy Unit - (Empty dummy unit)
+    //=================================================================================
+    "dummy_unit"
+    {
+        "BaseClass"                 "npc_dota_creature"
+            "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+            "VisionDaytimeRange"        "0"
+            "VisionNighttimeRange"      "0"
+            "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+            "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+            "AbilityLayout"             "4"
+            "Ability1"                  "dummy_passive"
+    }
+
+
 	//=================================================================================
 	// Creature: Basic Zombie
 	//=================================================================================
@@ -117,6 +133,23 @@
 			//-----------------------------------------------------------------
 		}
 	}
+    //=================================================================================
+    // Zombie Corpse
+    //=================================================================================
+    "zombie_corpse"
+    {
+            "BaseClass"                 "npc_dota_creature"
+            "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+            "VisionDaytimeRange"        "0"
+            "VisionNighttimeRange"      "0"
+            "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+            "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+            "AbilityLayout"             "4"
+            "Ability1"                  "dummy_passive"
+            "Model"						"models/heroes/undying/undying_minion_torso.vmdl"
+            "ModelScale"				"0.7"
+    }
+
 	//=================================================================================
 	// Creature: Basic Zombie
 	//=================================================================================

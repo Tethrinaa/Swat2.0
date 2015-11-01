@@ -7,6 +7,7 @@ EnemySpawner = {}
 require("game/bosses/abomination")
 require("game/bosses/horror")
 require("game/bosses/tyrant")
+require("game/minions/zombie")
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
@@ -43,6 +44,8 @@ function EnemySpawner:new(o)
     -- Chance of spawning innards (higher == more chance)
     self.innardsChance = 0
 
+    -- Minion Spawners
+    self.zombieSpawner = Zombie:new()
 
     -- Boss parameters
     self.abomsCurrentlyAlive = 0
@@ -103,6 +106,10 @@ function EnemySpawner:onDifficultySet(difficulty)
     --Timers:CreateTimer(30.0, function()
         self:startWaveSpawning()
     --end)
+end
+
+function EnemySpawner:canSpawnMinion()
+    return self.minionCount < EnemySpawner.MAX_MINIONS
 end
 
 -- Spawns a group of minions at the provided location
@@ -442,12 +449,24 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
 
 end
 
+function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+    g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
+
+    -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
+    -- of the unit. Here the EnemySpawner will call that function
+    local onDeathFunction = killedUnit.onDeathFunction
+    if onDeathFunction ~= nil then
+        onDeathFunction(killedUnit, killerEntity, killerAbility)
+    end
+end
+
 -- Spawns a Zombie at a random point in the location
 --  @param position | A vector where the enemy should be spawned
 --  @param specialType | A value that is used to determine what type of zombie to spawn (flaming, TNT, rad...etc)
 function EnemySpawner:spawnZombie(position, specialType)
     --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    --local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = self.zombieSpawner:spawnMinion(position, specialType)
 
     return unit
 end

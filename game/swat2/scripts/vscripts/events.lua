@@ -248,8 +248,10 @@ function GameMode:OnEntityKilled( keys )
 
   -- Put code here to handle when an entity gets killed
 
-  print("DEBUG | Enemy Killed, decrement minion count")
-  g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
+  -- If an enemy died, let the spawner know about it
+  if killedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+      g_EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+  end
 end
 
 
