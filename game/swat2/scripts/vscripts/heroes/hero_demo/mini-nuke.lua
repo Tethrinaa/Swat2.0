@@ -1,5 +1,4 @@
 function setActive(keys)
-	DeepPrintTable(keys)
 	keys.ability:SetActivated(true)
 end
 
