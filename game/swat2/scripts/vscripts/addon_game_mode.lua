@@ -37,8 +37,9 @@ end
 
 -- Create the game mode when we activate
 function Activate()
-   GameRules.GameMode = GameMode()
+	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
+	ListenToGameEvent( "dota_player_gained_level", HeroLeveledUp, self )
 end
 
 -- Evaluate the state of the game
@@ -49,4 +50,33 @@ function GameMode:OnThink()
 		return nil
 	end
 	return 1
+end
+
+function HeroLeveledUp( keys )
+	print( "Somebody leveled up!" )
+	local hero = PlayerResource:GetPlayer(keys.player-1):GetAssignedHero()
+	ItemCheck(hero) 
+	
+end
+
+
+function ItemCheck( hero )
+    for itemSlot = 0, 5, 1 do 	
+	local Item = hero:GetItemInSlot( itemSlot )
+	if (Item ~= nil) then
+            local itemName = Item:GetAbilityName()	
+	    local itemTable = GameMode.ItemInfoKV[itemName]
+	    if itemTable.intRequired then
+		    if itemTable.intRequired > hero:GetIntellect() then
+			DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersRemove"))
+			print("removing data driven modifier")			        
+			Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersRemove, {duration=-1} )
+		    else
+			DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersAdd"))
+			print("applying data driven modifier")
+			Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersAdd, {duration=-1} )
+		    end
+	    end
+	end
+    end
 end
