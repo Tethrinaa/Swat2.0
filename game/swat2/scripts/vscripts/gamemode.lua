@@ -396,16 +396,8 @@ function GameMode:BuildMarine( event )
 
    --Clean the hero up first
    RemoveAllSkills(hero)
-<<<<<<< HEAD
+
    
-=======
-
-   -- -- set abilities
-   -- for key,value in pairs(Global_Consts.classes[event.class].abilities) do
-     -- hero:AddAbility(value)
-   -- end
-
->>>>>>> develop
    -- set attributes - Why no SetBaseStrengthGain volvo?
    hero:SetBaseStrength(Global_Consts.classes[event.class].strength)
    hero.AttributeStrengthGain = Global_Consts.classes[event.class].strengthPerLevel
