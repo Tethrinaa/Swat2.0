@@ -136,10 +136,27 @@ function GameManager:setDifficulty(difficulty)
         print("GameManager | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
+    -- Spawn creates, power plants, abms...etc
+    self:initializeBuildings()
+
     -- Now tell whoever needs to know about the difficulty changing
     g_RadiationManager:onDifficultySet(difficulty)
     g_EnemyUpgrades:onDifficultySet(difficulty)
     g_EnemySpawner:onDifficultySet(difficulty)
+
+end
+
+-- Called once difficulty set.
+-- Spawns the creates, abms, powerplants...etc
+function GameManager:initializeBuildings()
+    -- Create the various building types in the game
+    Locations:createRooms()
+
+    -- TODO: Spawn Power Plants
+
+    -- TODO: Spawn ABMs
+
+    -- TODO: Spawn Crates
 
 end
 

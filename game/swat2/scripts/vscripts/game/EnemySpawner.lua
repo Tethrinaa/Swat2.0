@@ -122,6 +122,9 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
+    -- Spawn some initial zombies
+    self:spawnInitialZombies()
+
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
         self:startWaveSpawning()
@@ -131,6 +134,14 @@ end
 function EnemySpawner:canSpawnMinion()
     return self.minionCount < EnemySpawner.MAX_MINIONS
 end
+
+
+
+
+
+--------------------------
+----- ENEMY WAVE SPAWNING
+--------------------------
 
 function EnemySpawner:startWaveSpawning()
     if SHOW_ENEMY_SPAWNER_LOGS then
@@ -403,6 +414,15 @@ function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
     end
 end
 
+
+
+
+
+
+--------------------------
+----- BOSS STUFF
+--------------------------
+
 -- Function related to boss cycle
 -- This function will spin up a timer and periodically spawn bosses
 function EnemySpawner:startBossCycle()
@@ -528,4 +548,66 @@ function EnemySpawner:spawnBoss()
     if SHOW_ENEMY_SPAWNER_LOGS then
         print("EnemySpawner | Spawning boss!! (" .. ((boss ~= nil) and boss:GetName() or "nil??") .. ")")
     end
+end
+
+
+
+
+--------------------------
+----- OTHER STUFF
+--------------------------
+
+
+
+
+-- Function called at the start of the game to populate the starting map
+function EnemySpawner:spawnInitialZombies()
+    self:spawnZombiesInGraveyard()
+
+    -- Spawn zombies in rooms!
+    -- We always have a chance to spawn zombies in the non-power plant special rooms
+    local specialBuildingsThatGetZombies = {
+            Locations.abms
+            , Locations.atme_rooms
+            , Locations.clothing_room
+            , Locations.chemical_plants
+            , Locations.armories
+            , Locations.tech_centers
+            , Locations.cybernetic_facilities}
+    for _,locationGroup in pairs(specialBuildingsThatGetZombies) do
+        for _,location in pairs(locationGroup) do
+            g_EnemySpawner:spawnInitialZombiesInWarehouse(location)
+        end
+    end
+    -- Less chance in empty warehouses though
+    local chance = g_GameManager.difficultyValue * 24
+    for _,location in pairs(Locations.empty_warehouses) do
+        if RandomInt(0, 99) > chance then
+            g_EnemySpawner:spawnInitialZombiesInWarehouse(location)
+        end
+    end
+end
+
+-- Function called at the start of the game and when players enter the graveyard
+-- Creates some zombies in the graveyard
+function EnemySpawner:spawnZombiesInGraveyard()
+    local zombiesToSpawn = RandomInt(24 / g_GameManager.difficultyValue, 50 - (8 * g_GameManager.difficultyValue))
+    for i = 1,zombiesToSpawn do
+        self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInGraveyard(), 0, true)
+    end
+end
+
+-- Function called when we initialize buildings. It has a chance to spawn a small amount of zombies in the supplied region
+-- The zombies will head off to the graveyard
+function EnemySpawner:spawnInitialZombiesInWarehouse(region)
+    local zombiesToSpawn = RandomInt(-5, 4 - g_GameManager.difficultyValue)
+    local units = {}
+    for i = 1,zombiesToSpawn do
+        units[i] = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(region), 0, true)
+    end
+    Timers:CreateTimer(10.0, function()
+        for _,unit in pairs(units) do
+            ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
+        end
+    end)
 end

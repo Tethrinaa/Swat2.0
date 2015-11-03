@@ -1,8 +1,9 @@
 -- Stores the locations in the game and has convenience methods for getting locations or points in locations
 Locations = {}
 
-LOCATIONS_RANDOM_POINT_OFFSET = 40 -- to try and prevent things spawning inside/on walls or something
+SHOW_LOCATIONS_LOGS = SHOW_GAME_SYSTEM_LOGS
 
+LOCATIONS_RANDOM_POINT_OFFSET = 40 -- to try and prevent things spawning inside/on walls or something
 
 function Locations:new(o)
     o = o or {}
@@ -11,9 +12,20 @@ function Locations:new(o)
 
     -- includes power_plants, abms, and warehouses
     self.all_rooms = nil
-    self.power_plants = {}
+    self.warehouses = {} -- all rooms that are not power plants (ABMs, crate rooms, ...etc are included!)
+
+    -- Special rooms
+    -- Generated once difficulty is set (as the number of these depends on difficulty)
+    self.power_plants = {} -- NOTE: Not included in self.warehouses (as nothing spawns there)
     self.abms = {}
-    self.warehouses = {} -- all rooms that are not power plants (ABMs are included!)
+    self.atme_rooms = {}
+    self.clothing_rooms = {} -- "fake" ATME room
+    self.chemical_plants = {} -- Brown Crate Room (spawns drugs and stuff)
+    self.armories = {} -- Silver Crate Room (spawns weapons and armor)
+    self.tech_centers = {} -- Silver Crate Room (spawns other passive items)
+    self.cybernetic_facilities = {} -- Brown Crate Room (spawns permanent upgrades)
+    self.empty_warehouses = {} -- A warehouse that has nothing
+
 
     self.bunkers = nil
     self.graveyard = nil -- there is only one graveyard region
@@ -57,11 +69,105 @@ end
 -- We'll randomize the order of the regions in each of the groups
 -- This is useful for anyone who wants to get a random subset of distinct regions in a group (then can just grab a contiguous series and it will be random)
 function Locations:randomizeRegions(regions)
+    if SHOW_LOCATIONS_LOGS then
+        print("Locations | Randomizing buildings")
+    end
     for i = 1,#regions do
         local randNum = RandomInt(1,#regions)
         local temp = regions[randNum]
         regions[randNum] = regions[i]
         regions[i] = temp
+    end
+end
+
+-- Called once difficulty is set
+-- This picks out all of the special buildings in the game
+function Locations:createRooms()
+    local diff = g_GameManager.difficultyValue
+    local survival = g_GameManager.survivalValue
+    -- A modifier based on player count ([0-3 == 0, 4-6 == 1, 7=9 == 2])
+    local playerCountModifier = math.floor((g_GameManager.playerCount - 1)/ 3)
+
+    -- We'll use these variables to pick out rooms
+    -- We obviously don't want to assign a room more than one type
+    -- so, we'll keep an index and count of number of that type (relative to the current index)
+    local i = #self.all_rooms -- the index of the current room
+    local numOfType = 0 -- The number of rooms of a specific type
+
+    -- PowerPlants (6min, 6max)
+    numOfType = i - 6
+    while i > numOfType do
+        table.insert(self.power_plants, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- ABMs (4min, 6max)
+    numOfType = i - RandomInt(4, 6 - (3 - diff))
+    while i > numOfType do
+        table.insert(self.abms, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- atme (1min, 2max [only Insane+, Survival])
+    numOfType = i - math.max(1, RandomInt(1, 3 - diff + (2 * survival)))
+    while i > numOfType do
+        table.insert(self.atme_rooms, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- clothing (1min, 1max)
+    numOfType = i - 1
+    while i > numOfType do
+        table.insert(self.clothing_rooms, self.all_rooms[i])
+        i = i - 1
+    end
+    i = i - 1
+
+    -- chemical plants (2-3min, 3-5max)
+    numOfType = i - RandomInt(3 - survival, 3 + playerCountModifier)
+    while i > numOfType do
+        table.insert(self.chemical_plants, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- armories (1-3min, 6max)
+    numOfType = i - RandomInt(1 + playerCountModifier, 6 - diff)
+    while i > numOfType do
+        table.insert(self.armories, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- technology centers (1-2min, 3max)
+    numOfType = i - RandomInt(1 + ((playerCountModifier > 0) and 1 or 0), 3)
+    while i > numOfType do
+        table.insert(self.tech_centers, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- cybernetic facilities (1-2min, 4max)
+    numOfType = i - RandomInt(2 - survival, 5 - diff)
+    while i > numOfType do
+        table.insert(self.cybernetic_facilities, self.all_rooms[i])
+        i = i - 1
+    end
+
+    -- empty warehouses (rest)
+    while i > 0 do
+        table.insert(self.empty_warehouses, self.all_rooms[i])
+        i = i - 1
+    end
+
+    if SHOW_LOCATIONS_LOGS then
+        print("Locations | Generated Building Types:")
+        print("Locations | Power Plants       : " .. #self.power_plants)
+        print("Locations | Black Markets      : " .. #self.abms)
+        print("Locations | ATME Rooms         : " .. #self.atme_rooms)
+        print("Locations | Clothing Room      : " .. #self.clothing_rooms)
+        print("Locations | Chemical Plants    : " .. #self.chemical_plants)
+        print("Locations | Armories           : " .. #self.armories)
+        print("Locations | Tech Centers       : " .. #self.tech_centers)
+        print("Locations | Cybernetics Facils : " .. #self.cybernetic_facilities)
+        print("Locations | Empty Warehouses   : " .. #self.empty_warehouses)
     end
 end
 
