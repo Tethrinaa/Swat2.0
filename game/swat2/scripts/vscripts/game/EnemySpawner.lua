@@ -33,6 +33,9 @@ function EnemySpawner:new(o)
     -- Number of minions out (that count against the cap)
     self.minionCount = 0
 
+    -- Number of bosses
+    self.bossCount = 0
+
     -- Number of groups remaining in current wave
     self.waveGroups = 0
     -- count of minions added to "overflow"
@@ -202,14 +205,15 @@ function EnemySpawner:spawnWave()
             self:spawnWave()
         end)
     else
-        print("EnemySpawner | New Wave Started")
+        local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
+        print("EnemySpawner | New Wave Starting in " .. waveInitialWaitTime .. " seconds")
         -- Begin the wave!
         self.minionQueue = 0
         g_EnemyUpgrades.mobSpeed = 0 -- Reset the buffs we gave to the previous wave while we waited
 
         local numberOfWaveGroups = 51 + g_GameManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
         print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
-        Timers:CreateTimer(0, function()
+        Timers:CreateTimer(waveInitialWaitTime, function()
             -- There is a random chance we don't do anything
             local i = 0
             if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then

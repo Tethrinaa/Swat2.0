@@ -53,7 +53,7 @@ function Abomination:spawnAbomMinionGroup(warehouse)
     local spawnedUnits = {}
     for i = 1, numberOfMinions do
         local j = RandomInt(0, 9)
-        local position = warehouseCenter + RandomVector(270)
+        local position = warehouseCenter + RandomSizedVector(270)
         local unit = nil
         if j < 1 then
             unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, 0, true)

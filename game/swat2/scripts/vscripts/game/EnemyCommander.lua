@@ -78,7 +78,7 @@ function EnemyCommander:doMobAction(unit, target)
     local position = nil
     if target ~= nil and target:GetHealth() > 0 then
         -- Attack move to that targets locations
-        position = target:GetAbsOrigin() + RandomVector(499)
+        position = target:GetAbsOrigin() + RandomSizedVector(499)
     else
         -- Just go to the graveyard
         position = GetRandomPointInGraveyard()
