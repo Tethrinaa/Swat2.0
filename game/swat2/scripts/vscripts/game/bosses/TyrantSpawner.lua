@@ -1,9 +1,11 @@
 -- Stores information relating to tyrants
 
-Tyrant = {}
+SHOW_TYRANT_LOGS = SHOW_BOSS_LOGS
+
+TyrantSpawner = {}
 
 
-function Tyrant:new(o)
+function TyrantSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
@@ -15,7 +17,9 @@ end
 
 -- Generic boss function for actually spawning the boss
 -- Returns the created boss unit
-function Tyrant:spawnBoss()
-    print("Tyrant | TODO: Spawn Tyrant")
+function TyrantSpawner:spawnBoss()
+    if SHOW_TYRANT_LOGS then
+        print("TyrantSpawner | TODO: Spawn Tyrant")
+    end
     -- TODO
 end

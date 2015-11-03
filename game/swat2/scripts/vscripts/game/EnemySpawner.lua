@@ -2,18 +2,28 @@
 --
 
 SHOW_ENEMY_SPAWNER_LOGS = SHOW_GAME_SYSTEM_LOGS
+SHOW_BOSS_LOGS = SHOW_ENEMY_SPAWNER_LOGS -- Will enable showing log messages in the boss files
+SHOW_MINION_LOGS = SHOW_ENEMY_SPAWNER_LOGS -- Will enable showing log messages in the minion files
 
 EnemySpawner = {}
 
 -- Require the minion and boss files we'll be using
-require("game/bosses/abomination")
-require("game/bosses/horror")
-require("game/bosses/tyrant")
-require("game/minions/zombie")
+require("game/bosses/AbominationSpawner")
+require("game/bosses/HorrorSpawner")
+require("game/bosses/TyrantSpawner")
+require("game/minions/ZombieSpawner")
+require("game/minions/BeastSpawner")
+require("game/minions/MutantSpawner")
+require("game/minions/DogSpawner")
+require("game/minions/GrotesqueSpawner")
+require("game/minions/InnardsSpawner")
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
 EnemySpawner.MAX_GROUP_SIZE = 21 -- The largest size a minion group can be
+
+EnemySpawner.WAVE_SPAWN_DELAY = 30 -- The wait time from difficulty being set to when we start the wave spawning (note: the first wave will still take an additional 85-105 seconds)
+EnemySpawner.BOSS_SPAWN_DELAY = 45 -- The wait time from waves spawning before boss wave cycle begins (note: the first boss will still have an initial wait period)
 
 -- At least one of these conditions needs to be met for a boss to spawn
 EnemySpawner.BOSS_CHECK_MINION_COUNT = EnemySpawner.MAX_MINIONS / 4 * 3 -- The current number of minions must be less than this
@@ -50,22 +60,28 @@ function EnemySpawner:new(o)
     self.innardsChance = 0
 
     -- Minion Spawners
-    self.zombieSpawner = Zombie:new()
+    self.zombieSpawner = ZombieSpawner:new()
+    self.beastSpawner = BeastSpawner:new()
+    self.mutantSpawner = MutantSpawner:new()
+    self.dogSpawner = DogSpawner:new()
+    self.grotesqueSpawner = GrotesqueSpawner:new()
+    self.innardsSpawner = InnardsSpawner:new()
 
     -- Boss parameters
     self.abomsCurrentlyAlive = 0
 
-    self.abomSpawner = Abomination:new() -- There are situations where we just need to spawn an abom
-    self.tyrantSpawner = Tyrant:new() -- There are situations where we just need to spawn an abom
+    self.abomSpawner = AbominationSpawner:new() -- There are situations where we just need to spawn an abom
+    self.tyrantSpawner = TyrantSpawner:new() -- There are situations where we just need to spawn an abom
+    local horroSpawner = HorrorSpawner:new()
 
-    -- Create the bosses list
+    -- Create the bosses list [Order is Important! Abom last!!] (for all difficulties except Normal)
     self.bosses = {}
-    table.insert(self.bosses, Horror:new())
+    table.insert(self.bosses, horrorSpawner)
     table.insert(self.bosses, self.abomSpawner)
 
-    -- Normal can only get a few bosses
+    -- Normal can only get a few bosses [Order is Important! Abom last!!]
     self.normalDiffBosses = {}
-    table.insert(self.normalDiffBosses, Horror:new())
+    table.insert(self.normalDiffBosses, horroSpawner)
     table.insert(self.normalDiffBosses, self.abomSpawner)
 
     self.survivalDoubleBoss = false -- true if the last boss spawn was a double boss
@@ -107,14 +123,101 @@ function EnemySpawner:onDifficultySet(difficulty)
     end
 
     -- Start wave spawning in 30 seconds
-    -- TODO: Uncomment this
-    --Timers:CreateTimer(30.0, function()
+    Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
         self:startWaveSpawning()
-    --end)
+    end)
 end
 
 function EnemySpawner:canSpawnMinion()
     return self.minionCount < EnemySpawner.MAX_MINIONS
+end
+
+function EnemySpawner:startWaveSpawning()
+    if SHOW_ENEMY_SPAWNER_LOGS then
+        print("EnemySpawner | Starting Wave Spawning")
+    end
+
+    -- Start the CollectEmUp cycle
+    g_EnemyCommander:startCollectEmUpCycle()
+
+    -- Start the wave spawning
+    self:spawnWave()
+
+    Timers:CreateTimer(EnemySpawner.BOSS_SPAWN_DELAY, function()
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | Starting Boss Spawn Cycle")
+        end
+        self:startBossCycle()
+    end)
+end
+
+-- This method will go through the actions of a single wave
+function EnemySpawner:spawnWave()
+    if self.minionCount > EnemySpawner.MAX_MINIONS_WAVE_START then
+        -- Too many minions out to spawn a new wave!
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | Too many minions out to start a new wave")
+        end
+        -- Wait 15 seconds
+        Timers:CreateTimer(15, function()
+            -- Buff the zombies and try to spawn a wave
+            g_EnemyUpgrades.mobSpeed = g_EnemyUpgrades.mobSpeed + 0.5
+            self:spawnWave()
+        end)
+    else
+        -- Begin the wave!
+        self.minionQueue = 0
+        g_EnemyUpgrades.mobSpeed = 0 -- Reset the buffs we gave to the previous wave while we waited
+
+        -- Each wave group will spawn with about 5-15 seconds delays until we run out of groups
+        local numberOfWaveGroups = 51 + g_GameManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+
+        -- We need to wait a bit before actually starting the wave (give the players a breather)
+        local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
+
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | New Wave Starting in " .. waveInitialWaitTime .. " seconds")
+            print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
+        end
+
+        Timers:CreateTimer(waveInitialWaitTime, function()
+            -- There is a random chance we don't do anything
+            local i = 0
+            if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then
+                i = 18 - (g_GameManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+            else
+                i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_GameManager.playerCount / 4))
+            end
+
+            if RandomInt(1 + g_GameManager.survivalValue, 100) > i then
+                -- We passed our random chance.
+                numberOfWaveGroups = numberOfWaveGroups - 1
+                if numberOfWaveGroups < 0 then
+                    -- We're done spawning waves, start spawning the minion queue
+                    self:spawnQueueGroups()
+                else
+                    -- Spawn a wave group!
+
+                    -- Figure out a location for the spawn group
+                    local location = nil
+                    if g_GameManager.lastBuildingEntered ~= nil then
+                        location = g_GameManager.lastBuildingEntered
+                        g_GameManager.lastBuildingEntered = nil
+                    else
+                        location = GetRandomWarehouse()
+                    end
+
+                    self:spawnMinionGroup(location, true)
+
+                    -- We have more wave groups. Just restart this timer
+                    return self.waveGroupDelay
+                end
+            else
+                -- We failed the roll. Wait waveGroupDelay and try again
+                return self.waveGroupDelay
+            end
+        end)
+    end
 end
 
 -- Spawns a group of minions at the provided location
@@ -197,75 +300,6 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
     end
 end
 
--- This method will go through the actions of a single wave
-function EnemySpawner:spawnWave()
-    if self.minionCount > EnemySpawner.MAX_MINIONS_WAVE_START then
-        -- Too many minions out to spawn a new wave!
-        if SHOW_ENEMY_SPAWNER_LOGS then
-            print("EnemySpawner | Too many minions out to start a new wave")
-        end
-        -- Wait 15 seconds
-        Timers:CreateTimer(15, function()
-            -- Buff the zombies and try to spawn a wave
-            g_EnemyUpgrades.mobSpeed = g_EnemyUpgrades.mobSpeed + 0.5
-            self:spawnWave()
-        end)
-    else
-        -- Begin the wave!
-        self.minionQueue = 0
-        g_EnemyUpgrades.mobSpeed = 0 -- Reset the buffs we gave to the previous wave while we waited
-
-        -- Each wave group will spawn with about 5-15 seconds delays until we run out of groups
-        local numberOfWaveGroups = 51 + g_GameManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
-
-        -- We need to wait a bit before actually starting the wave (give the players a breather)
-        local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
-
-        if SHOW_ENEMY_SPAWNER_LOGS then
-            print("EnemySpawner | New Wave Starting in " .. waveInitialWaitTime .. " seconds")
-            print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
-        end
-
-        Timers:CreateTimer(waveInitialWaitTime, function()
-            -- There is a random chance we don't do anything
-            local i = 0
-            if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then
-                i = 18 - (g_GameManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
-            else
-                i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_GameManager.playerCount / 4))
-            end
-
-            if RandomInt(1 + g_GameManager.survivalValue, 100) > i then
-                -- We passed our random chance.
-                numberOfWaveGroups = numberOfWaveGroups - 1
-                if numberOfWaveGroups < 0 then
-                    -- We're done spawning waves, start spawning the minion queue
-                    self:spawnQueueGroups()
-                else
-                    -- Spawn a wave group!
-
-                    -- Figure out a location for the spawn group
-                    local location = nil
-                    if g_GameManager.lastBuildingEntered ~= nil then
-                        location = g_GameManager.lastBuildingEntered
-                        g_GameManager.lastBuildingEntered = nil
-                    else
-                        location = GetRandomWarehouse()
-                    end
-
-                    self:spawnMinionGroup(location, true)
-
-                    -- We have more wave groups. Just restart this timer
-                    return self.waveGroupDelay
-                end
-            else
-                -- We failed the roll. Wait waveGroupDelay and try again
-                return self.waveGroupDelay
-            end
-        end)
-    end
-end
-
 -- Begins summoning from the queue until the queue is empty
 -- Once the queue is empty, we summon another wave
 function EnemySpawner:spawnQueueGroups()
@@ -306,6 +340,67 @@ function EnemySpawner:spawnQueueGroups()
         self:spawnWave()
     end
 
+end
+
+-- Generic enemy spawner. Should pass in an enemy code defined here
+function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinionQueueIfFail)
+    if self.minionCount >= EnemySpawner.MAX_MINIONS then
+        -- Too many units in play, just add this unit to the minion queue
+        -- Nauty players will be punished, but the minions now go into the minion queue
+        if(shouldAddToMinionQueueIfFail) then
+            self.minionQueue = self.minionQueue + 1
+        end
+
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            if(shouldAddToMinionQueueIfFail) then
+                print("EnemySpawner | Adding enemy to minion queue! Queue size = " .. self.minionQueue)
+            else
+                print("EnemySpawner | Couldn't spawn queued enemy!")
+            end
+        end
+    else
+        -- We can spawn this unit
+
+        -- Decrement the minion queue
+        if self.minionQueue > 0 then
+            self.minionQueue = self.minionQueue - 1
+        end
+        self.minionCount = self.minionCount + 1
+
+        local unit = nil
+        if enemy == EnemySpawner.ENEMY_CODE_ZOMBIE then
+            unit = self.zombieSpawner:spawnMinion(position, specialType)
+        elseif enemy == EnemySpawner.ENEMY_CODE_GROTESQUE then
+            unit = self.grotesqueSpawner:spawnMinion(position, specialType)
+        elseif enemy == EnemySpawner.ENEMY_CODE_BEAST then
+            unit = self.beastSpawner:spawnMinion(position, specialType)
+        elseif enemy == EnemySpawner.ENEMY_CODE_DOG then
+            unit = self.dogSpawner:spawnMinion(position, specialType)
+        elseif enemy == EnemySpawner.ENEMY_CODE_MUTANT then
+            unit = self.mutantSpawner:spawnMinion(position)
+        else
+            print("EnemySpawner | WARNING - ATTEMPT TO SPAWN INVALID ENEMY CODE: " .. enemy)
+        end
+
+        -- Let's hurt the unit a bit
+        unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
+        -- Set its speed
+        unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
+
+        return unit
+    end
+
+end
+
+function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+    g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
+
+    -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
+    -- of the unit. Here the EnemySpawner will call that function
+    local onDeathFunction = killedUnit.onDeathFunction
+    if onDeathFunction ~= nil then
+        onDeathFunction(killedUnit, killerEntity, killerAbility)
+    end
 end
 
 -- Function related to boss cycle
@@ -409,133 +504,6 @@ function EnemySpawner:bossWaitForMinions(waitCount)
 
     end)
 end
-
-function EnemySpawner:startWaveSpawning()
-    if SHOW_ENEMY_SPAWNER_LOGS then
-        print("EnemySpawner | Starting Wave Spawning")
-    end
-
-    -- Start the CollectEmUp cycle
-    g_EnemyCommander:startCollectEmUpCycle()
-
-    -- Start the wave spawning
-    self:spawnWave()
-
-    Timers:CreateTimer(45, function()
-        if SHOW_ENEMY_SPAWNER_LOGS then
-            print("EnemySpawner | Starting Boss Spawn Cycle")
-        end
-        self:startBossCycle()
-    end)
-end
-
-----------------------
-------- MINION SPAWN FUNCTIONS
-----------------------
-
-
--- Generic enemy spawner. Should pass in an enemy code defined here
-function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinionQueueIfFail)
-    if self.minionCount >= EnemySpawner.MAX_MINIONS then
-        -- Too many units in play, just add this unit to the minion queue
-        -- Nauty players will be punished, but the minions now go into the minion queue
-        if(shouldAddToMinionQueueIfFail) then
-            self.minionQueue = self.minionQueue + 1
-        end
-
-        if SHOW_ENEMY_SPAWNER_LOGS then
-            if(shouldAddToMinionQueueIfFail) then
-                print("EnemySpawner | Adding enemy to minion queue! Queue size = " .. self.minionQueue)
-            else
-                print("EnemySpawner | Couldn't spawn queued enemy!")
-            end
-        end
-    else
-        -- We can spawn this unit
-
-        -- Decrement the minion queue
-        if self.minionQueue > 0 then
-            self.minionQueue = self.minionQueue - 1
-        end
-        self.minionCount = self.minionCount + 1
-
-        local unit = nil
-        if enemy == EnemySpawner.ENEMY_CODE_ZOMBIE then
-            unit = self:spawnZombie(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_GROTESQUE then
-            unit = self:spawnGrotesque(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_BEAST then
-            unit = self:spawnBeast(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_DOG then
-            unit = self:spawnDog(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_MUTANT then
-            unit = self:spawnMutant(position)
-        end
-
-        -- Let's hurt the unit a bit
-        unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
-        -- Set its speed
-        unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
-
-        return unit
-    end
-
-end
-
-function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
-    g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
-
-    -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
-    -- of the unit. Here the EnemySpawner will call that function
-    local onDeathFunction = killedUnit.onDeathFunction
-    if onDeathFunction ~= nil then
-        onDeathFunction(killedUnit, killerEntity, killerAbility)
-    end
-end
-
--- Spawns a Zombie at a random point in the location
---  @param position | A vector where the enemy should be spawned
---  @param specialType | A value that is used to determine what type of zombie to spawn (flaming, TNT, rad...etc)
-function EnemySpawner:spawnZombie(position, specialType)
-    --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
-    --local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
-    local unit = self.zombieSpawner:spawnMinion(position, specialType)
-
-    return unit
-end
-
-function EnemySpawner:spawnMutant(position)
-    --print("EnemySpawner | Spawning Mutant")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_mutant", position, true, nil, nil, DOTA_TEAM_BADGUYS )
-
-    return unit
-end
-
-function EnemySpawner:spawnDog(position, specialType)
-    --print("EnemySpawner | Spawning Dog(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_dog", position, true, nil, nil, DOTA_TEAM_BADGUYS )
-
-    return unit
-end
-
-function EnemySpawner:spawnGrotesque(position, specialType)
-    --print("EnemySpawner | Spawning Grotesque(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_garg", position, true, nil, nil, DOTA_TEAM_BADGUYS )
-
-    return unit
-end
-
-function EnemySpawner:spawnBeast(position, specialType)
-    --print("EnemySpawner | Spawning Beast(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_beast", position, true, nil, nil, DOTA_TEAM_BADGUYS )
-
-    return unit
-end
-
-
-----------------------
-------- BOSS SPAWN FUNCTIONS
-----------------------
 
 function EnemySpawner:spawnBoss()
     local boss = nil

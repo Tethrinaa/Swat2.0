@@ -1,9 +1,11 @@
 -- Stores information relating to horrors and generic boss spawning information
 
-Horror = {}
+SHOW_HORROR_LOGS = SHOW_BOSS_LOGS
+
+HorrorSpawner = {}
 
 
-function Horror:new(o)
+function HorrorSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
@@ -15,7 +17,7 @@ end
 
 -- Generic boss function for getting chance to spawn this boss
 -- Should return a number. Higher numbers are *lower* chance for this boss
-function Horror:rollToSpawn()
+function HorrorSpawner:rollToSpawn()
     if (g_RadiationManager.horrorRads == 0) and (RandomInt(0 - g_EnemySpawner.abomsCurrentlyAlive, 10 - (2 * math.max(0, g_RadiationManager.effectiveRadiation) + self.chanceToSpawn)) < 1) then
         return true
     else
@@ -27,7 +29,9 @@ end
 
 -- Generic boss function for actually spawning the boss
 -- Returns the created boss unit
-function Horror:spawnBoss()
-    print("Horror | TODO: Spawn Horror")
+function HorrorSpawner:spawnBoss()
+    if SHOW_HORROR_LOGS then
+        print("HorrorSpawner | TODO: Spawn Horror")
+    end
     -- TODO
 end

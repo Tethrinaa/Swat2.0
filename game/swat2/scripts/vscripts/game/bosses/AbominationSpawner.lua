@@ -2,10 +2,10 @@
 
 SHOW_ABOMINATION_LOGS = SHOW_BOSS_LOGS
 
-Abomination = {}
+AbominationSpawner = {}
 
 
-function Abomination:new(o)
+function AbominationSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
@@ -15,16 +15,16 @@ end
 
 -- Generic boss function that will be called to see if we should spawn this boss
 -- Should return a boolean of True to spawn it
-function Abomination:rollToSpawn()
+function AbominationSpawner:rollToSpawn()
     -- Aboms always succeed
     return true
 end
 
 -- Generic boss function for actually spawning the boss
 -- Returns the created boss unit
-function Abomination:spawnBoss()
+function AbominationSpawner:spawnBoss()
     if SHOW_ABOMINATION_LOGS then
-        print("Abomination | Spawning abomination")
+        print("AbominationSpawner | Spawning abomination")
     end
     g_EnemySpawner.abomsCurrentlyAlive = g_EnemySpawner.abomsCurrentlyAlive + 1
 
@@ -51,7 +51,7 @@ function Abomination:spawnBoss()
 end
 
 -- Abomination spawns with a few units of his own
-function Abomination:spawnAbomMinionGroup(warehouse)
+function AbominationSpawner:spawnAbomMinionGroup(warehouse)
     local numberOfMinions = RandomInt(1, math.max(Round(g_EnemyUpgrades.minionUber / 10.0), 1))
     local warehouseCenter = warehouse:GetAbsOrigin()
     local spawnedUnits = {}

@@ -3,18 +3,18 @@
 
 SHOW_ZOMBIE_LOGS = false -- these are a bit verbose so probably not needed to normaly be displayed unless specifically debuging this class
 
-Zombie = {}
+ZombieSpawner = {}
 
-Zombie.ZOMBIE_REVIVE_QUEUE_SIZE = 600
-Zombie.ZOMBIE_CORPSE_MODEL = "models/heroes/undying/undying_minion_torso.vmdl"
+ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE = 600
+ZombieSpawner.ZOMBIE_CORPSE_MODEL = "models/heroes/undying/undying_minion_torso.vmdl"
 
-function Zombie:new(o)
+function ZombieSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
 
     self.zombieReviveQueue = {}
-    for i = 1, Zombie.ZOMBIE_REVIVE_QUEUE_SIZE do
+    for i = 1, ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE do
         self.zombieReviveQueue[i] = nil
     end
     self.zombieReviveIndex = 1
@@ -28,7 +28,7 @@ end
 -- @param position | the position to create the unit
 -- @param specialType | a field that can be used to spawn special types of this minion
 -- returns the created unit
-function Zombie:spawnMinion(position, specialType)
+function ZombieSpawner:spawnMinion(position, specialType)
     --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
     local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
     self:addZombieMutation(unit)
@@ -36,17 +36,17 @@ function Zombie:spawnMinion(position, specialType)
     unit.zombieLives = 0
 
     -- EnemySpawner will look for onDeathFunctions and call them
-    unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onZombieDeath(killedUnit, killerEntity, killerAbility) end
+    unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
 
     return unit
 end
 
 -- Adds a random zombie mutation to the zombie
-function Zombie:addZombieMutation(zombie)
+function ZombieSpawner:addZombieMutation(zombie)
 end
 
 -- Called when this zombie dies
-function Zombie:onZombieDeath(killedUnit, killerEntity, killerAbility)
+function ZombieSpawner:onDeath(killedUnit, killerEntity, killerAbility)
     local lives = killedUnit.zombieLives or 0
 
     -- TODO: Check if killer ability was Nuke or if the zombie was AIMed
@@ -57,7 +57,7 @@ function Zombie:onZombieDeath(killedUnit, killerEntity, killerAbility)
     else
         -- We still want to spawn a dummy corpse though!
         if SHOW_ZOMBIE_LOGS then
-            print("Zombie | Zombie died and he will not revive")
+            print("ZombieSpawner | Zombie died and he will not revive")
         end
         local corpse = self:createDummyCorpse(killedUnit)
         corpse.isRevivable = false
@@ -70,9 +70,9 @@ end
 
 -- Spawns a dummy corpse at the position after a short delay
 -- Returns the created dummy unit
-function Zombie:createDummyCorpse(killedUnit)
+function ZombieSpawner:createDummyCorpse(killedUnit)
     local corpse = CreateUnitByName("zombie_corpse", killedUnit:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_BADGUYS)
-    corpse:SetModel(Zombie.ZOMBIE_CORPSE_MODEL)
+    corpse:SetModel(ZombieSpawner.ZOMBIE_CORPSE_MODEL)
     -- Set the corpse invisible until the dota corpse disappears
     corpse:AddNoDraw()
     -- Set the angles
@@ -85,43 +85,43 @@ function Zombie:createDummyCorpse(killedUnit)
     return corpse
 end
 
-function Zombie:queueZombieForRevive(killedUnit, killerEntity, wasNuked)
+function ZombieSpawner:queueZombieForRevive(killedUnit, killerEntity, wasNuked)
     -- Create a Zombie corpse
     local corpse = self:createDummyCorpse(killedUnit)
 
 
     -- Add zombie to the revive list
     local i = self.zombieReviveIndex + RandomInt(230, 299)
-    if i > Zombie.ZOMBIE_REVIVE_QUEUE_SIZE then
-        i = i - Zombie.ZOMBIE_REVIVE_QUEUE_SIZE
+    if i > ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE then
+        i = i - ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE
     end
     -- Find the first empty slot (loop back to 0 if we approach the end)
     while self.zombieReviveQueue[i] ~= nil do
-        if i == Zombie.ZOMBIE_REVIVE_QUEUE_SIZE then
+        if i == ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE then
             i = 1
         else
             i = i + 1
         end
     end
     if SHOW_ZOMBIE_LOGS then
-        print("Zombie | ZombieQueue | Adding zombie at " .. i)
+        print("ZombieSpawner | ZombieQueue | Adding zombie at " .. i)
     end
     self.zombieReviveQueue[i] = {corpse=corpse, killer=killerEntity, nuked=wasNuked, mana=killedUnit:GetMana(), zombieLives=killedUnit.zombieLives}
 end
 
 -- Searches the zombie queue for a filled slot in the queue
-function Zombie:searchZombieQueue()
+function ZombieSpawner:searchZombieQueue()
     local i = self.zombieReviveIndex
     local indicesSearched = 0
     while self.zombieReviveQueue[i] == nil and indicesSearched < 39 do
         indicesSearched = indicesSearched + 1
-        if i == Zombie.ZOMBIE_REVIVE_QUEUE_SIZE then
+        if i == ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE then
             i = 1
         else
             i = i + 1
         end
     end
-    if i == Zombie.ZOMBIE_REVIVE_QUEUE_SIZE then
+    if i == ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE then
         self.zombieReviveIndex = 1
     else
         self.zombieReviveIndex = i + 1
@@ -143,7 +143,7 @@ function Zombie:searchZombieQueue()
     else
         -- we found a corpse. Revive it
         if SHOW_ZOMBIE_LOGS then
-            print("Zombie | ZombieQueue Index= " .. self.zombieReviveIndex .. " | Reviving Zombie in " .. waitTime)
+            print("ZombieSpawner | ZombieQueue Index= " .. self.zombieReviveIndex .. " | Reviving Zombie in " .. waitTime)
         end
         Timers:CreateTimer(waitTime, function() self:reviveZombie(zombieInfo) end)
     end
@@ -151,7 +151,7 @@ function Zombie:searchZombieQueue()
 end
 
 -- Revives a zombie, given the zombie info saved in the zombieReviveQueue
-function Zombie:reviveZombie(zombieInfo)
+function ZombieSpawner:reviveZombie(zombieInfo)
     -- Calculate how many "lives" we should increment by
     local livesIncrement = math.max(1, (2 * g_GameManager.difficultyValue) - g_GameManager.survivalValue)
 
@@ -178,7 +178,7 @@ function Zombie:reviveZombie(zombieInfo)
             self:addZombieMutation(zombie)
 
             -- EnemySpawner will look for onDeathFunctions and call them
-            zombie.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onZombieDeath(killedUnit, killerEntity, killerAbility) end
+            zombie.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
 
             -- Send it after whoever killed it!
             -- Issueing an order to a unit immediately after it spawns seems to not consistently work
@@ -188,14 +188,14 @@ function Zombie:reviveZombie(zombieInfo)
             end)
         else
             if SHOW_ZOMBIE_LOGS then
-                print("Zombie | Revive | Zombie corpse added to minion queue")
+                print("ZombieSpawner | Revive | Zombie corpse added to minion queue")
             end
             -- Add this zombie to the minion queue
             -- TODO
         end
     else
         if SHOW_ZOMBIE_LOGS then
-            print("Zombie | Revive | Corpse Killed")
+            print("ZombieSpawner | Revive | Corpse Killed")
         end
         -- This corpse was "killed". Award experience
         -- TODO: Award experience.
