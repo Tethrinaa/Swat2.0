@@ -1,6 +1,8 @@
 -- This file will be responsible spawning waves.
 --
 
+SHOW_ENEMY_SPAWNER_LOGS = SHOW_GAME_SYSTEM_LOGS
+
 EnemySpawner = {}
 
 -- Require the minion and boss files we'll be using
@@ -127,10 +129,12 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
         if groupSize > EnemySpawner.MAX_GROUP_SIZE then
             groupSize = EnemySpawner.MAX_GROUP_SIZE
         end
-        if shouldAddToMinionQueueIfFail then
-            print("EnemySpawner | Spawning WaveGroup of " .. groupSize .. " enemies")
-        else
-            print("EnemySpawner | Spawning Queue WaveGroup of " .. groupSize .. " enemies. Queue size = " .. self.minionQueue)
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            if shouldAddToMinionQueueIfFail then
+                print("EnemySpawner | Spawning WaveGroup of " .. groupSize .. " enemies")
+            else
+                print("EnemySpawner | Spawning Queue WaveGroup of " .. groupSize .. " enemies. Queue size = " .. self.minionQueue)
+            end
         end
 
         local spawnedUnits = {}
@@ -197,7 +201,9 @@ end
 function EnemySpawner:spawnWave()
     if self.minionCount > EnemySpawner.MAX_MINIONS_WAVE_START then
         -- Too many minions out to spawn a new wave!
-        print("EnemySpawner | Too many minions out to start a new wave")
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | Too many minions out to start a new wave")
+        end
         -- Wait 15 seconds
         Timers:CreateTimer(15, function()
             -- Buff the zombies and try to spawn a wave
@@ -205,14 +211,21 @@ function EnemySpawner:spawnWave()
             self:spawnWave()
         end)
     else
-        local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
-        print("EnemySpawner | New Wave Starting in " .. waveInitialWaitTime .. " seconds")
         -- Begin the wave!
         self.minionQueue = 0
         g_EnemyUpgrades.mobSpeed = 0 -- Reset the buffs we gave to the previous wave while we waited
 
+        -- Each wave group will spawn with about 5-15 seconds delays until we run out of groups
         local numberOfWaveGroups = 51 + g_GameManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
-        print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
+
+        -- We need to wait a bit before actually starting the wave (give the players a breather)
+        local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
+
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | New Wave Starting in " .. waveInitialWaitTime .. " seconds")
+            print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
+        end
+
         Timers:CreateTimer(waveInitialWaitTime, function()
             -- There is a random chance we don't do anything
             local i = 0
@@ -227,7 +240,6 @@ function EnemySpawner:spawnWave()
                 numberOfWaveGroups = numberOfWaveGroups - 1
                 if numberOfWaveGroups < 0 then
                     -- We're done spawning waves, start spawning the minion queue
-                    print("EnemySpawner | Spawn from the minion queue!")
                     self:spawnQueueGroups()
                 else
                     -- Spawn a wave group!
@@ -235,11 +247,9 @@ function EnemySpawner:spawnWave()
                     -- Figure out a location for the spawn group
                     local location = nil
                     if g_GameManager.lastBuildingEntered ~= nil then
-                        print("EnemySpawner | Spawning in last entered warehouse!")
                         location = g_GameManager.lastBuildingEntered
                         g_GameManager.lastBuildingEntered = nil
                     else
-                        print("EnemySpawner | Spawning in random warehouse!")
                         location = GetRandomWarehouse()
                     end
 
@@ -260,12 +270,16 @@ end
 -- Once the queue is empty, we summon another wave
 function EnemySpawner:spawnQueueGroups()
     if self.minionQueue > 0 then
-        print("EnemySpawner | Spawning from Queue")
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | Spawning from Queue")
+        end
         local waitTimeBetweenQueueWaves = self.waveGroupDelay - g_GameManager.difficultyValue
         Timers:CreateTimer(waitTimeBetweenQueueWaves, function()
             if self.minionQueue  > 0 then
                 if self.minionCount >= EnemySpawner.MAX_MINIONS then
-                    print("EnemySpawner | Queue Waiting - too many enemies already out")
+                    if SHOW_ENEMY_SPAWNER_LOGS then
+                        print("EnemySpawner | Queue Waiting - too many enemies already out")
+                    end
                     -- Too many minions for the queue
                     -- Collect up the current zombies (which minorly buffs them) and wait to try again
                     g_EnemyCommander:collectEmUp()
@@ -278,12 +292,17 @@ function EnemySpawner:spawnQueueGroups()
                     return waitTimeBetweenQueueWaves
                 end
             else
-                print("EnemySpawner | Queue now empty")
+                if SHOW_ENEMY_SPAWNER_LOGS then
+                    print("EnemySpawner | Queue now empty. Begin the next wave")
+                end
                 self:spawnWave()
             end
         end)
     else
         -- No queue, we can just start the next wave
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | No minions queued up. Begin the next wave")
+        end
         self:spawnWave()
     end
 
@@ -361,7 +380,9 @@ function EnemySpawner:bossWaitForMinions(waitCount)
             -- Start the next boss cycle
             self:startBossCycle()
         else
-            print("Boss is waiting to spawn! waitCount=" .. waitCount)
+            if SHOW_ENEMY_SPAWNER_LOGS then
+                print("EnemySpawner | Boss is waiting to spawn! waitCount=" .. waitCount)
+            end
             -- we can't spawn a boss, if we have wait counts we can wait
             if waitCount > 0 then
                 waitCount = waitCount - 1
@@ -390,7 +411,9 @@ function EnemySpawner:bossWaitForMinions(waitCount)
 end
 
 function EnemySpawner:startWaveSpawning()
-    print("EnemySpawner | Starting Wave Spawning")
+    if SHOW_ENEMY_SPAWNER_LOGS then
+        print("EnemySpawner | Starting Wave Spawning")
+    end
 
     -- Start the CollectEmUp cycle
     g_EnemyCommander:startCollectEmUpCycle()
@@ -398,9 +421,10 @@ function EnemySpawner:startWaveSpawning()
     -- Start the wave spawning
     self:spawnWave()
 
-    -- TODO set to 45, not 0
-    Timers:CreateTimer(0, function()
-        print("EnemySpawner | Starting Boss Spawn Cycle")
+    Timers:CreateTimer(45, function()
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("EnemySpawner | Starting Boss Spawn Cycle")
+        end
         self:startBossCycle()
     end)
 end
@@ -417,9 +441,14 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
         -- Nauty players will be punished, but the minions now go into the minion queue
         if(shouldAddToMinionQueueIfFail) then
             self.minionQueue = self.minionQueue + 1
-            print("EnemySpawner | Adding enemy to minion queue! Queue size = " .. self.minionQueue)
-        else
-            print("EnemySpawner | Couldn't spawn queued enemy!")
+        end
+
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            if(shouldAddToMinionQueueIfFail) then
+                print("EnemySpawner | Adding enemy to minion queue! Queue size = " .. self.minionQueue)
+            else
+                print("EnemySpawner | Couldn't spawn queued enemy!")
+            end
         end
     else
         -- We can spawn this unit
@@ -527,5 +556,8 @@ function EnemySpawner:spawnBoss()
                 boss = bossSpawner:spawnBoss()
             end
         end
+    end
+    if SHOW_ENEMY_SPAWNER_LOGS then
+        print("EnemySpawner | Spawning boss!! (" .. ((boss ~= nil) and boss:GetName() or "nil??") .. ")")
     end
 end

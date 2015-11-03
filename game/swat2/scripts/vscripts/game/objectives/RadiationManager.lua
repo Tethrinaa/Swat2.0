@@ -1,3 +1,7 @@
+-- Class that handles the radiation fragments
+
+SHOW_RADIATION_MANAGER_LOGS = SHOW_GAME_SYSTEM_LOGS
+
 RadiationManager = {}
 
 -- CONSTANTS
@@ -88,7 +92,9 @@ end
 
 -- Sets the difficulty of the game, which affects how rads are spawned
 function RadiationManager:onDifficultySet()
-    print("RadManager | Setting difficulty to: " .. g_GameManager.difficultyName)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Setting difficulty to: " .. g_GameManager.difficultyName)
+    end
     if g_GameManager.nightmareValue == 0 then
         self:spawnInitialDifficultyRads(g_GameManager.difficultyValue, g_GameManager.isSurvival)
         self:startRadSpawner()
@@ -116,8 +122,8 @@ function RadiationManager:updateRadLevel()
     if newRadLevel ~= self.radiationLevel then
         -- The radiation level has changed!
         self.radiationLevel = newRadLevel
-        if self.debugMode then
-            print("RadSpawner | The radiation level has changed to: " .. newRadLevel)
+        if SHOW_RADIATION_MANAGER_LOGS then
+            print("RadManager | The radiation level has changed to: " .. newRadLevel)
         end
 
         self:updateRadiationFog(newRadLevel)
@@ -212,7 +218,9 @@ function RadiationManager:spawnRadlets(radPosition, ioned)
         -- Spawn radlets!
         local ionPenalty = 3 * self.ionedRads + ( ioned and 30 or 0 )
         local radletsToSpawn = RandomInt( 1 + g_GameManager.nightmareOrSurvivalValue, 2 + g_GameManager.nightmareValue + ( ioned and 2 or 0 ) )
-        print("RadManager | Spawning " .. radletsToSpawn .. " radlets!")
+        if SHOW_RADIATION_MANAGER_LOGS then
+            print("RadManager | Spawning " .. radletsToSpawn .. " radlets!")
+        end
 
         for i = 1, radletsToSpawn do
             if self:canSpawnRadFragment() then
@@ -232,7 +240,9 @@ function RadiationManager:spawnRadlets(radPosition, ioned)
 
                 -- Kill the radlet after size seconds
                 Timers:CreateTimer(size, function()
-                        print("RadManager | Radlet Died")
+                    if SHOW_RADIATION_MANAGER_LOGS then
+                            print("RadManager | Radlet Died")
+                        end
                         radlet:ForceKill(false)
                         self:decrementRadCount()
                     end
@@ -253,7 +263,9 @@ end
 -- This will spawn INITIA_RAD_COUNT rad fragments in 32 random rooms (no park or graveyard)
 -- no rad will be spawned in the same room
 function RadiationManager:spawnInitialRadFragments()
-    print("RadManager | Spawning initial rad fragments")
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Spawning initial rad fragments")
+    end
     -- The warehouses should already be in a random order in the locations
     local rooms = Locations.warehouses
 
@@ -279,7 +291,9 @@ function RadiationManager:spawnInitialDifficultyRads(difficultyValue, isSurvival
         initialRads = RandomInt(4-difficultyValue, 5-difficultyValue)
     end
 
-    print("RadManager | Spawning initial difficulty rads: " .. initialRads)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Spawning initial difficulty rads: " .. initialRads)
+    end
 
     for i = 1,initialRads do
         self:spawnRadFragment()
@@ -293,7 +307,7 @@ end
 function RadiationManager:startRadSpawner()
 
     if self.spawningRads then
-        print("RadSpawner | Warning - not starting rad spawner as rads already spawning")
+        print("RadManager | Warning - not starting rad spawner as rads already spawning")
     else
         self.spawningRads = true
 
@@ -323,7 +337,9 @@ function RadiationManager:startRadSpawner()
         radPoppedWaitFunction = function()
             if self.poppedRads == 0 then
                 -- No popped rads. Go spawn some rads
-                print("RadSpawner | radPoppedWaitFunction() - no popped rads")
+                if SHOW_RADIATION_MANAGER_LOGS then
+                    print("RadManager | radPoppedWaitFunction() - no popped rads.")
+                end
                 timesWaitedForRadsPopped = 0
                 Timers:CreateTimer( 0, spawnRadsFunction)
             else
@@ -342,7 +358,9 @@ function RadiationManager:startRadSpawner()
                 delayTime = (delayTime + (self.poppedRads * 1.1)) * (1.03 - 0.02 * g_GameManager.playerCount)
                 local waitTime = delayTime * delayTime
 
-                print("RadSpawner | radPoppedWaitFunction() - [ " .. self.poppedRads .. " popped rads] Waiting: " .. waitTime)
+                if SHOW_RADIATION_MANAGER_LOGS then
+                    print("RadManager | radPoppedWaitFunction() - [ " .. self.poppedRads .. " popped rads] Waiting: " .. waitTime)
+                end
 
                 self.poppedRads = 0
 
@@ -362,7 +380,9 @@ function RadiationManager:startRadSpawner()
             end
 
             -- Now call the rads popped function after waiting
-            print("RadSpawner | secondWaitFunction() - waiting " .. waitTime)
+            if SHOW_RADIATION_MANAGER_LOGS then
+                print("RadManager | secondWaitFunction() - waiting " .. waitTime)
+            end
             Timers:CreateTimer( waitTime, radPoppedWaitFunction)
         end
 
@@ -374,7 +394,9 @@ function RadiationManager:startRadSpawner()
                 if self.radFragments < self.radSoftLimit or self.nukedRads > 0 then
                     -- Spawn rads
                     local radsToSpawn = RandomInt(1, 1 + math.max(0, math.floor((self.nukedRads + self.ionedRads) / 5))) -- Nuking / Ioning (more than 5 rads) rads causes a change for extra ones to spawn
-                    print("RadSpawner | Spawning " .. radsToSpawn .. " Rad(s)!")
+                    if SHOW_RADIATION_MANAGER_LOGS then
+                        print("RadManager | Spawning " .. radsToSpawn .. " Rad(s)!")
+                    end
                     -- TODO Call SetRadNuke
                     -- TODO: Update nuke rad penalty if extra rads were spawned
                     for i = 1,radsToSpawn do
@@ -396,12 +418,16 @@ function RadiationManager:startRadSpawner()
                 self.ionedRads = 0
 
                 -- Now we call the next function with this wait time
-                print("RadSpawner | spawnRadsFunctio() - waiting " .. waitTime)
+                if SHOW_RADIATION_MANAGER_LOGS then
+                    print("RadManager | spawnRadsFunctio() - waiting " .. waitTime)
+                end
                 Timers:CreateTimer( waitTime, secondWaitFunction)
 
             else
                 -- Rads are in safe level and not in penalty mode
-                print("RadSpawner | Rads safe. Waiting 60 seconds to check again")
+                if SHOW_RADIATION_MANAGER_LOGS then
+                    print("RadManager | Rads safe. Waiting 60 seconds to check again")
+                end
                 return 60 -- Makes this timer start again in 60 seconds
             end
         end
@@ -414,16 +440,16 @@ end
 -- TODO
 -- Updates the radiation UI display based on radiation count
 function RadiationManager:updateRadiationDisplay(radCount)
-    if self.debugMode then
-        print("RadSpawner | TODO: update radiation display to " .. radCount)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | TODO: update radiation display to " .. radCount)
     end
 end
 
 -- TODO
 -- Updates the radiation damage aura (for heroes and civillians) based on the current radiation level
 function RadiationManager:updateRadiationDamageAura(radLevel)
-    if self.debugMode then
-        print("RadSpawner | Updating radiation damage aura for radLevel = " .. radLevel)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Updating radiation damage aura for radLevel = " .. radLevel)
     end
     --self.radHeroDamageAuraUnit:FindAbilityByName("global_radiation_damage"):SetLevel(radLevel)
 end
@@ -431,8 +457,8 @@ end
 -- TODO
 -- Updates the radiation buff aura (for zombies) based on the current radiation level
 function RadiationManager:updateRadiationBuffAura(radLevel)
-    if self.debugMode then
-        print("RadSpawner | TODO: update radiation buff for radLevel = " .. radLevel)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | TODO: update radiation buff for radLevel = " .. radLevel)
     end
 end
 
@@ -440,21 +466,24 @@ end
 -- TODO
 -- Updates the radiation fog of the map based on the current radiation level.
 function RadiationManager:updateRadiationFog(radLevel)
-    if self.debugMode then
-        print("RadSpawner | TODO: update radiation fog for radLevel = " .. radLevel)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | TODO: update radiation fog for radLevel = " .. radLevel)
     end
 end
 
 -- TODO
 -- Plays a sound based on the radLevel
 function RadiationManager:playRadLevelChangedSound(radLevel)
-    if self.debugMode then
-        print("RadSpawner | TODO: Play sound for radLevel = " .. radLevel)
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | TODO: Play sound for radLevel = " .. radLevel)
     end
 end
 
 -- Should be called when a rad resist player has loaded in the game
 function RadiationManager:addRadResistPlayer()
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Adding Rad Resist player")
+    end
     self.radResistPlayers = self.radResistPlayers + 1
 
     self:calculateRadiationResistance(self.radResistPlayers)
@@ -462,6 +491,9 @@ end
 
 -- Should be called when a rad resist player has left the game
 function RadiationManager:removeRadResistPlayer()
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Removing Rad Resist player")
+    end
     if self.radResistPlayers > 0 then
         self.radResistPlayers = self.radResistPlayers - 1
 
@@ -482,6 +514,9 @@ function RadiationManager:calculateRadiationResistance(radResistPlayersCount)
         else
             self.radiationResistance = self.radiationResistance + 1
         end
+    end
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Setting Radiation Resistance = " .. self.radiationResistance)
     end
 end
 

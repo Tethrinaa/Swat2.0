@@ -1,6 +1,8 @@
 -- Contains information about the zombie enemy
 --
 
+SHOW_ZOMBIE_LOGS = false -- these are a bit verbose so probably not needed to normaly be displayed unless specifically debuging this class
+
 Zombie = {}
 
 Zombie.ZOMBIE_REVIVE_QUEUE_SIZE = 600
@@ -51,11 +53,12 @@ function Zombie:onZombieDeath(killedUnit, killerEntity, killerAbility)
     local wasNuked = false
     if lives < RandomInt((g_GameManager.nightmareValue * 3 ) / 2, 9) then
         -- Reanimate the zombie
-        print("DEBUG | Enemy Killed: zombie died! But he will revive! Lives=" .. lives)
         self:queueZombieForRevive(killedUnit, killerEntity, wasNuked)
     else
-        print("DEBUG | Enemy Killed: zombie died! He will not revive.")
         -- We still want to spawn a dummy corpse though!
+        if SHOW_ZOMBIE_LOGS then
+            print("Zombie | Zombie died and he will not revive")
+        end
         local corpse = self:createDummyCorpse(killedUnit)
         corpse.isRevivable = false
         Timers:CreateTimer(RandomInt(15, 25), function()
@@ -100,7 +103,9 @@ function Zombie:queueZombieForRevive(killedUnit, killerEntity, wasNuked)
             i = i + 1
         end
     end
-    print("Zombie | ZombieQueue | Adding zombie at " .. i)
+    if SHOW_ZOMBIE_LOGS then
+        print("Zombie | ZombieQueue | Adding zombie at " .. i)
+    end
     self.zombieReviveQueue[i] = {corpse=corpse, killer=killerEntity, nuked=wasNuked, mana=killedUnit:GetMana(), zombieLives=killedUnit.zombieLives}
 end
 
@@ -133,11 +138,13 @@ function Zombie:searchZombieQueue()
     self.zombieReviveQueue[i] = nil
     if zombieInfo == nil then
         -- We found no zombie, wait and then search again
-        print("Zombie | ZombieQueue Index= " .. self.zombieReviveIndex .. " | No zombie found. Waiting " .. waitTime)
+        --print("Zombie | ZombieQueue Index= " .. self.zombieReviveIndex .. " | No zombie found. Waiting " .. waitTime)
         Timers:CreateTimer(waitTime, function() self:searchZombieQueue() end)
     else
         -- we found a corpse. Revive it
-        print("Zombie | ZombieQueue Index= " .. self.zombieReviveIndex .. " | Reviving Zombie in " .. waitTime)
+        if SHOW_ZOMBIE_LOGS then
+            print("Zombie | ZombieQueue Index= " .. self.zombieReviveIndex .. " | Reviving Zombie in " .. waitTime)
+        end
         Timers:CreateTimer(waitTime, function() self:reviveZombie(zombieInfo) end)
     end
 
@@ -150,7 +157,6 @@ function Zombie:reviveZombie(zombieInfo)
 
     if zombieInfo.corpse.isRevivable then
         if g_EnemySpawner:canSpawnMinion() then
-            print("Zombie | Revive | Reviving zombie")
             -- Revive the zombie
             local zombie = CreateUnitByName( "npc_dota_creature_basic_zombie", zombieInfo.corpse:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_BADGUYS )
             if zombieInfo.nuked then
@@ -181,12 +187,16 @@ function Zombie:reviveZombie(zombieInfo)
                 g_EnemyCommander:doMobAction(zombie, zombieInfo.killer)
             end)
         else
-            print("Zombie | Revive | Zombie corpse added to minion queue")
+            if SHOW_ZOMBIE_LOGS then
+                print("Zombie | Revive | Zombie corpse added to minion queue")
+            end
             -- Add this zombie to the minion queue
             -- TODO
         end
     else
-        print("Zombie | Revive | Corpse Killed")
+        if SHOW_ZOMBIE_LOGS then
+            print("Zombie | Revive | Corpse Killed")
+        end
         -- This corpse was "killed". Award experience
         -- TODO: Award experience.
     end

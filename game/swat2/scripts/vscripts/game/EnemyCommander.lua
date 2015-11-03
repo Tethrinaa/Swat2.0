@@ -1,5 +1,6 @@
 -- Issues commands to the units
 
+SHOW_ENEMY_COMMANDER_LOGS = SHOW_GAME_SYSTEM_LOGS
 
 EnemyCommander = {}
 
@@ -16,7 +17,9 @@ end
 
 -- Gets all of the units on the map and tells them to target an area near the current targetted hero
 function EnemyCommander:collectEmUp()
-    print("EnemyCommander | collectEmUp()")
+    if SHOW_ENEMY_COMMANDER_LOGS then
+        print("EnemyCommander | collectEmUp()")
+    end
 
     self:pickHeroToKill()
 
@@ -55,7 +58,9 @@ end
 
 -- Starts the cycle which calls collectEmUp() periodically
 function EnemyCommander:startCollectEmUpCycle()
-    print("EnemyCommander | Starting collectEmUp cycle")
+    if SHOW_ENEMY_COMMANDER_LOGS then
+        print("EnemyCommander | Starting collectEmUp cycle")
+    end
     Timers:CreateTimer( 0.0, function()
         self:collectEmUp()
         return 75.00 - 15 * (g_GameManager.difficultyValue - g_GameManager.survivalValue)
@@ -64,7 +69,7 @@ end
 
 -- Pleasant function that picks a random hero for the mobs to move towards
 function EnemyCommander:pickHeroToKill()
-    print("EnemyCommander | Picking new hero to target")
+    --print("EnemyCommander | Picking new hero to target")
     local players = Global_Player_Heroes
     local randomPlayerIndex = RandomInt(1, #players)
 

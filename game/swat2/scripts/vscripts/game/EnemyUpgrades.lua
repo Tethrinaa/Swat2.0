@@ -1,5 +1,7 @@
 -- Managers the upgrades, uber, tech...etc that benefits minions
 
+SHOW_ENEMY_UPGRADES_LOGS = SHOW_GAME_SYSTEM_LOGS
+
 EnemyUpgrades = {}
 
 EnemyUpgrades.MAX_ZOMBIE_BONUS = 58.0
@@ -155,7 +157,9 @@ function EnemyUpgrades:updateUber()
         self.bossUber = self.bossUber + playerRankSum
     end
 
-    print("EnemyUpgrades | Updating Uber | minion=" .. self.minionUber .. " boss=" .. self.bossUber)
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Updating Uber | minionUber=" .. self.minionUber .. " bossUber=" .. self.bossUber)
+    end
     self:upgradeMobs()
 end
 

@@ -3,6 +3,8 @@
 
 GameManager = {}
 
+SHOW_GAME_SYSTEM_LOGS = true
+
 -- Systems GameManager is responsible for
 require('game/Locations')
 require('game/EnemyUpgrades')
@@ -92,7 +94,9 @@ end
 
 -- Sets the game to one of the selectable options
 function GameManager:setDifficulty(difficulty)
-    print("GameManager | Setting difficulty to: " .. difficulty)
+    if SHOW_GAME_SYSTEM_LOGS then
+        print("GameManager | Setting difficulty to: " .. difficulty)
+    end
     self.difficultyName = difficulty
     if difficulty == "normal" then
         -- Normal mode

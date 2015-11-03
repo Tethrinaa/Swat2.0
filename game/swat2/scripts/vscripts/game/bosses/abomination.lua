@@ -1,5 +1,7 @@
 -- Stores information relating to abominations and generic boss spawning information
 
+SHOW_ABOMINATION_LOGS = SHOW_BOSS_LOGS
+
 Abomination = {}
 
 
@@ -21,7 +23,9 @@ end
 -- Generic boss function for actually spawning the boss
 -- Returns the created boss unit
 function Abomination:spawnBoss()
-    print("Abomination | Spawning abomination")
+    if SHOW_ABOMINATION_LOGS then
+        print("Abomination | Spawning abomination")
+    end
     g_EnemySpawner.abomsCurrentlyAlive = g_EnemySpawner.abomsCurrentlyAlive + 1
 
     local warehouse = GetRandomWarehouse()
