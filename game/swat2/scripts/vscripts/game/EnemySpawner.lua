@@ -124,6 +124,8 @@ function EnemySpawner:onDifficultySet(difficulty)
 
     -- Spawn some initial zombies
     self:spawnInitialZombies()
+    -- TODO REMOVE
+    self:spawnBoss()
 
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
@@ -404,13 +406,17 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
 end
 
 function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
-    g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
 
-    -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
-    -- of the unit. Here the EnemySpawner will call that function
-    local onDeathFunction = killedUnit.onDeathFunction
-    if onDeathFunction ~= nil then
-        onDeathFunction(killedUnit, killerEntity, killerAbility)
+    -- Units that are Ancients on the DOTA_TEAM_BADGUYS should be ignored (like rad frags)
+    if not killedUnit:IsAncient() then
+        g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
+
+        -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
+        -- of the unit. Here the EnemySpawner will call that function
+        local onDeathFunction = killedUnit.onDeathFunction
+        if onDeathFunction ~= nil then
+            onDeathFunction(killedUnit, killerEntity, killerAbility)
+        end
     end
 end
 
@@ -611,3 +617,4 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
         end
     end)
 end
+

@@ -75,9 +75,9 @@ function RadiationManager:new(o)
     ------------
 
     -- Create dummy aura units
-    self.radHeroDamageAuraUnit = CreateUnitByName("npc_dummy_blank",Entities:FindByName( nil, "room_lab"):GetAbsOrigin(),true, nil, nil, DOTA_TEAM_NEUTRALS)
-    self.radHeroDamageAuraUnit:AddAbility("global_radiation_damage")
-    self.radHeroDamageAuraUnit:AddAbility("swat_ability_invulnerable_object")
+    --self.radHeroDamageAuraUnit = CreateUnitByName("npc_dummy_blank",Entities:FindByName( nil, "room_lab"):GetAbsOrigin(),true, nil, nil, DOTA_TEAM_BADGUYS)
+    --self.radHeroDamageAuraUnit:AddAbility("global_radiation_damage")
+    --self.radHeroDamageAuraUnit:AddAbility("swat_ability_invulnerable_object")
 
     -- TODO: Create more dummy aura units
 
@@ -172,7 +172,7 @@ function RadiationManager:spawnRadFragment()
         point = GetRandomPointInWarehouse()
     end
 
-    local rad = CreateUnitByName( "npc_dota_creature_rad_frag", point, true, nil, nil, DOTA_TEAM_NEUTRALS )
+    local rad = CreateUnitByName( "npc_dota_creature_rad_frag", point, true, nil, nil, DOTA_TEAM_BADGUYS )
     -- Apply rad modifier to unit to reduce rad count on death and update bracket
     rad:AddAbility("rad_frag_datadriven")
     rad:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
@@ -224,7 +224,7 @@ function RadiationManager:spawnRadlets(radPosition, ioned)
 
         for i = 1, radletsToSpawn do
             if self:canSpawnRadFragment() then
-                local radlet = CreateUnitByName( "npc_dota_creature_rad_frag", radPosition + RandomSizedVector(160), true, nil, nil, DOTA_TEAM_NEUTRALS )
+                local radlet = CreateUnitByName( "npc_dota_creature_rad_frag", radPosition + RandomSizedVector(160), true, nil, nil, DOTA_TEAM_BADGUYS )
 
                 -- Generate a random "size"
                 local size = RandomInt( 40 + ionPenalty - self.radResistPlayers, 80 + (3 * ionPenalty) - (3 * self.radResistPlayers))
@@ -272,7 +272,7 @@ function RadiationManager:spawnInitialRadFragments()
     -- Spawn a guarenteed normal rad in the rooms
     for i = 1,INITIAL_RAD_COUNT do
         local room = rooms[i]
-        local rad = CreateUnitByName( "npc_dota_creature_rad_frag", room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_NEUTRALS )
+        local rad = CreateUnitByName( "npc_dota_creature_rad_frag", room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply rad modifier to unit to reduce rad count on death and update bracket
         rad:AddAbility("rad_frag_datadriven")
         rad:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)

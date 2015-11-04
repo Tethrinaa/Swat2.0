@@ -857,6 +857,8 @@
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
 		"ModelScale"				"2"
 		"Level"						"1"
+        "ConsideredHero"            "1" // Hero style health bar
+
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -894,9 +896,9 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"300"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"100"
+		"HealthBarOffset"			"600"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE" // Defines unit collision
 
 		// Movement
 		//----------------------------------------------------------------
@@ -966,9 +968,10 @@
 	{
 		// General
 		//
-		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
 		"Model"						"models\props_gameplay\gem01.vmdl"	// Model.
 		"Level"						"1"
+        "IsAncient"                 "1" // Will not be controlled or acted upon by the Enemy systems
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -1021,7 +1024,7 @@
 		"TeamName"					"DOTA_TEAM_NEUTRALS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 
 		// Vision
 		//----------------------------------------------------------------

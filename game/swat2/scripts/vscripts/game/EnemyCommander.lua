@@ -29,7 +29,7 @@ function EnemyCommander:collectEmUp()
                                             FIND_UNITS_EVERYWHERE,
                                             DOTA_UNIT_TARGET_TEAM_FRIENDLY,
                                             DOTA_UNIT_TARGET_ALL,
-                                            DOTA_UNIT_TARGET_FLAG_NONE,
+                                            DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
                                             FIND_ANY_ORDER,
                                             false)
 
@@ -40,19 +40,23 @@ function EnemyCommander:collectEmUp()
     -- Check to see if we have units in the minion queue, if we do we're going to speed up the units
     local increaseMoveSpeed = g_EnemySpawner.minionQueue > 0
     for _,unit in pairs(enemyUnits) do
-        if increaseMoveSpeed then
-            -- Up this units move speed
-            -- TODO check if unit has the % movespeed skill
-            local hasMovementSpeedBuff = false
-            if hasMovementSpeedBuff then
-                -- If they have the movement speed skill, we should reduce this buff a bit
-                unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_EnemyUpgrades:calculateZombieBonus(unit)) / 2.5)
-            else
-                unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_EnemyUpgrades:calculateZombieBonus(unit)))
+        -- Units that are Ancients on the DOTA_TEAM_BADGUYS should not be controlled (like rad frags)
+        if not unit:IsAncient() then
+            if increaseMoveSpeed then
+                -- Up this units move speed
+                -- TODO check if unit has the % movespeed skill
+                local hasMovementSpeedBuff = false
+                if hasMovementSpeedBuff then
+                    -- If they have the movement speed skill, we should reduce this buff a bit
+                    unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_EnemyUpgrades:calculateZombieBonus(unit)) / 2.5)
+                else
+                    unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_EnemyUpgrades:calculateZombieBonus(unit)))
+                end
             end
+
+            self:doMobAction(unit, nil)
         end
 
-        self:doMobAction(unit, nil)
     end
 end
 
