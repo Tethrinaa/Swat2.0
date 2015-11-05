@@ -3368,20 +3368,20 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"morphling_morph_agi"
+		"AbilityTextureName"			"doom_bringer_scorched_earth"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
-
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"  "0.3"
 		"AbilityCastRange"  "1000"
 		"FightRecapLevel"				"1"
-
-		// Time
+	
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
-
+	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"135 135 180 180 215 215 250 250 280 280 320 320 340 340 350 350"
@@ -3389,8 +3389,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"250"
-
-
+			
+		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3400,9 +3400,16 @@
 			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+		"particle"		"particles/units/heroes/hero_techies/techies_suicide_base.vpcf"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+		"particle"				"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+		"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
 		}
-
-		// Special
+		
+		// Special    
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3469,22 +3476,22 @@
 			"13"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"slop"                		"30"
+				"slop"                		"30" 
 			}
 			"14"
 			{
 				"var_type"                	"FIELD_INTEGER"
 				"linger_duration"           "3"
 			}
-
+			
 		}
-
+		
 		"OnSpellStart"
 		{
 			"LinearProjectile"
 			{
 				"Target"			"POINT"
-				"EffectName"		"particles\units\heroes\hero_lion\lion_spell_impale.vpcf"
+				"EffectName"		"particles\units\heroes\hero_tinker\tinker_heat_seeking_missile.vpcf"
 				"StartRadius"		"125"
 				"EndRadius"			"125"
 				"MoveSpeed"			"1600"
@@ -3493,8 +3500,38 @@
 				"ProvidesVision"	"0"
 				"HasFrontalCone"	"0"
 			}
+					"FireSound"
+		{
+			"Target"			"CASTER"
+			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
 		}
-
+			
+		}
+		
+			"OnProjectileHitUnit"
+	{
+		"FireSound"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
+		}
+	
+		"FireEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+			"ControlPointEntities"
+			{
+				"TARGET"		"attach_origin"
+			}
+		}
+	
+	}
+		
+		
+		
+		
 		"OnProjectileFinish"
 		{
 			"RunScript"
@@ -3513,27 +3550,39 @@
 				"linger_duration"	"%linger_duration"
 			}
 		}
-
+		
 		"Modifiers"
 		{
 			"modifier_demo_mirv_thinker"
 			{
+				
+			
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+				"EffectAttachType"	"follow_origin"
 				"Aura" "modifier_demo_mirv_napalm"
 				"Aura_Radius" "%outer_radius"
 				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
 				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
 				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
 				"Duration" "%duration"
-
+				
+				
 				"OnCreated"
 				{
-					"AttachEffect"
+					"FireEffect"
 					{
 						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
 						"EffectAttachType" "follow_origin"
 						"Target" "TARGET"
 					}
-
+					
+						"FireSound"
+						{
+							"EffectName"	"Hero_Techies.Suicide"
+							"Target" 		"CASTER"
+						}
+	
+					
 					"Damage"
 					{
 						"Target"
@@ -3546,7 +3595,7 @@
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
 					}
-
+					
 					"Damage"
 					{
 						"Target"
@@ -3560,7 +3609,8 @@
 						"Damage"		"%inner_damage"
 					}
 				}
-			}
+				}
+			
 			"modifier_demo_mirv_napalm"
 			{
 				"IsDebuff" "1"
@@ -3569,12 +3619,14 @@
 				"Duration" "%linger_duration"
 				"OnIntervalThink"
 				{
-					"AttachEffect"
-					{
-						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
-						"EffectAttachType" "follow_origin"
-						"Target" "TARGET"
-					}
+					     "FireEffect"
+						{
+							"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+							"EffectAttachType" "follow_origin"
+							"Target" "TARGET"
+						}
+
+			
 					"Damage"
 					{
 						"Type"   "DAMAGE_TYPE_PHYSICAL"
@@ -3589,6 +3641,7 @@
 			}
 		}
 	}
+	
 
 	//=================================================================================================================
 	// Demolitions: Mini-Nuke
