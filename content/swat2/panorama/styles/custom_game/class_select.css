@@ -3,45 +3,57 @@
 {
 	horizontal-align: center;
 	vertical-align: top;
-	margin-top: 200px;
-	flow-children: right;
+	margin-top: 150px;
 }
 .ClassesPanel
 {
+	margin-top: 100px;
+	horizontal-align: center;
+	flow-children: right;
    flow-children: down;
    visibility: visible;
 }
 .WeaponsPanel
 {
+	margin-top: 325px;
+	horizontal-align: center;
    flow-children: down;
-   margin-left: 50px;
    visibility: collapse;
 }
 .ArmorPanel
 {
+	margin-top: 175px;
+	horizontal-align: center;
 	flow-children: down;
-   margin-left: 50px;
    visibility: collapse;
 }
 .ConfirmResetPanel
 {
+	horizontal-align: center;
 	flow-children: down;
-   margin-left: 50px;
-   margin-top: 250px;
+   margin-top: 400px;
 }
 
 
 Panel{
-    background-color:#000;
+	border: 2px solid #111111FF;
+    background-color:#000000;
     padding:5px;
     visibility: visible;
+	font-size: 50;
 }
 Panel Panel{
-    background-color:#ccc;
-    padding:5px;
+	border-radius: 5px;
+    background-color: #293e29;
+    padding:10px;
+	width: 200px;
+		font-size: 50;
 }
 Button{
-    background-color:#ddd;
-    padding:5px;
+	horizontal-align: center;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #293e29 ), color-stop( 0.7, #000000 ), to( #293e29 ) );
+   padding: 5px;
+   width: 100%;
     color:#000;
+		font-size: 50;
 }
