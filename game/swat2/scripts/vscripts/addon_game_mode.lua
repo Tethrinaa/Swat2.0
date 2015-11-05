@@ -20,18 +20,32 @@ function Precache( context )
 	]]
 	
 	PrecacheUnitByNameSync("npc_dota_creature_basic_zombie", context)
+		PrecacheUnitByNameSync("npc_dota_creature_basic_mutant", context)
+		PrecacheUnitByNameSync("npc_dota_creature_basic_dog", context)
+		PrecacheUnitByNameSync("npc_dota_creature_basic_innards", context)
+		PrecacheUnitByNameSync("npc_dota_creature_basic_beast", context)
+
    PrecacheUnitByNameSync("npc_dota_create_rad_frag", context)
    PrecacheUnitByNameSync("npc_dota_hero_lina", context)
+   PrecacheUnitByNameSync("npc_dota_hero_keeper_of_the_light", context)
+   PrecacheUnitByNameSync("npc_dota_hero_tinker", context)
+
+   PrecacheUnitByNameSync("npc_dota_hero_omniknight", context)
+     PrecacheUnitByNameSync("npc_dota_hero_abaddon", context)
+     PrecacheUnitByNameSync("npc_dota_hero_wisp", context)
+PrecacheUnitByNameSync("npc_dota_hero_sven", context)
    PrecacheUnitByNameSync("npc_dota_hero_techies", context)
    PrecacheUnitByNameSync("npc_dota_hero_luna", context)
+    PrecacheUnitByNameSync("npc_dota_hero_venomancer", context)
+   PrecacheUnitByNameSync("npc_dota_hero_meepo", context)
+   PrecacheUnitByNameSync("npc_dota_hero_batrider", context)
+   
    PrecacheUnitByNameSync("npc_dota_hero_slardar", context)
    PrecacheUnitByNameSync("npc_power_core_damaged", context)
    PrecacheResource( "particle", "*.vpcf", context )
    PrecacheResource( "particle_folder", "particles/folder", context)
    PrecacheUnitByNameSync("npc_dota_hero_medusa", context)
-	 PrecacheUnitByNameSync("npc_dota_hero_batrider", context)
    PrecacheUnitByNameSync("npc_dota_hero_brewmaster", context)
-	 PrecacheItemByNameSync("demo_mirv", context)
    
    
 end

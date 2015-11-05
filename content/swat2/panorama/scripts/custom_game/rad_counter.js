@@ -13,8 +13,6 @@ function DisplayRad( table ) {
 	safeRadCount = table.safelevel;
 	hazMats = table.hazmat;
 	
-	
-	
 	var rads = $( "#RadCount" );
 	var safeRads = $( "#SafeRadCount" );
 	var hazIconOn = $( "#HazMatIconOn" );

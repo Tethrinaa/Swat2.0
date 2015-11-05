@@ -1,0 +1,43 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/objectives.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/objectives.js" /> 
+	</scripts>
+	<Panel hittest="false" class="BaseHud">
+		<Panel hittest="false" class="Background" >
+			<Panel hittest="false" class="FalloutBar" >
+				<Label id="FalloutMsg" text="FALLOUT METER"/>
+				<Label id="FalloutLvl" text="|"/>
+			</Panel>	
+			<Panel hittest="false" class="RadObjective">
+				<Label id="RadMsg" text="Radiation"/>
+				<Label id="RadCount" text="0"/>
+				<Label id="RadNeeded" text="0"/>
+				<Image id="HazMatIconOn" src="file://{images}/haz_materials_on.png" />
+				<Image id="HazMatIconOff" src="file://{images}/haz_materials_off.png" />
+			</Panel>		
+			<Panel hittest="false" class="PowObjective">
+				<Label id="PowMsg" text="Power"/>	
+				<Label id="PowCount" text="0"/>
+				<Label id="PowNeeded" text="0"/>
+			</Panel>	
+			<Panel hittest="false" class="CivObjective">
+				<Label id="CivMsg" text="Civilians"/>
+				<Label id="CivCount" text="0"/>
+				<Label id="CivNeeded" text="0"/>
+			</Panel>
+			<Image id="RadObjFalse" src="file://{images}/obj_incomplete.png" />
+			<Image id="RadObjTrue" src="file://{images}/obj_complete.png" />
+			<Image id="RadObjPerfect" src="file://{images}/obj_perfect.png" />	
+			<Image id="PowObjFalse" src="file://{images}/obj_incomplete.png" />
+			<Image id="PowObjTrue" src="file://{images}/obj_complete.png" />
+			<Image id="PowObjPerfect" src="file://{images}/obj_perfect.png" />
+			<Image id="CivObjFalse" src="file://{images}/obj_incomplete.png" />
+			<Image id="CivObjTrue" src="file://{images}/obj_complete.png" />
+			<Image id="CivObjPerfect" src="file://{images}/obj_perfect.png" />			
+		</Panel>	
+	</Panel>
+</root>
