@@ -437,12 +437,9 @@ function RadiationManager:startRadSpawner()
     end
 end
 
--- TODO
 -- Updates the radiation UI display based on radiation count
-function RadiationManager:updateRadiationDisplay(radCount)
-    if SHOW_RADIATION_MANAGER_LOGS then
-        print("RadManager | TODO: update radiation display to " .. radCount)
-    end
+function RadiationManager:updateRadiationDisplay()
+	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,radneeded = self.radSafeLimit, hazmats = self.hazmatContainers})
 end
 
 -- TODO

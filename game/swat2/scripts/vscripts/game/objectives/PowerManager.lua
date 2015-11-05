@@ -83,8 +83,8 @@ function PowerManager:spawnPower(damagedCount, badlyCount, severeCount, hasHidde
             print("PowerManager | Not enough tor counts??")
         end
         powerCore:AddAbility(degenAbility)
-        local ability = powerCore:FindAbilityByName(degenAbility)
-        ability:SetLevel(1)
+        powerCore:FindAbilityByName(degenAbility):SetLevel(1)
+        powerCore:SetMana(0)
 
         if hasHidden and (i % 2 == 0) then
             -- TODO: Hide this tor
@@ -115,5 +115,5 @@ function PowerManager:onPowerRestored()
 end
 
 function PowerManager:updatePowerDisplay()
-    -- TODO
+    CustomGameEventManager:Send_ServerToAllClients("display_pow", {powcount = self.powerPlantsFilled ,powneeded = self.powerPlantsNeeded})
 end

@@ -37,7 +37,6 @@
     }
 
 
-
 	//=================================================================================================================
 	// Ability: assault_rifleI // Mark 1 Assault Rifle skill
 	//=================================================================================================================
@@ -2047,13 +2046,13 @@
                 }
 
 				"OnDeath"
-                {
-                    "RunScript"
-                    {
-                        "ScriptFile" "units/rad_frag.lua"
-                            "Function"   "RadRemoved"
-                    }
-                }
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "units/rad_frag.lua"
+                  "Function"   "RadRemoved"
+               }
+            }
 			}
 		}
 	}
@@ -2710,8 +2709,8 @@
                     "States"
                     {
                         "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
-                        "MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-                        "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+                        "MODIFIER_STATE_UNSELECTABLE"          "MODIFIER_STATE_VALUE_ENABLED"
+                        "MODIFIER_STATE_NO_HEALTH_BAR"         "MODIFIER_STATE_VALUE_ENABLED"
                     }
             }
         }
@@ -2752,9 +2751,9 @@
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "ability_datadriven"
-        "AbilityBehavior"		        "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "AbilityTextureName"            "disruptor_glimpse"
-        "MaxLevel"	"1"
+        "MaxLevel"     "1"
 
         "Modifiers"
         {
@@ -2771,8 +2770,8 @@
                         "EffectAttachType"  "follow_hitloc"
                         "Target"
                         {
-                            "Center"	"UNIT"
-                            "Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+                            "Center"   "UNIT"
+                            "Flags"            "DOTA_UNIT_TARGET_FLAG_DEAD"
                         }
                     }
 
@@ -2780,10 +2779,10 @@
                     {
                         "Target"
                         {
-                            "Center"  	"UNIT"
-                            "Radius" 	"144"
-                            "Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
-                            "Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+                            "Center"   "UNIT"
+                            "Radius"   "144"
+                            "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+                            "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
                             "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
                         }
 
@@ -2793,12 +2792,12 @@
                             {
                                 "Target"
                                 {
-                                    "Center"	"TARGET"
+                                    "Center"   "TARGET"
                                     "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
                                 }
-                                "Type"			"DAMAGE_TYPE_PHYSICAL"
-                                "MinDamage"		"2000"
-                                "MaxDamage"		"4000"
+                                "Type"                 "DAMAGE_TYPE_PHYSICAL"
+                                "MinDamage"            "2000"
+                                "MaxDamage"            "4000"
                             }
                         }
                     }
@@ -2807,7 +2806,7 @@
 
         }
     }
-       //=================================================================================================================
+     //=================================================================================================================
 	// Ability: Xtreme Combat Mode (Cyborg)
 	//=================================================================================================================
    "cyborg_xtreme_combat_mode"
@@ -2819,7 +2818,7 @@
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
       "MaxLevel"                 "16"
       "LevelsBetweenUpgrades"    "0"
-      "AbilityTextureName"			"sven_warcry"
+      "AbilityTextureName"			"bristleback_warpath"
 
       // Casting
       "AbilityCastPoint"			"0.0"
@@ -2827,7 +2826,19 @@
       "AbilityManaCost"				"90 92 94 96 98 100 102 104 106 108 110 112 114 116 118 120"
       // Special
       //-------------------------------------------------------------------------------------------------------------
-      "AbilitySpecial"
+      	// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"models/heroes/wisp/wisp_overcharge.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+		}
+
+
+
+
+
+	  "AbilitySpecial"
       {
          "01"
          {
@@ -2864,6 +2875,27 @@
 		{
 			"modifier_cyborg_xtreme_combat_mode"
 			{
+			"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Sven.WarCry"
+						"Target"		"CASTER"
+					}
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%bonus_health_regen"
@@ -2876,7 +2908,7 @@
       //=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
 	//=================================================================================================================
-  "cyborg_organic_replacement"
+   "cyborg_organic_replacement"
    {
   	// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -2885,13 +2917,17 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		 "MaxLevel"                 "8"
 
-		"AbilityTextureName"			"centaur_return"
+		"AbilityTextureName"			"rattletrap_power_cogs"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+
+
 		}
 
 		// Special
@@ -2912,10 +2948,42 @@
 
 		}
 
+			"OnUpgrade"
+				{
+					"FireSound"
+					{
+						"Target"		"CASTER"
+						"EffectName"	"Hero_Tinker.Rearm"
+
+					}
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_meepo/meepo_poof.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
+
+
+
+
 		"Modifiers"
 		{
+
+
+
 			"modifier_blur_datadriven"
 			{
+
+
+
+
+
 				"Passive"	"1"
 				"IsHidden"	"1"
 				"Properties"
@@ -2933,10 +3001,10 @@
    //=================================================================================================================
   "cyborg_emergency_power"
    {
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				      "ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				     "ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"                 "6"
 		"AbilityTextureName"			"tinker_rearm"
 
@@ -2944,6 +3012,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
+
+
+					"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+					"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 
 		}
 
@@ -2953,7 +3025,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"150 115 95 80 70 60"
+		"AbilityCooldown"				"5 115 95 80 70 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -2979,11 +3051,13 @@
 		{
 			"FireSound"
 			{
+				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
 				"Target"		"TARGET"
 			}
 
 			"FireEffect"
 			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
 				"EffectAttachType"	"start_at_customorigin"
 
 				"ControlPointEntities"
@@ -2991,8 +3065,8 @@
 					"CASTER"	"follow_origin"
 					"TARGET"	"follow_origin"
 				}
-			}
 
+			}
 			"RunScript"
 			{
 				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power_lua"
@@ -3091,7 +3165,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+		"AbilityTextureName"			"alchemist_unstable_concoction"
 		"AbilityManaCost"		"200"
 
 		// Precache
@@ -3128,16 +3202,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"riki_smoke_screen"
 		"AbilityManaCost"		"0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+			"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+			"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
 		}
 
 		// Casting
@@ -3158,8 +3234,32 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_TrollWarlord.BerserkersRage.Toggle"
-				"Target" 		"CASTER"
+				"EffectName"	"Hero_Venomancer.PoisonNova"
+				"Target"		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"		"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"	"attach_origin"
+				}
+
+				"ControlPoints"
+				{
+					"01"	"1 1 1"
+					"02"	"0 0 0"
+				}
 			}
 
 			"RunScript"
@@ -3220,5 +3320,497 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
+	}
+
+	//=================================================================================================================
+	// Demolitions: MIRV
+	//=================================================================================================================
+	"demo_mirv"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"morphling_morph_agi"
+		"MaxLevel"						"16"
+		"LevelsBetweenUpgrades"  	"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "0.3"
+		"AbilityCastRange"  "1000"
+		"FightRecapLevel"				"1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"135 135 180 180 215 215 250 250 280 280 320 320 340 340 350 350"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"250"
+
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"models/heroes/techies/techies_bomb_projectile.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_radius"              "192"
+			}
+			"02"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_radius"              "144"
+			}
+			"03"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_damage"              "50" //scaled upt to 16
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_damage"              "100" //scaled upt to 16
+			}
+			"05"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"napalm_damage"           	"5 10 10 15 15 20 20 30 30 45 45 60 60 80 80 100" //scaled upt to 16
+			}
+			"06"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"armor_reduction"         	"-4"
+			}
+			"07"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"tick_rate"                	"1.0"
+			}
+			"08"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"duration"                	"2 3 3 4 4 5 5 7 7 9 9 11 11 14 14 18" //scaled upt to 16
+			}
+			"09"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"iMIRV"                		"2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9" //scaled upt to 16
+			}
+			"10"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"minDistance"                "36"
+			}
+			"11"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"maxDistance"               "180"
+			}
+			"12"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"delay"                		".25"
+			}
+			"13"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"slop"                		"30"
+			}
+			"14"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"linger_duration"           "3"
+			}
+
+		}
+
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"			"POINT"
+				"EffectName"		"particles\units\heroes\hero_lion\lion_spell_impale.vpcf"
+				"StartRadius"		"125"
+				"EndRadius"			"125"
+				"MoveSpeed"			"1600"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_NONE"
+				"TargetTypes"		"DOTA_UNIT_TARGET_BASIC"
+				"ProvidesVision"	"0"
+				"HasFrontalCone"	"0"
+			}
+		}
+
+		"OnProjectileFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "heroes/hero_demo/mirv.lua"
+				"Function"          "OnProjectileFinish"
+				"iMIRV"				"%iMIRV"
+				"Target"			"POINT"
+				"slop"				"%slop"
+				"duration" 			"%duration"
+				"napalm_damage" 	"%napalm_damage"
+				"minDistance" 		"%minDistance"
+				"maxDistance" 		"%maxDistance"
+				"delay" 			"%delay"
+				"tick_rate" 		"%tick_rate"
+				"linger_duration"	"%linger_duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_demo_mirv_thinker"
+			{
+				"Aura" "modifier_demo_mirv_napalm"
+				"Aura_Radius" "%outer_radius"
+				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
+				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
+				"Duration" "%duration"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+						"EffectAttachType" "follow_origin"
+						"Target" "TARGET"
+					}
+
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%outer_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%outer_damage"
+					}
+
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%inner_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%inner_damage"
+					}
+				}
+			}
+			"modifier_demo_mirv_napalm"
+			{
+				"IsDebuff" "1"
+				"IsPurgable" "0"
+				"ThinkInterval" "%tick_rate"
+				"Duration" "%linger_duration"
+				"OnIntervalThink"
+				{
+					"AttachEffect"
+					{
+						"EffectName" "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+						"EffectAttachType" "follow_origin"
+						"Target" "TARGET"
+					}
+					"Damage"
+					{
+						"Type"   "DAMAGE_TYPE_PHYSICAL"
+						"Damage" "%napalm_damage"
+						"Target" "TARGET"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Demolitions: Mini-Nuke
+	//=================================================================================================================
+	"demo_mini_nuke"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"morphling_morph_agi"
+		"MaxLevel"						"3"
+		"LevelsBetweenUpgrades"  	"0"
+		"AoERadius" 				"%outer_radius"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "00"
+		"AbilityCastRange"  "65534"
+		"FightRecapLevel"				"1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"600 550 500"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"6000"
+
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"	"models/heroes/techies/techies_bomb_projectile.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_radius"              "1200 1400 1600"
+			}
+			"02"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_radius"              "336 372 372"
+			}
+			"03"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"outer_damage"              "3000"
+			}
+			"04"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"inner_damage"              "6000"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
+				"Function"          "OnSpellStart"
+				"Target"			"POINT"
+				"duration"			"%duration"
+				"inner_damage"		"%inner_damage"
+				"inner_radius"      "%inner_radius"
+				"outer_damage"      "%outer_damage"
+				"outer_radius"	    "%outer_radius"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_demo_mini_nuke_thinker"
+			{
+				"Duration" "%duration"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
+						"Function"          "setActive"
+					}
+
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%outer_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%outer_damage"
+					}
+
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%inner_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PHYSICAL"
+						"Damage"		"%inner_damage"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Demolitions: Biochemical Energy
+	// This levels up with AdvGen and needs to level DOWN when lockdown gets toggled off
+	//=================================================================================================================
+	"demo_biochemical_energy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"	"troll_warlord_whirling_axes_melee"
+		"AbilityManaCost"		"0"
+		"MaxLevel"              "18"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"20"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"base_efficiency"  			".35"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"max_life_percent"  		".5"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"base_loss"  				".5"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"loss_factor" 		 		"2"
+			}
+			"01"
+			{
+				"var_type"                	"FIELD_INTEGER"
+				"min_eps"  					"2"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 	"heroes/hero_demo/biochem.lua"
+				"Function" 		"OnSpellStart"
+				"Target" 		"TARGET"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Demolitions: Advanced Generator
+	//=================================================================================================================
+	"demo_advanced_generator"
+	{
+  	// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		 "MaxLevel"                 "16"
+
+		"AbilityTextureName"			"centaur_return"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_regen"				"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" "CASTER"
+				"AbilityName" "demo_biochemical_energy"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_demo_advanced_generator"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+				}
+			}
+		}
 	}
 }

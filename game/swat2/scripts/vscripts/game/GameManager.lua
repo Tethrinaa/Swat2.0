@@ -148,6 +148,20 @@ function GameManager:setDifficulty(difficulty)
     g_EnemyUpgrades:onDifficultySet(difficulty)
     g_EnemySpawner:onDifficultySet(difficulty)
 
+    -- TODO
+    -- There is some current bug where the UI is being told to update too soon
+    -- So we'll update it periodically at the beginning of the game
+    local timesToUpdateDisplay = 10
+    Timers:CreateTimer(5, function()
+        g_RadiationManager:updateRadiationDisplay()
+        g_PowerManager:updatePowerDisplay()
+
+        if timesToUpdateDisplay > 0 then
+            return 5
+        else
+            timesToUpdateDisplay = timesToUpdateDisplay - 1
+        end
+    end)
 end
 
 -- Called once difficulty set.

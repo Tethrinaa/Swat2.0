@@ -141,6 +141,10 @@ end
 ]]
 function GameMode:OnAllPlayersLoaded()
   DebugPrint("[BAREBONES] All Players have loaded into the game")
+
+  --Initiates Radiation UI
+  --TODO: Fix bug where there is delay in UI update
+  Global_Radiation_Manager:updateRadiationDisplay()
 end
 
 --[[
@@ -373,10 +377,6 @@ function GameMode:BuildMarine( event )
    --Clean the hero up first
    RemoveAllSkills(hero)
 
-   -- -- set abilities
-   -- for key,value in pairs(Global_Consts.classes[event.class].abilities) do
-     -- hero:AddAbility(value)
-   -- end
 
    -- set attributes - Why no SetBaseStrengthGain volvo?
    hero:SetBaseStrength(Global_Consts.classes[event.class].strength)
@@ -425,6 +425,7 @@ function GameMode:BuildMarine( event )
 
    -- else if cyborg, get rank and increase movespeed
 
+   -- -- set abilities
    for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
 		hero:AddAbility(abil)
 		local ability = hero:FindAbilityByName(abil)
@@ -437,6 +438,7 @@ function GameMode:BuildMarine( event )
 			end
 		end
    end
+
    hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
    -- This will change based on rank and trait
    hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)
@@ -451,10 +453,11 @@ function GameMode:BuildMarine( event )
 
    GameMode:ModifyStatBonuses(hero)
 
+   -- Add player to the global player list (TODO: May not be best way to store all heroes??)
    table.insert(Global_Player_Heroes, hero)
 
    -- set trait TODO
-      -- set maverick mutate TODO
+   -- set maverick mutate TODO
    -- set spec TODO
    -- set maverick dog TODO
    -- set modifiers TODO
