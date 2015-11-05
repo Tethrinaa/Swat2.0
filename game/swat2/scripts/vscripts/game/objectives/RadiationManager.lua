@@ -432,10 +432,7 @@ end
 -- TODO
 -- Updates the radiation UI display based on radiation count
 function RadiationManager:updateRadiationDisplay()
-    if self.debugMode then
-        print("RadSpawner | TODO: update radiation display to " .. self.radFragments)
-    end
-	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,safelevel = self.radSafeLimit, hazmat = self.hazmatContainers})
+	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,radneeded = self.radSafeLimit, hazmats = self.hazmatContainers})
 end
 
 -- TODO
