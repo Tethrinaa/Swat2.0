@@ -35,7 +35,10 @@ function Locations:new(o)
 
     -- Randomize the rooms
     self.all_rooms = Entities:FindByName(nil, "room_spawn"):GetChildren()
-    self:randomizeRegions(self.all_rooms)
+    -- We'll randomize the order of the regions in each of the groups
+    -- This is useful for anyone who wants to get a random subset of distinct regions in a group (then can just grab a contiguous series and it will be random)
+    RandomizeList(self.all_rooms)
+
     for i = 1,#self.all_rooms do
         self.warehouses[i] = self.all_rooms[i]
     end
@@ -45,11 +48,11 @@ function Locations:new(o)
 
     -- Park
     self.park_regions = Entities:FindByName(nil, "park_spawn"):GetChildren()
-    self:randomizeRegions(self.park_regions)
+    RandomizeList(self.park_regions)
 
     -- Bunkers
     self.bunkers = Entities:FindByName(nil, "bunker_spawn"):GetChildren()
-    self:randomizeRegions(self.bunkers)
+    RandomizeList(self.bunkers)
 
     -- Lab
     self.lab = Entities:FindByName(nil, "lab_spawn")
@@ -64,20 +67,6 @@ end
 -- Call after Entities exists!
 function initializeGlobalLocations()
     Locations = Locations:new()
-end
-
--- We'll randomize the order of the regions in each of the groups
--- This is useful for anyone who wants to get a random subset of distinct regions in a group (then can just grab a contiguous series and it will be random)
-function Locations:randomizeRegions(regions)
-    if SHOW_LOCATIONS_LOGS then
-        print("Locations | Randomizing buildings")
-    end
-    for i = 1,#regions do
-        local randNum = RandomInt(1,#regions)
-        local temp = regions[randNum]
-        regions[randNum] = regions[i]
-        regions[i] = temp
-    end
 end
 
 -- Called once difficulty is set
@@ -99,6 +88,9 @@ function Locations:createRooms()
     while i > numOfType do
         table.insert(self.power_plants, self.all_rooms[i])
         i = i - 1
+
+        -- Don't allow things to spawn in power plants
+        table.remove(self.warehouses, i)
     end
 
     -- ABMs (4min, 6max)

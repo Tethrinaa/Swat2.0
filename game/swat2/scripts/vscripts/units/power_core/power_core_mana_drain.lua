@@ -36,7 +36,7 @@ function mana_drain( keys )
 		local mana_drain = mana_per_second / (1/tick_interval)
 
 		local target_mana = target:GetMana()
-      
+
 		-- Mana drain part
 		-- If the target has enough mana then drain the maximum amount
 		-- otherwise drain whatever is left
@@ -65,11 +65,11 @@ end
 ]]
 function auto_cast( event )
 	local caster = event.caster
-	--local target = event.target 
+	--local target = event.target
 	local ability = event.ability
    -- pick up x nearest target heroes and create tracking projectile targeting the number of targets
 	local targets = FindUnitsInRadius(
-		caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, ability:GetCastRange(), ability:GetAbilityTargetTeam(), 
+		caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, ability:GetCastRange(), ability:GetAbilityTargetTeam(),
       ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_CLOSEST, false
 	)
 	-- Get if the ability is on autocast mode and cast the ability on the attacked target if it doesn't have the modifier
@@ -79,15 +79,15 @@ function auto_cast( event )
             caster:CastAbilityOnTarget(v, ability, caster:GetPlayerOwnerID())
             break
          end
-      end	
-	end	
+      end
+	end
 end
 -- Auxiliar function that goes through every ability and item, checking for any ability being channelled
 function IsChanneling ( unit )
-	
+
 	for abilitySlot=0,15 do
 		local ability = unit:GetAbilityByIndex(abilitySlot)
-		if ability ~= nil and ability:IsChanneling() then 
+		if ability ~= nil and ability:IsChanneling() then
 			return true
 		end
 	end
@@ -107,6 +107,9 @@ function PowerCheck( keys )
    local ability = keys.ability
    if caster:GetMana() >= 2990 then
       caster.StatusManaRegen = "25"
+
+      g_PowerManager:onPowerPlantFilled(caster, ability)
+
       caster:RemoveAbility(ability:GetAbilityName())
       caster:RemoveModifierByName("modifier_mana_drain_autocast")
       caster:RemoveModifierByName("modifier_swat_ability_power_core_degen")

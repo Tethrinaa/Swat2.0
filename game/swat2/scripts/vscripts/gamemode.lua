@@ -205,7 +205,6 @@ function GameMode:InitGameMode()
   	print( "Template addon is loaded." )
 	--BDO what is this?  Didn't work after i switched us to barebones
    --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
-   spawnPower()
    local RoomToPass = getRandomRoom()
 
     g_GameManager = GameManager:new()
@@ -230,27 +229,6 @@ function GameMode:ExampleConsoleCommand()
   end
 
   print( '*********************************************' )
-end
-
-function spawnPower()
-   -- Note: need to match the distribution of damaged/badly/severly to the difficulty
-   -- Get six random rooms and reassign their parent, removing them from the list of basic rooms.
-   local powerParent = Entities:FindByName(nil, "power_room_parent")
-   local degen = "swat_ability_power_core_damaged"
-   for i = 1, 6 do
-      local room = getRandomRoom()
-      room:SetParent(powerParent, "power_room_parent")
-      local powerCore = CreateUnitByName("npc_power_core_damaged", room:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_GOODGUYS)
-      powerCore:SetMana(0)
-      -- Make two of each kind: damaged, badly damaged, and severly damaged.
-      if i == 3 or i == 4 then
-         degen = "swat_ability_power_core_badly_damaged"
-      elseif i == 5 or i == 6 then
-         degen = "swat_ability_power_core_severly_damaged"
-      end
-      powerCore:AddAbility(degen)
-      powerCore:FindAbilityByName(degen):SetLevel(1)
-   end
 end
 
 --This function spawns the selected number of zombies and sets them moving towards a random player

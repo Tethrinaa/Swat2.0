@@ -124,8 +124,6 @@ function EnemySpawner:onDifficultySet(difficulty)
 
     -- Spawn some initial zombies
     self:spawnInitialZombies()
-    -- TODO REMOVE
-    self:spawnBoss()
 
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()

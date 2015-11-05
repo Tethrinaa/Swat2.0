@@ -12,3 +12,13 @@ end
 function RandomSizedVector(maxSize)
     return Vector(RandomInt(-1 * maxSize, maxSize), RandomInt(-1 * maxSize, maxSize), 0)
 end
+
+-- Will randomize the passed in list
+function RandomizeList(list)
+    for i = 1,#list do
+        local randNum = RandomInt(1,#list)
+        local temp = list[randNum]
+        list[randNum] = list[i]
+        list[i] = temp
+    end
+end

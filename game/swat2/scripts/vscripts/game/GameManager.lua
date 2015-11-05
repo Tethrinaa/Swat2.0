@@ -11,9 +11,11 @@ require('game/EnemyUpgrades')
 require('game/EnemySpawner')
 require('game/EnemyCommander')
 require('game/objectives/RadiationManager')
+require('game/objectives/PowerManager')
 
 -- The systems instances stored as global variables
 g_RadiationManager = {}
+g_PowerManager = {}
 g_EnemyUpgrades = {}
 g_EnemySpawner = {}
 g_EnemyCommander = {}
@@ -87,6 +89,7 @@ function GameManager:initializeSystems()
 
 
     g_RadiationManager = RadiationManager:new()
+    g_PowerManager = PowerManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()
     g_EnemySpawner = EnemySpawner:new()
     g_EnemyCommander = EnemyCommander:new()
@@ -141,6 +144,7 @@ function GameManager:setDifficulty(difficulty)
 
     -- Now tell whoever needs to know about the difficulty changing
     g_RadiationManager:onDifficultySet(difficulty)
+    g_PowerManager:onDifficultySet(difficulty)
     g_EnemyUpgrades:onDifficultySet(difficulty)
     g_EnemySpawner:onDifficultySet(difficulty)
 
