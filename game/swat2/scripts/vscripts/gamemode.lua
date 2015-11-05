@@ -42,10 +42,10 @@ Global_Consts = {}
       Global_Consts.weapons.sniper_rifleI=        {bat= 2.570, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleI"}
       Global_Consts.weapons.sniper_rifleII=       {bat= 2.142, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleII"}
    Global_Consts.armors = {}
-      Global_Consts.armors.light    = {moveSpeed = 290, absorption = 1.4, armor = 0, sprintSkill = 3, nanitesSkill = "nanites_compact"}
-      Global_Consts.armors.medium   = {moveSpeed = 250, absorption = 2.1, armor = 0, sprintSkill = 2, nanitesSkill = "nanites_standard"}
-      Global_Consts.armors.heavy    = {moveSpeed = 220, absorption = 2.8, armor = 0, sprintSkill = 1, nanitesSkill = "nanites_heavy"}
-      Global_Consts.armors.advanced = {moveSpeed = 230, absorption = 2.8, armor = 1, sprintSkill = 0, nanitesSkill = "nanites_heavy"}
+      Global_Consts.armors.light    = {index = 0, moveSpeed = 290, absorption = 1.4, armor = 0, sprintSkill = 3, nanitesSkill = "nanites_compact"}
+      Global_Consts.armors.medium   = {index = 1, moveSpeed = 250, absorption = 2.1, armor = 0, sprintSkill = 2, nanitesSkill = "nanites_standard"}
+      Global_Consts.armors.heavy    = {index = 2, moveSpeed = 220, absorption = 2.8, armor = 0, sprintSkill = 1, nanitesSkill = "nanites_heavy"}
+      Global_Consts.armors.advanced = {index = 3, moveSpeed = 230, absorption = 2.8, armor = 1, sprintSkill = 0, nanitesSkill = "nanites_heavy"}
    Global_Consts.traits = {}
    Global_Consts.specs = {}
 
@@ -90,6 +90,7 @@ require('internal/events')
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
+
 --uber.lua contains most of the code relating to uber.
 require('uber')
 require('game/Locations')
@@ -217,7 +218,10 @@ function GameMode:InitGameMode()
 
    --load item table
    self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
-
+   GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+   for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
+	 GameMode.unit_infos[k] = v
+   end
 end
 
 -- This is an example console command
@@ -396,6 +400,7 @@ function GameMode:BuildMarine( event )
 
    --Clean the hero up first
    RemoveAllSkills(hero)
+      
 
    
    -- set attributes - Why no SetBaseStrengthGain volvo?
@@ -438,6 +443,7 @@ function GameMode:BuildMarine( event )
    end
 
    --set armor stats
+   hero.sdata.armor_index = Global_Consts.armors[event.armor].index
    hero:SetBaseMoveSpeed(Global_Consts.armors[event.armor].moveSpeed)
    print(hero:GetBaseMoveSpeed())
    hero:SetPhysicalArmorBaseValue(Global_Consts.armors[event.armor].armor)
@@ -445,7 +451,7 @@ function GameMode:BuildMarine( event )
 
    -- else if cyborg, get rank and increase movespeed
 
-   -- -- set abilities
+   -- set abilities
    for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
 		hero:AddAbility(abil)
 		local ability = hero:FindAbilityByName(abil)

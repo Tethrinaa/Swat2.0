@@ -32,6 +32,13 @@ function GameMode:OnNPCSpawned(keys)
   GameMode:_OnNPCSpawned(keys)
 
   local npc = EntIndexToHScript(keys.entindex)
+  npc.sdata = {}
+  npc.sdata.unit_name = npc:GetUnitName()
+  npc.sdata.OnEntityKilled = {}
+  npc.sdata.OnEntityHurt = {}
+  if not npc:HasAbility("friendly_fire_on") then
+	npc:AddAbility("friendly_fire_on"):SetLevel(1)
+  end
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -243,6 +250,12 @@ function GameMode:OnEntityKilled( keys )
   local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
   -- Put code here to handle when an entity gets killed
+  -- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
+    Timers:CreateTimer(1, function() 
+        if LeavesCorpse( killedUnit ) then
+            LeaveCorpse( killedUnit )
+		end
+	end)
 end
 
 

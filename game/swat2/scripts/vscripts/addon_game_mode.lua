@@ -3,6 +3,7 @@
 require('libraries/timers')
 require('internal/util')
 require('gamemode')
+require('corpses')
 require('stats')
 
 if GameMode == nil then
