@@ -243,3 +243,10 @@ function Notifications:BottomToTeam(team, table)
     CustomGameEventManager:Send_ServerToTeam(team, "bottom_notification", {text="No TEXT provided.", duration=table.duration, class=table.class, style=table.style, continue=table.continue} )
   end
 end
+
+
+function SendErrorMessage( pID, string )
+	Notifications:ClearBottom(pID)
+	Notifications:Bottom(pID, {text=string, style={color='#E62020'}, duration=2})
+	EmitSoundOnClient("General.Cancel", PlayerResource:GetPlayer(pID))
+end
