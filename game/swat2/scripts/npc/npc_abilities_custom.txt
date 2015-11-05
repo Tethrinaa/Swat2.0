@@ -5,7 +5,38 @@
 "DOTAAbilities"
 {
 	"Version"		"1"
-   
+
+    //=================================================================================================================
+    // Ability: Dummy unit - Ability that keeps this dummy unit from being detectable
+    //=================================================================================================================
+    "dummy_passive"
+    {
+        "BaseClass"         "ability_datadriven"
+            "AbilityBehavior"   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+            "Modifiers"
+            {
+                "dummy_modifier"
+                {
+                    "Passive"   "1"
+                        "States"
+                        {
+                            "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_NO_TEAM_MOVE_TO"    "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_NO_TEAM_SELECT" "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_INVULNERABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+                                //"MODIFIER_STATE_FLYING"   "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_UNSELECTABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_OUT_OF_GAME"    "MODIFIER_STATE_VALUE_ENABLED"
+                                "MODIFIER_STATE_NO_HEALTH_BAR"         "MODIFIER_STATE_VALUE_ENABLED"
+                        }
+                }
+            }
+    }
+
+
 	//=================================================================================================================
 	// Ability: assault_rifleI // Mark 1 Assault Rifle skill
 	//=================================================================================================================
@@ -21,7 +52,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sniper_assassinate"
 
-      
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -47,14 +78,14 @@
 			   "bonus_attack_range"		"0 15 30 45 60 75 90 105 120 135 150 165 180 195 210 225 240 255 270 285"
 		   }
 		}
-      
+
 		"Modifiers"
 		{
 			"modifier_assault_rifleI_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -71,7 +102,7 @@
 			}
 		}
 	}
-   
+
 	//=================================================================================================================
 	// Ability: assault_rifleII // Mark 2 Assault Rifle skill
 	//=================================================================================================================
@@ -87,7 +118,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sniper_assassinate"
 
-      
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -113,14 +144,14 @@
 			   "bonus_attack_range"		"0 15 30 45 60 75 90 105 120 135 150 165 180 195 210 225 240 255 270 285"
 		   }
 		}
-      
+
 		"Modifiers"
 		{
 			"modifier_assault_rifleII_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -152,7 +183,7 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sniper_assassinate"
 
-      
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -178,14 +209,14 @@
 			   "bonus_attack_range"		"0 15 30 45 60 75 90 105 120 135 150 165 180 195 210 225 240 255 270 285"
 		   }
 		}
-      
+
 		"Modifiers"
 		{
 			"modifier_assault_rifle_urban_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -219,7 +250,7 @@
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
       "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 
-      
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -265,16 +296,16 @@
 			   "mana_cost"	            "1 2 2 2 2 2 3 3 3 3 3 4 4 4 4 4 4 4 4"
          }
 		}
-      
+
       // Casting
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCastRange"				"550"
       "AbilityCastPoint"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
 
-      // Time		
+      // Time
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCooldown"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
-      
+
       "OnToggleOn"
       {
          "ApplyModifier"
@@ -291,14 +322,14 @@
             "Target" "CASTER"
          }
       }
-      
+
 		"Modifiers"
 		{
 			"modifier_vindicator_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -313,7 +344,7 @@
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
 			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
-            
+
             "Orb"
             {
                "Priority"			"DOTA_ORB_PRIORITY_ABILITY"
@@ -338,20 +369,20 @@
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
                      "Types" "DOTA_UNIT_TARGET_ALL"
-					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"  
+					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
                   }
                   "Duration" "%slow_duration"
                }
             }
 			}
-         
+
          "modifier_plasma_slow_datadriven"
          {
             "IsDebuff" "1"
-            
+
             //"EffectName" "particles/generic_gameplay/generic_slowed_cold.vpcf"
             //"EffectAttachType" "follow_origin"
-            
+
             "Properties"
             {
               "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow"
@@ -377,7 +408,7 @@
       "AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
       "AbilityUnitTargetType"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 
-      
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -423,16 +454,16 @@
 			   "mana_cost"	            "1 2 2 2 2 2 3 3 3 3 3 4 4 4 4 4 4 4 4"
          }
 		}
-      
+
       // Casting
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCastRange"				"550"
       "AbilityCastPoint"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
 
-      // Time		
+      // Time
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCooldown"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
-      
+
       "OnToggleOn"
       {
          "ApplyModifier"
@@ -449,14 +480,14 @@
             "Target" "CASTER"
          }
       }
-      
+
 		"Modifiers"
 		{
 			"modifier_vindicator_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -471,7 +502,7 @@
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
 			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
-            
+
             "Orb"
             {
                "Priority"			"DOTA_ORB_PRIORITY_ABILITY"
@@ -496,20 +527,20 @@
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
                      "Types" "DOTA_UNIT_TARGET_ALL"
-					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"  
+					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
                   }
                   "Duration" "%slow_duration"
                }
             }
 			}
-         
+
          "modifier_plasma_slow_datadriven"
          {
             "IsDebuff" "1"
-            
+
             //"EffectName" "particles/generic_gameplay/generic_slowed_cold.vpcf"
             //"EffectAttachType" "follow_origin"
-            
+
             "Properties"
             {
               "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow"
@@ -534,7 +565,7 @@
 		"AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL"
 
-      
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -580,20 +611,20 @@
 			   "mana_cost"	            "1"
          }
 		}
-      
+
       // Casting
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCastRange"				"550"
       "AbilityCastPoint"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
 
-      // Time		
+      // Time
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCooldown"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
 
       // Cost
       //-------------------------------------------------------------------------------------------------------------
       "AbilityManaCost"				"%mana_cost"
-      
+
       "OnToggleOn"
       {
          "ApplyModifier"
@@ -610,14 +641,14 @@
             "Target" "CASTER"
          }
       }
-      
+
 		"Modifiers"
 		{
 			"modifier_vindicator_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -632,7 +663,7 @@
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
 			   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
             }
-            
+
             "Orb"
             {
                "Priority"			"DOTA_ORB_PRIORITY_ABILITY"
@@ -657,20 +688,20 @@
                      "Radius" "120"
                      "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
                      "Types" "DOTA_UNIT_TARGET_ALL"
-					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"  
+					 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
                   }
                   "Duration" "%slow_duration"
                }
             }
 			}
-         
+
          "modifier_plasma_slow_datadriven"
          {
             "IsDebuff" "1"
-            
+
             //"EffectName" "particles/generic_gameplay/generic_slowed_cold.vpcf"
             //"EffectAttachType" "follow_origin"
-            
+
             "Properties"
             {
               "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow"
@@ -695,7 +726,7 @@
 		"AbilityTextureName"       "luna_moon_glaive"
       "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
       "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-      
+
       "precache"
       {
          "particle"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
@@ -742,7 +773,7 @@
                   "Function"		"moon_glaive_start_create_dummy"
                }
             }
-			
+
 			   "Properties"
 			   {
 				   "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_attack_range"
@@ -751,9 +782,9 @@
          }
       }
    }
-   
+
    // This is just for use with flamethrower bouncy stuff
-   
+
    "luna_moon_glaive_dummy_datadriven"
    {
       // General
@@ -765,7 +796,7 @@
       "OnProjectileHitUnit"
       {
          "DeleteOnHit"	"1"
-         
+
          "RunScript"
          {
             "ScriptFile"	"scripts/vscripts/heroes/hero_luna/moon_glaive.lua"
@@ -799,7 +830,7 @@
          }
       }
    }
-   
+
    //=================================================================================================================
 	// Ability: rocketI // Mark 1 rocket skill
 	//=================================================================================================================
@@ -815,14 +846,14 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "gyrocopter_rocket_barrage"
 
-      
+
       // Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
       "AbilityCooldown"				"6"
-		
-      
+
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -858,7 +889,7 @@
 			   "bonus_attack_range"		"600"
 		   }
 		}
-      
+
       "OnToggleOn"
       {
          "ApplyModifier"
@@ -872,7 +903,7 @@
             "Target" "CASTER"
          }
       }
-      
+
       "OnToggleOff"
       {
          "RemoveModifier"
@@ -886,14 +917,14 @@
             "Target" "CASTER"
          }
       }
-      
+
 		"Modifiers"
 		{
 			"modifier_rocket_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -902,7 +933,7 @@
                   "Function"		"Splash"
                }
             }
-            
+
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
@@ -929,7 +960,7 @@
                "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
             }
          }
-         
+
 		}
    }
    //=================================================================================================================
@@ -947,14 +978,14 @@
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "gyrocopter_rocket_barrage"
 
-      
+
       // Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
       "AbilityCooldown"				"6"
-		
-      
+
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -990,7 +1021,7 @@
 			   "bonus_attack_range"		"600"
 		   }
 		}
-      
+
       "OnToggleOn"
       {
          "ApplyModifier"
@@ -1004,7 +1035,7 @@
             "Target" "CASTER"
          }
       }
-      
+
       "OnToggleOff"
       {
          "RemoveModifier"
@@ -1018,14 +1049,14 @@
             "Target" "CASTER"
          }
       }
-      
+
 		"Modifiers"
 		{
 			"modifier_rocket_datadriven"
 			{
             "Passive"	"1"
 				"IsHidden"	"1"
-            
+
             "OnAttackLanded"
             {
                "RunScript"
@@ -1034,7 +1065,7 @@
                   "Function"		"Splash"
                }
             }
-            
+
             "Properties"
             {
                "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
@@ -1061,10 +1092,10 @@
                "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
             }
          }
-         
+
 		}
    }
-   
+
    //=================================================================================================================
 	// Ability: sniper_rifleI // Mark 1 Sniper Rifle skill
 	//=================================================================================================================
@@ -1079,7 +1110,7 @@
 		"MaxLevel"                 "9"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sven_great_cleave"
-     
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -1107,11 +1138,11 @@
 					{
 						"ModifierName"	"modifier_sniper1_crit_datadriven"
 						"Target"		"CASTER"
-					}	
+					}
 					"Random"
 					{
 						"Chance"		"%crit_chance"
-	
+
 						"OnSuccess"
 						{
 							"ApplyModifier"
@@ -1126,7 +1157,7 @@
       	"modifier_sniper1_crit_datadriven"
 			{
 				"IsHidden"		"1"
-				"IsPurgable"	"0"	
+				"IsPurgable"	"0"
 				"OnAttackLanded"
 				// "%attack_damage" is set to the damage value before mitigation
 				{
@@ -1135,7 +1166,7 @@
 						"ModifierName"	"modifier_sniper1_crit_datadriven"
 						"Target" 		"CASTER"
 					}
-				}	
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
@@ -1157,7 +1188,7 @@
 		"MaxLevel"                 "11"
 		"LevelsBetweenUpgrades"    "0"
 		"AbilityTextureName"       "sven_great_cleave"
-     
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -1185,11 +1216,11 @@
 					{
 						"ModifierName"	"modifier_sniper2_crit_datadriven"
 						"Target"		"CASTER"
-					}	
+					}
 					"Random"
 					{
 						"Chance"		"%crit_chance"
-	
+
 						"OnSuccess"
 						{
 							"ApplyModifier"
@@ -1204,7 +1235,7 @@
       	"modifier_sniper2_crit_datadriven"
 			{
 				"IsHidden"		"1"
-				"IsPurgable"	"0"	
+				"IsPurgable"	"0"
 				"OnAttackLanded"
 				// "%attack_damage" is set to the damage value before mitigation
 				{
@@ -1213,7 +1244,7 @@
 						"ModifierName"	"modifier_sniper2_crit_datadriven"
 						"Target" 		"CASTER"
 					}
-				}	
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
@@ -1236,7 +1267,7 @@
 			{
 				"IsHidden"				"1"
 				"Passive"				"1"
-				
+
 				"Aura"					""
 				"Aura_Radius"			"10"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_NONE"
@@ -1274,7 +1305,7 @@
             "var_type"			"FIELD_FLOAT"
             "mana_regen"		"-30"
          }
-      }     
+      }
       // Data driven
       //-------------------------------------------------------------------------------------------------------------
       "Modifiers"
@@ -1301,8 +1332,8 @@
 		"BaseClass"						"ability_datadriven"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
       "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-      "AbilityTextureName"			"crystal_maiden_brilliance_aura" 
-      "MaxLevel"                 "1"      
+      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
+      "MaxLevel"                 "1"
       // Special
       //-------------------------------------------------------------------------------------------------------------
       "AbilitySpecial"
@@ -1312,7 +1343,7 @@
             "var_type"			"FIELD_FLOAT"
             "mana_regen"		"-45"
          }
-      }     
+      }
       // Data driven
       //-------------------------------------------------------------------------------------------------------------
       "Modifiers"
@@ -1327,7 +1358,7 @@
                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
             }
          }
-      }      
+      }
    }
 	//=================================================================================================================
 	// Ability: Mana_Drain_Severly_Damaged (Power Core)
@@ -1339,7 +1370,7 @@
 		"BaseClass"						"ability_datadriven"
       "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
       "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-      "AbilityTextureName"			"crystal_maiden_brilliance_aura" 
+      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
       "MaxLevel"                 "1"
       // Special
       //-------------------------------------------------------------------------------------------------------------
@@ -1350,7 +1381,7 @@
             "var_type"			"FIELD_FLOAT"
             "mana_regen"		"-55"
          }
-      }     
+      }
       // Data driven
       //-------------------------------------------------------------------------------------------------------------
       "Modifiers"
@@ -1365,7 +1396,7 @@
                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
             }
          }
-      }      
+      }
    }
 	//=================================================================================================================
 	// Ability: Mana_Drain (Power Core)
@@ -1390,21 +1421,21 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 			"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.3"
 		"AbilityChannelTime"			"30.1"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityModifierSupportValue"	"5.0"	// better then the mana cost implies
@@ -1525,7 +1556,7 @@
          }
 		}
 	}
-	
+
    //=================================================================================================================
    // Ability: Mana Shield Light (Nanites-Light Armor)
    // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
@@ -1539,7 +1570,7 @@
 		"AbilityTextureName"			"medusa_mana_shield"
 		"MaxLevel"                 "20"
 		"LevelsBetweenUpgrades"    "0"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.4"
@@ -1570,7 +1601,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"EffectName"	"Hero_Medusa.ManaShield.On"
 				"Target" 		"CASTER"
 			}
 
@@ -1619,7 +1650,7 @@
 				"Passive"			"0"
 				"IsHidden"			"0"
 				"IsBuff"			   "1"
-				
+
 				"Properties"
 				{
 					// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
@@ -1629,7 +1660,7 @@
 
 				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
 				"EffectAttachType"	"follow_origin"
-		
+
 				"OnTakeDamage"
 				// "%attack_damage" is set to the damage value after mitigation
 				{
@@ -1649,7 +1680,7 @@
 			}
 		}
    }
-	
+
       //=================================================================================================================
    // Ability: Mana Shield Standard (Nanites-Standard Armor)
    // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
@@ -1674,7 +1705,7 @@
 			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
 			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.4"
@@ -1703,7 +1734,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"EffectName"	"Hero_Medusa.ManaShield.On"
 				"Target" 		"CASTER"
 			}
 
@@ -1752,7 +1783,7 @@
 				"Passive"			"0"
 				"IsHidden"			"0"
 				"IsBuff"			   "1"
-				
+
 				"Properties"
 				{
 					// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
@@ -1762,7 +1793,7 @@
 
 				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
 				"EffectAttachType"	"follow_origin"
-		
+
 				"OnTakeDamage"
 				// "%attack_damage" is set to the damage value after mitigation
 				{
@@ -1807,7 +1838,7 @@
 			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
 			"particle"			"particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.4"
@@ -1836,7 +1867,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"EffectName"	"Hero_Medusa.ManaShield.On"
 				"Target" 		"CASTER"
 			}
 
@@ -1885,7 +1916,7 @@
 				"Passive"			"0"
 				"IsHidden"			"0"
 				"IsBuff"			   "1"
-				
+
 				"Properties"
 				{
 					// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
@@ -1895,7 +1926,7 @@
 
 				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
 				"EffectAttachType"	"follow_origin"
-		
+
 				"OnTakeDamage"
 				// "%attack_damage" is set to the damage value after mitigation
 				{
@@ -1915,10 +1946,10 @@
 			}
 		}
 	}
-   
+
 	//=================================================================================================================
 	// Ability: Sprint (Light,Medium,Heavy)
-	//=================================================================================================================	
+	//=================================================================================================================
 	"sprint_datadriven"
 	{
 		// General
@@ -1933,11 +1964,11 @@
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"150 30 20"
-		
-		"AbilitySpecial"	
+
+		"AbilitySpecial"
 		{
 			"01"
 			{
@@ -1991,10 +2022,10 @@
 			}
 		}
 	}
-   
+
    //=================================================================================================================
 	// Ability: Radiation Fragment
-	//=================================================================================================================	
+	//=================================================================================================================
 	"rad_frag_datadriven"
 	{
 		// General
@@ -2009,6 +2040,10 @@
 			"modifier_rad_frag_datadriven"
 			{
 				"Passive" "1"
+                "States"
+                {
+                    "MODIFIER_STATE_NOT_ON_MINIMAP"      "MODIFIER_STATE_VALUE_ENABLED"
+                }
 
 				"OnDeath"
             {
@@ -2021,10 +2056,10 @@
 			}
 		}
 	}
-   
+
    //=================================================================================================================
 	// Ability: Radiation Fragment
-	//=================================================================================================================	
+	//=================================================================================================================
 	"global_radiation_damage"
 	{
 		// General
@@ -2043,13 +2078,13 @@
             "damage_per_second"		"0 1 2 12 25"
          }
       }
-      
+
 		"Modifiers"
 		{
 			"modifier_rad_damage_datadriven"
 			{
 				"Passive" "1"
-            
+
 				"ThinkInterval" "1.0"
             "OnIntervalThink"
             {
@@ -2091,7 +2126,7 @@
       "SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
       "MaxLevel"                 "6"
       "AbilityTextureName"			"mirana_invis"
-      
+
       // Precache
       //-------------------------------------------------------------------------------------------------------------
       "precache"
@@ -2099,10 +2134,10 @@
          "soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
          "particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
          "particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
-         "particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf" 
+         "particle"			"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
       }
 
-      // Time		
+      // Time
       //-------------------------------------------------------------------------------------------------------------
       "AbilityCastPoint"				"0.0"
 
@@ -2122,7 +2157,7 @@
          }
       }
 
-      "OnToggleOn" 
+      "OnToggleOn"
       {
          "ApplyModifier"
          {
@@ -2141,21 +2176,21 @@
          {
             "ModifierName" "modifier_sneak_watcher"
             "Target" "CASTER"
-         }  
+         }
          "RemoveModifier"
          {
             "ModifierName" "modifier_sneak_revealed"
             "Target" "CASTER"
-         }  
+         }
          "RemoveModifier"
          {
             "ModifierName" "modifier_sneak_invis"
             "Target" "CASTER"
-         }  
+         }
       }
-      
+
       "Modifiers"
-      { 
+      {
          "modifier_sneak_movespeed"
          {
             "Passive"   "1"
@@ -2167,22 +2202,22 @@
          }
          "modifier_sneak_watcher"
          {
-            "IsHidden"  "1"         
+            "IsHidden"  "1"
             "OnAttackLanded"
-            {  
+            {
                "ApplyModifier"
                {
                   "ModifierName" "modifier_sneak_revealed"
                   "Target" "CASTER"
-               }             
+               }
             }
             "OnAbilityExecuted"
-            {  
+            {
                "ApplyModifier"
                {
                   "ModifierName" "modifier_sneak_revealed"
                   "Target" "CASTER"
-               }         
+               }
             }
          }
          "modifier_sneak_revealed"
@@ -2204,11 +2239,11 @@
                   "ModifierName"	"modifier_sneak_invis"
                   "Target"		"TARGET"
                }
-            }           
+            }
          }
          "modifier_sneak_invis"
          {
-            "IsHidden"  "0" 
+            "IsHidden"  "0"
             "States"
             {
                "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -2218,7 +2253,7 @@
    }
    //=================================================================================================================
 	// Ability: Critical Shot (Covert Sniper)
-	//=================================================================================================================  
+	//=================================================================================================================
    "covert_sniper_critical_shot"
    {
       // General
@@ -2230,7 +2265,7 @@
       "MaxLevel"                 "8"
       "LevelsBetweenUpgrades"    "0"
       "AbilityTextureName"       "chaos_knight_chaos_strike"
-     
+
       // Special
       //-------------------------------------------------------------------------------------------------------------
       "AbilitySpecial"
@@ -2287,7 +2322,7 @@
          "modifier_crit"
          {
             "IsHidden"		"1"
-            "IsPurgable"	"0"	
+            "IsPurgable"	"0"
             "OnAttackLanded"
             // "%attack_damage" is set to the damage value before mitigation
             {
@@ -2296,7 +2331,7 @@
                   "ModifierName"	"modifier_crit"
                   "Target" 		"CASTER"
                }
-            }	
+            }
             "Properties"
             {
                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
@@ -2305,7 +2340,7 @@
          "modifier_aim_crit"
          {
             "IsHidden"		"1"
-            "IsPurgable"	"0"	
+            "IsPurgable"	"0"
             "OnAttackLanded"
             // "%attack_damage" is set to the damage value before mitigation
             {
@@ -2314,7 +2349,7 @@
                   "ModifierName"	"modifier_aim_crit"
                   "Target" 		"CASTER"
                }
-            }	
+            }
             "Properties"
             {
                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%aim_crit_damage"
@@ -2324,7 +2359,7 @@
    }
    //=================================================================================================================
 	// Ability: Marksman (Covert Sniper)
-	//=================================================================================================================   
+	//=================================================================================================================
 "covert_sniper_marksman"
 {
 	// General
@@ -2370,14 +2405,14 @@
       {
          "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
          "Function"		"GetTargetLocation"
-      }          
+      }
       "RunScript"
       {
          "ScriptFile"			"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
          "Function"				"PierceHit"
          "Target"				   "TARGET"
       }
-   }	
+   }
 	// Data driven
 	//-------------------------------------------------------------------------------------------------------------
 	"Modifiers"
@@ -2405,7 +2440,7 @@
             {
                "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
                "Function"		"getTargetLocation"
-            }   
+            }
          }
          "OnDealDamage"
          {
@@ -2414,7 +2449,7 @@
                "ScriptFile"	"scripts/vscripts/heroes/hero_covert_sniper/marksman.lua"
                "Function"		"getDamageDealt"
                "kill_damage"  "%attack_damage"
-            }            
+            }
          }
          "OnKill"
          {
@@ -2437,7 +2472,7 @@
 	}
    //=================================================================================================================
 	// Ability: Concussion Grenade (Covert Sniper)
-	//=================================================================================================================    
+	//=================================================================================================================
    "covert_sniper_concussion_grenade"
    {
       // General
@@ -2452,12 +2487,12 @@
       "LevelsBetweenUpgrades"    "0"
       "AbilityTextureName"			"brewmaster_drunken_haze"
 
-      // Ability Levels   
+      // Ability Levels
       "AoERadius"						"264"
       "AbilityCastRange"         "650"
       "AbilityCastPoint"			"0.4"
       "AbilityCooldown"				"3"
-      "AbilityManaCost"				"80"		
+      "AbilityManaCost"				"80"
 
       // Special
       // Each level swaps between upgrading duration (and stun) or the slow effects.
@@ -2493,7 +2528,7 @@
          {
             "var_type"              "FIELD_FLOAT"
             "stun_duration"         "0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 1.0 1.0 1.0 2.0 2.0 3.0"
-         }    
+         }
       }
 
       "precache"
@@ -2534,7 +2569,7 @@
                "Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
             }
             "Duration"		"%duration"
-         }     
+         }
       }
 
       "Modifiers"
@@ -2542,7 +2577,7 @@
          "modifier_concussion_grenade_stun"
          {
             "IsDebuff"  "1"
-            
+
             "States"
             {
                "MODIFIER_STATE_STUNNED"      "MODIFIER_STATE_VALUE_ENABLED"
@@ -2555,7 +2590,7 @@
             "EffectAttachType"		"follow_origin"
             "StatusEffectName"		"particles/status_fx/status_effect_brewmaster_drunken_haze.vpcf"
             "StatusEffectPriority"	"5"
-            
+
             "Properties"
             {
                "MODIFIER_PROPERTY_MISS_PERCENTAGE"				   "%miss_chance"
@@ -2564,10 +2599,10 @@
             }
          }
       }
-   } 
+   }
    //=================================================================================================================
 	// Ability: Aim (Covert Sniper)
-	//================================================================================================================= 
+	//=================================================================================================================
    "covert_sniper_aim"
    {
       // General
@@ -2583,7 +2618,7 @@
       "AbilityCastPoint"			"0.0"
       "AbilityCooldown"				"89.0 81.0 73.0 65.0 57.0 49.0 41.0 33.0 32.0 31.0 30.0 29.0 28.0 27.0 26.0 25.0"
       "AbilityManaCost"				"0"
-      // Special	
+      // Special
       //-------------------------------------------------------------------------------------------------------------
       "AbilitySpecial"
       {
@@ -2612,7 +2647,7 @@
             "Duration"     "%duration"
          }
       }
-        
+
       "Modifiers"
       {
          "modifier_aim"
@@ -2623,8 +2658,8 @@
             {
                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	   "%movespeed_slow"
                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"     "%attack_slow"
-            }       
-         }   
+            }
+         }
       }
    }
 
@@ -2706,13 +2741,40 @@
             "modifier_deniable"
             {
                 "Passive"                       "1"
-				"IsHidden"						"1"
+                "IsHidden"						"1"
                 "States"
-				{
-					"MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+                {
+                    "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+                }
             }
         }
+    }
+
+    //=================================================================================================================
+    // No Health Bar
+    //=================================================================================================================
+    "no_health_bar"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_datadriven"
+            "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+            "AbilityTextureName"            "disruptor_glimpse"
+
+            // Modifiers
+            //-------------------------------------------------------------------------------------------------------------
+            "Modifiers"
+            {
+
+                "Invulnerable"
+                {
+                    "Passive"                       "1"
+                        "States"
+                        {
+                            "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+                        }
+                }
+            }
     }
 
     //=================================================================================================================
@@ -2780,7 +2842,7 @@
     }
      //=================================================================================================================
 	// Ability: Xtreme Combat Mode (Cyborg)
-	//================================================================================================================= 
+	//=================================================================================================================
    "cyborg_xtreme_combat_mode"
    {
       // General
@@ -2805,11 +2867,11 @@
 			"particle"	"models/heroes/wisp/wisp_overcharge.vmdl"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 		}
-	  
-	  
-	  
-	  
-	  
+
+
+
+
+
 	  "AbilitySpecial"
       {
          "01"
@@ -2859,15 +2921,15 @@
 						"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 						"EffectAttachType"	"attach_hitloc"
 						"Target"			"TARGET"
-						
+
 						"ControlPointEntities"
 						{
 							"TARGET"	"attach_hitloc"
 						}
 					}
 				}
-			
-			
+
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%bonus_health_regen"
@@ -2879,7 +2941,7 @@
    }
       //=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
-	//================================================================================================================= 
+	//=================================================================================================================
    "cyborg_organic_replacement"
    {
   	// General
@@ -2898,7 +2960,7 @@
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
-			
+
 
 		}
 
@@ -2919,43 +2981,43 @@
 			}
 
 		}
-		
+
 			"OnUpgrade"
 				{
 					"FireSound"
 					{
 						"Target"		"CASTER"
 						"EffectName"	"Hero_Tinker.Rearm"
-						
+
 					}
 					"AttachEffect"
 					{
 						"EffectName"		"particles/units/heroes/hero_meepo/meepo_poof.vpcf"
 						"EffectAttachType"	"attach_hitloc"
 						"Target"			"TARGET"
-						
+
 						"ControlPointEntities"
 						{
 							"TARGET"	"attach_hitloc"
 						}
 					}
 				}
-		
-		
-		
+
+
+
 
 		"Modifiers"
 		{
-		
-		
-		
+
+
+
 			"modifier_blur_datadriven"
 			{
-			
 
-			
-			
-			
+
+
+
+
 				"Passive"	"1"
 				"IsHidden"	"1"
 				"Properties"
@@ -2967,10 +3029,10 @@
 		}
 	}
 
-   
+
     //=================================================================================================================
 	// Ability: Emergency Power(Cyborg)
-   //================================================================================================================= 
+   //=================================================================================================================
   "cyborg_emergency_power"
    {
 	// General
@@ -2984,11 +3046,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			
-					
+
+
 					"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
 					"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-		
+
 		}
 
 		// Casting
@@ -3031,7 +3093,7 @@
 			{
 				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
 				"EffectAttachType"	"start_at_customorigin"
-	
+
 				"ControlPointEntities"
 				{
 					"CASTER"	"follow_origin"
@@ -3058,16 +3120,16 @@
 		"AbilityTextureName"			"morphling_morph_agi"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"  "0"
 		"AbilityCastRange"  "1000"
-	
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
@@ -3075,13 +3137,13 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		// "AbilityDamage"				"250" calculated by script mainly
-			
-		
+
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 
-		
-		// Special 
+
+		// Special
 			//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3127,7 +3189,7 @@
 			}
 		}
 	}
-	
+
    	//=================================================================================================================
 	// Cybrog: Pheromones
 	//=================================================================================================================
@@ -3139,7 +3201,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"alchemist_unstable_concoction"
 		"AbilityManaCost"		"200"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3147,7 +3209,7 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
 			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
@@ -3168,7 +3230,7 @@
 			}
 		}
 	}
-	
+
 	"cyborg_pheromones_off"
 	{
 		// General
@@ -3177,7 +3239,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"riki_smoke_screen"
 		"AbilityManaCost"		"0"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3187,12 +3249,12 @@
 			"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
 			"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -3201,7 +3263,7 @@
 				"radius"          "1600"
 			}
 		}
-	
+
 		"OnSpellStart"
 		{
 			"FireSound"
@@ -3209,31 +3271,31 @@
 				"EffectName"	"Hero_Venomancer.PoisonNova"
 				"Target"		"CASTER"
 			}
-	
+
 			"FireEffect"
 			{
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
 				"EffectAttachType"	"attach_origin"
 				"Target"		"CASTER"
 			}
-	
+
 			"FireEffect"
 			{
 				"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
 				"EffectAttachType"	"start_at_customorigin"
-				
+
 				"ControlPointEntities"
 				{
 					"CASTER"	"attach_origin"
 				}
-	
+
 				"ControlPoints"
 				{
 					"01"	"1 1 1"
 					"02"	"0 0 0"
 				}
 			}
-	
+
 			"RunScript"
 			{
 				"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
@@ -3243,8 +3305,8 @@
 			}
 		}
 	}
-	
-	
+
+
 	//=================================================================================================================
 	// Cyborg: Forcefield
 	//=================================================================================================================
@@ -3256,7 +3318,7 @@
 		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_lua_ability.lua"
 		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
 		"AbilityManaCost"		"120"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3264,13 +3326,13 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
 			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"2"
 	}
-	
+
 	"cyborg_forcefield_off_lua_ability"
 	{
 		// General
@@ -3279,7 +3341,7 @@
 		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_off_lua_ability.lua"
 		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
 		"AbilityManaCost"		"0"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3287,13 +3349,13 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
 			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
 	}
-	
+
 	//=================================================================================================================
 	// Demolitions: MIRV
 	//=================================================================================================================
@@ -3309,17 +3371,17 @@
 		"AbilityTextureName"			"morphling_morph_agi"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"  "0.3"
 		"AbilityCastRange"  "1000"
 		"FightRecapLevel"				"1"
-	
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"135 135 180 180 215 215 250 250 280 280 320 320 340 340 350 350"
@@ -3327,8 +3389,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"250"
-			
-		
+
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3339,8 +3401,8 @@
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
 		}
-		
-		// Special    
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3407,16 +3469,16 @@
 			"13"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"slop"                		"30" 
+				"slop"                		"30"
 			}
 			"14"
 			{
 				"var_type"                	"FIELD_INTEGER"
 				"linger_duration"           "3"
 			}
-			
+
 		}
-		
+
 		"OnSpellStart"
 		{
 			"LinearProjectile"
@@ -3432,7 +3494,7 @@
 				"HasFrontalCone"	"0"
 			}
 		}
-		
+
 		"OnProjectileFinish"
 		{
 			"RunScript"
@@ -3451,7 +3513,7 @@
 				"linger_duration"	"%linger_duration"
 			}
 		}
-		
+
 		"Modifiers"
 		{
 			"modifier_demo_mirv_thinker"
@@ -3462,7 +3524,7 @@
 				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
 				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
 				"Duration" "%duration"
-				
+
 				"OnCreated"
 				{
 					"AttachEffect"
@@ -3471,7 +3533,7 @@
 						"EffectAttachType" "follow_origin"
 						"Target" "TARGET"
 					}
-					
+
 					"Damage"
 					{
 						"Target"
@@ -3484,7 +3546,7 @@
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
 					}
-					
+
 					"Damage"
 					{
 						"Target"
@@ -3527,7 +3589,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Demolitions: Mini-Nuke
 	//=================================================================================================================
@@ -3544,17 +3606,17 @@
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"  	"0"
 		"AoERadius" 				"%outer_radius"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"  "00"
 		"AbilityCastRange"  "65534"
 		"FightRecapLevel"				"1"
-	
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"600 550 500"
@@ -3562,8 +3624,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"6000"
-			
-		
+
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3574,8 +3636,8 @@
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
 		}
-		
-		// Special    
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3600,7 +3662,7 @@
 				"inner_damage"              "6000"
 			}
 		}
-		
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -3615,7 +3677,7 @@
 				"outer_radius"	    "%outer_radius"
 			}
 		}
-		
+
 		"Modifiers"
 		{
 			"modifier_demo_mini_nuke_thinker"
@@ -3629,7 +3691,7 @@
 						"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
 						"Function"          "setActive"
 					}
-				
+
 					"Damage"
 					{
 						"Target"
@@ -3642,7 +3704,7 @@
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
 					}
-					
+
 					"Damage"
 					{
 						"Target"
@@ -3659,7 +3721,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Demolitions: Biochemical Energy
 	// This levels up with AdvGen and needs to level DOWN when lockdown gets toggled off
@@ -3676,7 +3738,7 @@
 		"AbilityTextureName"	"troll_warlord_whirling_axes_melee"
 		"AbilityManaCost"		"0"
 		"MaxLevel"              "18"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3684,13 +3746,13 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
 			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"20"
-		
-		// Special    
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3720,7 +3782,7 @@
 				"min_eps"  					"2"
 			}
 		}
-		
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -3731,7 +3793,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Demolitions: Advanced Generator
 	//=================================================================================================================
@@ -3744,14 +3806,14 @@
 		 "MaxLevel"                 "16"
 
 		"AbilityTextureName"			"centaur_return"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 		}
-	
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -3762,7 +3824,7 @@
 				"bonus_regen"				"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16"
 			}
 		}
-		
+
 		"OnUpgrade"
 		{
 			"LevelUpAbility"
@@ -3771,7 +3833,7 @@
 				"AbilityName" "demo_biochemical_energy"
 			}
 		}
-	
+
 		"Modifiers"
 		{
 			"modifier_demo_advanced_generator"
@@ -3787,7 +3849,7 @@
 	}
 	//=================================================================================================================
 	// Medic: Revive
-   //================================================================================================================= 
+   //=================================================================================================================
   "medic_revive"
    {
 		// General
@@ -3796,26 +3858,26 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"                 		"6"
 		"AbilityTextureName"			"tinker_rearm"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 
 		}
-	
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
-	
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"20"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"250"
-	
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -3830,7 +3892,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"200"
 			}
-            
+
             // The levels of the numbers below aren't linked to revive level, but rather, to armor
             // light, medium, heavy, advanced, goliath
             "03"
@@ -3859,7 +3921,7 @@
 				"sickness_duration"		"20 60 120 150 150"
 			}
 		}
-	
+
 		"OnAbilityPhaseStart"
 		{
 			"RunScript"
@@ -3868,7 +3930,7 @@
 				"Function"		"OnAbilityPhaseStart"
 			}
 		}
-		
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -3893,7 +3955,7 @@
 	}
    	//=================================================================================================================
 	// Ability: Mend Wounds (Medic)
-	//=================================================================================================================  
+	//=================================================================================================================
 	"medic_mend_wounds"
     {
 	// General
@@ -3906,22 +3968,22 @@
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	"AbilityTextureName"			"beastmaster_inner_beast"
-   
+
 
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"120"
 		"AbilityCastPoint"				"0.1"
-		
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.5"
-		
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		
+
 
 			// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3945,14 +4007,14 @@
 				"Target" 		"TARGET"
 				"HealAmount"	"%heal"
 			}
-	
+
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Ability: Andrenaline (Medic)
-	//=================================================================================================================  
-	
+	//=================================================================================================================
+
 	"medic_adrenaline"
 	{
 		// General
@@ -3963,20 +4025,20 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"MaxLevel"						"1" 		//Needs to be chnaged for levels 51-55
 		"AbilityTextureName"			"lone_druid_rabid"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"120"
 		"AbilityCastPoint"				"0.1"
-		
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"		//Needs to be chnaged for levels 51-55	
-	
+		"AbilityCooldown"				"60"		//Needs to be chnaged for levels 51-55
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-	
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -3986,26 +4048,26 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"20"
 			}
-	
+
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"modelscale"		"25"
-			}	
-			
+			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_bonus_pct"	"300"
 			}
 		}
-		
+
 		"precache"
 		{
 			"particle"  "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 		}
-	
+
 		"OnSpellStart"
 		{
 			"FireEffect"
@@ -4014,13 +4076,13 @@
 				"EffectAttachType"  "follow_origin"
 				"Target"            "TARGET"
 			}
-	
+
 			"FireSound"
 			{
 				"EffectName"	"Hero_Clinkz.Strafe"
 				"Target" 		"TARGET"
 			}
-	
+
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_strafe"
@@ -4028,14 +4090,14 @@
 				"Duration"		"%duration"
 			}
 		}
-	
+
 		"Modifiers"
 		{
 			"modifier_strafe"
 			{
 				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
 				"EffectAttachType"	"follow_origin"
-		
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
@@ -4045,7 +4107,7 @@
 	}
        //=================================================================================================================
 	// Ability: Nano-Injection (Medic)
-	//=================================================================================================================  
+	//=================================================================================================================
 	"medic_nano_injection"
     {
         // General
@@ -4053,27 +4115,27 @@
         "BaseClass"						"ability_datadriven"
         "AbilityName"              "Nano-Injection"
         "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-    
+
         "MaxLevel"                 "16"
         "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
         "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
         "AbilityTextureName"			"omniknight_purification"
-   
+
 
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"175 205 235 265 295 325 355 385 415 445 475 505 535 565 595 625"
 		"AbilityCastPoint"				"0"
-		
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"20.0"
-		
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"250"
-		
+
 
 			// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4107,7 +4169,7 @@
 				"EffectName"	"Hero_Omniknight.Purification"
 				"Target"		"TARGET"
 			}
-	
+
 			"FireEffect"
 			{
 				"Target"			"TARGET"
@@ -4119,14 +4181,14 @@
 					"01"	"%radius %radius %radius"
 				}
 			}
-			
+
 			"FireEffect"
 			{
 				"Target"			"TARGET"
 				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
 				"EffectAttachType"	"follow_origin"
 			}
-	
+
 			"Heal"
 			{
 				"Target" 		"TARGET"
@@ -4135,7 +4197,7 @@
             "Random"
 			{
 				"Chance"		"%remove_rez_sick_chance"
-	
+
 				"OnSuccess"
 				{
 					"RemoveModifier"
@@ -4146,7 +4208,7 @@
 				}
 			}
 		}
-        
+
         "modifiers"
         {
             "modifier_nano_hot_thinker"
