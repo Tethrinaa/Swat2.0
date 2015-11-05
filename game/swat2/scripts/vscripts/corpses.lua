@@ -21,10 +21,6 @@ function LeaveCorpse( unit )
     
     -- Create the default corpse unless a different one is specified in the config for the unit
     local model = CORPSE_MODEL
-	for k,v in pairs(GameMode.unit_infos) do
-		print(k)
-	end
-	print("Corpsing "..unit:GetUnitName())
     local unit_info = GameMode.unit_infos[unit:GetUnitName()]
     if unit_info and unit_info["CorpseModel"] then
         model = unit_info["CorpseModel"]

@@ -54,6 +54,10 @@ end
 function Activate()
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
+	
+	-- Disable respawning so you don't wind up in lab constantly
+	GameRules:SetHeroRespawnEnabled(false)
+	
 	ListenToGameEvent( "dota_player_gained_level", HeroLeveledUp, self )
 end
 

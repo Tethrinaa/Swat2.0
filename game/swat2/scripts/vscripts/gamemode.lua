@@ -215,8 +215,8 @@ function GameMode:InitGameMode()
     Global_Radiation_Manager:setup() -- make sure this is called after rooms have been created
 
     Global_Radiation_Manager:setDifficulty(2, false) -- TODO: Call this when we actually set difficulty
-
-   --load item table
+	
+   --load unit and item tables
    self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
    GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
    for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
