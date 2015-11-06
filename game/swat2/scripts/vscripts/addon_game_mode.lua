@@ -19,6 +19,7 @@ function Precache( context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
     PrecacheUnitByNameSync("npc_dota_creature_basic_zombie", context)
+    PrecacheUnitByNameSync("npc_dota_creature", context)
     PrecacheUnitByNameSync("npc_dota_creature_basic_garg", context)
     PrecacheUnitByNameSync("npc_dota_creature_basic_mutant", context)
     PrecacheUnitByNameSync("npc_dota_creature_basic_beast", context)
