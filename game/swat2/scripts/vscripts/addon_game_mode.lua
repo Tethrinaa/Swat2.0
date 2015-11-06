@@ -24,6 +24,7 @@ function Precache( context )
     PrecacheUnitByNameSync("npc_dota_creature_basic_beast", context)
     PrecacheUnitByNameSync("npc_dota_creature_basic_dog", context)
     PrecacheUnitByNameSync("npc_dota_creature_basic_innards", context)
+    PrecacheUnitByNameSync("zombie_corpse", context)
     PrecacheUnitByNameSync("npc_dota_create_rad_frag", context)
     PrecacheUnitByNameSync("npc_dota_hero_lina", context)
     PrecacheUnitByNameSync("npc_dota_hero_techies", context)
@@ -49,10 +50,10 @@ end
 function Activate()
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
-	
+
 	-- Disable respawning so you don't wind up in lab constantly
 	GameRules:SetHeroRespawnEnabled(false)
-	
+
 	ListenToGameEvent( "dota_player_gained_level", HeroLeveledUp, self )
 end
 
