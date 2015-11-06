@@ -3983,13 +3983,13 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"duration"			"20"
 			}
 	
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"modelscale"		"25"
 			}	
 			
@@ -3997,6 +3997,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_bonus_pct"	"300"
+			}
+			
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_duration"			"10"
 			}
 		}
 		
@@ -4027,18 +4033,68 @@
 				"Target" 		"TARGET"
 				"Duration"		"%duration"
 			}
+			"RunScript"
+            {
+               "ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnSpellStart"
+            }
 		}
 	
 		"Modifiers"
 		{
-			"modifier_strafe"
+			"modifier_adrenaline"
 			{
 				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
 				"EffectAttachType"	"follow_origin"
 		
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_adrenaline_rush_waiter"
+						"Target" 		"TARGET"
+					}
+				}
+			
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
+				}
+			}
+			"modifier_adrenaline_rush_waiter"
+			{
+				"Duration" "14"
+				"IsHidden" "1"
+                "OnDestroy"
+                {
+                    "ApplyModifier"
+					{
+						"ModifierName"	"modifier_adrenaline_rush_thinker"
+						"Target" 		"TARGET"
+						"Duration"		"%rush_duration"
+					}
+                }
+			}
+			
+			"modifier_adrenaline_rush_thinker"
+			{
+				"ThinkInterval" "5"
+				"IsHidden" "1"
+                "OnIntervalThink"
+                {
+                    "RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+						"Function"		"RushThink"
+					}
+                }
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+						"Function"		"RushThink"
+					}
 				}
 			}
 		}
@@ -4092,7 +4148,12 @@
             "03"
             {
 				"var_type"			"FIELD_INTEGER"
-				"remove_rez_sick_chance"				"0 0 0 0 0 0 0 0 0 0 0 10 20 40 70 100"
+				"remove_rez_sick_chance"	"0 0 0 0 0 0 0 0 0 0 0 10 20 40 70 100"
+            }
+			"04"
+            {
+				"var_type"			"FIELD_INTEGER"
+				"add_HoT_chance"			"0 0 0 0 0 0 0 0 0 0 0 100 100 100 100 100"
             }
 			//"03"
 			//{
@@ -4132,15 +4193,27 @@
 				"Target" 		"TARGET"
 				"HealAmount"	"%heal"
 			}
+			
             "Random"
 			{
 				"Chance"		"%remove_rez_sick_chance"
-	
 				"OnSuccess"
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_medic_revive_rez_sickness"
+						"ModifierName"	"modifier_medic_revive_rez_sickness" // TODO This doesn't work for some reason...
+						"Target"		"TARGET"
+					}
+				}
+			}
+			"Random"
+			{
+				"Chance"		"%add_HoT_chance"
+				"OnSuccess"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nano_hot_thinker"
 						"Target"		"TARGET"
 					}
 				}
@@ -4153,7 +4226,7 @@
             {
                 "Duration" "6"
                 "ThinkInterval" "1"
-                "OnThink"
+                "OnIntervalThink"
                 {
                     "Heal"
                     {
