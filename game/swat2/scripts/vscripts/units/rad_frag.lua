@@ -10,5 +10,5 @@ function RadRemoved(keys)
 
     local position = rad:GetAbsOrigin()
 
-   Global_Radiation_Manager:onRadDestroyed(position)
+   g_RadiationManager:onRadDestroyed(position)
 end

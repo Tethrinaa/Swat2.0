@@ -9,7 +9,8 @@
 	<Panel class="SelectClassRoot">
       <Panel class ="ClassesPanel" id="ClassesPanel">
          <Button id="SniperButton" onactivate="Selected('sniper', 'ClassesPanel')">
-            <Image src="file://{images}/test.png" />
+            <!--ge src="file://{images}/sniper.png" /-->
+			<Label text="Covert Sniper" />
          </Button>
          <Button id="CyborgButton" onactivate="Selected('cyborg', 'ClassesPanel')">
             <Label text="Cyborg" />
@@ -18,7 +19,7 @@
             <Label text="Demolitions" />
          </Button>
          <Button id="MedicButton" onactivate="Selected('medic', 'ClassesPanel')">
-            <Label text="Field Medic" />
+            <Label text="Field Medic" size = "12"/>
          </Button>
          <Button id="MaverickButton" onactivate="Selected('maverick', 'ClassesPanel')">
             <Label text="Maverick" />

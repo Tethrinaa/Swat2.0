@@ -18,7 +18,7 @@ end
 function LeaveCorpse( unit )
     -- Create unit and make invulnerable
 	local corpse = CreateUnitByName("dummy_unit", unit:GetAbsOrigin(), true, unit, unit, unit:GetTeamNumber())
-    
+
     -- Create the default corpse unless a different one is specified in the config for the unit
     local model = CORPSE_MODEL
     local unit_info = GameMode.unit_infos[unit:GetUnitName()]
@@ -29,13 +29,13 @@ function LeaveCorpse( unit )
 
 	-- Set the corpse invisible until the dota corpse disappears
 	corpse:AddNoDraw()
-	
+
     -- Keep a reference to the unit whose body this was
 	corpse.killedUnit = unit
 
 	-- Set custom corpse visible
-	Timers:CreateTimer(.5, function() 
-		if IsValidEntity(corpse) then 
+	Timers:CreateTimer(.5, function()
+		if IsValidEntity(corpse) then
 			corpse:RemoveNoDraw()
 		end
 	end)
@@ -58,7 +58,11 @@ function LeavesCorpse( unit )
 	if not unit or not IsValidEntity(unit) then
 		return false
 
-	-- Ignore buildings	
+    -- Ignore enemy team
+    elseif unit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+        return false
+
+	-- Ignore buildings
 	elseif unit.GetInvulnCount ~= nil then
 		return false
 
@@ -66,7 +70,7 @@ function LeavesCorpse( unit )
 	elseif unit:FindAbilityByName("ability_building") then
 		return false
 
-	-- Ignore units that start with dummy keyword	
+	-- Ignore units that start with dummy keyword
 	elseif string.find(unit:GetUnitName(), "dummy") then
 		return false
 
@@ -80,7 +84,7 @@ function LeavesCorpse( unit )
 		if unit_info and unit_info["LeavesCorpse"] and unit_info["LeavesCorpse"] == 0 then
 			return false
 		else
-			-- Leave corpse		
+			-- Leave corpse
 			return true
 		end
 	end
