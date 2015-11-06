@@ -31,6 +31,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"			// Physical protection.
+      "ArmorType" "unarmored"
 		"MagicalResistance"			"0"	   	// Magical protection.
 
 		// Attack
@@ -42,6 +43,7 @@
 		"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"400"		// Range within a target can be acquired.
 		"AttackRange"				"100"		// Range within a target can be attacked.
+      "AttackType" "melee1"
 		"ProjectileModel"			""			// Particle system model for projectile.
 		"ProjectileSpeed"			""			// Speed of projectile.
 

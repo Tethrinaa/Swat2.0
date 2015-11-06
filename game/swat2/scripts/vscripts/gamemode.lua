@@ -53,7 +53,6 @@ Global_Consts.classes.tactician.Abilities = {"tactician_weakpoint","tactician_bl
 Global_Consts.classes.psychologist.modifiers = {"modifier_awareness"}
 Global_Consts.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}
 
-
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 BAREBONES_DEBUG_SPEW = false 
@@ -84,6 +83,9 @@ require('settings')
 require('events')
 --uber.lua contains most of the code relating to uber.
 require('uber')
+--this intercepts all damage dealt to any target, useful for damage\armor types and armor absorption
+require('damage_filter')
+
 
 
 --[[
@@ -172,7 +174,7 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
   GameMode = self
-    
+  
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
@@ -183,6 +185,14 @@ function GameMode:InitGameMode()
   -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
   Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
 
+  
+  -- Filter for damage and armor types
+  GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap( GameMode, "FilterDamage" ), self )
+
+  -- Register event listeners
+  CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
+  CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'PlayerFirstSpawnUber'))
+  
   DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
   
   	print( "Template addon is loaded." )
@@ -504,6 +514,3 @@ function GameMode:PlayerFirstSpawnUber(event)
    Global_Uber[plyid][2] = 0
    Global_Max_Player_Count = Global_Max_Player_Count + 1
 end
-
-CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
-CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'PlayerFirstSpawnUber'))
