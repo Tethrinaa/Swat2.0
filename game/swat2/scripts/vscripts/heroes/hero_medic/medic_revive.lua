@@ -1,3 +1,5 @@
+LinkLuaModifier( "modifier_medic_revive_rez_sickness_lua", "heroes/hero_medic/modifier_medic_revive_rez_sickness_lua", LUA_MODIFIER_MOTION_NONE )
+
 function FindValidReviveTargets(location, radius)
     -- Grab all friendly units in the area
 	local units = Entities:FindAllInSphere(location, radius)
@@ -82,11 +84,10 @@ function ReviveUnit(corpse, ability, victimized)
         
         -- Move the unit to where the corpse was
 		local location = corpse:GetAbsOrigin()
-		print(location)
         FindClearSpaceForUnit(unit, location, false)
         corpse:RemoveSelf()
         
-        -- As long as the player was neither a victim or noob break armor and apply rez sick
+        -- As long as the player was neither a victim or noob, break armor and apply rez sick
         if not victimized then
             local armor_index = 0
             if unit.sdata.armor_index then
@@ -103,10 +104,11 @@ function ReviveUnit(corpse, ability, victimized)
                 
                 -- Apply the rez sickness itself
                 local mod_keys = {}
-                mod_keys.sickness_duration = ability:GetLevelSpecialValueFor("sickness_duration", armor_index)
+                mod_keys.duration = ability:GetLevelSpecialValueFor("sickness_duration", armor_index)
                 mod_keys.ms_bonus_percent = ability:GetLevelSpecialValueFor("ms_bonus_percent", armor_index)
                 mod_keys.as_bonus_percent = ability:GetLevelSpecialValueFor("as_bonus_percent", armor_index)
-                Timers:CreateTimer(1, function() unit:AddNewModifier(caster, ability, "modifier_medic_revive_rez_sickness", mod_keys) end)
+				DeepPrintTable(mod_keys)
+                Timers:CreateTimer(1, function() unit:AddNewModifier( ability:GetCaster(), ability, "modifier_medic_revive_rez_sickness_lua", mod_keys ) end)
             end
             
             -- If this revive needs to damage the unit's power armor
