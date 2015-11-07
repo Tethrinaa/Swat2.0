@@ -39,17 +39,17 @@ function DisplayRad( table ) {
 		radObjPerfect.style.opacity = "0";
 	}
 	else if (radCount > 0) {
-		rads.style['color'] = COLOUR_NORMAL;
+		rads.style['color'] = COLOUR_WHITE;
 		rads.text = $.Localize(radCount);
 		radObjFalse.style.opacity = "0";
 		radObjTrue.style.opacity = "1";
 		radObjPerfect.style.opacity = "0";
 	}
 	else {
-		rads.style['color'] = COLOUR_NORMAL;
+		rads.style['color'] = COLOUR_WHITE;
 		rads.text = $.Localize(radCount);
 		
-		if (hazmats != 0) {
+		if (hazMats != 0) {
 			radObjFalse.style.opacity = "0";
 			radObjTrue.style.opacity = "1";
 			radObjPerfect.style.opacity = "0";
