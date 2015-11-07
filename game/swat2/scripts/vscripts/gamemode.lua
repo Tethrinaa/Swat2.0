@@ -31,18 +31,18 @@ Global_Consts = {}
       Global_Consts.classes.sniper=       {strength = 22, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 100, intellectPerLevel = 0.31}
       Global_Consts.classes.tactician =   {strength = 20, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 110, intellectPerLevel = 0.72}
    Global_Consts.weapons = {}
-      Global_Consts.weapons.assault_rifleI =      {bat= 1.860, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "assault_rifleI"}
-      Global_Consts.weapons.assault_rifleII =     {bat= 1.691, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "assault_rifleII"}
-      Global_Consts.weapons.assault_rifle_urban = {bat= 1.860, damageMin =  99, damageMinUpgrade = 1, damageMax = 156, damageMaxUp = 20, range =  900, weaponSkill = "assault_rifle_urban"}
-      Global_Consts.weapons.chaingunI =           {bat= 0.620, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  550, weaponSkill = "chaingunI"}
-      Global_Consts.weapons.chaingunII =          {bat= 0.564, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  625, weaponSkill = "chaingunII"}
-      Global_Consts.weapons.vindicator=           {bat= 0.760, damageMin =  55, damageMinUpgrade = 1, damageMax =  64, damageMaxUp = 10, range =  550, weaponSkill = "vindicator"}
-      Global_Consts.weapons.flamethrowerI=        {bat= 0.260, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "flamethrower"}
-      Global_Consts.weapons.flamethrowerII=       {bat= 0.236, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "flamethrower"}
-      Global_Consts.weapons.rocketI=              {bat= 3.100, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "rocketI"}
-      Global_Consts.weapons.rocketII=             {bat= 2.818, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "rocketII"}
-      Global_Consts.weapons.sniper_rifleI=        {bat= 2.570, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleI"}
-      Global_Consts.weapons.sniper_rifleII=       {bat= 2.142, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "sniper_rifleII"}
+      Global_Consts.weapons.assault_rifleI =      {bat= 1.860, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "weapon_assault_rifleI"}
+      Global_Consts.weapons.assault_rifleII =     {bat= 1.691, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "weapon_assault_rifleII"}
+      Global_Consts.weapons.assault_rifle_urban = {bat= 1.860, damageMin =  99, damageMinUpgrade = 1, damageMax = 156, damageMaxUp = 20, range =  900, weaponSkill = "weapon_assault_rifle_urban"}
+      Global_Consts.weapons.chaingunI =           {bat= 0.620, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  550, weaponSkill = "weapon_chaingunI"}
+      Global_Consts.weapons.chaingunII =          {bat= 0.564, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  625, weaponSkill = "weapon_chaingunII"}
+      Global_Consts.weapons.vindicator=           {bat= 0.760, damageMin =  55, damageMinUpgrade = 1, damageMax =  64, damageMaxUp = 10, range =  550, weaponSkill = "weapon_vindicator"}
+      Global_Consts.weapons.flamethrowerI=        {bat= 0.260, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "weapon_flamethrower"}
+      Global_Consts.weapons.flamethrowerII=       {bat= 0.236, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "weapon_flamethrower"}
+      Global_Consts.weapons.rocketI=              {bat= 3.100, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "weapon_rocketI"}
+      Global_Consts.weapons.rocketII=             {bat= 2.818, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "weapon_rocketII"}
+      Global_Consts.weapons.sniper_rifleI=        {bat= 2.570, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "weapon_sniper_rifleI"}
+      Global_Consts.weapons.sniper_rifleII=       {bat= 2.142, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "weapon_sniper_rifleII"}
    Global_Consts.armors = {}
       Global_Consts.armors.light    = {index = 0, moveSpeed = 290, absorption = 1.4, armor = 0, sprintSkill = 3, nanitesSkill = "nanites_compact"}
       Global_Consts.armors.medium   = {index = 1, moveSpeed = 250, absorption = 2.1, armor = 0, sprintSkill = 2, nanitesSkill = "nanites_standard"}
@@ -51,14 +51,15 @@ Global_Consts = {}
    Global_Consts.traits = {}
    Global_Consts.specs = {}
 
-Global_Consts.classes.cyborg.abilities = {"cyborg_cluster_rockets_lua_ability","cyborg_xtreme_combat_mode","cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield_lua_ability", "cyborg_forcefield_off_lua_ability"}
-Global_Consts.classes.demo.abilities = {"demo_mirv","demo_place_c4","demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"}
-Global_Consts.classes.ho.abilities = {"ho_plasma_shield","ho_storage_cells","ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
-Global_Consts.classes.maverick.abilities = {"maverick_plasma_grenade","maverick_robodog","maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"}
-Global_Consts.classes.medic.abilities  = {"medic_nano_injection","medic_mend_wounds","medic_adrenaline_junkie","medic_adrenaline","medic_rapid_therapy","medic_mending_station","medic_revive"}
-Global_Consts.classes.psychologist.abilities = {"psychologist_mental_clarity","psychologist_confidence","psychologist_self_motivation", "psychologist_mind_slay","psychologist_mind_rot","psychologist_clairvoyance"}
-Global_Consts.classes.sniper.abilities = {"sniper_concussion_grenade","sniper_aim","sniper_marksman","sniper_critical_shot","sniper_item_teleport","sniper_construct_camera","sniper_sneak"}
-Global_Consts.classes.tactician.Abilities = {"tactician_weakpoint","tactician_blitz","tactician_endurance","tactician_pep_talk","tactician_ion_strike","tactician_recruit"}
+Global_Consts.classes.cyborg.abilities = {"primary_cyborg_cluster_rockets_lua_ability","primary_cyborg_xtreme_combat_mode","primary_cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield_lua_ability", "cyborg_forcefield_off_lua_ability"}
+Global_Consts.classes.demo.abilities = {"primary_demo_mirv","primary_demo_place_c4","primary_demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"}
+Global_Consts.classes.ho.abilities = {"primary_ho_plasma_shield","primary_ho_storage_cells","ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
+Global_Consts.classes.maverick.abilities = {"primary_maverick_plasma_grenade","primary_maverick_robodog","primary_maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"}
+Global_Consts.classes.medic.abilities  = {"primary_medic_nano_injection","primary_medic_mend_wounds","primary_medic_adrenaline_junkie","medic_adrenaline","medic_rapid_therapy","medic_mending_station","medic_revive"}
+Global_Consts.classes.psychologist.abilities = {"primary_psychologist_mental_clarity","primary_psychologist_confidence","primary_psychologist_self_motivation", "psychologist_mind_slay","psychologist_mind_rot","psychologist_clairvoyance"}
+--TODO Figure out how to handle the sniper_critical_shot for the UI
+Global_Consts.classes.sniper.abilities = {"primary_sniper_concussion_grenade","primary_sniper_aim","primary_sniper_marksman","primary_sniper_critical_shot","sniper_item_teleport","sniper_construct_camera","sniper_sneak"}
+Global_Consts.classes.tactician.Abilities = {"primary_tactician_weakpoint","primary_tactician_blitz","primary_tactician_endurance","tactician_pep_talk","tactician_ion_strike","tactician_recruit"}
 
 Global_Consts.classes.psychologist.modifiers = {"modifier_awareness"}
 Global_Consts.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}

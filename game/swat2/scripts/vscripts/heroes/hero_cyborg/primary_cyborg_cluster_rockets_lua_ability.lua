@@ -1,38 +1,38 @@
 -- Author: NSEnigma
-cyborg_cluster_rockets_lua_ability = class ({})
+primary_cyborg_cluster_rockets_lua_ability = class ({})
 LinkLuaModifier( "modifier_cyborg_cluster_rockets_waiter_lua", "heroes/hero_cyborg/modifier_cyborg_cluster_rockets_waiter_lua", LUA_MODIFIER_MOTION_NONE )
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
 -- TODO The targetting tooltips are screwed up on the lua_abilities
-function cyborg_cluster_rockets_lua_ability:GetBehavior()
+function primary_cyborg_cluster_rockets_lua_ability:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE
 end
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
 -- Determines the AOE of the targetting cursor
-function cyborg_cluster_rockets_lua_ability:GetAOERadius()
+function primary_cyborg_cluster_rockets_lua_ability:GetAOERadius()
 	return self:GetSpecialValueFor( "radius" )
 end
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
 -- Shows PURE damage for the tooltip
-function cyborg_cluster_rockets_lua_ability:GetAbilityDamageType()
+function primary_cyborg_cluster_rockets_lua_ability:GetAbilityDamageType()
 	return DAMAGE_TYPE_PURE
 end
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
 -- Shows team as BOTH for the tooltip
-function cyborg_cluster_rockets_lua_ability:GetAbilityTargetTeam()
+function primary_cyborg_cluster_rockets_lua_ability:GetAbilityTargetTeam()
 	return DOTA_UNIT_TARGET_TEAM_BOTH
 end
 
 -- Necessary with a Lua ability - the value from the data driven is ignored
 -- Shows target as UNITS for the tooltip
-function cyborg_cluster_rockets_lua_ability:GetAbilityTargetType()
+function primary_cyborg_cluster_rockets_lua_ability:GetAbilityTargetType()
 	return DOTA_UNIT_TARGET_ALL
 end
 
-function cyborg_cluster_rockets_lua_ability:OnSpellStart()
+function primary_cyborg_cluster_rockets_lua_ability:OnSpellStart()
 	local mod = {}
 	
 	-- Set up all the parameters for the waiting thinker, which will create the damaging thinker
