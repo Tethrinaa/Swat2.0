@@ -63,7 +63,6 @@ Global_Consts.classes.tactician.Abilities = {"tactician_weakpoint","tactician_bl
 Global_Consts.classes.psychologist.modifiers = {"modifier_awareness"}
 Global_Consts.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}
 
-
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 BAREBONES_DEBUG_SPEW = false
@@ -99,6 +98,9 @@ require('events')
 
 --uber.lua contains most of the code relating to uber.
 require('uber')
+--this intercepts all damage dealt to any target, useful for damage\armor types and armor absorption
+require('damage_filter')
+
 
 -- Contains game logic and game systems (like spawning, radiation...etc)
 require('game/GameManager')
@@ -197,14 +199,12 @@ function GameMode:InitGameMode()
   -- This also sets up event hooks for all event handlers in events.lua
   -- Check out internals/gamemode to see/modify the exact code
   GameMode:_InitGameMode()
+  
+  -- Filter for damage and armor types
+  GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap( GameMode, "FilterDamage" ), self )
 
-  -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-  Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
-
-  DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
-
-	--BDO what is this?  Didn't work after i switched us to barebones
-   --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
+  -- Register event listeners
+  CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
 
    -- Initialize the GameManager (which will initialize more game systems like spawning, AI, upgrades..etc)
     g_GameManager = GameManager:new()
@@ -212,8 +212,10 @@ function GameMode:InitGameMode()
 
    --load item table
    self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
-
+   
+   -- Load unit table
    GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+   -- Add hero kv's to unit table
    for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
      GameMode.unit_infos[k] = v
    end
@@ -285,6 +287,7 @@ function GameMode:BuildMarine( event )
 
    --Get hero instead TODO
    hero = ply:GetAssignedHero()
+   hero:SetUnitName("npc_swat_hero_tactician")
 
    --Clean the hero up first
    RemoveAllSkills(hero)
@@ -317,10 +320,11 @@ function GameMode:BuildMarine( event )
       hero:SetRangedProjectileName("particles/units/heroes/hero_lina/lina_base_attack.vpcf")
       if (event.class == "maverick") then
          hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 19
+         hero.AttackType = flame
       end
-   end
-   if ((event.weapon == "rocketI") or (event.weapon == "rocketII")) then
+   elseif ((event.weapon == "rocketI") or (event.weapon == "rocketII")) then
       hero:SetRangedProjectileName("particles/units/heroes/hero_techies/techies_base_attack.vpcf")
+      hero.AttackType = "rockets"
       print(hero:GetProjectileSpeed())
       print(hero.ProjectileSpeed)
       hero.ProjectileSpeed=200
@@ -328,6 +332,8 @@ function GameMode:BuildMarine( event )
          print(k, v)
       end
       print(hero:GetProjectileSpeed())
+   else
+      hero.AttackType = "bullets"
    end
 
    --set armor stats
@@ -392,11 +398,14 @@ end
 
 --PlayerFirstSpawnUber is called every time a new hero is created at the start of the game
 function GameMode:onPlayerClassComplete(event)
+
    --Set the correct indexed player ID.  The +1 is needed since the ID is being passed from javascript.  Requires a re-index
+   local plyid = event.playerId+1
+   Global_Uber[plyid] = {}
+   Global_Uber[plyid][1] = 1
+   Global_Uber[plyid][2] = 0
+   Global_Max_Player_Count = Global_Max_Player_Count + 1
    local playerIndex = event.playerId+1
 
    g_EnemyUpgrades:onPlayerLevelUp(playerIndex, 1) -- Alert for uber calculations
 end
-
-CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
-CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'onPlayerClassComplete'))

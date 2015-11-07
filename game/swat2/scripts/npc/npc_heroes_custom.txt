@@ -22,6 +22,8 @@
       "AttributeIntelligenceGain"    "0"            // Intelligence bonus per level.
       "StatusMana" "1000"
       "StatusHealth" "500"
+      
+      "ArmorType" "power_armor"
       "CorpseDuration"              "0"
 	}
 	

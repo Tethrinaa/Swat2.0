@@ -170,18 +170,18 @@ function RadiationManager:spawnRadFragment()
         point = GetRandomPointInWarehouse()
     end
 
-    local rad = CreateUnitByName( "npc_dota_creature_rad_frag", point, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local rad_frag = CreateUnitByName( "npc_dota_creature_rad_frag", point, true, nil, nil, DOTA_TEAM_BADGUYS )
     -- Apply rad modifier to unit to reduce rad count on death and update bracket
-    rad:AddAbility("rad_frag_datadriven")
-    rad:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
-    rad:SetRenderColor(50,205,50)
+    rad_frag:AddAbility("rad_frag_datadriven")
+    rad_frag:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
+    rad_frag:SetRenderColor(50,205,50)
 
     -- For Nightmare+, there is a chance the rad will be an exploding rad
     if g_GameManager.nightmareValue > 0 then
         if RandomInt(0, 999) < ( 177 * g_GameManager.nightmareValue ) - ( 10 * g_GameManager.nightmareValue * g_GameManager.currentDay * g_GameManager.currentDay) then
-            rad:AddAbility("rad_explosion")
-            rad:FindAbilityByName("rad_explosion"):SetLevel(1)
-            rad:SetRenderColor(255, 50, 0)
+            rad_frag:AddAbility("rad_explosion")
+            rad_frag:FindAbilityByName("rad_explosion"):SetLevel(1)
+            rad_frag:SetRenderColor(255, 50, 0)
         end
     end
 
@@ -270,11 +270,14 @@ function RadiationManager:spawnInitialRadFragments()
     -- Spawn a guarenteed normal rad in the rooms
     for i = 1,INITIAL_RAD_COUNT do
         local room = rooms[i]
-        local rad = CreateUnitByName( "npc_dota_creature_rad_frag", room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
+        local rad_frag = CreateUnitByName( "npc_dota_creature_rad_frag", room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply rad modifier to unit to reduce rad count on death and update bracket
-        rad:AddAbility("rad_frag_datadriven")
-        rad:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
-        rad:SetRenderColor(50,205,50)
+        
+        if (rad_frag) then
+            rad_frag:AddAbility("rad_frag_datadriven")
+            rad_frag:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
+            rad_frag:SetRenderColor(50,205,50)
+        end
     end
     self:incrementRadCount(INITIAL_RAD_COUNT)
 end
