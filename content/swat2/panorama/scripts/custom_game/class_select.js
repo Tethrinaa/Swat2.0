@@ -16,11 +16,11 @@ function Selected(selection, PanelSelected)
          break;
       case "WeaponsPanel":
          WeaponSelected(selection);
-         PanelSelected.visible = false;
+         //PanelSelected.visible = false;
          break;
       case "ArmorPanel":
          playerArmor = selection; 
-         PanelSelected.visible = false;
+         //PanelSelected.visible = false;
          break;
       case "ConfirmResetPanel":
          ConfirmResetSelected(selection, PanelSelected);
@@ -152,6 +152,12 @@ function ConfirmResetSelected(selection, Panel)
          if ((playerClass != "" ) && (playerWeapon != "") && (playerArmor != ""))
          {
             GameEvents.SendCustomGameEventToServer( "class_setup_complete", { playerId: Players.GetLocalPlayer(), class: playerClass, weapon: playerWeapon, armor:playerArmor, trait:"none", spec:"none" });
+            
+            var RootPanel = Panel.GetParent();
+            RootPanel.FindChild("ClassesPanel").visible = false;
+            RootPanel.FindChild("WeaponsPanel").visible = false;
+            RootPanel.FindChild("ArmorPanel").visible = false;
+            
             Panel.visible=false
             Panel.GetParent().enabled = false;
          }

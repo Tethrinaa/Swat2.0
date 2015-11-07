@@ -1,63 +1,48 @@
 ATTACK_TYPES = {
-	["SWAT_ATTACK_TYPE_BULLETS"] 	= "bullets",
-	["SWAT_ATTACK_TYPE_ROCKETS"] 	= "rockets",
-	["SWAT_ATTACK_TYPE_FLAME"] 	= "flame",
-	["SWAT_ATTACK_TYPE_LASER"] 	= "laser",
-	["SWAT_ATTACK_TYPE_EXPLOSION"] 	= "explosion",
-	["SWAT_ATTACK_TYPE_MELEE1"] 	= "melee1",
-	["SWAT_ATTACK_TYPE_MELEE2"] 	= "melee2",
+	"bullets",
+	"rockets",
+	"flame",
+	"laser",
+	"explosion",
+	"melee1",
+	"melee2",
 }
 
 ARMOR_TYPES = {
-	["SWAT_ARMOR_TYPE_NONE"] 	= "unarmored",
-	["SWAT_ARMOR_TYPE_THICK_SKIN"] 	= "thick_skin",
-	["SWAT_ARMOR_TYPE_POWER_ARMOR"] = "power_armor",
-	["SWAT_ARMOR_TYPE_MK2"] 	= "mk2",
-	["SWAT_ARMOR_TYPE_CONTRAPTION"] = "contraption",
-	["SWAT_ARMOR_TYPE_VEHICLE"] 	= "vehicle",
+	"unarmored",
+	"thick_skin",
+	"power_armor",
+	"mk2",
+	"contraption",
+	"vehicle",
 }
 
 -- Returns a string with the swat damage type
 function GetAttackType( unit )
-	local unitName = unit:GetUnitName()
-	local attack_string = unit.AttackType
-	return ATTACK_TYPES[attack_string]
-end
+   local unit_name = unit:GetUnitName()
+   local attack_type = nil
 
-
--- Changes the Attack Type string defined in the KV, and the current visual tooltip
-function SetAttackType( unit, attack_type )
-	local unitName = unit:GetUnitName()
-	if GameRules.UnitKV[unitName]["AttackType"] then
-		local current_attack_type = GetAttackType(unit)
-		unit:RemoveModifierByName("modifier_attack_"..current_attack_type)
-
-		local attack_key = getIndexTable(ATTACK_TYPES, attack_type)
-		GameRules.UnitKV[unitName]["AttackType"] = attack_key
-
-		ApplyModifier(unit, "modifier_attack_"..attack_type)
-	end
+   if unit_name == "npc_swat_hero_tactician" then
+      attack_type = unit.AttackType
+   elseif GameMode.unit_infos[unit_name] then
+      attack_type = GameMode.unit_infos[unit_name].AttackType
+   else
+      print("ERROR, NO ATTACK TYPE FOR UNIT:", unit_name)
+   end
+   return attack_type
 end
 
 -- Returns a string with the swat armor type
 function GetArmorType( unit )
-	local unitName = unit:GetUnitName()
-	local armor_string = unit.ArmorType
-	return ARMOR_TYPES[armor_string]
-end
-
--- Changes the Armor Type string defined in the KV, and the current visual tooltip
-function SetArmorType( unit, armor_type )
-	local unitName = unit:GetUnitName()
-	if GameRules.UnitKV[unitName]["ArmorType"] then
-		local current_armor_type = GetArmorType(unit)
-		unit:RemoveModifierByName("modifier_armor_"..current_armor_type)
-
-		local armor_key = getIndexTable(ARMOR_TYPES, armor_type)
-		GameRules.UnitKV[unitName]["ArmorType"] = armor_key
-
-		ApplyModifier(unit, "modifier_armor_"..armor_type)
-	end
+   local unit_name = unit:GetUnitName()
+   local armor_type = nil
+   
+   if GameMode.unit_infos[unit_name] then
+      armor_type = GameMode.unit_infos[unit_name].ArmorType
+   else
+      print("ERROR, NO ARMOR TYPE FOR UNIT:", unit_name)
+   end
+   return armor_type
 end
 
 function GetDamageForAttackAndArmor( attack_type, armor_type )
@@ -74,6 +59,8 @@ Melee2    100%     50%    100%    66%    100%     60%
 Magic   100%    125%    75%     200%    35%    50%
 Spells  100%    100%    100%    100%    100%   70%  
 ]]
+
+   --print("info inside getdamage", attack_type, armor_type)
 	if attack_type == "bullets" then
 		if armor_type == "unarmored" then
 			return 1.00
@@ -192,33 +179,42 @@ end
 -- This function applies the actual armor damage reduction
 function GameMode:FilterDamage( filterTable )
    
-   local multiplier = 1
+   local multiplier = 1.00
    local damagetype = filterTable["damagetype_const"]
-   print("damage type is:", damagetype)
+   local damage = nil
+   local attack_type = nil
+   local armor_type = nil
+   local victim = nil
+   local attacker = nil
+   local victim_index = nil
+   local attacker_index = nil
+   --print("damage type is:", damagetype)
    
 	if damagetype == DAMAGE_TYPE_PHYSICAL then
-		local victim_index = filterTable["entindex_victim_const"]
-		local attacker_index = filterTable["entindex_attacker_const"]
+		victim_index = filterTable["entindex_victim_const"]
+		attacker_index = filterTable["entindex_attacker_const"]
 	
 		if not victim_index or not attacker_index then
 			return true
 		end
       
       -- Type conversion
-      local victim = EntIndexToHScript( victim_index )
-	   local attacker = EntIndexToHScript( attacker_index )
+      victim = EntIndexToHScript( victim_index )
+      --print("name of victim is", victim:GetUnitName())
+	   attacker = EntIndexToHScript( attacker_index )
+      --print("name of attacker is", attacker:GetUnitName())
       
-		local attack_type  = GetAttackType( attacker )
-      print("attack type is: ", attack_type)
-		local armor_type = GetArmorType( victim )
-      print("armor type is: ", armor_type)
+		attack_type  = GetAttackType( attacker )
+      --print("attack type is: ", attack_type)
+		armor_type = GetArmorType( victim )
+      --print("armor type is: ", armor_type)
       
       if attack_type and armor_type then
-         local multiplier = GetDamageForAttackAndArmor(attack_type, armor_type)
-         print("multiplier is: ", multipler)
+         multiplier = GetDamageForAttackAndArmor(attack_type, armor_type)
+         --print("multiplier is: ", multiplier)
       end
 
-		local damage = filterTable["damage"] * multiplier
+		damage = filterTable["damage"] * multiplier
 	
 		-- Reassign the new damage
 		filterTable["damage"] = damage
