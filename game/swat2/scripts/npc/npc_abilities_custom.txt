@@ -2939,7 +2939,7 @@
 			}
         }
    }
-      //=================================================================================================================
+	//=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
 	//=================================================================================================================
    "cyborg_organic_replacement"
@@ -3989,18 +3989,14 @@
 				"Function"		"OnAbilityPhaseStart"
 			}
 		}
-
 		"OnSpellStart"
 		{
-
-		"OnSpellStart"
-		{
-		"FireSound"
+			"FireSound"
 			{
 				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
 				"Target"		"CASTER"
 			}
-				"FireEffect"
+			"FireEffect"
 			{
 				"Target"			"TARGET"
 				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
@@ -4079,7 +4075,7 @@
 
     "MaxLevel"                 	 	"16"
 	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"AbilityTextureName"			"rubick_spell_steal"
 
 		"precache"
@@ -4116,7 +4112,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star
+				"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star"
 				"Target"		"TARGET"
 			}
 			"Heal"
@@ -4150,7 +4146,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"		//Needs to be chnaged for levels 51-55
+		"AbilityCooldown"				"60"		//Needs to be changed for levels 51-55
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4162,13 +4158,13 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"duration"			"20"
 			}
 
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"modelscale"		"25"
 			}
 
@@ -4176,6 +4172,26 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_bonus_pct"	"300"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_duration"			"10"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_wait_duration"			"14"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_check_duration"			"5"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_gap_duration"			"1"
 			}
 		}
 
@@ -4202,15 +4218,60 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_strafe"
+				"ModifierName"	"modifier_adrenaline"
 				"Target" 		"TARGET"
 				"Duration"		"%duration"
+			}
+			"RunScript"
+			{
+               "ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnSpellStart"
+            }
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_rush_waiter"
+				"Target" 		"TARGET"
+				"Duration"		"%rush_wait_duration"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_strafe"
+			"modifier_rush_waiter"
+			{
+				"IsHidden" "1"
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_rush_thinker"
+						"Target" 		"TARGET"
+						"Duration"		"%rush_duration"
+					}
+				}
+			}
+			"modifier_rush_thinker"
+			{
+				"IsHidden" "1"
+				"ThinkInterval" "%rush_check_duration"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+						"Function"		"RushThink"
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+						"Function"		"RushThink"
+					}
+				}
+			}
+			"modifier_adrenaline"
 			{
 				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -4342,5 +4403,52 @@
                 }
             }
         }
+	}
+	
+	//=================================================================================================================
+	// Ability: Adrenaline Junkie (Medic)
+	//================================================================================================================= 
+   "medic_adrenaline_junkie"
+   {
+  	// General
+		//-------------------------------------------------------------------------------------------------------------
+		 "AbilityName"              "medic_adrenaline_junkie"
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		 "MaxLevel"                 "8"
+
+		"AbilityTextureName"			"rattletrap_power_cogs"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			
+
+		}	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"junkie_chance"		"65 70 75 80 85 90 95 100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"junkie_chance"		"65 70 75 80 85 90 95 100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_rush_bonus"	"2 4 6 8 10 12 14 16"
+			}
+		}
 	}
 }
