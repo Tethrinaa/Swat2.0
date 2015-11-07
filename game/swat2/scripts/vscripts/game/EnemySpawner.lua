@@ -48,6 +48,9 @@ function EnemySpawner:new(o)
     -- Number of bosses
     self.bossCount = 0
 
+    -- Count of killed minions (just keeps incrementing)
+    self.minionsKilled = 0
+
     -- Number of groups remaining in current wave
     self.waveGroups = 0
     -- count of minions added to "overflow"
@@ -407,6 +410,7 @@ function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
 
     -- Units that are Ancients on the DOTA_TEAM_BADGUYS should be ignored (like rad frags)
     if not killedUnit:IsAncient() then
+        g_EnemySpawner.minionsKilled = g_EnemySpawner.minionsKilled + 1
         g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
 
         -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter

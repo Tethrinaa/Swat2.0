@@ -1074,20 +1074,19 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/heroes/leshrac/leshrac.vmdl"
+		"Model"						"models/props_structures/tower_good3_dest_lvl2.vmdl"
 		"BaseClass"					"npc_dota_creature"
 		"SoundSet"					"Hero_leshrac"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
 		"Level"						"10"
-		"ModelScale"				"0.7"
+		"ModelScale"				"1.3"
 		//"UnitLabel"				"power_core" // saw this somewhere, unsure of effect
 
 		"AttacksEnabled"			""
 
 		"precache"
 		{
-			"model" "models/heroes/leshrac/leshrac.vmdl"
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+
 		}
 
 		// Abilities
@@ -1143,8 +1142,7 @@
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 
-		//"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
-		//"VoiceFile"					"soundevents/voscripts/game_sounds_vo_leshrac.vsndevts"
+	
 
 		// Inventory
 		//----------------------------------------------------------------
