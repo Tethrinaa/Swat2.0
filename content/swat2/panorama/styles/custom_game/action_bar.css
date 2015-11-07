@@ -6,11 +6,41 @@
 	flow-children: down;
 }
 
-#ability_list
+.TopBar
+{
+	flow-children: right;
+}
+
+.BottomBar
+{
+	flow-children: right;
+}
+
+#weapon_list
+{
+	flow-children: right;
+	border: 2px solid black;
+	background-color: #FFA300;
+}
+
+#primary_ability_list
 {
 	flow-children: right;
 	border: 2px solid black;
 	background-color: #272823;
+}
+#nanite_list
+{
+	flow-children: right;
+	border: 2px solid black;
+	background-color: #0094FF;
+}
+
+#secondary_ability_list
+{
+	flow-children: right;
+	border: 2px solid black;
+	background-color: #6D7062;
 }
 
 .AbilityPanel

@@ -12,7 +12,14 @@
 				<Label text="#LevelUp" />
 			</Panel>
 		</Button>
-		<Panel id="ability_list" />
+		<Panel class="TopBar">
+			<Panel id="weapon_list" />
+			<Panel id="primary_ability_list" />
+			<Panel id="nanite_list" />
+		</Panel>
+		<Panel class="BottomBar">
+			<Panel id="secondary_ability_list" />
+		</Panel>
 	</Panel>
 </root>
 
