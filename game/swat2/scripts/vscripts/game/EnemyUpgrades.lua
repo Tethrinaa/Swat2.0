@@ -161,29 +161,47 @@ function EnemyUpgrades:upgradeMobs()
 	end
 
 	-- Calculate the creature level of mobs
-	local newMobLevel = math.floor(self.minionUber / 30) + self.undeadUpgrade + self.nightmareUpgrade
+	local newMobLevel = 1 + math.floor(self.minionUber / 30) + self.undeadUpgrade + self.nightmareUpgrade
 
-    if (newMobLevel ~= self.currentMobLevel or newMobHealthScale ~= self.currentMobHealthBonus) then
+    -- Calculate new boss level
+    local newBossLevel = 1 + math.floor(self.bossUber / 40) + self.nightmareUpgrade
+
+
+    if newMobLevel ~= self.currentMobLevel
+        or newMobHealthScale ~= self.currentMobHealthBonus
+        or iBossHealth ~= self.currentBossHealthBonus
+        or newBossLevel ~= self.currentBossLevel
+        then
         -- Upgrade all existing mobs
         -- Calculation: (newMobHealth) = (oldMobHealth / oldMobHealthScaleBonus) * newMobHealthScaleBonus
         local mobConvertValue = (newMobHealthScale / self.currentMobHealthBonus) -- saves us doing this calculation over and over
         local mobLevelAdjust = newMobLevel - self.currentMobLevel
         if SHOW_ENEMY_UPGRADES_LOGS then
-            print("EnemyUpgrades | Upgrading Mobs: Level = " .. newMobLevel .. " HealthScale = " .. newMobHealthScale .. " [ LevelAdjust= " .. mobLevelAdjust .. ", mobConvert=" .. mobConvertValue .. "]")
+            print("EnemyUpgrades | Upgrading Mobs | MobLevel = " .. newMobLevel .. " HealthScale = " .. newMobHealthScale .. " | BossLevel = " .. newBossLevel .. "  iBossHealth=" .. iBossHealth)
         end
+        local bossLevelAdjust = newBossLevel - self.currentBossLevel
+        local bossHealthAdjust = iBossHealth - self.currentBossHealthBonus
+
         local enemyUnits = g_EnemySpawner:getAllMobs()
 
         for _,unit in pairs(enemyUnits) do
-            -- Leveling up will set them to max health, so we need to store it before we level them up
-            local mobHealth = unit:GetHealth()
-            unit:CreatureLevelUp(mobLevelAdjust) -- NOTE: Sets to max health
-            unit:SetMaxHealth(unit:GetMaxHealth() * mobConvertValue)
-            unit:SetHealth(mobHealth * mobConvertValue)
+            if unit.onUberChangesBoss ~= nil then
+                -- This unit is a boss and will update itself
+                unit.onUberChangesBoss(unit, bossLevelAdjust, bossHealthAdjust)
+            else
+                -- Leveling up will set them to max health, so we need to store it before we level them up
+                local mobHealth = unit:GetHealth()
+                unit:CreatureLevelUp(mobLevelAdjust) -- NOTE: Sets to max health
+                unit:SetMaxHealth(unit:GetMaxHealth() * mobConvertValue)
+                unit:SetHealth(mobHealth * mobConvertValue)
+            end
         end
 
         -- Update the current variables
         self.currentMobHealthBonus = newMobHealthScale
         self.currentMobLevel = newMobLevel
+        self.currentBossHealthBonus = iBossHealth
+        self.currentBossLevel = newBossLevel
     end
 end
 

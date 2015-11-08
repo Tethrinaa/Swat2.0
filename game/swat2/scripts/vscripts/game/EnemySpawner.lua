@@ -129,10 +129,15 @@ function EnemySpawner:onDifficultySet(difficulty)
     self:spawnInitialZombies()
 
     -- TODO TEST CODE
-    Timers:CreateTimer(0, function()
+    --Timers:CreateTimer(0, function()
+        --local location = GetRandomWarehouse()
+        --self:spawnMinionGroup(location, true)
+        --return 5
+    --end)
+    Timers:CreateTimer(15, function()
         local location = GetRandomWarehouse()
-        self:spawnMinionGroup(location, true)
-        return 5
+        self:spawnBoss()
+        return 30
     end)
 
     -- Start wave spawning in 30 seconds
