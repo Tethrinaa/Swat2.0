@@ -122,13 +122,13 @@
 
             //Level Up Parameters
             //-----------------------------------------------------------------
-            "HPGain"					"40"
-            "DamageGain"				"10"
-            "ArmorGain"					"1"
-            "MagicResistGain"			"1"
-            "MoveSpeedGain"				"1"
-            "BountyGain"				"5"
-            "XPGain"					"20"
+            "HPGain"					"00"
+            "DamageGain"				"5"
+            "ArmorGain"					"0"
+            "MagicResistGain"			"0"
+            "MoveSpeedGain"				"0"
+            "BountyGain"				"0"
+            "XPGain"					"0"
 
             //Ability Usage Parameters
             //-----------------------------------------------------------------
@@ -255,13 +255,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"5"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -370,13 +370,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"8"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -485,13 +485,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"11"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -599,13 +599,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"9"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -715,13 +715,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"4"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -832,13 +832,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"5"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -949,13 +949,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"38"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------

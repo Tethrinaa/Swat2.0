@@ -48,6 +48,19 @@ function EnemyUpgrades:new(o)
     -- This value affects the zombie bonus value for some zombies
     self.collectionZombieBonus = 0.0 -- incremented in EnemyCommander's CollectEmUp method (only changes in survival, though)
 
+	-- Upgrades
+	self.currentMobHealthBonus = 1.0 -- Stores the last bonus from upgradeMobs()
+	self.currentBossHealthBonus = 1.0 -- Stores the last bonus from upgradeMobs()
+	self.currentMobLevel = 1
+	self.currentBossLevel = 1
+	self.extinctionZombieHealthBonusLevel = 0 -- Level of a tech for extinction
+
+    GameRules:SetTimeOfDay(.5) -- Set gametime to noon
+
+    self.tempMobHealthLevel = 0 -- TODO remove
+    self.tempMobLevel = 0 -- TODO remove
+
+
     return o
 end
 
@@ -110,18 +123,76 @@ end
 
 -- Returns a zombie bonus value for the passed mob (generally used in the zombieBonus parameter of calculateMoveSpeed() )
 function EnemyUpgrades:calculateZombieBonus(mob)
-    -- TODO: Check if unit is zombie
-    --if GetUnitTypeId(oUnit) == 'n008' then
-        --// GetUnitUserData() for a Zombie returns its number of lives)
-      --return (GetUnitUserData(oUnit) / udg_CollectionZBonus)*(9.00/udg_nDifficulty)
-    --else
-      --return 0.0
-    --endif
-    return 0.0
+	if mob.zombieLives ~= nil then
+		-- This unit is a zombie
+		return (mob.zombieLives / self.collectionZombieBonus) * (9.00 / g_GameManager.difficultyBase)
+	else
+		return 0.0
+	end
 end
 
 function EnemyUpgrades:upgradeMobs()
-    -- TODO: We need the actual abilities to do this
+	local iBossHealth = 0
+    local iMobHealthLevel = 0
+    local i = 0
+    if (not g_GameManager.isSurvival) then
+      iBossHealth = math.floor(self.bossUber / 20)
+      iMobHealthLevel = math.floor(self.minionUber / 48)
+    elseif g_GameManager.survivalValue < 5 then
+        iBossHealth = math.floor(self.bossUber / math.max(20 - math.floor(g_GameManager.survivalValue / 2), 12))
+        iMobHealthLevel = math.floor(self.minionUber / math.max(50 - (2 * g_GameManager.survivalValue), 15))
+    else
+        iBossHealth = math.floor(self.bossUber / math.max(21 - g_GameManager.survivalValue, 12))
+        iMobHealthLevel = math.floor(self.minionUber / math.max(58 - (4 * g_GameManager.survivalValue), 15))
+    end
+    iBossHealth = iBossHealth + self.undeadUpgrade + self.nightmareUpgrade
+    print("EnemyUpgrades | iMobHealth=" .. iMobHealthLevel .. "  iBossHealth=" .. iBossHealth)
+
+	-- Calculate the bonus health scale value for minions
+	local newMobHealthScale = 1.0
+	newMobHealthScale = newMobHealthScale + (( 0.08 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade3 - 1))
+	if g_GameManager.difficultyValue < 2 then
+		newMobHealthScale = newMobHealthScale + (( 0.04 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade - 1))
+		if g_GameManager.nightmareValue > 0 then
+			newMobHealthScale = newMobHealthScale + (( 0.02 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade2 - 1))
+		end
+	elseif g_GameManager.difficultyValue < 3 then
+		newMobHealthScale = newMobHealthScale + (( 0.02 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade - 1))
+	end
+
+	-- Calculate the creature level of mobs
+	local newMobLevel = math.floor(self.minionUber / 30) + self.undeadUpgrade + self.nightmareUpgrade
+
+    if (newMobLevel ~= self.currentMobLevel or newMobHealthScale ~= self.currentMobHealthBonus) then
+        -- Upgrade all existing mobs
+        -- Calculation: (newMobHealth) = (oldMobHealth / oldMobHealthScaleBonus) * newMobHealthScaleBonus
+        local mobConvertValue = (newMobHealthScale / self.currentMobHealthBonus) -- saves us doing this calculation over and over
+        local mobLevelAdjust = newMobLevel - self.currentMobLevel
+        if SHOW_ENEMY_UPGRADES_LOGS then
+            print("EnemyUpgrades | Upgrading Mobs: Level = " .. newMobLevel .. " HealthScale = " .. newMobHealthScale .. " [ LevelAdjust= " .. mobLevelAdjust .. ", mobConvert=" .. mobConvertValue .. "]")
+        end
+        local enemyUnits = g_EnemySpawner:getAllMobs()
+
+        for _,unit in pairs(enemyUnits) do
+            -- Leveling up will set them to max health, so we need to store it before we level them up
+            local mobHealth = unit:GetHealth()
+            unit:CreatureLevelUp(mobLevelAdjust) -- NOTE: Sets to max health
+            unit:SetMaxHealth(unit:GetMaxHealth() * mobConvertValue)
+            unit:SetHealth(mobHealth * mobConvertValue)
+        end
+
+        -- Update the current variables
+        self.currentMobHealthBonus = newMobHealthScale
+        self.currentMobLevel = newMobLevel
+    end
+end
+
+-- Upgrades a single mob (called when they are spawned, NOT when they are upgraded in upgradeMobs()
+function EnemyUpgrades:upgradeMob(unit)
+    local mobHealth = unit:GetHealth()
+    unit:CreatureLevelUp(self.currentMobLevel)
+	unit:SetMaxHealth(unit:GetMaxHealth() * self.currentMobHealthBonus)
+    unit:SetHealth(mobHealth * self.currentMobHealthBonus)
 end
 
 function EnemyUpgrades:updateUber()

@@ -75,7 +75,7 @@ function EnemySpawner:new(o)
 
     self.abomSpawner = AbominationSpawner:new() -- There are situations where we just need to spawn an abom
     self.tyrantSpawner = TyrantSpawner:new() -- There are situations where we just need to spawn an abom
-    local horroSpawner = HorrorSpawner:new()
+    local horrorSpawner = HorrorSpawner:new()
 
     -- Create the bosses list [Order is Important! Abom last!!] (for all difficulties except Normal)
     self.bosses = {}
@@ -84,7 +84,7 @@ function EnemySpawner:new(o)
 
     -- Normal can only get a few bosses [Order is Important! Abom last!!]
     self.normalDiffBosses = {}
-    table.insert(self.normalDiffBosses, horroSpawner)
+    table.insert(self.normalDiffBosses, horrorSpawner)
     table.insert(self.normalDiffBosses, self.abomSpawner)
 
     self.survivalDoubleBoss = false -- true if the last boss spawn was a double boss
@@ -127,6 +127,13 @@ function EnemySpawner:onDifficultySet(difficulty)
 
     -- Spawn some initial zombies
     self:spawnInitialZombies()
+
+    -- TODO TEST CODE
+    Timers:CreateTimer(0, function()
+        local location = GetRandomWarehouse()
+        self:spawnMinionGroup(location, true)
+        return 5
+    end)
 
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
@@ -396,6 +403,9 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
             print("EnemySpawner | WARNING - ATTEMPT TO SPAWN INVALID ENEMY CODE: " .. enemy)
         end
 
+        -- Apply enemy upgrades
+        g_EnemyUpgrades:upgradeMob(unit)
+
         -- Let's hurt the unit a bit
         unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
         -- Set its speed
@@ -618,5 +628,26 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
             ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
         end
     end)
+end
+
+function EnemySpawner:getAllMobs()
+	local retval = {}
+    local enemyUnits = FindUnitsInRadius(DOTA_TEAM_BADGUYS,
+                                            Vector(0, 0, 0),
+                                            nil,
+                                            FIND_UNITS_EVERYWHERE,
+                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                            DOTA_UNIT_TARGET_ALL,
+                                            DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+                                            FIND_ANY_ORDER,
+                                            false)
+	for _,unit in pairs(enemyUnits) do
+        -- Units that are Ancients on the DOTA_TEAM_BADGUYS should not be controlled or counted (like rad frags)
+        if not unit:IsAncient() then
+            table.insert(retval, unit)
+        end
+    end
+
+	return retval
 end
 
