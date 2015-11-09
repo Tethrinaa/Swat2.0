@@ -93,11 +93,13 @@ end
 -- Passes in the Abom unit and iBossHealth value for the uber (which should be used to update the units attributes)
 -- @param bossLevelAdjust | The current level for attack (sets the aboms level)
 -- @param bossHealthAdjust | The change in boss health value since the last update
-function onUberChangedAbom(unit, bossLevelAdjust, bossHealthAdjust)
-    print("Abomination | Uber Updated: LevelAdjust=" .. bossLevelAdjust .. " | bossHealthAdjust=" .. bossHealthAdjust)
+function onUberChangedAbom(unit, bossLevel, bossHealthAdjust)
+    print("Abomination | Upgrades: bossLevel=" .. bossLevel .. " | bossHealthAdjust=" .. bossHealthAdjust)
     local mobHealth = unit:GetHealth()
     local healthChange = bossHealthAdjust * 1500
-    unit:CreatureLevelUp(bossLevelAdjust)
+    local currentLevel = unit:GetLevel() or 1
+    unit:CreatureLevelUp(bossLevel - currentLevel)
     unit:SetMaxHealth(unit:GetMaxHealth() + healthChange)
     unit:SetHealth(mobHealth + healthChange)
+    GiveUnitArmor(unit, bossLevel)
 end

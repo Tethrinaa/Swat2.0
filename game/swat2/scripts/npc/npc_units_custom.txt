@@ -898,7 +898,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"100"
 		"HealthBarOffset"			"600"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE" // Defines unit collision
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO" // Defines unit collision
 
 		// Movement
 		//----------------------------------------------------------------

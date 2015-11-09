@@ -179,7 +179,6 @@ function EnemyUpgrades:upgradeMobs()
         if SHOW_ENEMY_UPGRADES_LOGS then
             print("EnemyUpgrades | Upgrading Mobs | MobLevel = " .. newMobLevel .. " HealthScale = " .. newMobHealthScale .. " | BossLevel = " .. newBossLevel .. "  iBossHealth=" .. iBossHealth)
         end
-        local bossLevelAdjust = newBossLevel - self.currentBossLevel
         local bossHealthAdjust = iBossHealth - self.currentBossHealthBonus
 
         local enemyUnits = g_EnemySpawner:getAllMobs()
@@ -187,7 +186,7 @@ function EnemyUpgrades:upgradeMobs()
         for _,unit in pairs(enemyUnits) do
             if unit.onUberChangesBoss ~= nil then
                 -- This unit is a boss and will update itself
-                unit.onUberChangesBoss(unit, bossLevelAdjust, bossHealthAdjust)
+                unit.onUberChangesBoss(unit, newBossLevel, bossHealthAdjust)
             else
                 -- Leveling up will set them to max health, so we need to store it before we level them up
                 local mobHealth = unit:GetHealth()
@@ -268,4 +267,32 @@ function EnemyUpgrades:onPlayerLeavesGame(playerIndex)
     self.playerMinionUber[playerIndex] = 0
     self.playerBossUber[playerIndex] = 0
     self:updateUber()
+end
+
+
+--- OTHER UTIL METHODS
+
+-- Uses two abilities to give up to 400 armor to the supplied unit
+function GiveUnitArmor(unit, armor)
+    if armor > 400 then
+        print("WARNING | Can't supply unit=" .. unit .. " with armor=" .. armor .. " (Over 400!)")
+        armor = 400
+    end
+
+    local armor1 = armor % 20
+    local armor2 = math.floor(armor / 20)
+
+    local armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+    if armorAbil1 == nil then
+        unit:AddAbility("armor_upgrade_1")
+        armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+    end
+    armorAbil1:SetLevel(armor1)
+
+    local armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+    if armorAbil2 == nil then
+        unit:AddAbility("armor_upgrade_2")
+        armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+    end
+    armorAbil2:SetLevel(armor2)
 end
