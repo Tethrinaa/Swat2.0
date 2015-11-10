@@ -164,6 +164,24 @@ function GameManager:setDifficulty(difficulty)
     end)
 end
 
+-- Called when the first player loads in and pregame has started
+function GameManager:onPreGameStarted()
+    if SHOW_GAME_SYSTEM_LOGS then
+        print("Pregame has started!")
+    end
+    g_EnemySpawner:onPreGameStarted()
+    g_RadiationManager:onPreGameStarted()
+end
+
+-- Called when the horn blows and the game begins
+function GameManager:onGameStarted()
+    if SHOW_GAME_SYSTEM_LOGS then
+        print("Game has started!")
+    end
+    g_EnemySpawner:onGameStarted()
+    g_EnemyUpgrades:onGameStarted()
+end
+
 -- Called once difficulty set.
 -- Spawns the creates, abms, powerplants...etc
 function GameManager:initializeBuildings()

@@ -125,9 +125,6 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
-    -- Spawn some initial zombies
-    self:spawnInitialZombies()
-
     -- TODO TEST CODE
     --Timers:CreateTimer(0, function()
         --local location = GetRandomWarehouse()
@@ -139,19 +136,26 @@ function EnemySpawner:onDifficultySet(difficulty)
         self:spawnBoss()
         return 30
     end)
+end
 
+-- Called when the first player loads in and pregame has started
+function EnemySpawner:onPreGameStarted()
+    -- Spawn some initial zombies
+    self:spawnInitialZombies()
+end
+
+-- Called when the horn blows and the game begins
+function EnemySpawner:onGameStarted()
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
         self:startWaveSpawning()
     end)
 end
 
+
 function EnemySpawner:canSpawnMinion()
     return self.minionCount < EnemySpawner.MAX_MINIONS
 end
-
-
-
 
 
 --------------------------

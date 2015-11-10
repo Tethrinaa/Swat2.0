@@ -55,8 +55,6 @@ function EnemyUpgrades:new(o)
 	self.currentBossLevel = 1
 	self.extinctionZombieHealthBonusLevel = 0 -- Level of a tech for extinction
 
-    GameRules:SetTimeOfDay(.5) -- Set gametime to noon
-
     self.tempMobHealthLevel = 0 -- TODO remove
     self.tempMobLevel = 0 -- TODO remove
 
@@ -96,6 +94,11 @@ function EnemyUpgrades:onDifficultySet(difficulty)
         -- Unknown? Error! (Shouldn't happen)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
+end
+
+-- Called when the horn blows and the game begins
+function EnemyUpgrades:onGameStarted()
+    -- TODO Queue up the Midnight Difficulty Increase or survival
 end
 
 -- Calculates what the movespeed should be for the given mob

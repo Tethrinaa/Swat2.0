@@ -47,7 +47,7 @@ function EnemyCommander:collectEmUp()
     end
 end
 
--- Starts the cycle which calls collectEmUp() periodically
+-- Starts the cycle which calls collectEmUp() periodically (generally called when the units start spawning)
 function EnemyCommander:startCollectEmUpCycle()
     if SHOW_ENEMY_COMMANDER_LOGS then
         print("EnemyCommander | Starting collectEmUp cycle")

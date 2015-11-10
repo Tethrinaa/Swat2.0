@@ -134,6 +134,7 @@ end
 ]]
 function GameMode:OnFirstPlayerLoaded()
   DebugPrint("[BAREBONES] First Player has loaded")
+
 end
 
 --[[
@@ -171,20 +172,10 @@ end
 
 --[[
   This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
-  gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
-  is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
-  DebugPrint("[BAREBONES] The game has officially begun")
-
-  Timers:CreateTimer(30, -- Start this timer 30 game-time seconds later
-    function()
-      DebugPrint("This function is called 30 seconds after the game begins, and every 30 seconds thereafter")
-      return 30.0 -- Rerun this timer every 30 game-time seconds
-    end)
+  g_GameManager:onGameStarted()
 end
-
-
 
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
@@ -206,9 +197,18 @@ function GameMode:InitGameMode()
 	--BDO what is this?  Didn't work after i switched us to barebones
    --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
 
+   -- Set time to Noon (game will start PRE_GAME_TIME seconds before noon)
+   -- Not sure why this needs to be in a Timer but it not putting it in a timer means the game will ignore it
+   Timers:CreateTimer(1, function()
+       GameRules:SetTimeOfDay(0.5)
+   end)
+
    -- Initialize the GameManager (which will initialize more game systems like spawning, AI, upgrades..etc)
-    g_GameManager = GameManager:new()
-    g_GameManager:setDifficulty("insane")
+   g_GameManager = GameManager:new()
+   g_GameManager:onPreGameStarted()
+
+   -- TODO: Maybe set difficulty based on vote?
+   g_GameManager:setDifficulty("insane")
 
    --load item table
    self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )

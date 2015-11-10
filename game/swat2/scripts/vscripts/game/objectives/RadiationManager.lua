@@ -81,8 +81,6 @@ function RadiationManager:new(o)
 
     -- TODO: Create more dummy aura units
 
-    self:spawnInitialRadFragments()
-
     return o
 end
 
@@ -97,12 +95,17 @@ function RadiationManager:onDifficultySet()
     end
     if g_GameManager.nightmareValue == 0 then
         self:spawnInitialDifficultyRads(g_GameManager.difficultyValue, g_GameManager.isSurvival)
-        self:startRadSpawner()
     else
         -- TODO
         -- Do nightmare / extinction rad ramp up
     end
 
+end
+
+-- Called when the horn blows and the game begins
+function RadiationManager:onPreGameStarted()
+    self:spawnInitialRadFragments()
+    self:startRadSpawner()
 end
 
 -- Checks to see if the rad level as changed since last called.
@@ -307,6 +310,9 @@ function RadiationManager:startRadSpawner()
     if self.spawningRads then
         print("RadManager | Warning - not starting rad spawner as rads already spawning")
     else
+        if SHOW_RADIATION_MANAGER_LOGS then
+            print("RadManager | Starting Rad Spawner")
+        end
         self.spawningRads = true
 
         -- So this process is emulating the old swat code for spawning rads continuously
