@@ -189,9 +189,6 @@ function GameMode:InitGameMode()
   -- Check out internals/gamemode to see/modify the exact code
   GameMode:_InitGameMode()
 
-  -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-  Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
-
   DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
 
 	--BDO what is this?  Didn't work after i switched us to barebones
@@ -217,21 +214,9 @@ function GameMode:InitGameMode()
    for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
      GameMode.unit_infos[k] = v
    end
-end
 
--- This is an example console command
-function GameMode:ExampleConsoleCommand()
-  print( '******* Example Console Command ***************' )
-  local cmdPlayer = Convars:GetCommandClient()
-  if cmdPlayer then
-    local playerID = cmdPlayer:GetPlayerID()
-    if playerID ~= nil and playerID ~= -1 then
-      -- Do something here for the player who called this command
-      PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
-    end
-  end
-
-  print( '*********************************************' )
+   -- Register chat commands
+   SetUpDebugGameChatCommands()
 end
 
 --[[

@@ -12,6 +12,7 @@ require('game/EnemySpawner')
 require('game/EnemyCommander')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
+require('game/DebugChatCommands')
 
 -- The systems instances stored as global variables
 g_RadiationManager = {}

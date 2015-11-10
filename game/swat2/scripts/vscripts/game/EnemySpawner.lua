@@ -125,17 +125,6 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
-    -- TODO TEST CODE
-    --Timers:CreateTimer(0, function()
-        --local location = GetRandomWarehouse()
-        --self:spawnMinionGroup(location, true)
-        --return 5
-    --end)
-    Timers:CreateTimer(15, function()
-        local location = GetRandomWarehouse()
-        self:spawnBoss()
-        return 30
-    end)
 end
 
 -- Called when the first player loads in and pregame has started
