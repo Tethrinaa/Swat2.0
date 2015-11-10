@@ -68,6 +68,9 @@ Global_Consts.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 BAREBONES_DEBUG_SPEW = false
 
+-- SHOW_DEBUG_LOGS is used for SWAT code. If true, it will enable displaying most normal debug logs
+SHOW_DEBUG_LOGS = true
+
 if GameMode == nil then
     DebugPrint( '[BAREBONES] creating barebones game mode' )
     _G.GameMode = class({})
@@ -198,6 +201,18 @@ function GameMode:InitGameMode()
    -- Not sure why this needs to be in a Timer but it not putting it in a timer means the game will ignore it
    Timers:CreateTimer(1, function()
        GameRules:SetTimeOfDay(0.5)
+
+       -- Make 1 hour == 1 minute
+       local cvar_name = "dota_time_of_day_rate"
+       local cvar_value = 0.0006933333333 -- This is 1/3 the normal rate
+       local current = cvar_getf(cvar_name)
+       if SHOW_DEBUG_LOGS then
+           print("Trying to slow time time | cvarname=" .. cvar_name .. "  |  " .. current .. " -> " .. cvar_value)
+       end
+       cvar_setf(cvar_name, cvar_value)
+       if SHOW_DEBUG_LOGS then
+           print("Successfully slowed down time")
+       end
    end)
 
    -- Initialize the GameManager (which will initialize more game systems like spawning, AI, upgrades..etc)

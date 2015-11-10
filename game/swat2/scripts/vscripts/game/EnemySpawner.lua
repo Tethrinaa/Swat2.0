@@ -125,12 +125,14 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
+    -- Spawn some initial zombies (we had to wait for difficulty so we can get the room layouts)
+    self:spawnInitialZombies()
 end
 
 -- Called when the first player loads in and pregame has started
 function EnemySpawner:onPreGameStarted()
-    -- Spawn some initial zombies
-    self:spawnInitialZombies()
+    -- Spawn some zombies in the graveyard
+    self:spawnZombiesInGraveyard()
 end
 
 -- Called when the horn blows and the game begins
@@ -578,8 +580,6 @@ end
 
 -- Function called at the start of the game to populate the starting map
 function EnemySpawner:spawnInitialZombies()
-    self:spawnZombiesInGraveyard()
-
     -- Spawn zombies in rooms!
     -- We always have a chance to spawn zombies in the non-power plant special rooms
     local specialBuildingsThatGetZombies = {

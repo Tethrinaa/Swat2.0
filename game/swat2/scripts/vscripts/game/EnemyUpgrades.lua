@@ -55,6 +55,10 @@ function EnemyUpgrades:new(o)
 	self.currentBossLevel = 1
 	self.extinctionZombieHealthBonusLevel = 0 -- Level of a tech for extinction
 
+    -- Bonuses are applied from things like Nightmare/Extinction being activated and from Midnight difficulty
+    self.bonusMobAttackLevels = 0 -- Each point is 1 bonus attack level for mobs
+    self.bonusMobHealthLevels = 0 -- Each point is 5% bonus health for mobs
+
     self.tempMobHealthLevel = 0 -- TODO remove
     self.tempMobLevel = 0 -- TODO remove
 
@@ -98,7 +102,10 @@ end
 
 -- Called when the horn blows and the game begins
 function EnemyUpgrades:onGameStarted()
-    -- TODO Queue up the Midnight Difficulty Increase or survival
+    -- Queue up the Midnight Difficulty Increase or survival
+    Timers:CreateTimer(12 * 60, function() -- Wait 12 minutes
+        self:onFirstMidnight()
+    end)
 end
 
 -- Calculates what the movespeed should be for the given mob
@@ -162,9 +169,10 @@ function EnemyUpgrades:upgradeMobs()
 	elseif g_GameManager.difficultyValue < 3 then
 		newMobHealthScale = newMobHealthScale + (( 0.02 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade - 1))
 	end
+    newMobHealthScale = newMobHealthScale + (( 0.05 ) * self.bonusMobHealthLevels)
 
 	-- Calculate the creature level of mobs
-	local newMobLevel = 1 + math.floor(self.minionUber / 30) + self.undeadUpgrade + self.nightmareUpgrade
+	local newMobLevel = 1 + math.floor(self.minionUber / 30) + self.undeadUpgrade + self.nightmareUpgrade + self.bonusMobAttackLevels
 
     -- Calculate new boss level
     local newBossLevel = 1 + math.floor(self.bossUber / 40) + self.nightmareUpgrade
@@ -272,6 +280,53 @@ function EnemyUpgrades:onPlayerLeavesGame(playerIndex)
     self:updateUber()
 end
 
+-- 'Midnight' Difficulty
+-- The harder difficulties will permanently boost enemy upgrades at certain times
+function EnemyUpgrades:onFirstMidnight()
+    -- Enable midnight difficulty!!
+    if g_GameManager.nightmareValue > 1 then
+        self:performExtinctionMidnightDifficulty()
+    elseif g_GameManager.nightmareValue == 1 then
+        self:performNightmareMidnightDifficulty()
+    elseif g_GameManager.difficultyValue == 1 then
+        self:performInsaneMidnightDifficulty()
+    end
+end
+
+function EnemyUpgrades:performInsaneMidnightDifficulty()
+
+    local waitTime = 0
+    if g_GameManager.playerCount < 3 then
+        waitTime = 12 * 60 -- Wait until noon
+    else
+        waitTime = 8 * 60 -- Wait until sunrise
+    end
+
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Midnight Difficult! [Insane] in " .. waitTime .. " seconds")
+    end
+
+    Timers:CreateTimer(waitTime, function()
+        self.bonusMobAttackLevels = self.bonusMobAttackLevels + 4 -- Bonus 4 attack levels
+        self.bonusMobHealthLevels = self.bonusMobHealthLevels + 2 -- Bonus 10% health
+        if SHOW_ENEMY_UPGRADES_LOGS then
+            print("EnemyUpgrades | Buffing Mobs. AttackBonus=" .. self.bonusMobAttackLevels .. " HealthBonus=" .. self.bonusMobHealthLevels)
+        end
+        self:upgradeMobs()
+    end)
+end
+
+function EnemyUpgrades:performNightmareMidnightDifficulty()
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Midnight Difficult! [Nightmare]")
+    end
+end
+
+function EnemyUpgrades:performExtinctionMidnightDifficulty()
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Midnight Difficult! [Extinction]")
+    end
+end
 
 --- OTHER UTIL METHODS
 
