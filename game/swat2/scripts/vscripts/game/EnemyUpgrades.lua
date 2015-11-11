@@ -302,6 +302,10 @@ function EnemyUpgrades:performInsaneMidnightDifficulty()
         waitTime = 8 * 60 -- Wait until sunrise
     end
 
+    -- Reduce experience game
+    g_ExperienceManager.experienceModifierBase = g_ExperienceManager.experienceModifierBase * 0.90
+    g_ExperienceManager:updateExperienceModifier()
+
     if SHOW_ENEMY_UPGRADES_LOGS then
         print("EnemyUpgrades | Midnight Difficult! [Insane] in " .. waitTime .. " seconds")
     end

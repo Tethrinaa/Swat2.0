@@ -102,7 +102,6 @@ function RadiationManager:onDifficultySet()
 
 end
 
--- Called when the horn blows and the game begins
 function RadiationManager:onPreGameStarted()
     self:spawnInitialRadFragments()
     self:startRadSpawner()
