@@ -3655,7 +3655,7 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"morphling_morph_agi"
+		"AbilityTextureName"			"gyrocopter_homing_missile"
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"  	"0"
 		"AoERadius" 				"%outer_radius"
@@ -3788,7 +3788,7 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"	"troll_warlord_whirling_axes_melee"
+		"AbilityTextureName"	"razor_static_link"
 		"AbilityManaCost"		"0"
 		"MaxLevel"              "18"
 
@@ -3858,7 +3858,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		 "MaxLevel"                 "16"
 
-		"AbilityTextureName"			"centaur_return"
+		"AbilityTextureName"			"dark_seer_ion_shell"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -3910,7 +3910,7 @@
 		"BaseClass"				      	"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"                 		"6"
-		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+		"AbilityTextureName"			"omniknight_repel"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
