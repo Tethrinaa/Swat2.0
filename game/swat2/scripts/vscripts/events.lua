@@ -38,7 +38,8 @@ function GameMode:OnNPCSpawned(keys)
   npc.sdata.unit_name = npc:GetUnitName()
   npc.sdata.OnEntityKilled = {}
   npc.sdata.OnEntityHurt = {}
-  if not npc:HasAbility("friendly_fire_on") then
+
+  if not npc:HasAbility("friendly_fire_on") and npc:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 	npc:AddAbility("friendly_fire_on"):SetLevel(1)
   end
 end
@@ -254,6 +255,8 @@ function GameMode:OnEntityKilled( keys )
   local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
   -- Put code here to handle when an entity gets killed
+  DeepPrintTable(killedUnit.sdata)
+  
   -- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
   if LeavesCorpse( killedUnit ) then
       Timers:CreateTimer(1, function()

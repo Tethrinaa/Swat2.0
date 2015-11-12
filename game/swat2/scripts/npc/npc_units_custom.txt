@@ -1320,7 +1320,7 @@
 		//----------------------------------------------------------------
 		"AttackDesire" "1.5" // How much bots want to attack them vs other non-hero things
 	}
-		//=================================================================================
+	//=================================================================================
 	// Creature: Basic Zombie
 	//=================================================================================
 	"npc_dota_creature_basic_zombie2"
@@ -1446,4 +1446,59 @@
         "AbilityLayout"				"4"
         "Ability1"					"invulnerable_unselectable"
     }
+	
+	"medic_mending_station"
+	{
+		// General
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/undying/undying_minion.vmdl"	// Model.
+        "SoundSet"					"Undying_Zombie"					// Name of sound set.
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
+		"ModelScale"				"1"
+		"Level"						"1"
+		"IsMechanical"				"1"
+		"IsSummoned"				"1"
+		"Duration"				"20"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"mender_mend_wounds"			// Ability 1.
+		"Ability2"					"mender_defense_network"			// Ability 1.
+		"Ability3"					"mender_contraption_plating"			// Ability 1.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"			// Physical protection.	
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"35"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"200"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+	}
 }

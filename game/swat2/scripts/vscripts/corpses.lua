@@ -41,55 +41,63 @@ function LeaveCorpse( unit )
 	end)
 
 	-- Remove itself after the corpse duration
+	-- If this unit type has a certain duration specified ...
     if unit_info and unit_info["CorpseDuration"] then
-        if unit_info["CorpseDuration"] == 0 then
-            return
-        else
+	
+		-- ... use that duration ...
+        if unit_info["CorpseDuration"] ~= 0 then
             SetCorpseDuration(corpse, unit_info["CorpseDuration"])
+			
+		-- ... but 0 means indefinite ...
+        else 
+            return nil
         end
+		
+	-- ... otherwise just use the default duration for corpses
     else
         SetCorpseDuration(corpse, CORPSE_DURATION)
     end
 	return corpse
 end
 
--- Custom Corpse Mechanic
+--- Determines if a unit leaves a corpse on death.
+-- @param unit The unit to check
+-- @return boolean true if it leaves a corpse, false otherwise.
 function LeavesCorpse( unit )
 	if not unit or not IsValidEntity(unit) then
 		return false
-
-    -- Ignore enemy team
-    elseif unit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-        return false
-
-	-- Ignore buildings
-	elseif unit.GetInvulnCount ~= nil then
+		
+	-- no mechanical units leave corpses
+	elseif IsMechanical then
 		return false
-
-	-- Ignore custom buildings
-	elseif unit:FindAbilityByName("ability_building") then
-		return false
+	end
 
 	-- Ignore units that start with dummy keyword
 	elseif string.find(unit:GetUnitName(), "dummy") then
 		return false
 
 	-- Ignore units that were specifically set to leave no corpse
+	-- e.g. microwaved
 	elseif unit.no_corpse then
 		return false
 
 	-- Read the LeavesCorpse KV
 	else
 		local unit_info = GameMode.unit_infos[unit:GetUnitName()]
+		
+		-- Only skip a corpse if it specifically says to skip it for the unit type
 		if unit_info and unit_info["LeavesCorpse"] and unit_info["LeavesCorpse"] == 0 then
 			return false
+			
+		-- otherwise, assume everything leaves a corpse.
 		else
-			-- Leave corpse
 			return true
 		end
 	end
 end
 
-function SetNoCorpse( event )
-	event.target.no_corpse = true
+--- Sets a unit to not leave a corpse on death.
+-- @param unit The unit to remove from corpsing
+function SetNoCorpse( unit )
+	unit.no_corpse = true
 end
