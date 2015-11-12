@@ -130,7 +130,7 @@ function EnemySpawner:onDifficultySet(difficulty)
 
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
-        self:startWaveSpawning()
+		self:startWaveSpawning()
     end)
 end
 

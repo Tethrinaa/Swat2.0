@@ -1,9 +1,23 @@
 "use strict";
 
+//TODO: Fix tooltips popping up from underneath, enemy ability bars not loading properly
+//TODO: see if I can set up hotkeys
+
+
 var m_NaniteAbilityPanels = []; // created up to a high-water mark, but reused when selection changes
 var m_WeaponAbilityPanels = []; // created up to a high-water mark, but reused when selection changes
 var m_PrimaryAbilityPanels = []; // created up to a high-water mark, but reused when selection changes
 var m_SecondaryAbilityPanels = []; // created up to a high-water mark, but reused when selection changes
+
+
+function Test()
+{
+	var testBackground = $( "#TestBackground");
+
+	testBackground.addEventListener("click", function(event) {
+		event.preventDefault()
+	});	
+}
 
 function OnLevelUpClicked()
 {
