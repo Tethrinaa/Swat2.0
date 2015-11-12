@@ -5,11 +5,11 @@ DEBUG_CHAT_COMMANDS_ARE_ENABLED = true
 -- Function that registers game chat commands (if enabled)
 function SetUpDebugGameChatCommands()
     if DEBUG_CHAT_COMMANDS_ARE_ENABLED then
-        Convars:RegisterCommand( "swat_game_spawn_group", DebugGameChatCommand_SpawnGroup, "Chat Command | Spawn Wave", FCVAR_CHEAT )
-        Convars:RegisterCommand( "swat_game_spawn_boss", DebugGameChatCommand_SpawnBoss, "Chat Command | Spawn Boss", FCVAR_CHEAT )
-        Convars:RegisterCommand( "swat_game_kill_all_mobs", DebugGameChatCommand_KillAllEnemies, "Chat Command | Kill all mobs", FCVAR_CHEAT )
-        Convars:RegisterCommand( "swat_game_award_xp", DebugGameChatCommand_AwardXP, "Chat Command | Award XP", FCVAR_CHEAT )
-        Convars:RegisterCommand( "swat_game_level_up", DebugGameChatCommand_LevelUp, "Chat Command | Level Up", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_spawn_group", DebugGameChatCommand_SpawnGroup, "Chat Command | Spawn Wave", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_spawn_boss", DebugGameChatCommand_SpawnBoss, "Chat Command | Spawn Boss", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_kill_all_mobs", DebugGameChatCommand_KillAllEnemies, "Chat Command | Kill all mobs", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_award_xp", DebugGameChatCommand_AwardXP, "Chat Command | Award XP", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_level_up", DebugGameChatCommand_LevelUp, "Chat Command | Level Up", FCVAR_CHEAT )
     end
 end
 

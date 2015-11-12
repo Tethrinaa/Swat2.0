@@ -1557,6 +1557,77 @@
 		}
 	}
 
+    //=================================================================================================================
+    // Ability: Armor Upgrade
+    // Note: We need this to go past level 20, we will accomplish this with two abilities
+    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_2 will cover in increments of 20
+    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_2 = level 0
+    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_2 = level 1
+    //       See EnemyUpgrades GiveUnitArmor() method
+    //=================================================================================================================
+    "armor_upgrade_1"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_armor_upgrade_1"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }
+    "armor_upgrade_2"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"20 40 60 80 100 120 140 180 200 220 240 260 280 300 320 340 360 380 400"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_armor_upgrade_2"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }
+
    //=================================================================================================================
    // Ability: Mana Shield Light (Nanites-Light Armor)
    // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
@@ -4011,7 +4082,7 @@
 					"01"	"%radius %radius %radius"
 				}
 			}
-			
+
 			"FireEffect"
 			{
 				"Target"			"TARGET"
@@ -4044,7 +4115,7 @@
 			"EffectAttachType"	"follow_overhead"
 			"Target"			"CASTER"
 			}
-	
+
 			"AttachEffect"
 				{
 					"Target"
@@ -4058,10 +4129,10 @@
 						"EffectAttachType"			"follow_origin"
 						"EffectRadius"				"%radius"
 					}
-				
-				
-				
-				
+
+
+
+
             }
         }
 		}
@@ -4085,7 +4156,7 @@
 		"precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-			
+
 		}
 
 		// Casting
@@ -4348,79 +4419,6 @@
 
 
 
-
-
-
-    //=================================================================================================================
-    // Ability: Armor Upgrade
-    // Note: We need this to go past level 20, we will accomplish this with two abilities
-    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_2 will cover in increments of 20
-    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_2 = level 0
-    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_2 = level 1
-    //       See EnemyUpgrades GiveUnitArmor() method
-    //=================================================================================================================
-    "armor_upgrade_1"
-	{
-		"BaseClass"					"ability_datadriven"
-		"AbilityTextureName"		"lone_druid_rabid"
-		"MaxLevel"					"20"
-
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-                "bonus_armor"			"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
-			}
-		}
-
-		"Modifiers"
-		{
-            "modifier_armor_upgrade_1"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Properties"
-				{
-				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
-				}
-			}
-		}
-	}
-    "armor_upgrade_2"
-    {
-        "BaseClass"					"ability_datadriven"
-        "AbilityTextureName"		"lone_druid_rabid"
-        "MaxLevel"					"20"
-
-        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"				"FIELD_INTEGER"
-                "bonus_armor"			"20 40 60 80 100 120 140 180 200 220 240 260 280 300 320 340 360 380 400"
-            }
-        }
-
-        "Modifiers"
-        {
-            "modifier_armor_upgrade_2"
-            {
-                "Passive"			"1"
-                "IsHidden"			"1"
-
-                "Properties"
-                {
-                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
-                }
-            }
-        }
-    }
 
 
 }
