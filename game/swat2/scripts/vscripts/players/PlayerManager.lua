@@ -70,3 +70,16 @@ function PlayerManager:onPlayerLeftGame(playerId)
     self.playerCount = self.playerCount - 1
     g_ExperienceManager:updateExperienceModifier()
 end
+
+-- Returns the player info for the supplied player id (or nil if there isn none)
+function PlayerManager:getPlayerInfoForPlayerId(playerId)
+    playerId = tonumber(playerId)
+    for _,playerInfo in pairs(self.playersInfo) do
+        print(tostring(playerInfo.playerId) .. " == " .. tostring(playerId) .. " | " .. tostring(tonumber(playerInfo.playerId) == tonumber(playerId)))
+        print("PlayerInfo ID=" .. playerInfo.playerId)
+        if tonumber(playerInfo.playerId) == playerId then
+            return playerInfo
+        end
+    end
+    return nil
+end

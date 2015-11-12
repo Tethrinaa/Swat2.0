@@ -113,6 +113,18 @@ end
 function GameMode:InitGameMode()
   GameMode = self
 
+  --load item table
+  self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
+
+  -- Index the npc units and npc heroes values
+  -- Note: To retrieve a value:
+  --        local unit_value = GameMode.unit_infos[unit:GetUnitName()]
+  --        unit_value["MyCustomKey"]
+  GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+  for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
+    GameMode.unit_infos[k] = v
+  end
+
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
@@ -154,14 +166,6 @@ function GameMode:InitGameMode()
    -- TODO: Maybe set difficulty based on vote?
    g_GameManager:setDifficulty("insane")
    g_PlayerManager:setDifficulty("insane")
-
-   --load item table
-   self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
-
-   GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
-   for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
-     GameMode.unit_infos[k] = v
-   end
 
    -- Register chat commands
    SetUpDebugGameChatCommands()

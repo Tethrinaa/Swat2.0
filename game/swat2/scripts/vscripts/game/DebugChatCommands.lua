@@ -7,6 +7,9 @@ function SetUpDebugGameChatCommands()
     if DEBUG_CHAT_COMMANDS_ARE_ENABLED then
         Convars:RegisterCommand( "swat_game_spawn_group", DebugGameChatCommand_SpawnGroup, "Chat Command | Spawn Wave", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_game_spawn_boss", DebugGameChatCommand_SpawnBoss, "Chat Command | Spawn Boss", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_game_kill_all_mobs", DebugGameChatCommand_KillAllEnemies, "Chat Command | Kill all mobs", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_game_award_xp", DebugGameChatCommand_AwardXP, "Chat Command | Award XP", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_game_level_up", DebugGameChatCommand_LevelUp, "Chat Command | Level Up", FCVAR_CHEAT )
     end
 end
 
@@ -35,4 +38,32 @@ end
 function DebugGameChatCommand_SpawnBoss()
     print("DEBUG | Spawning Boss")
     g_EnemySpawner:spawnBoss()
+end
+
+function DebugGameChatCommand_KillAllEnemies()
+    print("DEBUG | Killing all enemies")
+    local mobs = g_EnemySpawner:getAllMobs()
+    for _,unit in pairs(mobs) do
+        unit:ForceKill(true)
+    end
+end
+
+function DebugGameChatCommand_AwardXP()
+    print("DEBUG | Awarding XP to all players")
+    g_ExperienceManager:awardExperience(10)
+end
+
+function DebugGameChatCommand_LevelUp()
+    print("DEBUG | Leveling up hero")
+    local cmdPlayer = Convars:GetCommandClient()
+    if cmdPlayer then
+      local playerID = cmdPlayer:GetPlayerID()
+      if playerID ~= nil and playerID ~= -1 then
+        -- Do something here for the player who called this command
+        local playerInfo = g_PlayerManager:getPlayerInfoForPlayerId(playerID)
+        if playerInfo then
+            playerInfo.hero:HeroLevelUp(true)
+        end
+      end
+    end
 end

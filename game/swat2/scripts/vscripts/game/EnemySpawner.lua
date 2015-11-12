@@ -403,6 +403,18 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
             print("EnemySpawner | WARNING - ATTEMPT TO SPAWN INVALID ENEMY CODE: " .. enemy)
         end
 
+        -- Apply an experience value to the unit, if one was not already set in the spawner
+        -- This value will be retrieved from the npc_units_custom file under the key SwatXP
+        if not unit.experience then
+            local unit_info = GameMode.unit_infos[unit:GetUnitName()]
+            if unit_info then
+                local experience = unit_info["SwatXP"]
+                if experience then
+                    unit.experience = experience
+                end
+            end
+        end
+
         -- Apply enemy upgrades
         g_EnemyUpgrades:upgradeMob(unit)
 
@@ -422,6 +434,11 @@ function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
     if not killedUnit:IsAncient() then
         g_EnemySpawner.minionsKilled = g_EnemySpawner.minionsKilled + 1
         g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
+
+        -- Award experience if this unit has it
+        if killedUnit.experience ~= nil and killedUnit.experience > 0 then
+            g_ExperienceManager:awardExperience(killedUnit.experience)
+        end
 
         -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
         -- of the unit. Here the EnemySpawner will call that function

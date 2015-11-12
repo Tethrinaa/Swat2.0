@@ -1,6 +1,6 @@
 -- Manages giving out experience to players
 
-SHOW_EXPERIENCE_LOGS = SHOW_PLAYER_LOGS
+SHOW_EXPERIENCE_LOGS = false -- these really don't need to be firing off unless you're testing it
 
 EXPERIENCE_MANAGER_CYCLE_DELAY = 3 -- seconds between handing out experience
 EXPERIENCE_MANAGER_CHUNK = 1999 -- Amount of XP to award at once
@@ -52,7 +52,10 @@ function ExperienceManager:onDifficultySet(difficulty)
 end
 
 function ExperienceManager:awardExperience(experience)
-    self.heroExperience = self.heroExperience * experienceModifier
+    if SHOW_EXPERIENCE_LOGS then
+        print("ExperienceManager | Awarded " .. experience .. " experience points | After Modifier = " .. (experience * self.experienceModifier))
+    end
+    self.heroExperience = self.heroExperience + (experience * self.experienceModifier)
 end
 
 function ExperienceManager:updateExperienceModifier()
@@ -77,6 +80,10 @@ function ExperienceManager:updateExperienceModifier()
     else
       self.experienceModifier = 50.0 * self.experienceModifierBase
     end
+
+    if SHOW_EXPERIENCE_LOGS then
+        print("ExperienceManager | Experience Modifier Set to: " .. self.experienceModifier)
+    end
 end
 
 function ExperienceManager:startExperienceCycle()
@@ -91,6 +98,12 @@ end
 -- Divides the experience to the players
 -- Note:
 function ExperienceManager:divideExperience(experience)
+    -- Subtract the amount we awarded
+    self.heroExperience = self.heroExperience - experience
+    if SHOW_EXPERIENCE_LOGS then
+        print("ExperienceManager | Giving out experience: " .. experience)
+    end
+
     local exp = 0
     local isDone = false
     while not isDone do
