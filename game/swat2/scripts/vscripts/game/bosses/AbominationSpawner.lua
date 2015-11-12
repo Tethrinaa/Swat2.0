@@ -31,6 +31,11 @@ function AbominationSpawner:spawnBoss()
     local warehouse = GetRandomWarehouse()
     local boss = CreateUnitByName( "npc_dota_creature_basic_abomination", GetCenterInRegion(warehouse), true, nil, nil, DOTA_TEAM_BADGUYS )
 
+    -- Apply upgrades
+    onUberChangedAbom(boss, g_EnemyUpgrades.currentBossLevel, g_EnemyUpgrades.currentBossHealthBonus)
+    -- Register for uber changes
+    boss.onUberChangesBoss = onUberChangedAbom
+
     -- TODO: Add more abilities and abomination types
     boss:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(boss, 0))
 
@@ -82,4 +87,19 @@ function AbominationSpawner:spawnAbomMinionGroup(warehouse)
         end
     end)
 
+end
+
+-- Called when the uber changes
+-- Passes in the Abom unit and iBossHealth value for the uber (which should be used to update the units attributes)
+-- @param bossLevelAdjust | The current level for attack (sets the aboms level)
+-- @param bossHealthAdjust | The change in boss health value since the last update
+function onUberChangedAbom(unit, bossLevel, bossHealthAdjust)
+    print("Abomination | Upgrades: bossLevel=" .. bossLevel .. " | bossHealthAdjust=" .. bossHealthAdjust)
+    local mobHealth = unit:GetHealth()
+    local healthChange = bossHealthAdjust * 1500
+    local currentLevel = unit:GetLevel() or 1
+    unit:CreatureLevelUp(bossLevel - currentLevel)
+    unit:SetMaxHealth(unit:GetMaxHealth() + healthChange)
+    unit:SetHealth(mobHealth + healthChange)
+    GiveUnitArmor(unit, bossLevel)
 end

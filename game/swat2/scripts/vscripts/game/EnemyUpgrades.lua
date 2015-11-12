@@ -48,6 +48,21 @@ function EnemyUpgrades:new(o)
     -- This value affects the zombie bonus value for some zombies
     self.collectionZombieBonus = 0.0 -- incremented in EnemyCommander's CollectEmUp method (only changes in survival, though)
 
+	-- Upgrades
+	self.currentMobHealthBonus = 1.0 -- Stores the last bonus from upgradeMobs()
+	self.currentBossHealthBonus = 1.0 -- Stores the last bonus from upgradeMobs()
+	self.currentMobLevel = 1
+	self.currentBossLevel = 1
+	self.extinctionZombieHealthBonusLevel = 0 -- Level of a tech for extinction
+
+    -- Bonuses are applied from things like Nightmare/Extinction being activated and from Midnight difficulty
+    self.bonusMobAttackLevels = 0 -- Each point is 1 bonus attack level for mobs
+    self.bonusMobHealthLevels = 0 -- Each point is 5% bonus health for mobs
+
+    self.tempMobHealthLevel = 0 -- TODO remove
+    self.tempMobLevel = 0 -- TODO remove
+
+
     return o
 end
 
@@ -85,6 +100,14 @@ function EnemyUpgrades:onDifficultySet(difficulty)
     end
 end
 
+-- Called when the horn blows and the game begins
+function EnemyUpgrades:onGameStarted()
+    -- Queue up the Midnight Difficulty Increase or survival
+    Timers:CreateTimer(12 * 60, function() -- Wait 12 minutes
+        self:onFirstMidnight()
+    end)
+end
+
 -- Calculates what the movespeed should be for the given mob
 -- @param mob(Entity) | the mob to calculate the speed for
 -- @param zombieBonus(float) | Adds this to the returned value (has a max)
@@ -110,18 +133,94 @@ end
 
 -- Returns a zombie bonus value for the passed mob (generally used in the zombieBonus parameter of calculateMoveSpeed() )
 function EnemyUpgrades:calculateZombieBonus(mob)
-    -- TODO: Check if unit is zombie
-    --if GetUnitTypeId(oUnit) == 'n008' then
-        --// GetUnitUserData() for a Zombie returns its number of lives)
-      --return (GetUnitUserData(oUnit) / udg_CollectionZBonus)*(9.00/udg_nDifficulty)
-    --else
-      --return 0.0
-    --endif
-    return 0.0
+	if mob.zombieLives ~= nil then
+		-- This unit is a zombie
+		return (mob.zombieLives / self.collectionZombieBonus) * (9.00 / g_GameManager.difficultyBase)
+	else
+		return 0.0
+	end
 end
 
 function EnemyUpgrades:upgradeMobs()
-    -- TODO: We need the actual abilities to do this
+	local iBossHealth = 0
+    local iMobHealthLevel = 0
+    local i = 0
+    if (not g_GameManager.isSurvival) then
+      iBossHealth = math.floor(self.bossUber / 20)
+      iMobHealthLevel = math.floor(self.minionUber / 48)
+    elseif g_GameManager.survivalValue < 5 then
+        iBossHealth = math.floor(self.bossUber / math.max(20 - math.floor(g_GameManager.survivalValue / 2), 12))
+        iMobHealthLevel = math.floor(self.minionUber / math.max(50 - (2 * g_GameManager.survivalValue), 15))
+    else
+        iBossHealth = math.floor(self.bossUber / math.max(21 - g_GameManager.survivalValue, 12))
+        iMobHealthLevel = math.floor(self.minionUber / math.max(58 - (4 * g_GameManager.survivalValue), 15))
+    end
+    iBossHealth = iBossHealth + self.undeadUpgrade + self.nightmareUpgrade
+    print("EnemyUpgrades | iMobHealth=" .. iMobHealthLevel .. "  iBossHealth=" .. iBossHealth)
+
+	-- Calculate the bonus health scale value for minions
+	local newMobHealthScale = 1.0
+	newMobHealthScale = newMobHealthScale + (( 0.08 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade3 - 1))
+	if g_GameManager.difficultyValue < 2 then
+		newMobHealthScale = newMobHealthScale + (( 0.04 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade - 1))
+		if g_GameManager.nightmareValue > 0 then
+			newMobHealthScale = newMobHealthScale + (( 0.02 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade2 - 1))
+		end
+	elseif g_GameManager.difficultyValue < 3 then
+		newMobHealthScale = newMobHealthScale + (( 0.02 ) * math.max(0, iMobHealthLevel + self.nightmareUpgrade - 1))
+	end
+    newMobHealthScale = newMobHealthScale + (( 0.05 ) * self.bonusMobHealthLevels)
+
+	-- Calculate the creature level of mobs
+	local newMobLevel = 1 + math.floor(self.minionUber / 30) + self.undeadUpgrade + self.nightmareUpgrade + self.bonusMobAttackLevels
+
+    -- Calculate new boss level
+    local newBossLevel = 1 + math.floor(self.bossUber / 40) + self.nightmareUpgrade
+
+
+    if newMobLevel ~= self.currentMobLevel
+        or newMobHealthScale ~= self.currentMobHealthBonus
+        or iBossHealth ~= self.currentBossHealthBonus
+        or newBossLevel ~= self.currentBossLevel
+        then
+        -- Upgrade all existing mobs
+        -- Calculation: (newMobHealth) = (oldMobHealth / oldMobHealthScaleBonus) * newMobHealthScaleBonus
+        local mobConvertValue = (newMobHealthScale / self.currentMobHealthBonus) -- saves us doing this calculation over and over
+        local mobLevelAdjust = newMobLevel - self.currentMobLevel
+        if SHOW_ENEMY_UPGRADES_LOGS then
+            print("EnemyUpgrades | Upgrading Mobs | MobLevel = " .. newMobLevel .. " HealthScale = " .. newMobHealthScale .. " | BossLevel = " .. newBossLevel .. "  iBossHealth=" .. iBossHealth)
+        end
+        local bossHealthAdjust = iBossHealth - self.currentBossHealthBonus
+
+        local enemyUnits = g_EnemySpawner:getAllMobs()
+
+        for _,unit in pairs(enemyUnits) do
+            if unit.onUberChangesBoss ~= nil then
+                -- This unit is a boss and will update itself
+                unit.onUberChangesBoss(unit, newBossLevel, bossHealthAdjust)
+            else
+                -- Leveling up will set them to max health, so we need to store it before we level them up
+                local mobHealth = unit:GetHealth()
+                unit:CreatureLevelUp(mobLevelAdjust) -- NOTE: Sets to max health
+                unit:SetMaxHealth(unit:GetMaxHealth() * mobConvertValue)
+                unit:SetHealth(mobHealth * mobConvertValue)
+            end
+        end
+
+        -- Update the current variables
+        self.currentMobHealthBonus = newMobHealthScale
+        self.currentMobLevel = newMobLevel
+        self.currentBossHealthBonus = iBossHealth
+        self.currentBossLevel = newBossLevel
+    end
+end
+
+-- Upgrades a single mob (called when they are spawned, NOT when they are upgraded in upgradeMobs()
+function EnemyUpgrades:upgradeMob(unit)
+    local mobHealth = unit:GetHealth()
+    unit:CreatureLevelUp(self.currentMobLevel)
+	unit:SetMaxHealth(unit:GetMaxHealth() * self.currentMobHealthBonus)
+    unit:SetHealth(mobHealth * self.currentMobHealthBonus)
 end
 
 function EnemyUpgrades:updateUber()
@@ -152,7 +251,7 @@ function EnemyUpgrades:updateUber()
     -- Survival also takes into account the player's ranks
     if g_GameManager.isSurvival then
         -- TODO Sum up player's rank. For now, just setting it to one for each
-        local playerRankSum = g_GameManager.playerCount
+        local playerRankSum = g_PlayerManager.playerCount
         self.minionUber = self.minionUber + playerRankSum
         self.bossUber = self.bossUber + playerRankSum
     end
@@ -179,4 +278,83 @@ function EnemyUpgrades:onPlayerLeavesGame(playerIndex)
     self.playerMinionUber[playerIndex] = 0
     self.playerBossUber[playerIndex] = 0
     self:updateUber()
+end
+
+-- 'Midnight' Difficulty
+-- The harder difficulties will permanently boost enemy upgrades at certain times
+function EnemyUpgrades:onFirstMidnight()
+    -- Enable midnight difficulty!!
+    if g_GameManager.nightmareValue > 1 then
+        self:performExtinctionMidnightDifficulty()
+    elseif g_GameManager.nightmareValue == 1 then
+        self:performNightmareMidnightDifficulty()
+    elseif g_GameManager.difficultyValue == 1 then
+        self:performInsaneMidnightDifficulty()
+    end
+end
+
+function EnemyUpgrades:performInsaneMidnightDifficulty()
+
+    local waitTime = 0
+    if g_PlayerManager.playerCount < 3 then
+        waitTime = 12 * 60 -- Wait until noon
+    else
+        waitTime = 8 * 60 -- Wait until sunrise
+    end
+
+    -- Reduce experience game
+    g_ExperienceManager.experienceModifierBase = g_ExperienceManager.experienceModifierBase * 0.90
+    g_ExperienceManager:updateExperienceModifier()
+
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Midnight Difficult! [Insane] in " .. waitTime .. " seconds")
+    end
+
+    Timers:CreateTimer(waitTime, function()
+        self.bonusMobAttackLevels = self.bonusMobAttackLevels + 4 -- Bonus 4 attack levels
+        self.bonusMobHealthLevels = self.bonusMobHealthLevels + 2 -- Bonus 10% health
+        if SHOW_ENEMY_UPGRADES_LOGS then
+            print("EnemyUpgrades | Buffing Mobs. AttackBonus=" .. self.bonusMobAttackLevels .. " HealthBonus=" .. self.bonusMobHealthLevels)
+        end
+        self:upgradeMobs()
+    end)
+end
+
+function EnemyUpgrades:performNightmareMidnightDifficulty()
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Midnight Difficult! [Nightmare]")
+    end
+end
+
+function EnemyUpgrades:performExtinctionMidnightDifficulty()
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | Midnight Difficult! [Extinction]")
+    end
+end
+
+--- OTHER UTIL METHODS
+
+-- Uses two abilities to give up to 400 armor to the supplied unit
+function GiveUnitArmor(unit, armor)
+    if armor > 400 then
+        print("WARNING | Can't supply unit=" .. unit .. " with armor=" .. armor .. " (Over 400!)")
+        armor = 400
+    end
+
+    local armor1 = armor % 20
+    local armor2 = math.floor(armor / 20)
+
+    local armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+    if armorAbil1 == nil then
+        unit:AddAbility("armor_upgrade_1")
+        armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+    end
+    armorAbil1:SetLevel(armor1)
+
+    local armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+    if armorAbil2 == nil then
+        unit:AddAbility("armor_upgrade_2")
+        armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+    end
+    armorAbil2:SetLevel(armor2)
 end

@@ -65,7 +65,8 @@
 
         // Bounty
         //----------------------------------------------------------------
-        "BountyXP"					"5000"		// Experience earn. TODO Set to 0
+        "SwatXP"					"1"		// SWAT Custom Variable | Experience base value earned when killing enemy
+        "BountyXP"					"0"		// Experience earn.
         "BountyGoldMin"				"0"		// Gold earned min.
         "BountyGoldMax"				"0"		// Gold earned max.
 
@@ -124,13 +125,13 @@
 
             //Level Up Parameters
             //-----------------------------------------------------------------
-            "HPGain"					"40"
-            "DamageGain"				"10"
-            "ArmorGain"					"1"
-            "MagicResistGain"			"1"
-            "MoveSpeedGain"				"1"
-            "BountyGain"				"5"
-            "XPGain"					"20"
+            "HPGain"					"00"
+            "DamageGain"				"5"
+            "ArmorGain"					"0"
+            "MagicResistGain"			"0"
+            "MoveSpeedGain"				"0"
+            "BountyGain"				"0"
+            "XPGain"					"0"
 
             //Ability Usage Parameters
             //-----------------------------------------------------------------
@@ -198,7 +199,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"5000"		// Experience earn. TODO Set to 0
+        "SwatXP"					"1"		// SWAT Custom Variable | Experience base value earned when killing enemy
+		"BountyXP"					"0"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -257,13 +259,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"5"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -313,7 +315,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"5000"		// Experience earn.
+        "SwatXP"					"4"		// SWAT Custom Variable | Experience base value earned when killing enemy
+		"BountyXP"					"0"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -372,13 +375,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"8"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -428,7 +431,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					   "5000"		// Experience earn.
+        "SwatXP"					"3"		// SWAT Custom Variable | Experience base value earned when killing enemy
+		"BountyXP"					   "0"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -487,13 +491,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"11"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -542,7 +546,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"5000"		// Experience earn.
+        "SwatXP"					"5"		// SWAT Custom Variable | Experience base value earned when killing enemy
+		"BountyXP"					"0"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -601,13 +606,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"9"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -717,13 +722,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"4"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -777,7 +782,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"5000"		// Experience earn.
+        "SwatXP"					"2"		// SWAT Custom Variable | Experience base value earned when killing enemy
+		"BountyXP"					"0"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -836,13 +842,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"5"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
@@ -894,7 +900,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"5000"		// Experience earn.
+        "SwatXP"					"13"	// SWAT Custom Variable | Experience base value earned when killing enemy
+		"BountyXP"					"0"		// Experience earn.
 		"BountyGoldMin"				"0"		// Gold earned min.
 		"BountyGoldMax"				"0"		// Gold earned max.
 
@@ -902,7 +909,7 @@
 		//----------------------------------------------------------------
 		"RingRadius"				"100"
 		"HealthBarOffset"			"600"
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE" // Defines unit collision
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO" // Defines unit collision
 
 		// Movement
 		//----------------------------------------------------------------
@@ -953,13 +960,13 @@
 
 			//Level Up Parameters
 			//-----------------------------------------------------------------
-			"HPGain"					"40"
-			"DamageGain"				"10"
-			"ArmorGain"					"1"
-			"MagicResistGain"			"1"
-			"MoveSpeedGain"				"1"
-			"BountyGain"				"5"
-			"XPGain"					"20"
+			"HPGain"					"0"
+			"DamageGain"				"38"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
 
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
