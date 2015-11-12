@@ -162,6 +162,10 @@ function ZombieSpawner:reviveZombie(zombieInfo)
 
             -- Revive the zombie
             local zombie = CreateUnitByName( "npc_dota_creature_basic_zombie", zombieInfo.corpse:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_BADGUYS )
+
+            -- Apply enemy upgrades
+            g_EnemyUpgrades:upgradeMob(zombie)
+
             if zombieInfo.nuked then
                 -- The zombie died via nuke (revives with less life, but does keep its mana)
                 zombie:SetHealth(math.max(1, RandomInt(1, 180 - (30 * g_GameManager.difficultyValue) + (15 * g_GameManager.nightmareValue))))

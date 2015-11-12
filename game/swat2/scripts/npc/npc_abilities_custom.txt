@@ -40,7 +40,7 @@
 	//=================================================================================================================
 	// Ability: assault_rifleI // Mark 1 Assault Rifle skill
 	//=================================================================================================================
-	"assault_rifleI"
+	"weapon_assault_rifleI"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -106,7 +106,7 @@
 	//=================================================================================================================
 	// Ability: assault_rifleII // Mark 2 Assault Rifle skill
 	//=================================================================================================================
-	"assault_rifleII"
+	"weapon_assault_rifleII"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@
    //=================================================================================================================
 	// Ability: assault_rifle_urban // Medic Urban Assault Rifle skill
 	//=================================================================================================================
-	"assault_rifle_urban"
+	"weapon_assault_rifle_urban"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -236,7 +236,7 @@
    //=================================================================================================================
 	// Ability: chaingunI // Mark 1 Chaingun skill
 	//=================================================================================================================
-	"chaingunI"
+	"weapon_chaingunI"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -394,7 +394,7 @@
    //=================================================================================================================
 	// Ability: chaingunII // Mark 2 chaingun skill
 	//=================================================================================================================
-	"chaingunII"
+	"weapon_chaingunII"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -552,7 +552,7 @@
    //=================================================================================================================
 	// Ability: vindicator // Cyborg vindicator skill
 	//=================================================================================================================
-	"vindicator"
+	"weapon_vindicator"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -713,7 +713,7 @@
    //=================================================================================================================
 	// Ability: flamethrower // Mark 1 & 2 flamethrower skill
 	//=================================================================================================================
-	"flamethrower"
+	"weapon_flamethrower"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -834,7 +834,7 @@
    //=================================================================================================================
 	// Ability: rocketI // Mark 1 rocket skill
 	//=================================================================================================================
-	"rocketI"
+	"weapon_rocketI"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -966,7 +966,7 @@
    //=================================================================================================================
 	// Ability: rocketII // Mark 2 rocket skill
 	//=================================================================================================================
-	"rocketII"
+	"weapon_rocketII"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -1099,7 +1099,7 @@
    //=================================================================================================================
 	// Ability: sniper_rifleI // Mark 1 Sniper Rifle skill
 	//=================================================================================================================
-	"sniper_rifleI"
+	"weapon_sniper_rifleI"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -1177,7 +1177,7 @@
    //=================================================================================================================
 	// Ability: sniper_rifleII // Mark 2 Sniper Rifle skill
 	//=================================================================================================================
-	"sniper_rifleII"
+	"weapon_sniper_rifleII"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -1556,6 +1556,77 @@
          }
 		}
 	}
+
+    //=================================================================================================================
+    // Ability: Armor Upgrade
+    // Note: We need this to go past level 20, we will accomplish this with two abilities
+    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_2 will cover in increments of 20
+    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_2 = level 0
+    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_2 = level 1
+    //       See EnemyUpgrades GiveUnitArmor() method
+    //=================================================================================================================
+    "armor_upgrade_1"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_armor_upgrade_1"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }
+    "armor_upgrade_2"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"20 40 60 80 100 120 140 180 200 220 240 260 280 300 320 340 360 380 400"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_armor_upgrade_2"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }
 
    //=================================================================================================================
    // Ability: Mana Shield Light (Nanites-Light Armor)
@@ -2254,7 +2325,7 @@
    //=================================================================================================================
 	// Ability: Critical Shot (Covert Sniper)
 	//=================================================================================================================
-   "covert_sniper_critical_shot"
+   "primary_covert_sniper_critical_shot"
    {
       // General
       //-------------------------------------------------------------------------------------------------------------
@@ -2360,7 +2431,7 @@
    //=================================================================================================================
 	// Ability: Marksman (Covert Sniper)
 	//=================================================================================================================
-"covert_sniper_marksman"
+"primary_covert_sniper_marksman"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -2473,7 +2544,7 @@
    //=================================================================================================================
 	// Ability: Concussion Grenade (Covert Sniper)
 	//=================================================================================================================
-   "covert_sniper_concussion_grenade"
+   "primary_covert_sniper_concussion_grenade"
    {
       // General
       //-------------------------------------------------------------------------------------------------------------
@@ -2603,7 +2674,7 @@
    //=================================================================================================================
 	// Ability: Aim (Covert Sniper)
 	//=================================================================================================================
-   "covert_sniper_aim"
+   "primary_covert_sniper_aim"
    {
       // General
       //-------------------------------------------------------------------------------------------------------------
@@ -2843,7 +2914,7 @@
      //=================================================================================================================
 	// Ability: Xtreme Combat Mode (Cyborg)
 	//=================================================================================================================
-   "cyborg_xtreme_combat_mode"
+   "primary_cyborg_xtreme_combat_mode"
    {
       // General
       //-------------------------------------------------------------------------------------------------------------
@@ -2942,7 +3013,7 @@
 	//=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
 	//=================================================================================================================
-   "cyborg_organic_replacement"
+   "primary_cyborg_organic_replacement"
    {
   	// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -3111,12 +3182,12 @@
    	//=================================================================================================================
 	// Cybrog: Cluster Rockets
 	//=================================================================================================================
-	"cyborg_cluster_rockets_lua_ability"
+	"primary_cyborg_cluster_rockets_lua_ability"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_lua"
-		"ScriptFile"        		"heroes/hero_cyborg/cyborg_cluster_rockets_lua_ability.lua"
+		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets_lua_ability.lua"
 		"AbilityTextureName"			"gyrocopter_flak_cannon"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
@@ -3359,7 +3430,7 @@
 	//=================================================================================================================
 	// Demolitions: MIRV
 	//=================================================================================================================
-	"demo_mirv"
+	"primary_demo_mirv"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -3371,17 +3442,17 @@
 		"AbilityTextureName"			"doom_bringer_scorched_earth"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"  "0.3"
 		"AbilityCastRange"  "1000"
 		"FightRecapLevel"				"1"
-	
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"135 135 180 180 215 215 250 250 280 280 320 320 340 340 350 350"
@@ -3389,8 +3460,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"250"
-			
-		
+
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3400,7 +3471,7 @@
 			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
-		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
 		"particle"		"particles/units/heroes/hero_techies/techies_suicide_base.vpcf"
 		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
 		"particle"				"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
@@ -3408,8 +3479,8 @@
 		"particle"				"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
 		"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
 		}
-		
-		// Special    
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3476,16 +3547,16 @@
 			"13"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"slop"                		"30" 
+				"slop"                		"30"
 			}
 			"14"
 			{
 				"var_type"                	"FIELD_INTEGER"
 				"linger_duration"           "3"
 			}
-			
+
 		}
-		
+
 		"OnSpellStart"
 		{
 			"LinearProjectile"
@@ -3505,9 +3576,9 @@
 			"Target"			"CASTER"
 			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
 		}
-			
+
 		}
-		
+
 			"OnProjectileHitUnit"
 	{
 		"FireSound"
@@ -3515,7 +3586,7 @@
 			"Target"			"TARGET"
 			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
 		}
-	
+
 		"FireEffect"
 		{
 			"Target"			"TARGET"
@@ -3526,12 +3597,12 @@
 				"TARGET"		"attach_origin"
 			}
 		}
-	
+
 	}
-		
-		
-		
-		
+
+
+
+
 		"OnProjectileFinish"
 		{
 			"RunScript"
@@ -3550,13 +3621,13 @@
 				"linger_duration"	"%linger_duration"
 			}
 		}
-		
+
 		"Modifiers"
 		{
 			"modifier_demo_mirv_thinker"
 			{
-				
-			
+
+
 				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Aura" "modifier_demo_mirv_napalm"
@@ -3565,8 +3636,8 @@
 				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
 				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
 				"Duration" "%duration"
-				
-				
+
+
 				"OnCreated"
 				{
 					"FireEffect"
@@ -3575,14 +3646,14 @@
 						"EffectAttachType" "follow_origin"
 						"Target" "TARGET"
 					}
-					
+
 						"FireSound"
 						{
 							"EffectName"	"Hero_Techies.Suicide"
 							"Target" 		"CASTER"
 						}
-	
-					
+
+
 					"Damage"
 					{
 						"Target"
@@ -3595,7 +3666,7 @@
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
 					}
-					
+
 					"Damage"
 					{
 						"Target"
@@ -3610,7 +3681,7 @@
 					}
 				}
 				}
-			
+
 			"modifier_demo_mirv_napalm"
 			{
 				"IsDebuff" "1"
@@ -3626,7 +3697,7 @@
 							"Target" "TARGET"
 						}
 
-			
+
 					"Damage"
 					{
 						"Type"   "DAMAGE_TYPE_PHYSICAL"
@@ -3641,7 +3712,7 @@
 			}
 		}
 	}
-	
+
 
 	//=================================================================================================================
 	// Demolitions: Mini-Nuke
@@ -3655,7 +3726,7 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"morphling_morph_agi"
+		"AbilityTextureName"			"gyrocopter_homing_missile"
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"  	"0"
 		"AoERadius" 				"%outer_radius"
@@ -3788,7 +3859,7 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"	"troll_warlord_whirling_axes_melee"
+		"AbilityTextureName"	"razor_static_link"
 		"AbilityManaCost"		"0"
 		"MaxLevel"              "18"
 
@@ -3850,7 +3921,7 @@
 	//=================================================================================================================
 	// Demolitions: Advanced Generator
 	//=================================================================================================================
-	"demo_advanced_generator"
+	"primary_demo_advanced_generator"
 	{
   	// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -3858,7 +3929,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		 "MaxLevel"                 "16"
 
-		"AbilityTextureName"			"centaur_return"
+		"AbilityTextureName"			"dark_seer_ion_shell"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -3910,7 +3981,7 @@
 		"BaseClass"				      	"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"                 		"6"
-		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+		"AbilityTextureName"			"omniknight_repel"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -4007,7 +4078,7 @@
 					"01"	"%radius %radius %radius"
 				}
 			}
-			
+
 			"FireEffect"
 			{
 				"Target"			"TARGET"
@@ -4032,26 +4103,14 @@
                     "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%ms_bonus_percent"
                     "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_PERCENTAGE"    "%as_bonus_percent"
                 }
+
 				"OnCreated"
 				{
 					"AttachEffect"
 					{
-						"Target"
-						{
-							"Center"  		"CASTER"
-							"Radius"		"%radius"
-							"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-						"EffectName" "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-						"EffectAttachType"			"follow_origin"
-						"EffectRadius"				"%radius"
-					}
-					"AttachEffect"
-					{
 						"EffectName"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
 						"EffectAttachType"	"follow_overhead"
-						"Target"			"CASTER"
+						"Target"			"TARGET"
 					}
 				}
 			}
@@ -4060,7 +4119,7 @@
    	//=================================================================================================================
 	// Ability: Mend Wounds (Medic)
 	//=================================================================================================================
-	"medic_mend_wounds"
+	"primary_medic_mend_wounds"
     {
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -4076,6 +4135,7 @@
 		"precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+
 		}
 
 		// Casting
@@ -4571,7 +4631,7 @@
        //=================================================================================================================
 	// Ability: Nano-Injection (Medic)
 	//=================================================================================================================
-	"medic_nano_injection"
+	"primary_medic_nano_injection"
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -4689,7 +4749,7 @@
             }
         }
 	}
-	
+
 	//=================================================================================================================
 	// Ability: Adrenaline Junkie (Medic)
 	//================================================================================================================= 
