@@ -161,7 +161,8 @@ function ZombieSpawner:reviveZombie(zombieInfo)
             g_EnemySpawner.minionCount = g_EnemySpawner.minionCount + 1
 
             -- Revive the zombie
-            local zombie = CreateUnitByName( "npc_dota_creature_basic_zombie", zombieInfo.corpse:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_BADGUYS )
+            local position = zombieInfo.corpse:GetAbsOrigin()
+            local zombie = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
             -- Apply enemy upgrades
             g_EnemyUpgrades:upgradeMob(zombie)
@@ -176,7 +177,10 @@ function ZombieSpawner:reviveZombie(zombieInfo)
                 zombie:SetHealth(math.max(1, RandomInt(1, 250 - (50 * g_GameManager.difficultyValue) + (25 * g_GameManager.nightmareValue) + (zombieInfo.mana * (3.0 - g_GameManager.difficultyBase)))))
                 zombie.zombieLives = zombieInfo.zombieLives + livesIncrement -- reduce chance for future revives
 
-                -- TODO Spawn Innards
+                -- Potentially spawn some innards
+                if g_EnemySpawner.innardsSpawner.innardsChance > 0 then
+                    g_EnemySpawner.innardsSpawner:rollForInnardsSpawn(position, zombieInfo.killer)
+                end
             end
 
             -- Set its speed
