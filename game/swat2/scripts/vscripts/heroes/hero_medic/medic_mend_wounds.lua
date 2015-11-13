@@ -8,6 +8,5 @@ function HealAutocast( keys )
 	local ability = keys.ability
 	local autocast_radius = ability:GetSpecialValueFor("auto_cast_range")
 	
-	print("Trying to cast mend")
 	AutoCastAbility(ability, autocast_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, IsMendWoundsTarget)
 end

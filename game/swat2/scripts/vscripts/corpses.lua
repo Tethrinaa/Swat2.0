@@ -68,9 +68,8 @@ function LeavesCorpse( unit )
 		return false
 		
 	-- no mechanical units leave corpses
-	elseif IsMechanical then
+	elseif IsMechanical(unit) then
 		return false
-	end
 
 	-- Ignore units that start with dummy keyword
 	elseif string.find(unit:GetUnitName(), "dummy") then

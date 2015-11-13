@@ -9,6 +9,10 @@ function IsMechanical(unit)
 	return unit_info ~= nil and unit_info["IsMechanical"] == 1
 end
 
+function IsOrganic(unit) 
+	return not IsMechanical(unit) 
+end
+
 --- Searches for valid revive targets in an area.
 -- @param location The center of the search area
 -- @param location The radius of the search area
@@ -168,12 +172,16 @@ end
 -- @param target The target unit of the ability cast
 -- @param filter_func The function determining the validity of the target
 -- @param error_message The error message, hopefully a #key into the tooltips file
+-- @return true if the target was valid, false otherwise
 function ValidateAbilityTarget(ability, target, filter_func, error_message)
 
 	-- if the target doesn't pass the filter, then abort the ability
     if not filter_func(target) then
 		AbortAbilityCast(ability, error_message)
+		return false
     end
+	
+	return true
 end
 
 --- Force a caster to cast an ability on the nearest eligible target in a radius.
@@ -190,12 +198,10 @@ function AutoCastAbility(ability, autocast_radius, target_team, filter_func)
 		local target
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, autocast_radius, target_team, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 
-		print("Found "..#targets.." units!")
 		-- Find the closest target ...
 		for _,unit in pairs(targets) do
 			-- ... who passes the filter 
 			if filter_func(unit) then
-				print("First good was named "..unit:GetUnitName())
 				target = unit
 				break
 			end
@@ -207,5 +213,7 @@ function AutoCastAbility(ability, autocast_radius, target_team, filter_func)
 		else
 			caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
 		end
-	end	
+	else
+		-- The caster wasn't ready for one reason or another
+	end
 end

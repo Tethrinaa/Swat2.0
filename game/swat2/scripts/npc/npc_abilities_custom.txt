@@ -3728,7 +3728,6 @@
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"gyrocopter_homing_missile"
 		"MaxLevel"						"3"
-		"LevelsBetweenUpgrades"  	"0"
 		"AoERadius" 				"%outer_radius"
 
 		// Casting
@@ -3927,8 +3926,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		 "MaxLevel"                 "16"
-
+		"MaxLevel"                 "16"
+		"LevelsBetweenUpgrades"  	"0"
 		"AbilityTextureName"			"dark_seer_ion_shell"
 
 		// Precache
@@ -3998,7 +3997,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
+		"AbilityCastPoint"				".05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -4125,9 +4124,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityName"           	    "Mend Wounds"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		// for some unknown reason the backswing for this is around 3 seconds, so let's ignore it instead
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	
 		"MaxLevel"                 	 	"16"
+		"LevelsBetweenUpgrades"  	"0"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"rubick_spell_steal"
@@ -4161,11 +4162,17 @@
 				"var_type"			"FIELD_INTEGER"
 				"heal"				"17 23 28 34 39 45 50 56 61 67 72 78 83 89 94 100"
 			}
-			
+		
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"auto_cast_range"	"625"
+			}
+			
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bandage_bonus"		"17 23 28 34 39 45 50 56 61 67 72 78 83 89 94 100"
 			}
 		}
 		
@@ -4196,10 +4203,10 @@
 		
 		"Modifiers"
 		{
-			"modifier_mendic_mend_wounds_autocast"
+			"modifier_medic_mend_wounds_autocast"
 			{
 				"Passive"				"1"
-				"IsHidden"			"1"
+				"IsHidden"				"1"
 				"OnCreated"
 				{
 					"RunScript"
@@ -4459,7 +4466,7 @@
 			"modifier_mender_contraption_plating"
 			{
 				"Passive"	"1"
-				//"IsHidden"	"1"
+				"IsHidden"	"1"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
@@ -4487,7 +4494,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"120"
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastPoint"				"0.05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -4545,6 +4552,16 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
 			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
 		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+               "ScriptFile"		"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnAbilityPhaseStart"
+            }
+		}
+		
 
 		"OnSpellStart"
 		{
@@ -4640,6 +4657,7 @@
         "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 
         "MaxLevel"                 "16"
+		"LevelsBetweenUpgrades"  	"0"
         "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
         "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
         "AbilityTextureName"			"omniknight_purification"
@@ -4649,7 +4667,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"175 205 235 265 295 325 355 385 415 445 475 505 535 565 595 625"
-		"AbilityCastPoint"				"0"
+		"AbilityCastPoint"				"0.05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -4674,17 +4692,27 @@
 				"var_type"			"FIELD_INTEGER"
 				"HoT"				"0 0 0 0 0 0 0 0 0 0 0 10 20 30 40 50"
 			}
-            "03"
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"HoT_chance"				"0 0 0 0 0 0 0 0 0 0 0 100 100 100 100 100"
+			}
+            "04"
             {
 				"var_type"			"FIELD_INTEGER"
 				"remove_rez_sick_chance"				"0 0 0 0 0 0 0 0 0 0 0 10 20 40 70 100"
             }
-			//"03"
-			//{
-			//	"var_type"			"FIELD_FLOAT"
-			//	"injury"			"0 0 0 0 0.1 0.25 0.4 0.55 0.7 0.85 1 1 1 1 1 1"
-			//}
 		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+               "ScriptFile"		"scripts/vscripts/heroes/hero_medic/medic_nano_injection.lua"
+               "Function"		"OnAbilityPhaseStart"
+            }
+		}
+		
 		"OnSpellStart"
 		{
 			"FireSound"
@@ -4725,7 +4753,20 @@
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_medic_revive_rez_sickness"
+						"ModifierName"	"modifier_medic_revive_rez_sickness_lua"
+						"Target"		"TARGET"
+					}
+				}
+			}
+            "Random"
+			{
+				"Chance"		"%HoT_chance"
+
+				"OnSuccess"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nano_hot_thinker"
 						"Target"		"TARGET"
 					}
 				}
@@ -4738,7 +4779,7 @@
             {
                 "Duration" "6"
                 "ThinkInterval" "1"
-                "OnThink"
+                "OnIntervalThink"
                 {
                     "Heal"
                     {
@@ -4753,14 +4794,14 @@
 	//=================================================================================================================
 	// Ability: Adrenaline Junkie (Medic)
 	//================================================================================================================= 
-   "medic_adrenaline_junkie"
+   "primary_medic_adrenaline_junkie"
    {
   	// General
 		//-------------------------------------------------------------------------------------------------------------
-		 "AbilityName"              "medic_adrenaline_junkie"
+		"AbilityName"              "medic_adrenaline_junkie"
 		"BaseClass"				"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		 "MaxLevel"                 "8"
+		"MaxLevel"                 "8"
 
 		"AbilityTextureName"			"rattletrap_power_cogs"
 
@@ -4780,11 +4821,6 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"junkie_chance"		"65 70 75 80 85 90 95 100"
-			}
-			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"junkie_chance"		"65 70 75 80 85 90 95 100"
@@ -4837,12 +4873,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"			"20"
+				"mender_duration"			"20"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mender_cast_range"			"625"
+				"recharge_time"			"90"
 			}
 		}
 		

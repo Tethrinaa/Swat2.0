@@ -95,3 +95,7 @@ function PlayerManager:getPlayerHeroes()
     end
     return playerHeroes
 end
+
+function PlayerManager:onHeroDies(killedUnit, killerEntity, killerAbility)
+  LeaveCorpse( killedUnit )
+end

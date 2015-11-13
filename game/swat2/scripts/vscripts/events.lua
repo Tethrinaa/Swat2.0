@@ -254,19 +254,11 @@ function GameMode:OnEntityKilled( keys )
 
   local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
-  -- Put code here to handle when an entity gets killed
-  DeepPrintTable(killedUnit.sdata)
-  
-  -- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
-  if LeavesCorpse( killedUnit ) then
-      Timers:CreateTimer(1, function()
-          LeaveCorpse( killedUnit )
-      end)
-  end
-
   -- If an enemy died, let the spawner know about it
   if killedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-      g_EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+    g_EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+  elseif killedUnit:GetTeamNumber() == DOTA_TEAM_GOODGUYS and killedUnit:IsHero() then
+	g_PlayerManager:onHeroDies(killedUnit, killerEntity, killerAbility)
   end
 end
 

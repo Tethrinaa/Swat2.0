@@ -12,7 +12,7 @@ function OnSpellStart(keys)
 	mender:SetControllableByPlayer(caster:GetPlayerID(), true)
 	
 	-- Grab the medic's level of mender
-	local medic_abil_level = caster:FindAbilityByName("medic_mend_wounds"):GetLevel()
+	local medic_abil_level = caster:FindAbilityByName("primary_medic_mend_wounds"):GetLevel()
 
 	-- Set the level of mend to be the same, but at least 1
 	local mender_abil = mender:FindAbilityByName("mender_mend_wounds")
@@ -36,11 +36,15 @@ function OnSpellStart(keys)
 	-- Save this mender as the last mender made by this medic so we can decrease the cost later
 	caster.sdata.mender = mender
 	
+	
 	-- Set a timed life for the mender so it shows a countdown timer and dies
-	mender:AddNewModifier(caster, nil, "modifier_kill", {duration=20})
+	local mender_duration = medic_mending_station_abil:GetSpecialValueFor("mender_duration")
+	mender:AddNewModifier(caster, nil, "modifier_kill", {duration=mender_duration})
+	
+	local recharge_time = medic_mending_station_abil:GetSpecialValueFor("recharge_time")
 	
 	-- 90 seconds later...
-	Timers:CreateTimer(90, function()
+	Timers:CreateTimer(recharge_time, function()
 		-- reduce the cost of medic_mending_station if the medic hasn't cast it again
 		if caster.sdata.mender == mender then 
 			medic_mending_station_abil:SetLevel(1)

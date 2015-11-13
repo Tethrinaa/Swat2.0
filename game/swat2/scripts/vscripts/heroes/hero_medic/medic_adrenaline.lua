@@ -1,5 +1,9 @@
 LinkLuaModifier( "modifier_medic_revive_rez_sickness_lua", "heroes/hero_medic/modifier_medic_revive_rez_sickness_lua", LUA_MODIFIER_MOTION_NONE )
 
+function OnAbilityPhaseStart(keys)
+	ValidateAbilityTarget(keys.ability, keys.target, IsOrganic, "#error_inorganic_target")
+end
+
 function RushThink( keys )
 	-- TODO implement rushing correctly here
 	keys.target:RemoveModifierByName("modifier_rush_thinker")
@@ -36,11 +40,12 @@ end
 
 function OnSpellStart(keys)
 	local caster = keys.caster
-	local junkie_abil = caster:FindAbilityByName("medic_adrenaline_junkie")
+	local junkie_abil = caster:FindAbilityByName("primary_medic_adrenaline_junkie")
 	local junkie_level = junkie_abil:GetLevel()
 	
 	-- If you're adrening someone else but you have junkie
 	if keys.caster ~= keys.target and junkie_level > 0 then
+		-- ... then check the chance to junkie from the ability
 		if math.random(0, 99) < junkie_abil:GetSpecialValueFor("junkie_chance") then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_adrenaline", {duration = keys.ability:GetSpecialValueFor("rush_duration")} )
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_rush_waiter", {duration = keys.ability:GetSpecialValueFor("rush_duration")} )

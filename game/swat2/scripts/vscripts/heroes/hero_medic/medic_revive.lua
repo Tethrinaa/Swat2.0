@@ -10,18 +10,9 @@ function OnAbilityPhaseStart(keys)
 	-- grab all the eligible nearby revive targets
 	targets = FindValidReviveTargets(location, keys.ability:GetSpecialValueFor("radius"), caster:GetTeamNumber())
 
-    -- if no targets are found then
+    -- if no targets are found then abort the cast
     if #targets < 1 then
-		-- stop the cast
-		caster:Interrupt()
-		
-		-- send an error the console
-		SendErrorMessage(pID, "#error_no_usable_corpses")
-		
-		-- reset the cooldown and energy
-		local mana = caster:GetMana()
-		Timers:CreateTimer(function() keys.ability:EndCooldown() end)		
-		Timers:CreateTimer(function() caster:SetMana(mana) end)
+		AbortAbilityCast(keys.ability, "#error_no_usable_corpses")
     end
 end
 
