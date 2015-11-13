@@ -180,6 +180,12 @@ function GameManager:onGameStarted()
     g_EnemyUpgrades:onGameStarted()
 end
 
+-- Called when the horn blows and the game begins
+function GameManager:onPlayerLeavesGame()
+    g_EnemySpawner.innardsSpawner:updateInnardsChance()
+    g_EnemyUpgrades:onPlayerLeavesGame(playerIndex)
+end
+
 -- Called once difficulty set.
 -- Spawns the creates, abms, powerplants...etc
 function GameManager:initializeBuildings()

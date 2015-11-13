@@ -12,7 +12,8 @@ function GameMode:OnDisconnect(keys)
   local userid = keys.userid
 
   -- TODO: Not sure if this is called correctly (UNTESTED)
-  EnemyUpgrades:onPlayerLeavesGame(keys.player)
+  g_PlayerManager:onPlayerLeavesGame(userid)
+  g_GameManager.onPlayerLeavesGame(userid)
 end
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
