@@ -12,7 +12,8 @@ function GameMode:OnDisconnect(keys)
   local userid = keys.userid
 
   -- TODO: Not sure if this is called correctly (UNTESTED)
-  EnemyUpgrades:onPlayerLeavesGame(keys.player)
+  g_PlayerManager:onPlayerLeavesGame(userid)
+  g_GameManager.onPlayerLeavesGame(userid)
 end
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
@@ -38,7 +39,8 @@ function GameMode:OnNPCSpawned(keys)
   npc.sdata.unit_name = npc:GetUnitName()
   npc.sdata.OnEntityKilled = {}
   npc.sdata.OnEntityHurt = {}
-  if not npc:HasAbility("friendly_fire_on") then
+
+  if not npc:HasAbility("friendly_fire_on") and npc:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 	npc:AddAbility("friendly_fire_on"):SetLevel(1)
   end
 end
@@ -253,17 +255,11 @@ function GameMode:OnEntityKilled( keys )
 
   local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
-  -- Put code here to handle when an entity gets killed
-  -- If the unit is supposed to leave a corpse, create a dummy_unit to use abilities on it.
-  if LeavesCorpse( killedUnit ) then
-      Timers:CreateTimer(1, function()
-          LeaveCorpse( killedUnit )
-      end)
-  end
-
   -- If an enemy died, let the spawner know about it
   if killedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-      g_EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+    g_EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
+  elseif killedUnit:GetTeamNumber() == DOTA_TEAM_GOODGUYS and killedUnit:IsHero() then
+	g_PlayerManager:onHeroDies(killedUnit, killerEntity, killerAbility)
   end
 end
 

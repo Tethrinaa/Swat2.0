@@ -22,3 +22,33 @@ function RandomizeList(list)
         list[i] = temp
     end
 end
+
+function ShallowPrintTable(t)
+	for k,v in pairs(t) do
+		print(k,v)
+	end
+end
+
+function PrintEntityFunctions(t)
+
+	local mt = getmetatable(t)
+	if not mt then
+		print("Object has no metatable.")
+		return
+	end
+	
+	mt = mt.__index
+	if mt and mt ~= t then
+		ShallowPrintTable(mt)
+		PrintEntityFunctions(mt)
+	end
+end
+
+-- Typical call:  if hasbit(x, bit(3)) then ...
+function hasbit(x, p)
+    return x % (p + p) >= p
+end
+
+function bit(p)
+    return 2 ^ (p - 1)  -- 1-based indexing
+end

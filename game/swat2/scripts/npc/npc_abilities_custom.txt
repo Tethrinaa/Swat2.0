@@ -1557,6 +1557,77 @@
 		}
 	}
 
+    //=================================================================================================================
+    // Ability: Armor Upgrade
+    // Note: We need this to go past level 20, we will accomplish this with two abilities
+    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_2 will cover in increments of 20
+    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_2 = level 0
+    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_2 = level 1
+    //       See EnemyUpgrades GiveUnitArmor() method
+    //=================================================================================================================
+    "armor_upgrade_1"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_armor_upgrade_1"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }
+    "armor_upgrade_2"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"20 40 60 80 100 120 140 180 200 220 240 260 280 300 320 340 360 380 400"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_armor_upgrade_2"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }
+
    //=================================================================================================================
    // Ability: Mana Shield Light (Nanites-Light Armor)
    // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
@@ -2939,7 +3010,7 @@
 			}
         }
    }
-      //=================================================================================================================
+	//=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
 	//=================================================================================================================
    "primary_cyborg_organic_replacement"
@@ -3111,14 +3182,18 @@
    	//=================================================================================================================
 	// Cybrog: Cluster Rockets
 	//=================================================================================================================
-	"primary_cyborg_cluster_rockets_lua_ability"
+	"primary_cyborg_cluster_rockets"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_lua"
-		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets_lua_ability.lua"
-		"AbilityTextureName"			"gyrocopter_flak_cannon"
-		"MaxLevel"						"16"
+		"BaseClass"              	"ability_datadriven"
+		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets.lua"
+		"AbilityTextureName"		"gyrocopter_flak_cannon"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TEAM_ALL"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_TEAM_NONE"
+		"MaxLevel"					"16"
 		"LevelsBetweenUpgrades"  	"0"
 
 		// Casting
@@ -3137,6 +3212,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		// "AbilityDamage"				"250" calculated by script mainly
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AoERadius"						"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
 
 
 		// Precache
@@ -3160,12 +3237,17 @@
 			"03"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"tick_rate"           		"0.10"
+				"tick_rate"           		".08 .08 .08 .08 .08 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12"
+			}
+			"03" // I know this is derived information but it helps to have each natively available
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"ticks"           			"5"
 			}
 			"04"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"damage_duration"           "0.51"
+				"damage_duration"           ".33 .33 .33 .33 .33 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49"
 			}
 			"05"
 			{
@@ -3179,13 +3261,56 @@
 			}
 			"07"
 			{
-				"var_type"                	"FIELD_INTEGER"
-				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+				"var_type"                	"FIELD_FLOAT"
+				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
 			}
 			"07"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
+				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"DelayedAction"
+			{
+				"Delay"						"%delay"
+				"Action"
+				{
+					"CreateThinker"
+					{
+						"ModifierName"			"modifier_cyborg_cluster_rockets_thinker"
+						"Target"				"POINT"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_cyborg_cluster_rockets_thinker"
+			{
+				"ThinkInterval"				"%tick_rate"
+				"Duration"					"%damage_duration"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+						"Function"		"ClusterThink"
+						"Target"		"POINT"
+					}
+				}
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+						"Function"		"ClusterThink"
+						"Target"		"POINT"
+					}
+				}
 			}
 		}
 	}
@@ -3310,13 +3435,13 @@
 	//=================================================================================================================
 	// Cyborg: Forcefield
 	//=================================================================================================================
-	"cyborg_forcefield_lua_ability"
+	"cyborg_forcefield"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_lua"
-		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_lua_ability.lua"
-		"AbilityTextureName"			"abaddon_aphotic_shield"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"abaddon_aphotic_shield"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityManaCost"		"120"
 
 		// Precache
@@ -3331,14 +3456,59 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"2"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName" 		"modifier_cyborg_forcefield"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+				"Function"		"SwapInDeactivate"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_cyborg_forcefield"
+			{
+				"ThinkInterval" 	"1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldThink"
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldCreate"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldDestroy"
+					}
+				}
+			}
+		}
 	}
 
-	"cyborg_forcefield_off_lua_ability"
+	"cyborg_forcefield_off"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_lua"
-		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_off_lua_ability.lua"
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"wisp_spirits"
 		"AbilityManaCost"		"0"
 
@@ -3354,6 +3524,20 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
+		
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName" 		"modifier_cyborg_forcefield"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+				"Function"		"SwapOutDeactivate"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -3371,17 +3555,17 @@
 		"AbilityTextureName"			"doom_bringer_scorched_earth"
 		"MaxLevel"						"16"
 		"LevelsBetweenUpgrades"  	"0"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"  "0.3"
 		"AbilityCastRange"  "1000"
 		"FightRecapLevel"				"1"
-	
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"135 135 180 180 215 215 250 250 280 280 320 320 340 340 350 350"
@@ -3389,8 +3573,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"250"
-			
-		
+
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -3400,7 +3584,7 @@
 			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
 			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
-		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
 		"particle"		"particles/units/heroes/hero_techies/techies_suicide_base.vpcf"
 		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
 		"particle"				"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
@@ -3408,8 +3592,8 @@
 		"particle"				"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
 		"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
 		}
-		
-		// Special    
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -3476,16 +3660,16 @@
 			"13"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"slop"                		"30" 
+				"slop"                		"30"
 			}
 			"14"
 			{
 				"var_type"                	"FIELD_INTEGER"
 				"linger_duration"           "3"
 			}
-			
+
 		}
-		
+
 		"OnSpellStart"
 		{
 			"LinearProjectile"
@@ -3505,9 +3689,9 @@
 			"Target"			"CASTER"
 			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
 		}
-			
+
 		}
-		
+
 			"OnProjectileHitUnit"
 	{
 		"FireSound"
@@ -3515,7 +3699,7 @@
 			"Target"			"TARGET"
 			"EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
 		}
-	
+
 		"FireEffect"
 		{
 			"Target"			"TARGET"
@@ -3526,12 +3710,12 @@
 				"TARGET"		"attach_origin"
 			}
 		}
-	
+
 	}
-		
-		
-		
-		
+
+
+
+
 		"OnProjectileFinish"
 		{
 			"RunScript"
@@ -3550,13 +3734,13 @@
 				"linger_duration"	"%linger_duration"
 			}
 		}
-		
+
 		"Modifiers"
 		{
 			"modifier_demo_mirv_thinker"
 			{
-				
-			
+
+
 				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Aura" "modifier_demo_mirv_napalm"
@@ -3565,8 +3749,8 @@
 				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
 				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
 				"Duration" "%duration"
-				
-				
+
+
 				"OnCreated"
 				{
 					"FireEffect"
@@ -3575,14 +3759,14 @@
 						"EffectAttachType" "follow_origin"
 						"Target" "TARGET"
 					}
-					
+
 						"FireSound"
 						{
 							"EffectName"	"Hero_Techies.Suicide"
 							"Target" 		"CASTER"
 						}
-	
-					
+
+
 					"Damage"
 					{
 						"Target"
@@ -3595,7 +3779,7 @@
 						"Type"			"DAMAGE_TYPE_PHYSICAL"
 						"Damage"		"%outer_damage"
 					}
-					
+
 					"Damage"
 					{
 						"Target"
@@ -3610,7 +3794,7 @@
 					}
 				}
 				}
-			
+
 			"modifier_demo_mirv_napalm"
 			{
 				"IsDebuff" "1"
@@ -3626,7 +3810,7 @@
 							"Target" "TARGET"
 						}
 
-			
+
 					"Damage"
 					{
 						"Type"   "DAMAGE_TYPE_PHYSICAL"
@@ -3641,7 +3825,7 @@
 			}
 		}
 	}
-	
+
 
 	//=================================================================================================================
 	// Demolitions: Mini-Nuke
@@ -3655,9 +3839,8 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"morphling_morph_agi"
+		"AbilityTextureName"			"gyrocopter_homing_missile"
 		"MaxLevel"						"3"
-		"LevelsBetweenUpgrades"  	"0"
 		"AoERadius" 				"%outer_radius"
 
 		// Casting
@@ -3788,7 +3971,7 @@
 		"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"	"troll_warlord_whirling_axes_melee"
+		"AbilityTextureName"	"razor_static_link"
 		"AbilityManaCost"		"0"
 		"MaxLevel"              "18"
 
@@ -3796,8 +3979,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+		"particle"			Nim"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
 		}
 
 		// Casting
@@ -3838,6 +4021,24 @@
 
 		"OnSpellStart"
 		{
+		"FireSound"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"Hero_StormSpirit.ElectricVortexCast"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+				"MoveSpeed"				"1100"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"0"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
+			}
+		
+		
+		
 			"RunScript"
 			{
 				"ScriptFile" 	"heroes/hero_demo/biochem.lua"
@@ -3856,9 +4057,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		 "MaxLevel"                 "16"
-
-		"AbilityTextureName"			"centaur_return"
+		"MaxLevel"                 "16"
+		"LevelsBetweenUpgrades"  	"0"
+		"AbilityTextureName"			"dark_seer_ion_shell"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -3910,7 +4111,7 @@
 		"BaseClass"				      	"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"                 		"6"
-		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+		"AbilityTextureName"			"omniknight_repel"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -3927,7 +4128,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
+		"AbilityCastPoint"				".05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -3989,18 +4190,14 @@
 				"Function"		"OnAbilityPhaseStart"
 			}
 		}
-
 		"OnSpellStart"
 		{
-
-		"OnSpellStart"
-		{
-		"FireSound"
+			"FireSound"
 			{
 				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
 				"Target"		"CASTER"
 			}
-				"FireEffect"
+			"FireEffect"
 			{
 				"Target"			"TARGET"
 				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
@@ -4011,7 +4208,7 @@
 					"01"	"%radius %radius %radius"
 				}
 			}
-			
+
 			"FireEffect"
 			{
 				"Target"			"TARGET"
@@ -4036,34 +4233,17 @@
                     "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%ms_bonus_percent"
                     "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_PERCENTAGE"    "%as_bonus_percent"
                 }
-			"OnCreated"
-			{
-			"AttachEffect"
-			{
-			"EffectName"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-			"EffectAttachType"	"follow_overhead"
-			"Target"			"CASTER"
-			}
-	
-			"AttachEffect"
+
+				"OnCreated"
 				{
-					"Target"
+					"AttachEffect"
 					{
-						"Center"  		"CASTER"
-						"Radius"		"%radius"
-						"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-						"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						"EffectName"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
 					}
-				"EffectName" "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-						"EffectAttachType"			"follow_origin"
-						"EffectRadius"				"%radius"
-					}
-				
-				
-				
-				
-            }
-        }
+				}
+			}
 		}
 	}
    	//=================================================================================================================
@@ -4071,27 +4251,29 @@
 	//=================================================================================================================
 	"primary_medic_mend_wounds"
     {
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"						"ability_datadriven"
-    "AbilityName"           	    "Mend Wounds"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-
-    "MaxLevel"                 	 	"16"
-	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-	"AbilityTextureName"			"rubick_spell_steal"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityName"           	    "Mend Wounds"
+		// for some unknown reason the backswing for this is around 3 seconds, so let's ignore it instead
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"MaxLevel"                 	 	"16"
+		"LevelsBetweenUpgrades"  	"0"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"rubick_spell_steal"
 
 		"precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
-			
+
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"120"
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -4102,7 +4284,7 @@
 		"AbilityManaCost"				"0"
 
 
-			// Special
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -4111,12 +4293,35 @@
 				"var_type"			"FIELD_INTEGER"
 				"heal"				"17 23 28 34 39 45 50 56 61 67 72 78 83 89 94 100"
 			}
+		
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"auto_cast_range"	"625"
+			}
+			
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bandage_bonus"		"17 23 28 34 39 45 50 56 61 67 72 78 83 89 94 100"
+			}
 		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_mend_wounds.lua"
+				"Function"		"OnAbilityPhaseStart"
+				"Target"		"TARGET"
+			}
+		}
+		
 		"OnSpellStart"
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star
+				"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star"
 				"Target"		"TARGET"
 			}
 			"Heal"
@@ -4125,6 +4330,280 @@
 				"HealAmount"	"%heal"
 			}
 
+		}
+		
+		"Modifiers"
+		{
+			"modifier_medic_mend_wounds_autocast"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
+						"Function"		"HealAutocast"
+					}
+				}
+	
+				"ThinkInterval" ".15"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
+						"Function"		"HealAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Mend Wounds (Mender)
+	//=================================================================================================================
+	"mender_mend_wounds"
+    {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityName"           	    "Mend Wounds"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+	
+		"MaxLevel"                 	 	"17"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityTextureName"			"rubick_spell_steal"
+
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.05"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal"				"12 17 23 28 34 39 45 50 56 61 67 72 78 83 89 94 100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"auto_cast_range"	"625"
+			}
+		}
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_mend_wounds.lua"
+				"Function"		"OnAbilityPhaseStart"
+				"Target"		"TARGET"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star"
+				"Target"		"TARGET"
+			}
+			"Heal"
+			{
+				"Target" 		"TARGET"
+				"HealAmount"	"%heal"
+			}
+
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mender_mend_wounds_autocast"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
+						"Function"		"HealAutocast"
+					}
+				}
+	
+				"ThinkInterval" ".15"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
+						"Function"		"HealAutocast"
+					}
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Defense Network (Mender)
+	//=================================================================================================================
+	"mender_defense_network"
+    {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityName"           	    "Defense Network"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"MaxLevel"                 	 	"16"
+		"AbilityTextureName"			"rubick_spell_steal"
+
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_bonus_percentage"				"-9 -10 -11 -12 -13 -14 -15 -16 -17 -18 -19 -20 -21 -22 -23 -24 -25"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"				"800"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"linger_duration"	"3"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"info_bonus_percentage"				"9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"info_aura_radius"				"625"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mender_defense_network"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Aura" "modifier_mender_defense_network_buff"
+				"Aura_Radius" "%aura_radius"
+				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
+				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+			}
+			"modifier_mender_defense_network_buff"
+			{
+				"Duration" "%linger_duration"
+				"IsDebuff" "1"
+				"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_bonus_percentage"
+				}
+			}
+			"modifier_mender_defense_network_info"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Aura" "modifier_mender_defense_network_buff_info"
+				"Aura_Radius" "%info_aura_radius"
+				"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" "DOTA_UNIT_TARGET_ALL"
+				"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
+			}
+			"modifier_mender_defense_network_buff_info"
+			{
+				"Duration" "%linger_duration"
+				"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Contraption Plating (Mender)
+	//=================================================================================================================
+	"mender_contraption_plating"
+    {
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityName"           	    "Contraption Plating"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+		"MaxLevel"                 	 	"8"
+		"AbilityTextureName"			"tidehunter_kraken_shell"
+
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"				"4 8 16 24 32 40 48 56 64"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_absorption"				"10 20 30 45 60 75 100 125"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mender_contraption_plating"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK" "%damage_absorption"
+				}
+			}
 		}
 	}
 
@@ -4146,11 +4625,11 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"120"
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastPoint"				"0.05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"		//Needs to be chnaged for levels 51-55
+		"AbilityCooldown"				"60"		//Needs to be changed for levels 51-55
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4162,13 +4641,13 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"duration"			"20"
 			}
 
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"modelscale"		"25"
 			}
 
@@ -4177,6 +4656,26 @@
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_bonus_pct"	"300"
 			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_duration"			"10"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_wait_duration"			"14"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_check_duration"			"5"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rush_gap_duration"			"1"
+			}
 		}
 
 		"precache"
@@ -4184,6 +4683,16 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
 			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
 		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+               "ScriptFile"		"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnAbilityPhaseStart"
+            }
+		}
+		
 
 		"OnSpellStart"
 		{
@@ -4202,15 +4711,60 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_strafe"
+				"ModifierName"	"modifier_adrenaline"
 				"Target" 		"TARGET"
 				"Duration"		"%duration"
+			}
+			"RunScript"
+			{
+               "ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnSpellStart"
+            }
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_rush_waiter"
+				"Target" 		"TARGET"
+				"Duration"		"%rush_wait_duration"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_strafe"
+			"modifier_rush_waiter"
+			{
+				"IsHidden" "1"
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_rush_thinker"
+						"Target" 		"TARGET"
+						"Duration"		"%rush_duration"
+					}
+				}
+			}
+			"modifier_rush_thinker"
+			{
+				"IsHidden" "1"
+				"ThinkInterval" "%rush_check_duration"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+						"Function"		"RushThink"
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+						"Function"		"RushThink"
+					}
+				}
+			}
+			"modifier_adrenaline"
 			{
 				"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -4234,6 +4788,7 @@
         "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 
         "MaxLevel"                 "16"
+		"LevelsBetweenUpgrades"  	"0"
         "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
         "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
         "AbilityTextureName"			"omniknight_purification"
@@ -4243,7 +4798,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"175 205 235 265 295 325 355 385 415 445 475 505 535 565 595 625"
-		"AbilityCastPoint"				"0"
+		"AbilityCastPoint"				"0.05"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -4268,17 +4823,27 @@
 				"var_type"			"FIELD_INTEGER"
 				"HoT"				"0 0 0 0 0 0 0 0 0 0 0 10 20 30 40 50"
 			}
-            "03"
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"HoT_chance"				"0 0 0 0 0 0 0 0 0 0 0 100 100 100 100 100"
+			}
+            "04"
             {
 				"var_type"			"FIELD_INTEGER"
 				"remove_rez_sick_chance"				"0 0 0 0 0 0 0 0 0 0 0 10 20 40 70 100"
             }
-			//"03"
-			//{
-			//	"var_type"			"FIELD_FLOAT"
-			//	"injury"			"0 0 0 0 0.1 0.25 0.4 0.55 0.7 0.85 1 1 1 1 1 1"
-			//}
 		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+               "ScriptFile"		"scripts/vscripts/heroes/hero_medic/medic_nano_injection.lua"
+               "Function"		"OnAbilityPhaseStart"
+            }
+		}
+		
 		"OnSpellStart"
 		{
 			"FireSound"
@@ -4319,7 +4884,20 @@
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_medic_revive_rez_sickness"
+						"ModifierName"	"modifier_medic_revive_rez_sickness_lua"
+						"Target"		"TARGET"
+					}
+				}
+			}
+            "Random"
+			{
+				"Chance"		"%HoT_chance"
+
+				"OnSuccess"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nano_hot_thinker"
 						"Target"		"TARGET"
 					}
 				}
@@ -4332,7 +4910,7 @@
             {
                 "Duration" "6"
                 "ThinkInterval" "1"
-                "OnThink"
+                "OnIntervalThink"
                 {
                     "Heal"
                     {
@@ -4342,5 +4920,107 @@
                 }
             }
         }
+	}
+
+	//=================================================================================================================
+	// Ability: Adrenaline Junkie (Medic)
+	//================================================================================================================= 
+   "primary_medic_adrenaline_junkie"
+   {
+  	// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityName"              "medic_adrenaline_junkie"
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"                 "8"
+
+		"AbilityTextureName"			"rattletrap_power_cogs"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			
+
+		}	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"junkie_chance"		"65 70 75 80 85 90 95 100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_rush_bonus"	"2 4 6 8 10 12 14 16"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Medic: Mending Station
+	//=================================================================================================================
+	"medic_mending_station"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"gyrocopter_flak_cannon"
+		"MaxLevel"						"2"
+		"LevelsBetweenUpgrades"  	"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"  "0"
+		"AbilityCastRange"  "160"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"250 500"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+
+
+		// Special
+			//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mender_duration"			"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"recharge_time"			"90"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_medic/medic_mending_station.lua"
+				"Function"		"OnSpellStart"
+				"Target"		"POINT"
+			}
+		}
 	}
 }

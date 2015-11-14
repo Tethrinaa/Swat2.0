@@ -19,6 +19,12 @@ function ZombieSpawner:new(o)
     end
     self.zombieReviveIndex = 1
 
+    -- Keep a cache of queued lives. If the zombie lives queue has a value in it, we set that value to the zombie's lives
+    self.zombieLivesQueue = Queue:new()
+
+    -- Cache the experience worth of a zombie for when we revive)
+    self.zombieExperienceValue = GameMode.unit_infos["npc_dota_creature_basic_zombie"]["SwatXP"] or 1
+
     self:searchZombieQueue() -- begin searching the queue
 
     return o
@@ -33,7 +39,17 @@ function ZombieSpawner:spawnMinion(position, specialType)
     local unit = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
     self:addZombieMutation(unit)
 
-    unit.zombieLives = 0
+    if self.zombieLivesQueue:getSize() == 0 then
+        -- No zombie lives stored from queue
+        unit.zombieLives = 0
+    else
+        -- A zombie tried to reanimate but was blocked because of minion queue
+        -- Apply that zombie's lives to this zombie
+        unit.zombieLives = self.zombieLivesQueue:pop_first()
+        if SHOW_ZOMBIE_LOGS then
+            print("ZombieSpawner | Spawned Zombie set with queued lives=" .. unit.zombieLives)
+        end
+    end
 
     -- EnemySpawner will look for onDeathFunctions and call them
     unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
@@ -161,7 +177,12 @@ function ZombieSpawner:reviveZombie(zombieInfo)
             g_EnemySpawner.minionCount = g_EnemySpawner.minionCount + 1
 
             -- Revive the zombie
-            local zombie = CreateUnitByName( "npc_dota_creature_basic_zombie", zombieInfo.corpse:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_BADGUYS )
+            local position = zombieInfo.corpse:GetAbsOrigin()
+            local zombie = CreateUnitByName( "npc_dota_creature_basic_zombie", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+
+            -- Apply enemy upgrades
+            g_EnemyUpgrades:upgradeMob(zombie)
+
             if zombieInfo.nuked then
                 -- The zombie died via nuke (revives with less life, but does keep its mana)
                 zombie:SetHealth(math.max(1, RandomInt(1, 180 - (30 * g_GameManager.difficultyValue) + (15 * g_GameManager.nightmareValue))))
@@ -172,13 +193,19 @@ function ZombieSpawner:reviveZombie(zombieInfo)
                 zombie:SetHealth(math.max(1, RandomInt(1, 250 - (50 * g_GameManager.difficultyValue) + (25 * g_GameManager.nightmareValue) + (zombieInfo.mana * (3.0 - g_GameManager.difficultyBase)))))
                 zombie.zombieLives = zombieInfo.zombieLives + livesIncrement -- reduce chance for future revives
 
-                -- TODO Spawn Innards
+                -- Potentially spawn some innards
+                if g_EnemySpawner.innardsSpawner.innardsChance > 0 then
+                    g_EnemySpawner.innardsSpawner:rollForInnardsSpawn(position, zombieInfo.killer)
+                end
             end
 
             -- Set its speed
             zombie:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(zombie, math.floor((zombieInfo.zombieLives + livesIncrement) / livesIncrement) * (9.0 / g_GameManager.difficultyBase)))
             -- Give it a mutation
             self:addZombieMutation(zombie)
+
+            -- Give it some XP worth
+            zombie.experience = self.zombieExperienceValue
 
             -- EnemySpawner will look for onDeathFunctions and call them
             zombie.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
@@ -196,7 +223,8 @@ function ZombieSpawner:reviveZombie(zombieInfo)
             -- Add this zombie to the minion queue
             g_EnemySpawner.minionQueue = g_EnemySpawner.minionQueue + 1
 
-            -- TODO Add Zombie lives to queue
+            -- Add this zombies lives to the minion queue
+            self.zombieLivesQueue:push_last(zombieInfo.zombieLives + (2 * g_GameManager.difficultyValue) - 1)
         end
     else
         if SHOW_ZOMBIE_LOGS then

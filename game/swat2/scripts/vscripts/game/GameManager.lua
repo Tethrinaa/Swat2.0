@@ -12,6 +12,7 @@ require('game/EnemySpawner')
 require('game/EnemyCommander')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
+require('game/DebugChatCommands')
 
 -- The systems instances stored as global variables
 g_RadiationManager = {}
@@ -56,9 +57,6 @@ function GameManager:new(o)
 
     -- Current day (incremented every day cycle)
     self.currentDay = 1
-
-    -- Total number of heroes (including those made by CPU slots)
-    self.playerCount = 1
 
     -- Difficulty related variables
     -- difficultyBase - A constant value (except on survival), which scales the difficulty of the game over time
@@ -162,6 +160,30 @@ function GameManager:setDifficulty(difficulty)
             timesToUpdateDisplay = timesToUpdateDisplay - 1
         end
     end)
+end
+
+-- Called when the first player loads in and pregame has started
+function GameManager:onPreGameStarted()
+    if SHOW_GAME_SYSTEM_LOGS then
+        print("Pregame has started!")
+    end
+    g_EnemySpawner:onPreGameStarted()
+    g_RadiationManager:onPreGameStarted()
+end
+
+-- Called when the horn blows and the game begins
+function GameManager:onGameStarted()
+    if SHOW_GAME_SYSTEM_LOGS then
+        print("Game has started!")
+    end
+    g_EnemySpawner:onGameStarted()
+    g_EnemyUpgrades:onGameStarted()
+end
+
+-- Called when the horn blows and the game begins
+function GameManager:onPlayerLeavesGame()
+    g_EnemySpawner.innardsSpawner:updateInnardsChance()
+    g_EnemyUpgrades:onPlayerLeavesGame(playerIndex)
 end
 
 -- Called once difficulty set.

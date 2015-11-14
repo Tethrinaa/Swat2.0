@@ -1,72 +1,15 @@
 -- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
-Global_Fallout = 0
-Global_Max_Player_Count = 0
---[[Global Uber will end up being a two dimensional array of [total players][2].  First element will be whether the player
-    is connected.  If they are connected, it will be an integer value of 1, otherwise an integer value of 0.  This will allow
-	us to turn their Uber off if the disconnect.  Second element is the player's uber contribution]]
-Global_Uber = {}
-Global_Max_Player_Count = 0
 
-Global_Player_Heroes = {}
-
+-- Global Variables
+g_PlayerManager = nil
 g_GameManager = nil
-
-function bit(p)
-  return 2 ^ (p - 1)  -- 1-based indexing
-end
-
--- Typical call:  if hasbit(x, bit(3)) then ...
-function hasbit(x, p)
-  return x % (p + p) >= p
-end
-
-Global_Consts = {}
-   Global_Consts.classes = {}
-      Global_Consts.classes.cyborg=       {strength = 30, strengthPerLevel=1.10, agility = 14, agilityPerLevel = 0.36, intellect = 105, intellectPerLevel = 0.62}
-      Global_Consts.classes.demo=         {strength = 22, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 105, intellectPerLevel = 0.42}
-      Global_Consts.classes.ho=           {strength = 25, strengthPerLevel=1.00, agility = 11, agilityPerLevel = 0.30, intellect = 100, intellectPerLevel = 0.31}
-      Global_Consts.classes.maverick=     {strength = 22, strengthPerLevel=0.70, agility = 12, agilityPerLevel = 0.60, intellect = 100, intellectPerLevel = 0.31}
-      Global_Consts.classes.medic=        {strength = 18, strengthPerLevel=0.20, agility = 11, agilityPerLevel = 0.36, intellect = 111, intellectPerLevel = 1.00}
-      Global_Consts.classes.psychologist= {strength = 18, strengthPerLevel=0.15, agility = 11, agilityPerLevel = 0.60, intellect = 111, intellectPerLevel = 0.80}
-      Global_Consts.classes.sniper=       {strength = 22, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 100, intellectPerLevel = 0.31}
-      Global_Consts.classes.tactician =   {strength = 20, strengthPerLevel=0.60, agility = 12, agilityPerLevel = 0.60, intellect = 110, intellectPerLevel = 0.72}
-   Global_Consts.weapons = {}
-      Global_Consts.weapons.assault_rifleI =      {bat= 1.860, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "weapon_assault_rifleI"}
-      Global_Consts.weapons.assault_rifleII =     {bat= 1.691, damageMin =  90, damageMinUpgrade = 1, damageMax = 124, damageMaxUp = 18, range =  900, weaponSkill = "weapon_assault_rifleII"}
-      Global_Consts.weapons.assault_rifle_urban = {bat= 1.860, damageMin =  99, damageMinUpgrade = 1, damageMax = 156, damageMaxUp = 20, range =  900, weaponSkill = "weapon_assault_rifle_urban"}
-      Global_Consts.weapons.chaingunI =           {bat= 0.620, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  550, weaponSkill = "weapon_chaingunI"}
-      Global_Consts.weapons.chaingunII =          {bat= 0.564, damageMin =  45, damageMinUpgrade = 1, damageMax =  52, damageMaxUp =  8, range =  625, weaponSkill = "weapon_chaingunII"}
-      Global_Consts.weapons.vindicator=           {bat= 0.760, damageMin =  55, damageMinUpgrade = 1, damageMax =  64, damageMaxUp = 10, range =  550, weaponSkill = "weapon_vindicator"}
-      Global_Consts.weapons.flamethrowerI=        {bat= 0.260, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "weapon_flamethrower"}
-      Global_Consts.weapons.flamethrowerII=       {bat= 0.236, damageMin =   9, damageMinUpgrade = 1, damageMax =  11, damageMaxUp =  2, range =  700, weaponSkill = "weapon_flamethrower"}
-      Global_Consts.weapons.rocketI=              {bat= 3.100, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "weapon_rocketI"}
-      Global_Consts.weapons.rocketII=             {bat= 2.818, damageMin =  94, damageMinUpgrade = 1, damageMax = 157, damageMaxUp = 22, range = 1500, weaponSkill = "weapon_rocketII"}
-      Global_Consts.weapons.sniper_rifleI=        {bat= 2.570, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "weapon_sniper_rifleI"}
-      Global_Consts.weapons.sniper_rifleII=       {bat= 2.142, damageMin = 200, damageMinUpgrade = 5, damageMax = 300, damageMaxUp = 25, range = 1200, weaponSkill = "weapon_sniper_rifleII"}
-   Global_Consts.armors = {}
-      Global_Consts.armors.light    = {index = 0, moveSpeed = 290, absorption = 1.4, armor = 0, sprintSkill = 3, nanitesSkill = "nanites_compact"}
-      Global_Consts.armors.medium   = {index = 1, moveSpeed = 250, absorption = 2.1, armor = 0, sprintSkill = 2, nanitesSkill = "nanites_standard"}
-      Global_Consts.armors.heavy    = {index = 2, moveSpeed = 220, absorption = 2.8, armor = 0, sprintSkill = 1, nanitesSkill = "nanites_heavy"}
-      Global_Consts.armors.advanced = {index = 3, moveSpeed = 230, absorption = 2.8, armor = 1, sprintSkill = 0, nanitesSkill = "nanites_heavy"}
-   Global_Consts.traits = {}
-   Global_Consts.specs = {}
-
-Global_Consts.classes.cyborg.abilities = {"primary_cyborg_cluster_rockets_lua_ability","primary_cyborg_xtreme_combat_mode","primary_cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield_lua_ability", "cyborg_forcefield_off_lua_ability"}
-Global_Consts.classes.demo.abilities = {"primary_demo_mirv","primary_demo_place_c4","primary_demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"}
-Global_Consts.classes.ho.abilities = {"primary_ho_plasma_shield","primary_ho_storage_cells","ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
-Global_Consts.classes.maverick.abilities = {"primary_maverick_plasma_grenade","primary_maverick_robodog","primary_maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"}
-Global_Consts.classes.medic.abilities  = {"primary_medic_nano_injection","primary_medic_mend_wounds","primary_medic_adrenaline_junkie","medic_adrenaline","medic_rapid_therapy","medic_mending_station","medic_revive"}
-Global_Consts.classes.psychologist.abilities = {"primary_psychologist_mental_clarity","primary_psychologist_confidence","primary_psychologist_self_motivation", "psychologist_mind_slay","psychologist_mind_rot","psychologist_clairvoyance"}
---TODO Figure out how to handle the sniper_critical_shot for the UI
-Global_Consts.classes.sniper.abilities = {"primary_sniper_concussion_grenade","primary_sniper_aim","primary_sniper_marksman","primary_sniper_critical_shot","sniper_item_teleport","sniper_construct_camera","sniper_sneak"}
-Global_Consts.classes.tactician.Abilities = {"primary_tactician_weakpoint","primary_tactician_blitz","primary_tactician_endurance","tactician_pep_talk","tactician_ion_strike","tactician_recruit"}
-
-Global_Consts.classes.psychologist.modifiers = {"modifier_awareness"}
-Global_Consts.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}
 
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 BAREBONES_DEBUG_SPEW = false
+
+-- SHOW_DEBUG_LOGS is used for SWAT code. If true, it will enable displaying most normal debug logs
+SHOW_DEBUG_LOGS = true
 
 if GameMode == nil then
     DebugPrint( '[BAREBONES] creating barebones game mode' )
@@ -97,15 +40,14 @@ require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
---uber.lua contains most of the code relating to uber.
-require('uber')
 --this intercepts all damage dealt to any target, useful for damage\armor types and armor absorption
 require('damage_filter')
 
 
 -- Contains game logic and game systems (like spawning, radiation...etc)
 require('game/GameManager')
-
+-- Contains player control logic (like hero building, experience, item management...etc)
+require('players/PlayerManager')
 
 --[[
   This function should be used to set up Async precache calls at the beginning of the gameplay.
@@ -137,6 +79,7 @@ end
 ]]
 function GameMode:OnFirstPlayerLoaded()
   DebugPrint("[BAREBONES] First Player has loaded")
+
 end
 
 --[[
@@ -157,256 +100,84 @@ end
 function GameMode:OnHeroInGame(hero)
   DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
-  -- This line for example will set the starting gold of every hero to 500 unreliable gold
-  hero:SetGold(500, false)
+  -- I'm aware this is a weird spot to put the manager loading code, but basically
+  -- we need to start this after we have a definitive player count (many things rely on this)
+  -- so InitGameMode is too early. OnAllPlayersLoaded seems to take too long to trigger. People can
+  -- choose their class in game before this happens. It seems that this may be a good spot for now.
+  if not firstHeroHasJoined then
+      firstHeroHasJoined = true
 
-  -- These lines will create an item and add it to the player, effectively ensuring they start with the item
-  local item = CreateItem("item_example_item", hero, hero)
-  hero:AddItem(item)
+      print("Loading Managers")
+      -- Initialize the PlayerManager
+      g_PlayerManager = PlayerManager:new()
+      g_PlayerManager:onPreGameStarted()
 
-  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-    --with the "example_ability" ability
+      -- Initialize the GameManager (which will initialize more game systems like spawning, AI, upgrades..etc)
+      g_GameManager = GameManager:new()
+      g_GameManager:onPreGameStarted()
 
-  local abil = hero:GetAbilityByIndex(1)
-  hero:RemoveAbility(abil:GetAbilityName())
-  hero:AddAbility("example_ability")]]
+      -- TODO: Maybe set difficulty based on vote?
+      g_GameManager:setDifficulty("insane")
+      g_PlayerManager:setDifficulty("insane")
+
+      self:OnHeroInGame(hero)
+  end
 end
 
---[[
-  This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
-  gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
-  is useful for starting any game logic timers/thinkers, beginning the first round, etc.
-]]
+-- This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
 function GameMode:OnGameInProgress()
-  DebugPrint("[BAREBONES] The game has officially begun")
-
-  Timers:CreateTimer(30, -- Start this timer 30 game-time seconds later
-    function()
-      DebugPrint("This function is called 30 seconds after the game begins, and every 30 seconds thereafter")
-      return 30.0 -- Rerun this timer every 30 game-time seconds
-    end)
+  g_GameManager:onGameStarted()
+  g_PlayerManager:onGameStarted()
 end
-
-
 
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
   GameMode = self
-
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
-
   -- Call the internal function to set up the rules/behaviors specified in constants.lua
   -- This also sets up event hooks for all event handlers in events.lua
   -- Check out internals/gamemode to see/modify the exact code
   GameMode:_InitGameMode()
-  
+  DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
+  ---------------------
+
+  --load item table
+  self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
+
+  -- Index the npc units and npc heroes values
+  -- Note: To retrieve a value:
+  --        local unit_value = GameMode.unit_infos[unit:GetUnitName()]
+  --        unit_value["MyCustomKey"]
+  GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+  for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
+    GameMode.unit_infos[k] = v
+  end
+
   -- Filter for damage and armor types
   GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap( GameMode, "FilterDamage" ), self )
 
-  -- Register event listeners
-  CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(GameMode, 'BuildMarine'))
+	--BDO what is this?  Didn't work after i switched us to barebones
+   --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
 
-   -- Initialize the GameManager (which will initialize more game systems like spawning, AI, upgrades..etc)
-    g_GameManager = GameManager:new()
-    g_GameManager:setDifficulty("insane")
+   -- Set time to Noon (game will start PRE_GAME_TIME seconds before noon)
+   -- Not sure why this needs to be in a Timer but it not putting it in a timer means the game will ignore it
+   Timers:CreateTimer(1, function()
+       GameRules:SetTimeOfDay(0.5)
 
-   --load item table
-   self.ItemInfoKV = LoadKeyValues( "scripts/npc/item_info.txt" )
-   
-   -- Load unit table
-   GameMode.unit_infos = LoadKeyValues("scripts/npc/npc_units_custom.txt")
-   -- Add hero kv's to unit table
-   for k, v in pairs(LoadKeyValues("scripts/npc/npc_heroes_custom.txt")) do
-     GameMode.unit_infos[k] = v
-   end
-end
+       -- Make 1 hour == 1 minute
+       local cvar_name = "dota_time_of_day_rate"
+       local cvar_value = 0.0006933333333 -- This is 1/3 the normal rate
+       local current = cvar_getf(cvar_name)
+       if SHOW_DEBUG_LOGS then
+           print("Trying to slow time time | cvarname=" .. cvar_name .. "  |  " .. current .. " -> " .. cvar_value)
+       end
+       cvar_setf(cvar_name, cvar_value)
+       if SHOW_DEBUG_LOGS then
+           print("Successfully slowed down time")
+       end
+   end)
 
--- This is an example console command
-function GameMode:ExampleConsoleCommand()
-  print( '******* Example Console Command ***************' )
-  local cmdPlayer = Convars:GetCommandClient()
-  if cmdPlayer then
-    local playerID = cmdPlayer:GetPlayerID()
-    if playerID ~= nil and playerID ~= -1 then
-      -- Do something here for the player who called this command
-      PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
-    end
-  end
-
-  print( '*********************************************' )
-end
-
---[[
-These are the valid orders, in case you want to use them (easier here than to find them in the C code):
-
-DOTA_UNIT_ORDER_NONE
-DOTA_UNIT_ORDER_MOVE_TO_POSITION
-DOTA_UNIT_ORDER_MOVE_TO_TARGET
-DOTA_UNIT_ORDER_ATTACK_MOVE
-DOTA_UNIT_ORDER_ATTACK_TARGET
-DOTA_UNIT_ORDER_CAST_POSITION
-DOTA_UNIT_ORDER_CAST_TARGET
-DOTA_UNIT_ORDER_CAST_TARGET_TREE
-DOTA_UNIT_ORDER_CAST_NO_TARGET
-DOTA_UNIT_ORDER_CAST_TOGGLE
-DOTA_UNIT_ORDER_HOLD_POSITION
-DOTA_UNIT_ORDER_TRAIN_ABILITY
-DOTA_UNIT_ORDER_DROP_ITEM
-DOTA_UNIT_ORDER_GIVE_ITEM
-DOTA_UNIT_ORDER_PICKUP_ITEM
-DOTA_UNIT_ORDER_PICKUP_RUNE
-DOTA_UNIT_ORDER_PURCHASE_ITEM
-DOTA_UNIT_ORDER_SELL_ITEM
-DOTA_UNIT_ORDER_DISASSEMBLE_ITEM
-DOTA_UNIT_ORDER_MOVE_ITEM
-DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO
-DOTA_UNIT_ORDER_STOP
-DOTA_UNIT_ORDER_TAUNT
-DOTA_UNIT_ORDER_BUYBACK
-DOTA_UNIT_ORDER_GLYPH
-DOTA_UNIT_ORDER_EJECT_ITEM_FROM_STASH
-DOTA_UNIT_ORDER_CAST_RUNE
-]]
-
--- This function will rebuild the marine
--- The event must pass the following:
--- playerId - a handle for the player
--- class  - the class the player select
--- weapon - the weapon the player selected
--- armor  - the armor type the player selected
--- trait  - the trait the player selected
--- spec   - the specialty the player selected
-function GameMode:BuildMarine( event )
-
-   -- Get the player entity from the playerid
-   local entIndex = event.playerId+1
-   local ply = EntIndexToHScript(entIndex)
-
-   -- Create the default hero
-   --local hero = CreateHeroForPlayer("npc_dota_hero_sniper", ply)
-
-   --Get hero instead TODO
-   hero = ply:GetAssignedHero()
-   hero:SetUnitName("npc_swat_hero_tactician")
-
-   --Clean the hero up first
-   RemoveAllSkills(hero)
-
-
-
-   -- set attributes - Why no SetBaseStrengthGain volvo?
-   hero:SetBaseStrength(Global_Consts.classes[event.class].strength)
-   hero.AttributeStrengthGain = Global_Consts.classes[event.class].strengthPerLevel
-   hero:SetBaseAgility(Global_Consts.classes[event.class].agility)
-   hero.AttributeAgilityGain = Global_Consts.classes[event.class].agilityPerLevel
-   hero:SetBaseIntellect(Global_Consts.classes[event.class].intellect)
-   hero.AttributeIntellectGain = Global_Consts.classes[event.class].intellectPerLevel
-   hero:SetBaseManaRegen(6)
-   hero:SetBaseHealthRegen(0)
-
-   -- -- Set weapon stats -Why no SetAttackRange???
-   hero:SetBaseAttackTime(Global_Consts.weapons[event.weapon].bat)
-   hero:SetBaseDamageMin(Global_Consts.weapons[event.weapon].damageMin)
-   hero:SetBaseDamageMax(Global_Consts.weapons[event.weapon].damageMax)
-   hero:SetAcquisitionRange(Global_Consts.weapons[event.weapon].range) -- can't actually set range?  Doing this with weapon skills
-   hero:AddAbility(Global_Consts.weapons[event.weapon].weaponSkill)
-   hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill):SetLevel(1)
-   --hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 16
-   print(hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill):GetMaxLevel())
-
-   print(event.weapon)
-
-   if ((event.weapon == "flamethrowerI") or (event.weapon == "flamethrowerII")) then
-      hero:SetRangedProjectileName("particles/units/heroes/hero_lina/lina_base_attack.vpcf")
-      if (event.class == "maverick") then
-         hero:FindAbilityByName(Global_Consts.weapons[event.weapon].weaponSkill).MaxLevel = 19
-         hero.AttackType = flame
-      end
-   elseif ((event.weapon == "rocketI") or (event.weapon == "rocketII")) then
-      hero:SetRangedProjectileName("particles/units/heroes/hero_techies/techies_base_attack.vpcf")
-      hero.AttackType = "rockets"
-      print(hero:GetProjectileSpeed())
-      print(hero.ProjectileSpeed)
-      hero.ProjectileSpeed=200
-      for k,v in pairs(hero) do
-         print(k, v)
-      end
-      print(hero:GetProjectileSpeed())
-   else
-      hero.AttackType = "bullets"
-   end
-
-   --set armor stats
-   hero.sdata.armor_index = Global_Consts.armors[event.armor].index
-   hero:SetBaseMoveSpeed(Global_Consts.armors[event.armor].moveSpeed)
-   print(hero:GetBaseMoveSpeed())
-   hero:SetPhysicalArmorBaseValue(Global_Consts.armors[event.armor].armor)
-   hero:SetBaseMagicalResistanceValue(0)
-
-   -- else if cyborg, get rank and increase movespeed
-
-   -- set abilities
-   for i, abil in ipairs(Global_Consts.classes[event.class].abilities) do
-		hero:AddAbility(abil)
-		local ability = hero:FindAbilityByName(abil)
-		if ability then
-			if hasbit(ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE) then
-				ability:SetLevel(1)
-			end
-			if string.find(abil, "_off") then
-				hero:SwapAbilities(abil,abil,false,false)
-			end
-		end
-   end
-
-   hero:AddAbility(Global_Consts.armors[event.armor].nanitesSkill)
-   -- This will change based on rank and trait
-   hero:FindAbilityByName(Global_Consts.armors[event.armor].nanitesSkill):SetLevel(1)
-
-   -- Add the appropriate sprint
-   if (event.class ~= "cyborg") then
-      hero:AddAbility("sprint_datadriven")
-      hero:FindAbilityByName("sprint_datadriven"):SetLevel(Global_Consts.armors[event.armor].sprintSkill)
-   end
-
-   hero:SetAbilityPoints(1) -- This will change based on rank
-
-   GameMode:ModifyStatBonuses(hero)
-
-   -- Add player to the global player list (TODO: May not be best way to store all heroes??)
-   table.insert(Global_Player_Heroes, hero)
-
-   -- set trait TODO
-   -- set maverick mutate TODO
-   -- set spec TODO
-   -- set maverick dog TODO
-   -- set modifiers TODO
-
-end
-
--- pass this a hero entity to remove all of that hero's skills
-function RemoveAllSkills(hero)
-  -- loop through hero's skills, fetch them, and remove them subtract one to 0 index
-   for index = 0, hero:GetAbilityCount()-1 do
-      -- Check if we get an ability, because GetAbilityCount likes to
-      -- return 16 (max abilities a hero can have?) regardless
-      if hero:GetAbilityByIndex(index) then
-         hero:RemoveAbility(hero:GetAbilityByIndex(index):GetAbilityName())
-      end
-   end
-end
-
---PlayerFirstSpawnUber is called every time a new hero is created at the start of the game
-function GameMode:onPlayerClassComplete(event)
-
-   --Set the correct indexed player ID.  The +1 is needed since the ID is being passed from javascript.  Requires a re-index
-   local plyid = event.playerId+1
-   Global_Uber[plyid] = {}
-   Global_Uber[plyid][1] = 1
-   Global_Uber[plyid][2] = 0
-   Global_Max_Player_Count = Global_Max_Player_Count + 1
-   local playerIndex = event.playerId+1
-
-   g_EnemyUpgrades:onPlayerLevelUp(playerIndex, 1) -- Alert for uber calculations
+   -- Register chat commands
+   SetUpDebugGameChatCommands()
 end
