@@ -75,7 +75,7 @@ function EnemySpawner:new(o)
 
     self.abomSpawner = AbominationSpawner:new() -- There are situations where we just need to spawn an abom
     self.tyrantSpawner = TyrantSpawner:new() -- There are situations where we just need to spawn an abom
-    local horroSpawner = HorrorSpawner:new()
+    local horrorSpawner = HorrorSpawner:new()
 
     -- Create the bosses list [Order is Important! Abom last!!] (for all difficulties except Normal)
     self.bosses = {}
@@ -84,7 +84,7 @@ function EnemySpawner:new(o)
 
     -- Normal can only get a few bosses [Order is Important! Abom last!!]
     self.normalDiffBosses = {}
-    table.insert(self.normalDiffBosses, horroSpawner)
+    table.insert(self.normalDiffBosses, horrorSpawner)
     table.insert(self.normalDiffBosses, self.abomSpawner)
 
     self.survivalDoubleBoss = false -- true if the last boss spawn was a double boss
@@ -125,21 +125,28 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
-    -- Spawn some initial zombies
+    -- Spawn some initial zombies (we had to wait for difficulty so we can get the room layouts)
     self:spawnInitialZombies()
+end
 
+-- Called when the first player loads in and pregame has started
+function EnemySpawner:onPreGameStarted()
+    -- Spawn some zombies in the graveyard
+    self:spawnZombiesInGraveyard()
+end
+
+-- Called when the horn blows and the game begins
+function EnemySpawner:onGameStarted()
     -- Start wave spawning in 30 seconds
     Timers:CreateTimer(EnemySpawner.WAVE_SPAWN_DELAY, function()
 		self:startWaveSpawning()
     end)
 end
 
+
 function EnemySpawner:canSpawnMinion()
     return self.minionCount < EnemySpawner.MAX_MINIONS
 end
-
-
-
 
 
 --------------------------
@@ -184,7 +191,7 @@ function EnemySpawner:spawnWave()
         g_EnemyUpgrades.mobSpeed = 0 -- Reset the buffs we gave to the previous wave while we waited
 
         -- Each wave group will spawn with about 5-15 seconds delays until we run out of groups
-        local numberOfWaveGroups = 51 + g_GameManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+        local numberOfWaveGroups = 51 + g_PlayerManager.playerCount + ( 3 * g_GameManager.nightmareValue * g_GameManager.nightmareValue)
 
         -- We need to wait a bit before actually starting the wave (give the players a breather)
         local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
@@ -198,9 +205,9 @@ function EnemySpawner:spawnWave()
             -- There is a random chance we don't do anything
             local i = 0
             if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then
-                i = 18 - (g_GameManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
+                i = 18 - (g_PlayerManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
             else
-                i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_GameManager.playerCount / 4))
+                i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_PlayerManager.playerCount / 4))
             end
 
             if RandomInt(1 + g_GameManager.survivalValue, 100) > i then
@@ -331,7 +338,7 @@ function EnemySpawner:spawnQueueGroups()
                     -- Too many minions for the queue
                     -- Collect up the current zombies (which minorly buffs them) and wait to try again
                     g_EnemyCommander:collectEmUp()
-                    return 48 - (2 * g_GameManager.playerCount)
+                    return 48 - (2 * g_PlayerManager.playerCount)
                 else
                     -- Spawn a full wave group regardless of how many are in the minion queue
                     local location = GetRandomWarehouse()
@@ -396,6 +403,21 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
             print("EnemySpawner | WARNING - ATTEMPT TO SPAWN INVALID ENEMY CODE: " .. enemy)
         end
 
+        -- Apply an experience value to the unit, if one was not already set in the spawner
+        -- This value will be retrieved from the npc_units_custom file under the key SwatXP
+        if not unit.experience then
+            local unit_info = GameMode.unit_infos[unit:GetUnitName()]
+            if unit_info then
+                local experience = unit_info["SwatXP"]
+                if experience then
+                    unit.experience = experience
+                end
+            end
+        end
+
+        -- Apply enemy upgrades
+        g_EnemyUpgrades:upgradeMob(unit)
+
         -- Let's hurt the unit a bit
         unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
         -- Set its speed
@@ -412,6 +434,11 @@ function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
     if not killedUnit:IsAncient() then
         g_EnemySpawner.minionsKilled = g_EnemySpawner.minionsKilled + 1
         g_EnemySpawner.minionCount = math.max(0, g_EnemySpawner.minionCount - 1)
+
+        -- Award experience if this unit has it
+        if killedUnit.experience ~= nil and killedUnit.experience > 0 then
+            g_ExperienceManager:awardExperience(killedUnit.experience)
+        end
 
         -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
         -- of the unit. Here the EnemySpawner will call that function
@@ -570,8 +597,6 @@ end
 
 -- Function called at the start of the game to populate the starting map
 function EnemySpawner:spawnInitialZombies()
-    self:spawnZombiesInGraveyard()
-
     -- Spawn zombies in rooms!
     -- We always have a chance to spawn zombies in the non-power plant special rooms
     local specialBuildingsThatGetZombies = {
@@ -618,5 +643,26 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
             ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
         end
     end)
+end
+
+function EnemySpawner:getAllMobs()
+	local retval = {}
+    local enemyUnits = FindUnitsInRadius(DOTA_TEAM_BADGUYS,
+                                            Vector(0, 0, 0),
+                                            nil,
+                                            FIND_UNITS_EVERYWHERE,
+                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                            DOTA_UNIT_TARGET_ALL,
+                                            DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+                                            FIND_ANY_ORDER,
+                                            false)
+	for _,unit in pairs(enemyUnits) do
+        -- Units that are Ancients on the DOTA_TEAM_BADGUYS should not be controlled or counted (like rad frags)
+        if not unit:IsAncient() then
+            table.insert(retval, unit)
+        end
+    end
+
+	return retval
 end
 

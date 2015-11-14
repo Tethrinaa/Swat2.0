@@ -1,9 +1,6 @@
 .AbilityOverlayRoot
 {
-	horizontal-align: center;
-	vertical-align: bottom;
-	margin-left: 331px;
-	margin-bottom: 6px;
+	position: 46.7% 88.6% 0px;
 	flow-children: down;
 }
 
@@ -11,8 +8,6 @@
 {
     width: 453px;
 	height: 117px;
-	/*background-size: 100%;
-	background-image: url("file://{images}/action_bar_background.png");*/
 	background-color: #000000;
 }
  
@@ -40,8 +35,6 @@
 #primary_ability_list
 {
 	flow-children: right;
-	/*border: 2px solid black;*/
-	/*background-color: #272823;*/
 }
 #nanite_list
 {
@@ -53,16 +46,12 @@
 #secondary_ability_list
 {
 	flow-children: right;
-	/*border: 2px solid black;*/
-	/*background-color: #6D7062;*/
 }
 
 .AbilityPanel
 {
 	margin-left: 7px;
 	margin-right: 7px;
-	/*margin-top: 2px;
-	margin-bottom: 2px;*/
 }
 
 .AbilityPanel.no_ability
@@ -164,27 +153,4 @@
 	border: 2px solid #734918;
 }
 
-#TestBackground
-{
-	margin-bottom:-100px;
-	width: 200px;
-	height: 117px;
-	background-size: 100%;
-	background-color: #FFFFFF;
-	background-image: url("file://{images}/objectives_background.png");
-	z-index: 5;
-	opacity: 1;
-}
-
-#TestBackground:hover
-{
-	margin-bottom:-100px;
-	width: 200px;
-	height: 117px;
-	background-size: 100%;
-	background-color: #000000;
-	background-image: url("file://{images}/class_icons/cyborg.png");
-	z-index: 200;
-	opacity: 1;
-}
 

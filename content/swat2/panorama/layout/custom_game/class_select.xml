@@ -21,18 +21,18 @@
          <Button id="MedicButton" onactivate="Selected('medic', 'ClassesPanel')">
             <Label text="Field Medic" size = "12"/>
          </Button>
-         <Button id="MaverickButton" onactivate="Selected('maverick', 'ClassesPanel')">
+         <!-- <Button id="MaverickButton" onactivate="Selected('maverick', 'ClassesPanel')">
             <Label text="Maverick" />
-         </Button>
-         <Button id="HeavyOrdnanceButton" onactivate="Selected('ho', 'ClassesPanel')">
+         </Button> -->
+         <!-- <Button id="HeavyOrdnanceButton" onactivate="Selected('ho', 'ClassesPanel')">
             <Label text="Heavy Ordnance" />
-         </Button>
-         <Button id="PsychologistButton" onactivate="Selected('psychologist', 'ClassesPanel')">
+         </Button> -->
+         <!-- <Button id="PsychologistButton" onactivate="Selected('psychologist', 'ClassesPanel')">
             <Label text="Psychologist" />
-         </Button>
-         <Button id="TacticianButton" onactivate="Selected('tactician', 'ClassesPanel')">
+         </Button> -->
+         <!-- <Button id="TacticianButton" onactivate="Selected('tactician', 'ClassesPanel')">
             <Label text="Tactician" />
-         </Button>
+         </Button> -->
       </Panel>
       <Panel class ="WeaponsPanel" id="WeaponsPanel">
          <Button id="AssaultRifleButton" onactivate="Selected('assault_rifle', 'WeaponsPanel')">

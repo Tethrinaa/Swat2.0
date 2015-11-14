@@ -1,12 +1,6 @@
 .SquadStatusRoot
 {
-	/*horizontal-align: top;
-	vertical-align: right;*/
-	margin-top: 100px;
-	margin-left: 30px;
-	/*width: 600px;
-	height: 600px;
-	background-color: #FFFFFF; */
+	position: 1.56% 8% 0px;
 }
 
 .SquadStatusRoot Label
@@ -43,7 +37,7 @@
 
 #squad_list
 {
-	/*flow-children: down;*/
+	
 }
 
 

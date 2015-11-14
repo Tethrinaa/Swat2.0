@@ -4,6 +4,7 @@ require('libraries/timers')
 require('internal/util')
 require('gamemode')
 require('corpses')
+require('util/SWATUtil')
 require('stats')
 
 if GameMode == nil then
