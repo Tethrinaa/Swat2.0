@@ -98,6 +98,8 @@ function EnemyUpgrades:onDifficultySet(difficulty)
         -- Unknown? Error! (Shouldn't happen)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
+
+    self:startIncreaseMoveSpeedLoop()
 end
 
 -- Called when the horn blows and the game begins
@@ -113,13 +115,16 @@ end
 -- @param zombieBonus(float) | Adds this to the returned value (has a max)
 -- Returns back the value to set for the movespeed
 function EnemyUpgrades:calculateMovespeed(mob, zombieBonus)
-    local moveSpeed = mob:GetBaseMoveSpeed()
+    local moveSpeed = GameMode.unit_infos[mob:GetUnitName()]["MovementSpeed"] or 0
+    if moveSpeed == 0 then
+        print("ERROR! | No Movementspeed value found for mob=" .. mob:GetUnitName())
+    end
 
-    local maxMobSpeedBonus = self.mobSpeedBase * 1.1
+    local maxMobSpeedBonus = moveSpeed * 1.1
     if(moveSpeed + self.mobSpeedBase < maxMobSpeedBonus) then
         moveSpeed = moveSpeed + self.mobSpeedBase
     else
-        moveSpeed = maxMobSpeedBonus
+        moveSpeed = moveSpeed + maxMobSpeedBonus
     end
 
     if zombieBonus < EnemyUpgrades.MAX_ZOMBIE_BONUS then
@@ -127,6 +132,8 @@ function EnemyUpgrades:calculateMovespeed(mob, zombieBonus)
     else
         moveSpeed = moveSpeed + self.mobSpeed + EnemyUpgrades.MAX_ZOMBIE_BONUS
     end
+
+    --print("DEBUG | CalculateMoveSpeed | " .. mob:GetUnitName() .. "  [base=" .. mob:GetBaseMoveSpeed() .. " set=" .. moveSpeed .. " , mobSpeedBase=" .. self.mobSpeedBase .. " , mobSpeed=" .. self.mobSpeed .. " , zombieBonus=" .. zombieBonus .. "]")
 
     return moveSpeed
 end
@@ -139,6 +146,34 @@ function EnemyUpgrades:calculateZombieBonus(mob)
 	else
 		return 0.0
 	end
+end
+
+-- Every 30 seconds, move speed is increased (or decreased) based on the minion queue
+function EnemyUpgrades:startIncreaseMoveSpeedLoop()
+    Timers:CreateTimer(30, function()
+
+        local bonusPenalty = 0.0
+        if g_GameManager.isSurvival then
+            bonusPenalty = 2.0
+            self.mobSpeedBase = (-14.28 * (g_GameManager.difficultyBase + 0.75)) + g_GameManager.difficultyTime + (g_PlayerManager.playerCount * ( 2.5 - g_GameManager.difficultyBase ))
+        else
+            self.mobSpeedBase = (-14.28 * (g_GameManager.difficultyBase + 0.75)) + (g_GameManager.difficultyTime / (18.0 - (g_PlayerManager.playerCount / 3.0))) + (g_PlayerManager.playerCount * ( 2.5 - g_GameManager.difficultyBase ))
+        end
+
+        if g_EnemySpawner.minionQueue > 29 then
+            self.mobSpeed = self.mobSpeed + 1.9 + bonusPenalty
+        elseif g_EnemySpawner.minionQueue > 0 then
+            self.mobSpeed = self.mobSpeed + 1.0 + bonusPenalty
+        else
+            self.mobSpeed = math.max(0, self.mobSpeed - 1.0 - bonusPenalty)
+        end
+
+        if SHOW_ENEMY_UPGRADES_LOGS then
+            print("EnemyUpgrades | Increasing movespeed. [mobSpeedBase=" .. self.mobSpeedBase .. " , moveSpeed=" .. self.moveSpeed .. "]")
+        end
+
+        return 30
+    end)
 end
 
 function EnemyUpgrades:upgradeMobs()
