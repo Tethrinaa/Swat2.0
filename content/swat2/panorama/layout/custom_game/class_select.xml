@@ -7,207 +7,67 @@
 		<include src="file://{resources}/scripts/custom_game/class_select.js" />
 	</scripts>
 	<Panel class="SelectClassRoot">
-	<!--Class Selection-->
       <Panel class ="ClassesPanel" id="ClassesPanel">
-		<Label text="Class Selection" />
          <Button id="SniperButton" onactivate="Selected('sniper', 'ClassesPanel')">
-			<Image src="file://{images}/sniper.png" />
-			<Label text="        Covert Sniper" />
+            <!--ge src="file://{images}/sniper.png" /-->
+			<Label text="Covert Sniper" />
          </Button>
          <Button id="CyborgButton" onactivate="Selected('cyborg', 'ClassesPanel')">
-			<Image src="file://{images}/borg.png" />
-            <Label text="         Cyborg" />
+            <Label text="Cyborg" />
          </Button>
          <Button id="DemoButton" onactivate="Selected('demo', 'ClassesPanel')">
-            <Image src="file://{images}/demo.png" />
-			<Label text="         Demolitions" />
+            <Label text="Demolitions" />
          </Button>
          <Button id="MedicButton" onactivate="Selected('medic', 'ClassesPanel')">
-            <Image src="file://{images}/medic.png" />
-			<Label text="         Field Medic" />
+            <Label text="Field Medic" size = "12"/>
          </Button>
-         <Button id="MaverickButton" onactivate="Selected('maverick', 'ClassesPanel')">
-            <Image src="file://{images}/mav.png" />
-			<Label text="         Maverick" />
-         </Button>
-         <Button id="HeavyOrdnanceButton" onactivate="Selected('ho', 'ClassesPanel')">
-            <Image src="file://{images}/heavy.png" />
-			<Label text="         Heavy Ordnance" />
-         </Button>
-         <Button id="PsychologistButton" onactivate="Selected('psychologist', 'ClassesPanel')">
-            <Image src="file://{images}/psy.png" />
-			<Label text="         Psychologist" />
-         </Button>
-         <Button id="TacticianButton" onactivate="Selected('tactician', 'ClassesPanel')">
-           <Image src="file://{images}/tact.png" />
-		   <Label text="         Tactician" />
-         </Button>
+         <!-- <Button id="MaverickButton" onactivate="Selected('maverick', 'ClassesPanel')">
+            <Label text="Maverick" />
+         </Button> -->
+         <!-- <Button id="HeavyOrdnanceButton" onactivate="Selected('ho', 'ClassesPanel')">
+            <Label text="Heavy Ordnance" />
+         </Button> -->
+         <!-- <Button id="PsychologistButton" onactivate="Selected('psychologist', 'ClassesPanel')">
+            <Label text="Psychologist" />
+         </Button> -->
+         <!-- <Button id="TacticianButton" onactivate="Selected('tactician', 'ClassesPanel')">
+            <Label text="Tactician" />
+         </Button> -->
       </Panel>
-	  	<!--Weapon Selection-->
       <Panel class ="WeaponsPanel" id="WeaponsPanel">
-		<Label text="Weapon Selection" />
          <Button id="AssaultRifleButton" onactivate="Selected('assault_rifle', 'WeaponsPanel')">
-            <Image src="file://{images}/assault.png" />
-			<Label text="         Assault Rifle" />
+            <Label text="Assault Rifle" />
          </Button>
          <Button id="ChaingunButton" onactivate="Selected('chaingun', 'WeaponsPanel')">
-            <Image src="file://{images}/chain.png" />
-			<Label text="         Chaingun" />
+            <Label text="Chaingun" />
          </Button>
          <Button id="VindicatorButton" onactivate="Selected('vindicator', 'WeaponsPanel')">
-            <Image src="file://{images}/vin.png" />
-			<Label text="         Vindicator" />
+            <Label text="Vindicator" />
          </Button>
          <Button id="FlamethrowerButton" onactivate="Selected('flamethrower', 'WeaponsPanel')">
-            <Image src="file://{images}/flame.png" />
-			<Label text="         Flamethrower" />
+            <Label text="Flamethrower" />
          </Button>
          <Button id="RocketButton" onactivate="Selected('rocket', 'WeaponsPanel')">
-            <Image src="file://{images}/rocket.png" />
-			<Label text="         Rocket Launcher" />
+            <Label text="Rocket Launcher" />
          </Button>
          <Button id="SniperRifleButton" onactivate="Selected('sniper_rifle', 'WeaponsPanel')">
-            <Image src="file://{images}/rifle.png" />
-			<Label text="         Sniper Rifle" />
+            <Label text="Sniper Rifle" />
          </Button>
       </Panel>
-	  	<!--Armor Selection-->
       <Panel class ="ArmorPanel" id="ArmorPanel">
-		<Label text="Armor Selection" />
          <Button id="LightArmorButton" onactivate="Selected('light', 'ArmorPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Light Armor" />
+            <Label text="Light Armor" />
          </Button>
          <Button id="MediumArmorButton" onactivate="Selected('medium', 'ArmorPanel')">
-            <Image src="file://{images}/medium.png" />
-			<Label text="         Medium Armor" />
+            <Label text="Medium Armor" />
          </Button>
          <Button id="HeavyArmorButton" onactivate="Selected('heavy', 'ArmorPanel')">
-            <Image src="file://{images}/heavyarm.png" />
-			<Label text="         Heavy Armor" />
+            <Label text="Heavy Armor" />
          </Button>
          <Button id="AdvancedArmorButton" onactivate="Selected('advanced', 'ArmorPanel')">
-            <Image src="file://{images}/adv.png" />
-			<Label text="         Advanced Armor" />
+            <Label text="Advanced Armor" />
          </Button>
       </Panel>
-	  	<!--Trait Selection first panel-->
-		 <Panel class ="TraitPanel" id="TraitPanel">
-		 <Label text="                Traits" />
-         <Button id="SkilledButton" onactivate="Selected('skilled', 'TraitPanel')">
-            <Image src="file://{images}/skill.png" />
-			<Label text="         Skilled" />
-         </Button>
-         <Button id="SurvivalistButton" onactivate="Selected('survivalist', 'TraitPanel')">
-            <Image src="file://{images}/surv.png" />
-			<Label text="         Surivalist" />
-         </Button>
-         <Button id="AcrobatButton" onactivate="Selected('acrobat', 'TraitPanel')">
-            <Image src="file://{images}/acro.png" />
-			<Label text="         Acrobat" />
-         </Button>
-         <Button id="HealerButton" onactivate="Selected('healer', 'TraitPanel')">
-            <Image src="file://{images}/heal.png" />
-			<Label text="         Healer" />
-         </Button>
-         <Button id="ChemreliantButton" onactivate="Selected('chem', 'TraitPanel')">
-            <Image src="file://{images}/chem.png" />
-			<Label text="         Chem. Reliant" />
-         </Button>
-         <Button id="GadgeteerButton" onactivate="Selected('gadgeteer', 'TraitPanel')">
-            <Image src="file://{images}/gad.png" />
-			<Label text="         Gadgeteer" />
-         </Button>
-         <Button id="EnergizerButton" onactivate="Selected('energizer', 'TraitPanel')">
-            <Image src="file://{images}/ener.png" />
-			<Label text="         Energizer" />
-         </Button>
-         <Button id="EngineerButton" onactivate="Selected('engineer', 'TraitPanel')">
-            <Image src="file://{images}/eng.png" />
-			<Label text="         Engineer" />
-         </Button>
-	  </Panel>
-		 <!--Trait Selection second panel-->
-	  <Panel class ="TraitPanel2" id="TraitPanel2">
-	  <Label text="                Traits" />
-         <Button id="GiftedButton" onactivate="Selected('gifted', 'TraitPanel2')">
-            <Image src="file://{images}/gift.png" />
-			<Label text="         Gifted" />
-         </Button>
-         <Button id="DragoonButton" onactivate="Selected('dragoon', 'TraitPanel2')">
-            <Image src="file://{images}/drag.png" />
-			<Label text="         Dragoon" />
-         </Button>
-         <Button id="SwiftlearnerButton" onactivate="Selected('swift', 'TraitPanel2')">
-             <Image src="file://{images}/swift.png" />
-			<Label text="         Swift Learner" />
-         </Button>
-         <Button id="FlowerchildButton" onactivate="Selected('flower', 'TraitPanel2')">
-            <Image src="file://{images}/flower.png" />
-			<Label text="         Flower Child" />
-         </Button>
-         <Button id="RadresistantButton" onactivate="Selected('radresist', 'TraitPanel2')">
-            <Image src="file://{images}/rad.png" />
-			<Label text="         Rad. Resistant" />
-         </Button>
-         <Button id="ProwlerButton" onactivate="Selected('prowler', 'TraitPanel2')">
-            <Image src="file://{images}/prowl.png" />
-			<Label text="         Prowler" />
-         </Button>
-         <Button id="PackratButton" onactivate="Selected('packrat', 'TraitPanel2')">
-            <Image src="file://{images}/pack.png" />
-			<Label text="         Packrat" />
-         </Button>
-         <Button id="RecklessButton" onactivate="Selected('reckless', 'TraitPanel2')">
-            <Image src="file://{images}/reck.png" />
-			<Label text="         Reckless" />
-         </Button>
-      </Panel>
-	  <!--Specialization Selection-->
-		 <Panel class ="SpecPanel" id="SpecPanel">
-		 <Label text="       Specialization" />
-         <Button id="WeaponryButton" onactivate="Selected('weaponry', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Weaponry" />
-         </Button>
-         <Button id="EnergyCellsButton" onactivate="Selected('energycells', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Energy Cells" />
-         </Button>
-		 <Button id="TriageButton" onactivate="Selected('triage', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Triage" />
-         </Button>
-		 <Button id="LeadershipButton" onactivate="Selected('leadership', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Leadership" />
-         </Button>
-		 <Button id="PowerArmorButton" onactivate="Selected('powerarmor', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Power Armor" />
-         </Button>
-		 <Button id="CyberneticsButton" onactivate="Selected('cybernetics', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Cybernetics" />
-         </Button>
-		 <Button id="ChemistryButton" onactivate="Selected('chemistry', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Chemistry" />
-         </Button>
-		 <Button id="RoboticsButton" onactivate="Selected('robotics', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Robotics" />
-         </Button>
-		 <Button id="EspionageButton" onactivate="Selected('espionage', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Espionage" />
-         </Button>
-		 <Button id="Espionage2Button" onactivate="Selected('espionage2', 'SpecPanel')">
-            <Image src="file://{images}/light.png" />
-			<Label text="         Espionage" />
-         </Button>
-      </Panel>
-	  	<!--Confirm/Reset Selection-->
       <Panel class="ConfirmResetPanel" id="ConfirmResetPanel">
          <Button id="ConfirmButton" onactivate="Selected('confirm', 'ConfirmResetPanel')">
             <Label text="Confirm Selections" />
@@ -217,5 +77,5 @@
          </Button>
       </Panel>
 	</Panel>
-	<!--Tooltips for all buttons-->
 </root>
+
