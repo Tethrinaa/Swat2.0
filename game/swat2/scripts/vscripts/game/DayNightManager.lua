@@ -32,7 +32,8 @@ function DayNightManager:new(o)
     self.__index = self
 
 
-    self.dayCount = 1
+    self.currentHour = 12 -- This is the "hour" of the day in SWAT time
+    self.currentDay = 1
     self.isNight = false
 
 
@@ -57,35 +58,13 @@ function DayNightManager:startDayNightCycle()
     -- Starts at 12:00 (SWAT Time). So the first wait is shorter (5 minutes in swat time to reach 17:00)
     -- Because days are shorter, 12:00 SWAT Time is around 11:20
     -- It should take (18:00 - 11:20 = 6 hours 40 mintues) * (45 seconds per hour) == 5 minutes
-    Timers:CreateTimer(5 * 60, function()
-        if self.isNight then
-            -- Going from Night -> Day
-            if SHOW_DAY_NIGHT_LOGS then
-                print("DayNight | Switching from Night to Day!")
-            end
-
-            self:setTimeOfDayRate(DayNightManager.DAY_TIME_SPEED)
-            self.isNight = false
-            self.dayCount = self.dayCount + 1
-
-            self:onDayBegins()
-
-            -- Day takes 9 minutes to finish
-            return 9 * 60
-        else
-            -- Going from Day -> Night
-            if SHOW_DAY_NIGHT_LOGS then
-                print("DayNight | Switching from Day to Night!")
-            end
-
-            self:setTimeOfDayRate(DayNightManager.NIGHT_TIME_SPEED)
-            self.isNight = true
-
-            self:onNightBegins()
-
-            -- Night takes 15 minutes to finish
-            return 15 * 60
+    Timers:CreateTimer(60, function()
+        self.currentHour = self.currentHour + 1
+        if self.currentHour > 23 then
+            self.currentHour = 0
         end
+        self:onHour(self.currentHour)
+        return 60
     end)
 end
 
@@ -97,10 +76,72 @@ function DayNightManager:setTimeOfDayRate(rate)
     cvar_setf(DayNightManager.CVAR_NAME, rate)
 end
 
+-- Called every "hour" in game
+function DayNightManager:onHour(hour)
+    if hour == 0 then
+        -- Midnight
+        self.currentDay = self.currentDay + 1
+        if SHOW_DAY_NIGHT_LOGS then
+            print("DayNight | Midnight | New Day = " .. self.currentDay)
+        end
+        -- TODO Alert players that a new day has begun
+
+        self:onMidnight()
+    elseif hour == 8 then
+        -- Dawn
+        if SHOW_DAY_NIGHT_LOGS then
+            print("DayNight | Dawn | Switching from Night to Day!")
+        end
+        self:setTimeOfDayRate(DayNightManager.DAY_TIME_SPEED)
+        self.isNight = false
+
+        self:onDayBegins()
+    elseif hour == 12 then
+        -- Noon
+        if SHOW_DAY_NIGHT_LOGS then
+            print("DayNight | Noon")
+        end
+        self:onNoon()
+    elseif hour == 17 then
+        -- Dusk
+        if SHOW_DAY_NIGHT_LOGS then
+            print("DayNight | Dusk | Switching from Day to Night!")
+        end
+        self:setTimeOfDayRate(DayNightManager.NIGHT_TIME_SPEED)
+        self.isNight = true
+
+        self:onNightBegins()
+    end
+end
+
+-- Called when the time is 00:00 SWAT time. "Midnight" (note: this is not 00:00 in dota)
+function DayNightManager:onMidnight()
+    if self.currentDay == 2 then
+        g_EnemyUpgrades:onFirstMidnight()
+    end
+
+    if g_GameManager.nightmareOrSurvivalValue > 0 then
+        g_EnemyUpgrades:onTimeDifficultyIncreased()
+    end
+end
+
 -- Called when day starts (except for the initial day everyone starts the game in)
 function DayNightManager:onDayBegins()
+    g_EnemyUpgrades:onTimeDifficultyIncreased()
+
+    -- TODO: Hazard Pay
+end
+
+-- Called when the time is 12:00 SWAT time. "Noon" (note: this is not 12:00 in dota)
+function DayNightManager:onNoon()
+    if g_GameManager.nightmareOrSurvivalValue > 0 then
+        g_EnemyUpgrades:onTimeDifficultyIncreased()
+    end
 end
 
 -- Called when night begins (starting with the first night players experience)
 function DayNightManager:onNightBegins()
+    g_EnemyUpgrades:onTimeDifficultyIncreased()
+
+    -- TODO: Hazard Pay
 end

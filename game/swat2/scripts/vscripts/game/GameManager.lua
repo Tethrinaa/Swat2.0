@@ -57,9 +57,6 @@ function GameManager:new(o)
     -- Boolean for if we're in survival mode
     self.isSurvival = false
 
-    -- Current day (incremented every day cycle)
-    self.currentDay = 1
-
     -- Difficulty related variables
     -- difficultyBase - A constant value (except on survival), which scales the difficulty of the game over time
     --                - LOWER == MORE DIFFICULT
@@ -84,12 +81,12 @@ function GameManager:new(o)
 end
 
 function GameManager:initializeSystems()
+    g_DayNightManager = DayNightManager:new()
     g_RadiationManager = RadiationManager:new()
     g_PowerManager = PowerManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()
     g_EnemySpawner = EnemySpawner:new()
     g_EnemyCommander = EnemyCommander:new()
-    g_DayNightManager = DayNightManager:new()
 end
 
 -- Sets the game to one of the selectable options
@@ -176,7 +173,6 @@ function GameManager:onGameStarted()
         print("Game has started!")
     end
     g_EnemySpawner:onGameStarted()
-    g_EnemyUpgrades:onGameStarted()
     g_DayNightManager:onGameStarted()
 end
 

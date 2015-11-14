@@ -102,14 +102,6 @@ function EnemyUpgrades:onDifficultySet(difficulty)
     self:startIncreaseMoveSpeedLoop()
 end
 
--- Called when the horn blows and the game begins
-function EnemyUpgrades:onGameStarted()
-    -- Queue up the Midnight Difficulty Increase or survival
-    Timers:CreateTimer(12 * 60, function() -- Wait 12 minutes
-        self:onFirstMidnight()
-    end)
-end
-
 -- Calculates what the movespeed should be for the given mob
 -- @param mob(Entity) | the mob to calculate the speed for
 -- @param zombieBonus(float) | Adds this to the returned value (has a max)
@@ -315,8 +307,25 @@ function EnemyUpgrades:onPlayerLeavesGame(playerIndex)
     self:updateUber()
 end
 
+-- This function is called at Dawn/Dusk (and also Midnight/Noon on NM+
+-- It increases the base difficulty factor of the game
+function EnemyUpgrades:onTimeDifficultyIncreased()
+    -- Increase difficulty time scaling factor
+    g_GameManager.difficultyTime = g_GameManager.difficultyTime + (1.8 / g_GameManager.difficultyBase)
+
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | onTimeDifficultyIncreased! new difficultyTime=" .. g_GameManager.difficultyTime)
+    end
+
+    if g_GameManager.isSurvival then
+        g_GameManager.difficultyBase = math.max(0.8, g_GameManager.difficultyBase - 0.1)
+        self:updateUber()
+    end
+end
+
 -- 'Midnight' Difficulty
 -- The harder difficulties will permanently boost enemy upgrades at certain times
+-- This is triggered on the first midnight of the game
 function EnemyUpgrades:onFirstMidnight()
     -- Enable midnight difficulty!!
     if g_GameManager.nightmareValue > 1 then
