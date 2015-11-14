@@ -3753,9 +3753,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-			"particle"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+			"particle"	"models/heroes/techies/techies_bomb_projectile.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_base_attack_explosion.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_path.vpcf"
+			"particle"  "particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
 		}
 
 		// Special
@@ -3786,14 +3788,6 @@
 
 		"OnSpellStart"
 		{
-		
-			"FireSound"
-			{
-				"EffectName"	"Hero_VengefulSpirit.MagicMissile"
-				"Target" 		"CASTER"
-			}
-		
-		
 			"RunScript"
 			{
 				"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
@@ -3815,23 +3809,6 @@
 
 				"OnDestroy"
 				{
-				
-				"FireEffect"
-				{
-				"Target"			"TARGET"
-				"EffectName"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
-				"EffectAttachType"		"attach_hitloc"
-				"EffectRadius"			"%outer_radius"
-				}
-					
-				"FireSound"
-				{
-				"EffectName"			"Hero_Techies.Suicide"
-				"Target"				"TARGET"
-				}
-				
-				
-				
 					"RunScript"
 					{
 						"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
@@ -3889,8 +3866,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+		"particle"			Nim"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
 		}
 
 		// Casting
@@ -3931,6 +3908,24 @@
 
 		"OnSpellStart"
 		{
+		"FireSound"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"Hero_StormSpirit.ElectricVortexCast"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+				"MoveSpeed"				"1100"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"0"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
+			}
+		
+		
+		
 			"RunScript"
 			{
 				"ScriptFile" 	"heroes/hero_demo/biochem.lua"
