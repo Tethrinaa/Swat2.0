@@ -445,7 +445,7 @@ end
 
 -- Updates the radiation UI display based on radiation count
 function RadiationManager:updateRadiationDisplay()
-	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,radneeded = self.radSafeLimit, hazmats = self.hazmatContainers})
+	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,radneeded = self.radSafeLimit, hazmats = self.hazmatContainers})	
 end
 
 -- TODO
