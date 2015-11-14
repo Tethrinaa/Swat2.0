@@ -3182,14 +3182,18 @@
    	//=================================================================================================================
 	// Cybrog: Cluster Rockets
 	//=================================================================================================================
-	"primary_cyborg_cluster_rockets_lua_ability"
+	"primary_cyborg_cluster_rockets"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_lua"
-		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets_lua_ability.lua"
-		"AbilityTextureName"			"gyrocopter_flak_cannon"
-		"MaxLevel"						"16"
+		"BaseClass"              	"ability_datadriven"
+		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets.lua"
+		"AbilityTextureName"		"gyrocopter_flak_cannon"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TEAM_ALL"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_TEAM_NONE"
+		"MaxLevel"					"16"
 		"LevelsBetweenUpgrades"  	"0"
 
 		// Casting
@@ -3208,6 +3212,8 @@
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		// "AbilityDamage"				"250" calculated by script mainly
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AoERadius"						"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
 
 
 		// Precache
@@ -3231,12 +3237,17 @@
 			"03"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"tick_rate"           		"0.10"
+				"tick_rate"           		".08 .08 .08 .08 .08 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12"
+			}
+			"03" // I know this is derived information but it helps to have each natively available
+			{
+				"var_type"                	"FIELD_FLOAT"
+				"ticks"           			"5"
 			}
 			"04"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"damage_duration"           "0.51"
+				"damage_duration"           ".33 .33 .33 .33 .33 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49"
 			}
 			"05"
 			{
@@ -3250,13 +3261,56 @@
 			}
 			"07"
 			{
-				"var_type"                	"FIELD_INTEGER"
-				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+				"var_type"                	"FIELD_FLOAT"
+				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
 			}
 			"07"
 			{
 				"var_type"                	"FIELD_FLOAT"
-				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
+				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"DelayedAction"
+			{
+				"Delay"						"%delay"
+				"Action"
+				{
+					"CreateThinker"
+					{
+						"ModifierName"			"modifier_cyborg_cluster_rockets_thinker"
+						"Target"				"POINT"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_cyborg_cluster_rockets_thinker"
+			{
+				"ThinkInterval"				"%tick_rate"
+				"Duration"					"%damage_duration"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+						"Function"		"ClusterThink"
+						"Target"		"POINT"
+					}
+				}
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+						"Function"		"ClusterThink"
+						"Target"		"POINT"
+					}
+				}
 			}
 		}
 	}
@@ -3381,13 +3435,13 @@
 	//=================================================================================================================
 	// Cyborg: Forcefield
 	//=================================================================================================================
-	"cyborg_forcefield_lua_ability"
+	"cyborg_forcefield"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_lua"
-		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_lua_ability.lua"
-		"AbilityTextureName"			"abaddon_aphotic_shield"
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"abaddon_aphotic_shield"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityManaCost"		"120"
 
 		// Precache
@@ -3402,14 +3456,59 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"2"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName" 		"modifier_cyborg_forcefield"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+				"Function"		"SwapInDeactivate"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_cyborg_forcefield"
+			{
+				"ThinkInterval" 	"1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldThink"
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldCreate"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldDestroy"
+					}
+				}
+			}
+		}
 	}
 
-	"cyborg_forcefield_off_lua_ability"
+	"cyborg_forcefield_off"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_lua"
-		"ScriptFile"			"heroes/hero_cyborg/cyborg_forcefield_off_lua_ability.lua"
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"wisp_spirits"
 		"AbilityManaCost"		"0"
 
@@ -3425,6 +3524,20 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"0"
+		
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName" 		"modifier_cyborg_forcefield"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+				"Function"		"SwapOutDeactivate"
+			}
+		}
 	}
 
 	//=================================================================================================================
