@@ -64,11 +64,11 @@ end
 function InnardsSpawner:rollForInnardsSpawn(position, targetUnit)
     if self.innards > self.innardsReset then
         self.innards = self.innardsInitial
+    else
+        self.innards = self.innards + 1
     end
     if self.innards > 0 and RandomInt(1, self.innards) < self.innardsChance then
         self:spawnMinion(position, 1)
-    else
-        self.innards = self.innards + 1
     end
 end
 

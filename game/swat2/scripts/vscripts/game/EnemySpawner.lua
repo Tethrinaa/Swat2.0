@@ -641,7 +641,9 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
     end
     Timers:CreateTimer(10.0, function()
         for _,unit in pairs(units) do
-            ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
+            if not unit:IsNull() then
+                ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
+            end
         end
     end)
 end

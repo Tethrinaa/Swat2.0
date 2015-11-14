@@ -169,7 +169,7 @@ function EnemyUpgrades:startIncreaseMoveSpeedLoop()
         end
 
         if SHOW_ENEMY_UPGRADES_LOGS then
-            print("EnemyUpgrades | Increasing movespeed. [mobSpeedBase=" .. self.mobSpeedBase .. " , moveSpeed=" .. self.moveSpeed .. "]")
+            print("EnemyUpgrades | Increasing movespeed. [mobSpeedBase=" .. self.mobSpeedBase .. " , moveSpeed=" .. self.mobSpeed .. "]")
         end
 
         return 30

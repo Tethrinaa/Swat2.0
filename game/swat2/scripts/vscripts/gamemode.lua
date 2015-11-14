@@ -107,7 +107,15 @@ function GameMode:OnHeroInGame(hero)
   if not firstHeroHasJoined then
       firstHeroHasJoined = true
 
-      print("Loading Managers")
+      -- Note: Make sure locations are set up before anything else
+      if SHOW_DEBUG_LOGS then
+          print("gamemode | Initializing Global Locations")
+      end
+      initializeGlobalLocations()
+
+      if SHOW_DEBUG_LOGS then
+          print("gamemode | Loading Managers")
+      end
       -- Initialize the PlayerManager
       g_PlayerManager = PlayerManager:new()
       g_PlayerManager:onPreGameStarted()
