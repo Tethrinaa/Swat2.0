@@ -1,59 +1,37 @@
 
 .SelectClassRoot
 {
+	horizontal-align: center;
 	vertical-align: top;
 	margin-top: 150px;
 }
 .ClassesPanel
 {
-	margin-left: 650px;
+	margin-top: 100px;
+	horizontal-align: center;
+	flow-children: right;
    flow-children: down;
    visibility: visible;
 }
 .WeaponsPanel
 {
-	margin-top: 100px;
-	margin-left: 650px;
+	margin-top: 325px;
+	horizontal-align: center;
    flow-children: down;
    visibility: collapse;
 }
 .ArmorPanel
 {
-	margin-top: 100px;
-	margin-left: 650px;
+	margin-top: 175px;
+	horizontal-align: center;
 	flow-children: down;
    visibility: collapse;
 }
-.TraitPanel
-{  
-	margin-top: -34px;
-	margin-left: 455px;
-	flow-children: down;
-	visibility: collapse;
-}
-.TraitPanel2
-{  
-	margin-top: -34px;
-	margin-left: 840px;
-	flow-children: down;
-	visibility: collapse;
-}
- .SpecPanel
-{  
-	margin-top: -70px;
-	margin-left: 650px;
-	flow-children: down;
-	visibility: collapse;
-}
-.TooltipPanel
-{  
-	visibility: collapse;
-}
 .ConfirmResetPanel
 {
+	horizontal-align: center;
 	flow-children: down;
-   margin-top: 600px;
-   margin-left: 650px;
+   margin-top: 400px;
 }
 
 
@@ -62,12 +40,14 @@ Panel{
     background-color:#000000;
     padding:5px;
     visibility: visible;
+	font-size: 50;
 }
 Panel Panel{
 	border-radius: 5px;
     background-color: #293e29;
     padding:10px;
-	width: 390px;
+	width: 200px;
+		font-size: 50;
 }
 Button{
 	horizontal-align: center;
@@ -75,7 +55,5 @@ Button{
    padding: 5px;
    width: 100%;
     color:#000;
-}
-Label{
-font-size: 40;
+		font-size: 50;
 }
