@@ -10,6 +10,7 @@ require('game/Locations')
 require('game/EnemyUpgrades')
 require('game/EnemySpawner')
 require('game/EnemyCommander')
+require('game/DayNightManager')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
 require('game/DebugChatCommands')
@@ -20,6 +21,7 @@ g_PowerManager = {}
 g_EnemyUpgrades = {}
 g_EnemySpawner = {}
 g_EnemyCommander = {}
+g_DayNightManager = {}
 
 function GameManager:new(o)
     o = o or {}
@@ -87,6 +89,7 @@ function GameManager:initializeSystems()
     g_EnemyUpgrades = EnemyUpgrades:new()
     g_EnemySpawner = EnemySpawner:new()
     g_EnemyCommander = EnemyCommander:new()
+    g_DayNightManager = DayNightManager:new()
 end
 
 -- Sets the game to one of the selectable options
@@ -174,6 +177,7 @@ function GameManager:onGameStarted()
     end
     g_EnemySpawner:onGameStarted()
     g_EnemyUpgrades:onGameStarted()
+    g_DayNightManager:onGameStarted()
 end
 
 -- Called when the horn blows and the game begins
