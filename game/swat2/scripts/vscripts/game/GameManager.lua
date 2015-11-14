@@ -82,10 +82,6 @@ function GameManager:new(o)
 end
 
 function GameManager:initializeSystems()
-    -- Note: Make sure locations are set up before anything else
-    initializeGlobalLocations()
-
-
     g_RadiationManager = RadiationManager:new()
     g_PowerManager = PowerManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()

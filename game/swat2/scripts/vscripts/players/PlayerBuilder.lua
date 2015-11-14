@@ -61,8 +61,10 @@ function PlayerBuilder:new(o)
     return o
 end
 
--- Register for the player build event
-CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(PlayerBuilder, "BuildMarine"))
+function PlayerBuilder:onPreGameStarted()
+    -- Register for the player build event
+    CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(PlayerBuilder, "BuildMarine"))
+end
 
 -- This function will rebuild the marine
 -- The event must pass the following:
