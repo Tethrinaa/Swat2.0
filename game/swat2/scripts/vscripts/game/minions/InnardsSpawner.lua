@@ -65,7 +65,7 @@ function InnardsSpawner:rollForInnardsSpawn(position, targetUnit)
     if self.innards > self.innardsReset then
         self.innards = self.innardsInitial
     end
-    if RandomInt(1, self.innards) < self.innardsChance then
+    if self.innards > 0 and RandomInt(1, self.innards) < self.innardsChance then
         self:spawnMinion(position, 1)
     else
         self.innards = self.innards + 1
@@ -103,7 +103,7 @@ function InnardsSpawner:spawnMinion(position, specialType, targetUnit)
         -- Issueing an order to a unit immediately after it spawns seems to not consistently work
         -- so we'll wait a second before telling the group where to go
         Timers:CreateTimer(0.5, function()
-            g_EnemyCommander:doMobAction(zombie, targetUnit)
+            g_EnemyCommander:doMobAction(unit, targetUnit)
         end)
     end
 

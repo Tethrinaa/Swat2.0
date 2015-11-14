@@ -10,6 +10,7 @@ function SetUpDebugGameChatCommands()
         Convars:RegisterCommand( "swat_kill_all_mobs", DebugGameChatCommand_KillAllEnemies, "Chat Command | Kill all mobs", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_award_xp", DebugGameChatCommand_AwardXP, "Chat Command | Award XP", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_level_up", DebugGameChatCommand_LevelUp, "Chat Command | Level Up", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_collect_em_up", DebugGameChatCommand_CollectEmUp, "Chat Command | Collect em up", FCVAR_CHEAT )
     end
 end
 
@@ -66,4 +67,9 @@ function DebugGameChatCommand_LevelUp()
         end
       end
     end
+end
+
+function DebugGameChatCommand_CollectEmUp()
+    print("DEBUG | Calling CollectEmUp")
+    g_EnemyCommander:collectEmUp()
 end
