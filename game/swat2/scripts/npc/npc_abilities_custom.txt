@@ -3979,8 +3979,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+		"particle"			Nim"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
 		}
 
 		// Casting
@@ -4021,6 +4021,24 @@
 
 		"OnSpellStart"
 		{
+		"FireSound"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"Hero_StormSpirit.ElectricVortexCast"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+				"MoveSpeed"				"1100"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"0"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
+			}
+		
+		
+		
 			"RunScript"
 			{
 				"ScriptFile" 	"heroes/hero_demo/biochem.lua"

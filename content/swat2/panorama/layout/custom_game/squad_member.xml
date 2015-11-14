@@ -1,0 +1,54 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/squad_status.css" />
+		<include src="file://{resources}/styles/custom_game/squad_member.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/squad_member.js" />
+	</scripts>
+	<Panel class="SquadMemberPanel">
+		<Label id="Health" />
+		<Label id="Mana" />	
+		<Label id="Index" />
+		<Panel class="PlayerPortrait">
+			<Image id="ClassPortrait" />
+			<Image id="Rank" />
+		</Panel>
+		<Panel class="HealthMeter">
+			<Image id="HealthBarBackground" />
+			<Image id="HealthBar" />
+		</Panel>
+		<Panel class="ManaMeter">
+			<Image id="ManaBarBackground" />
+			<Image id="ManaBar" />
+		</Panel>
+		<Label id="PlayerName" />
+		<Image src="file://{images}/class_icons/covert_sniper.png" />
+		<Image src="file://{images}/class_icons/cyborg.png" />
+		<Image src="file://{images}/class_icons/demolitions.png" />
+		<Image src="file://{images}/class_icons/field_medic.png" />
+		<Image src="file://{images}/class_icons/heavy_ord.png" />
+		<Image src="file://{images}/class_icons/maverick.png" />
+		<Image src="file://{images}/class_icons/psychologist.png" />
+		<Image src="file://{images}/class_icons/pyrotechnician.png" />
+		<Image src="file://{images}/class_icons/tactician.png" />
+		<Image src="file://{images}/class_icons/tech_ops.png" />
+		<Image src="file://{images}/class_icons/umbrella_clone.png" />
+		<Image src="file://{images}/class_icons/watchman.png" />
+		<Image src="file://{images}/rank_icons/captain.png" />	
+		<Image src="file://{images}/rank_icons/chief.png" />
+		<Image src="file://{images}/rank_icons/commander.png" />
+		<Image src="file://{images}/rank_icons/deputy_chief.png" />
+		<Image src="file://{images}/rank_icons/detective.png" />
+		<Image src="file://{images}/rank_icons/legendary_hero.png" />
+		<Image src="file://{images}/rank_icons/lieutenant.png" />
+		<Image src="file://{images}/rank_icons/national_hero.png" />
+		<Image src="file://{images}/rank_icons/officerI.png" />
+		<Image src="file://{images}/rank_icons/officerII.png" />
+		<Image src="file://{images}/rank_icons/officerIII.png" />
+		<Image src="file://{images}/rank_icons/sergeant.png" />		
+	</Panel>
+</root>
+
+

@@ -1,0 +1,44 @@
+.SquadStatusRoot
+{
+	position: 1.56% 8% 0px;
+}
+
+.SquadStatusRoot Label
+{
+    text-transform: uppercase;
+	text-shadow: 0px 1px 3px 2.5 #000000;
+	color: white;
+	vertical-align: top;
+	horizontal-align: center;
+}
+
+.Debug
+{
+	
+}
+
+.Debug Label
+{
+    text-transform: uppercase;
+	text-shadow: 0px 1px 3px 2.5 #000000;
+	color: white;
+	vertical-align: top;
+	horizontal-align: center;
+}
+
+#TestOutput
+{
+	text-transform: uppercase;
+	text-shadow: 0px 1px 3px 2.5 #000000;
+	color: white;
+	vertical-align: top;
+	horizontal-align: center;
+}
+
+#squad_list
+{
+	
+}
+
+
+

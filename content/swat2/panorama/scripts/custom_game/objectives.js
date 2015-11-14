@@ -1,5 +1,7 @@
 "use strict";
 
+//TODO: put tooltips on all elements
+
 var COLOUR_WHITE = "#FFFFFF";
 var COLOUR_GREEN = "#4CFF00";
 var COLOUR_YELLOW = "#FFD800";

@@ -1,8 +1,7 @@
 .BaseHud
 {
-    width: 100%;
-    height: 100%;
     flow-children: right;
+	position: 57.3% 0.09% 0px;
 }
 
 .GoldCounterBox
@@ -11,8 +10,6 @@
     height: 40px;
     background-image: url("file://{images}/gold_counter.png");
     background-size: 100%;
-	margin-left: 1100px;
-	margin-top: 1px;
 }
 
 .GoldCounterBox Label

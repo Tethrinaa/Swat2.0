@@ -7,12 +7,17 @@
 		<include src="file://{resources}/scripts/custom_game/action_bar.js" />
 	</scripts>
 	<Panel class="AbilityOverlayRoot">
-		<Button id="LevelUpButton" onactivate="OnLevelUpClicked()">
-			<Panel id="LevelUpButtonInset">
-				<Label text="#LevelUp" />
+		<Button id="TestBackground" />
+		<Panel hittest="false" class="Background" >
+			<Panel class="TopBar">
+				<Panel id="weapon_list" />
+				<Panel id="primary_ability_list" />
+				<Panel id="nanite_list" />
 			</Panel>
-		</Button>
-		<Panel id="ability_list" />
+			<Panel class="BottomBar">
+				<Panel id="secondary_ability_list" />
+			</Panel>
+		</Panel>
 	</Panel>
 </root>
 

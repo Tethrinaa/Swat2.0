@@ -11,6 +11,7 @@ function PlayerInfo:new(o)
     self.playerId = -1 -- Player ID as assigned by Dota2
     self.playerIndex = -1  -- Player index. First player slot = 1, second player slot = 2.
     self.hero = nil -- The player's hero
+	self.playerName = "<Unknown>"
 
     -- Hero customization options
     -- Customization names

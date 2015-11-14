@@ -182,6 +182,7 @@ function PlayerBuilder:BuildMarine( event )
     local playerInfo = PlayerInfo:new()
     playerInfo.playerId = event.playerId
     playerInfo.playerIndex = event.playerId + 1
+	playerInfo.playerName = PlayerResource:GetPlayerName(event.playerId) or "Unknown"
     playerInfo.hero = hero
 
     playerInfo.className = event.class
