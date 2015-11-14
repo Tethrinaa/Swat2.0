@@ -41,7 +41,6 @@
 	height: 12px;
 	width: 12px;
 	border: 1px solid black;
-	/*background-image: url("file://{images}/rank_icons/legendary_hero.png");*/
 	opacity: 1;
 }
 
@@ -55,7 +54,7 @@
 {
 	height: 10px;
 	width: 92px;
-	background-color: #000000;
+	background-color: #404040;
 	opacity: 1;
 }
 
@@ -80,7 +79,7 @@
 	opacity: 1;
 	height: 10px;
 	width: 92px;
-	background-color: #000000;
+	background-color: #404040;
 }
 
 #ManaBar

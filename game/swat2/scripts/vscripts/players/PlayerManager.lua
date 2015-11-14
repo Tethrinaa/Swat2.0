@@ -6,10 +6,12 @@ SHOW_PLAYER_LOGS = SHOW_DEBUG_LOGS
 require('players/ExperienceManager')
 require('players/PlayerBuilder')
 require('players/PlayerInfo')
+require('players/PlayerHudManager')
 
 -- The systems instance stored as global variables
 g_ExperienceManager = {}
 g_PlayerBuilder = {}
+g_PlayerHudManager = {}
 
 PlayerManager = {}
 function PlayerManager:new(o)
@@ -35,11 +37,13 @@ function PlayerManager:initializeSystems()
 
     g_ExperienceManager = ExperienceManager:new()
     g_PlayerBuilder = PlayerBuilder:new()
+    g_PlayerHudManager = PlayerHudManager:new()
 end
 
 -- Called when the first player loads in and pregame has started
 function PlayerManager:onPreGameStarted()
     g_ExperienceManager:onPreGameStarted()
+    g_PlayerHudManager:startHudUpdateLoop()
 end
 
 -- Called when the horn blows and the game begins

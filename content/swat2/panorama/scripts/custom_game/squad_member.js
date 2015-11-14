@@ -41,11 +41,11 @@ function SetClassPortrait( name )
 {
 	var url;
 	
-	if ( name == "covert_sniper" ) { url = "url('file://{images}/class_icons/covert_sniper.png')"; }
+	if ( name == "sniper" ) { url = "url('file://{images}/class_icons/covert_sniper.png')"; }
 	else if ( name == "cyborg" ) { url = "url('file://{images}/class_icons/cyborg.png')"; }
-	else if ( name == "demolitions" ) { url = "url('file://{images}/class_icons/demolitions.png')"; }
-	else if ( name == "field_medic" ) { url = "url('file://{images}/class_icons/field_medic.png')"; }
-	else if ( name == "heavy_ord" ) { url = "url('file://{images}/class_icons/heavy_ord.png')"; }
+	else if ( name == "demo" ) { url = "url('file://{images}/class_icons/demolitions.png')"; }
+	else if ( name == "medic" ) { url = "url('file://{images}/class_icons/field_medic.png')"; }
+	else if ( name == "ho" ) { url = "url('file://{images}/class_icons/heavy_ord.png')"; }
 	else if ( name == "maverick" ) { url = "url('file://{images}/class_icons/maverick.png')"; }
 	else if ( name == "psychologist" ) { url = "url('file://{images}/class_icons/psychologist.png')"; }
 	else if ( name == "pyrotechnician" ) { url = "url('file://{images}/class_icons/pyrotechnician.png')"; }
@@ -104,6 +104,12 @@ function UpdateSquadMember( table )
 			var percentHealth = playerHealth/playerMaxHealth;
 			var width = healthBarWidth*percentHealth;
 			healthbar.style.width = (width+"px");	
+			healthbar.style.backgroundColor = "gradient( radial, 50% -20%, 0% 0%, 80% 80%, from( #006500 ), to( #00C000 ) )"
+			//If player health is critical, turns health bar red
+			if ( playerHealth < 183 ) 
+			{
+					healthbar.style.backgroundColor = "gradient( radial, 50% -20%, 0% 0%, 80% 80%, from( #F90021 ), to( #A0000A ) )"
+			}
 		}
 			
 		//handles mana
