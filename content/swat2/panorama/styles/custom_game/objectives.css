@@ -1,8 +1,7 @@
 .BaseHud
 {
-    width: 100%;
-    height: 100%;
     flow-children: down;
+	position: 88.6% 80.9% 0px;
 }
 
 .Background
@@ -11,8 +10,6 @@
     height: 200px;
     background-image: url("file://{images}/objectives_background.png");
     background-size: 100%;
-	margin-top: 879px;
-	margin-left: 1708px;
 }
 
 #RadObjFalse {

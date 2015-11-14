@@ -33,7 +33,7 @@ PLAYER_BUILDER_CONSTS = {}
    PLAYER_BUILDER_CONSTS.traits = {}
    PLAYER_BUILDER_CONSTS.specs = {}
 
-PLAYER_BUILDER_CONSTS.classes.cyborg.abilities = {"primary_cyborg_cluster_rockets_lua_ability","primary_cyborg_xtreme_combat_mode","primary_cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield_lua_ability", "cyborg_forcefield_off_lua_ability"}
+PLAYER_BUILDER_CONSTS.classes.cyborg.abilities = {"primary_cyborg_cluster_rockets","primary_cyborg_xtreme_combat_mode","primary_cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield", "cyborg_forcefield_off"}
 PLAYER_BUILDER_CONSTS.classes.demo.abilities = {"primary_demo_mirv","primary_demo_place_c4","primary_demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"}
 PLAYER_BUILDER_CONSTS.classes.ho.abilities = {"primary_ho_plasma_shield","primary_ho_storage_cells","ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
 PLAYER_BUILDER_CONSTS.classes.maverick.abilities = {"primary_maverick_plasma_grenade","primary_maverick_robodog","primary_maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"}
@@ -182,6 +182,7 @@ function PlayerBuilder:BuildMarine( event )
     local playerInfo = PlayerInfo:new()
     playerInfo.playerId = event.playerId
     playerInfo.playerIndex = event.playerId + 1
+	playerInfo.playerName = PlayerResource:GetPlayerName(event.playerId) or "Unknown"
     playerInfo.hero = hero
 
     playerInfo.className = event.class
