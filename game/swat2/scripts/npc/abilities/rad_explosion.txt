@@ -1,0 +1,63 @@
+//=================================================================================================================
+    // Rad damage for exploding rads - BOOM!
+    //=================================================================================================================
+    "rad_explosion"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityTextureName"            "disruptor_glimpse"
+        "MaxLevel"     "1"
+
+        "Modifiers"
+        {
+
+            "modifier_rad_frag_explosion_datadriven"
+            {
+                "Passive" "1"
+
+                "OnDeath"
+                {
+                    "FireEffect"
+                    {
+                        "EffectName"        "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+                        "EffectAttachType"  "follow_hitloc"
+                        "Target"
+                        {
+                            "Center"   "UNIT"
+                            "Flags"            "DOTA_UNIT_TARGET_FLAG_DEAD"
+                        }
+                    }
+
+                    "ActOnTargets"
+                    {
+                        "Target"
+                        {
+                            "Center"   "UNIT"
+                            "Radius"   "144"
+                            "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+                            "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+                            "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                        }
+
+                        "Action"
+                        {
+                            "Damage"
+                            {
+                                "Target"
+                                {
+                                    "Center"   "TARGET"
+                                    "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                                }
+                                "Type"                 "DAMAGE_TYPE_PHYSICAL"
+                                "MinDamage"            "2000"
+                                "MaxDamage"            "4000"
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }

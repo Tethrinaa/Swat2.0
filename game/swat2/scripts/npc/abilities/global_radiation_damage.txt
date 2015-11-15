@@ -1,0 +1,54 @@
+//=================================================================================================================
+// Ability: Radiation Fragment
+//=================================================================================================================
+"global_radiation_damage"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"		"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityTextureName" 	"necrolyte_heartstopper_aura"
+      "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"MaxLevel"	"5"
+
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				"FIELD_INTEGER"
+            "damage_per_second"		"0 1 2 12 25"
+         }
+      }
+
+	"Modifiers"
+	{
+		"modifier_rad_damage_datadriven"
+		{
+			"Passive" "1"
+
+			"ThinkInterval" "1.0"
+            "OnIntervalThink"
+            {
+               "ActOnTargets"
+               {
+                  "Target"
+                  {
+                     "Center" "CASTER"
+                     "Radius" "20000"
+                     "Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+                     "Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                  }
+                  "Action"
+                  {
+                     "Damage"
+                     {
+                        "Target" "TARGET"
+                        "Type" "DAMAGE_TYPE_MAGICAL"
+                        "Damage" "%damage_per_second"
+                     }
+                  }
+               }
+            }
+		}
+	}
+}

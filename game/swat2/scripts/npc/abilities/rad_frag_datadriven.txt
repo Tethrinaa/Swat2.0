@@ -1,0 +1,33 @@
+//=================================================================================================================
+// Ability: Radiation Fragment
+//=================================================================================================================
+"rad_frag_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"		"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"AbilityTextureName" 	"viper_corrosive_skin"
+	"MaxLevel"	"1"
+
+	"Modifiers"
+	{
+		"modifier_rad_frag_datadriven"
+		{
+			"Passive" "1"
+                "States"
+                {
+                    "MODIFIER_STATE_NOT_ON_MINIMAP"      "MODIFIER_STATE_VALUE_ENABLED"
+                }
+
+			"OnDeath"
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "units/rad_frag.lua"
+                  "Function"   "RadRemoved"
+               }
+            }
+		}
+	}
+}

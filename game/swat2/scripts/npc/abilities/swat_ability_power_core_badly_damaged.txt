@@ -1,0 +1,38 @@
+//=================================================================================================================
+// Ability: Mana_Drain_Badly_Damaged (Power Core)
+//=================================================================================================================
+"swat_ability_power_core_badly_damaged"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
+      "MaxLevel"                 "1"
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"			"FIELD_FLOAT"
+            "mana_regen"		"-45"
+         }
+      }
+      // Data driven
+      //-------------------------------------------------------------------------------------------------------------
+      "Modifiers"
+      {
+         "modifier_swat_ability_power_core_degen"
+         {
+            "Passive"				"1"
+            "IsPurgable"			"0"
+            "IsHidden"				"0"
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+            }
+         }
+      }
+   }

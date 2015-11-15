@@ -1,0 +1,145 @@
+//=================================================================================================================
+// Ability: Nano-Injection (Medic)
+//=================================================================================================================
+"primary_medic_nano_injection"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"						"ability_datadriven"
+        "AbilityName"              "Nano-Injection"
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+
+        "MaxLevel"                 "16"
+	"LevelsBetweenUpgrades"  	"0"
+        "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityTextureName"			"omniknight_purification"
+
+
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"175 205 235 265 295 325 355 385 415 445 475 505 535 565 595 625"
+	"AbilityCastPoint"				"0.05"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20.0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"250"
+
+
+		// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"heal"				"100 120 140 170 200 240 280 330 380 440 500 500 500 500 500 500"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"HoT"				"0 0 0 0 0 0 0 0 0 0 0 10 20 30 40 50"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"HoT_chance"				"0 0 0 0 0 0 0 0 0 0 0 100 100 100 100 100"
+		}
+            "04"
+            {
+			"var_type"			"FIELD_INTEGER"
+			"remove_rez_sick_chance"				"0 0 0 0 0 0 0 0 0 0 0 10 20 40 70 100"
+            }
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+               "ScriptFile"		"scripts/vscripts/heroes/hero_medic/medic_nano_injection.lua"
+               "Function"		"OnAbilityPhaseStart"
+            }
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Omniknight.Purification"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"ControlPoints"
+			{
+				"00"	"0 0 0"
+				"01"	"%radius %radius %radius"
+			}
+		}
+
+		"FireEffect"
+		{
+			"Target"			"TARGET"
+			"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+
+		"Heal"
+		{
+			"Target" 		"TARGET"
+			"HealAmount"	"%heal"
+		}
+            "Random"
+		{
+			"Chance"		"%remove_rez_sick_chance"
+
+			"OnSuccess"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_medic_revive_rez_sickness_lua"
+					"Target"		"TARGET"
+				}
+			}
+		}
+            "Random"
+		{
+			"Chance"		"%HoT_chance"
+
+			"OnSuccess"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_nano_hot_thinker"
+					"Target"		"TARGET"
+				}
+			}
+		}
+	}
+
+        "modifiers"
+        {
+            "modifier_nano_hot_thinker"
+            {
+                "Duration" "6"
+                "ThinkInterval" "1"
+                "OnIntervalThink"
+                {
+                    "Heal"
+                    {
+                        "Target" 		"TARGET"
+                        "HealAmount"	"%HoT"
+                    }
+                }
+            }
+        }
+}

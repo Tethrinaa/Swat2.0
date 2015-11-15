@@ -1,0 +1,75 @@
+//=================================================================================================================
+// Ability: Sprint (Light,Medium,Heavy)
+//=================================================================================================================
+"sprint_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"		"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	"AbilityTextureName" 	"clinkz_wind_walk"
+	"MaxLevel"	"3"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.0"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"150 30 20"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_speed"				"80 60 50"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"6.0"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_evasion"				"100"
+		}
+	}
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"Target" "CASTER"
+			"ModifierName" "modifier_sprint_datadriven"
+		}
+		"FireSound"
+		{
+			"EffectName" "Hero_Slardar.Sprint"
+			"Target"	 "CASTER"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_sprint_datadriven"
+		{
+			"IsBuff" "1"
+			"Duration" "%duration"
+			"EffectName"	"particles/units/heroes/hero_slardar/slardar_sprint.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_speed"
+				"MODIFIER_PROPERTY_EVASION_CONSTANT" "%bonus_evasion"
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"1"
+			}
+            "States"
+            {
+               "MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+            }
+		}
+	}
+}

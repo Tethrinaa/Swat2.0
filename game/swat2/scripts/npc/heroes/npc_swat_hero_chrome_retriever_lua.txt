@@ -1,0 +1,17 @@
+//=================================================================================================================
+// HERO: Chrome Retriever
+//=================================================================================================================
+"npc_swat_hero_chrome_retriever_lua"
+{
+	"override_hero"					"npc_dota_hero_centaur"			// Hero to override
+	"Ability1"					""	// Turbo
+	"Ability2"					""	// Advanced Generator
+	"Ability3"					""	// Thrash
+	"Ability4"					"mana_shield_light_datadriven"	// Nanites Light
+	// A.R.S. (Dog_Level_Relation)
+	// Retrieve Items
+	// Evasion (Dog_Level_Relation)
+	// Cloak (Dog_Level_Relation)
+	// Reconnaissance (Dog_Level_Relation)
+	// Inventory (Dog_Level_Relation)
+}

@@ -1,0 +1,25 @@
+//=================================================================================================================
+ // Invulnerability
+ //=================================================================================================================
+    "invulnerable"
+    {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "AbilityTextureName"            "disruptor_glimpse"
+
+        // Modifiers
+        //-------------------------------------------------------------------------------------------------------------
+        "Modifiers"
+        {
+            "Invulnerable"
+            {
+                "Passive"                       "1"
+                    "States"
+                    {
+                        "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
+                    }
+            }
+        }
+    }

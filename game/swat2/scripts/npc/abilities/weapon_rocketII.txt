@@ -1,0 +1,132 @@
+//=================================================================================================================
+// Ability: rocketII // Mark 2 rocket skill
+//=================================================================================================================
+"weapon_rocketII"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				      "ability_datadriven"
+	"AbilityName"              "Lock-Down"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+	"MaxLevel"                 "11"
+	"LevelsBetweenUpgrades"    "0"
+	"AbilityTextureName"       "gyrocopter_rocket_barrage"
+
+
+      // Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.0"
+      "AbilityCooldown"				"6"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"96 192 264"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 66 33"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "damage_increase"				"0 10 16 22 28 34 40 46 52 58 64"
+         }
+         "04"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "attack_speed_increase"		"0 3 6 9 12 15 18 21 24 27 30"
+         }
+         "05"
+         {
+            "var_type" "FIELD_FLOAT"
+            "base_attack_time" "2.818 2.738 2.658 2.585 2.516 2.45 2.388 2.329 2.273 2.219 2.168"
+         }
+         "06"
+	   {
+		   "var_type"					"FIELD_INTEGER"
+		   "bonus_attack_range"		"600"
+	   }
+	}
+
+      "OnToggleOn"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_datadriven"
+            "Target" "CASTER"
+         }
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_disarm_datadriven"
+            "Target" "CASTER"
+         }
+      }
+
+      "OnToggleOff"
+      {
+         "RemoveModifier"
+         {
+            "ModifierName" "modifier_lockdown_datadriven"
+            "Target" "CASTER"
+         }
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_lockdown_disarm_datadriven"
+            "Target" "CASTER"
+         }
+      }
+
+	"Modifiers"
+	{
+		"modifier_rocket_datadriven"
+		{
+            "Passive"	"1"
+			"IsHidden"	"1"
+
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+               }
+            }
+
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+            }
+		}
+         "modifier_lockdown_datadriven"
+         {
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_increase"
+               "MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT" "%base_attack_time"
+            }
+            "States"
+            {
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+         "modifier_lockdown_disarm_datadriven"
+         {
+            "Duration" "3"
+            "States"
+            {
+               "MODIFIER_STATE_DISARMED" "MODIFIER_STATE_VALUE_ENABLED"
+               "MODIFIER_STATE_ROOTED" "MODIFIER_STATE_VALUE_ENABLED"
+            }
+         }
+
+	}
+   }

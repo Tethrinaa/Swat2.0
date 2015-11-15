@@ -1,0 +1,74 @@
+"cyborg_pheromones_off"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityTextureName"			"riki_smoke_screen"
+	"AbilityManaCost"		"0"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+		"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+		"particle"		"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"0"
+
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"        "FIELD_INTEGER"
+			"radius"          "1600"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Venomancer.PoisonNova"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+			"EffectAttachType"	"attach_origin"
+			"Target"		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"attach_origin"
+			}
+
+			"ControlPoints"
+			{
+				"01"	"1 1 1"
+				"02"	"0 0 0"
+			}
+		}
+
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
+			"Function"		"OnSpellStart"
+			"main_ability_name"		"cyborg_pheromones"
+			"radius"		"%radius"
+		}
+	}
+}

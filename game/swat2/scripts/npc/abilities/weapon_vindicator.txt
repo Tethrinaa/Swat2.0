@@ -1,0 +1,161 @@
+//=================================================================================================================
+// Ability: vindicator // Cyborg vindicator skill
+//=================================================================================================================
+"weapon_vindicator"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				      "ability_datadriven"
+	"AbilityName"              "Plasma-V Rounds"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	"MaxLevel"                 "17"
+	"LevelsBetweenUpgrades"    "0"
+	"AbilityTextureName"       "clinkz_searing_arrows"
+	"AbilityUnitTargetTeam"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"    "DOTA_UNIT_TARGET_ALL"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_radius"				"24 96 120"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "splash_damage_percent"		"100 90 15"
+         }
+         "03"
+	   {
+		   "var_type"					"FIELD_INTEGER"
+		   "bonus_attack_range"		"-350"
+	   }
+         "04"
+	   {
+		   "var_type"					"FIELD_INTEGER"
+		   "bonus_damage"		      "0 5 9 13 17 21 25 29 33 37 41 45 49 53 57 61 65"
+	   }
+         "05"
+         {
+            "var_type"					"FIELD_INTEGER"
+		   "attack_speed_slow"		"0 -4 -5 -5 -6 -6 -7 -7 -8 -8 -9 -9 -10 -10 -11 -11 -12"
+         }
+         "06"
+         {
+            "var_type"					"FIELD_INTEGER"
+		   "movement_speed_slow"	"0 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20 -20"
+         }
+         "07"
+         {
+            "var_type"					"FIELD_FLOAT"
+		   "slow_duration"	      "0 0.25 0.28 0.31 0.34 0.37 0.40 0.43 0.46 0.49 0.52 0.55 0.58 0.61 0.64 0.67 0.70"
+         }
+         "08"
+         {
+            "var_type"					"FIELD_INTEGER"
+		   "mana_cost"	            "1"
+         }
+	}
+
+      // Casting
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilityCastRange"				"550"
+      "AbilityCastPoint"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
+
+      // Time
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilityCooldown"				"0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"
+
+      // Cost
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilityManaCost"				"%mana_cost"
+
+      "OnToggleOn"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_vindicator_on_datadriven"
+            "Target" "CASTER"
+         }
+      }
+      "OnToggleOff"
+      {
+         "RemoveModifier"
+         {
+            "ModifierName" "modifier_vindicator_on_datadriven"
+            "Target" "CASTER"
+         }
+      }
+
+	"Modifiers"
+	{
+		"modifier_vindicator_datadriven"
+		{
+            "Passive"	"1"
+			"IsHidden"	"1"
+
+            "OnAttackLanded"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"	"scripts/vscripts/heroes/hero__marine/weapons.lua"
+                  "Function"		"Splash"
+			  "hits_player_units" "0"
+               }
+            }
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+		   "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+            }
+
+            "Orb"
+            {
+               "Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+               "ProjectileName"	"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
+               "CastAttack"		"1"
+            }
+            "OnOrbFire"
+            {
+               "SpendMana"
+               {
+                  "Mana"	"%mana_cost"
+               }
+            }
+            "OnOrbImpact"
+            {
+               "ApplyModifier"
+               {
+                  "ModifierName" "modifier_plasma_slow_datadriven"
+                  "Target"
+                  {
+                     "Center" "TARGET"
+                     "Radius" "120"
+                     "Teams" "DOTA_UNIT_TARGET_TEAM_BOTH"
+                     "Types" "DOTA_UNIT_TARGET_ALL"
+				 "ExcludeFlags" "DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+                  }
+                  "Duration" "%slow_duration"
+               }
+            }
+		}
+
+         "modifier_plasma_slow_datadriven"
+         {
+            "IsDebuff" "1"
+
+            //"EffectName" "particles/generic_gameplay/generic_slowed_cold.vpcf"
+            //"EffectAttachType" "follow_origin"
+
+            "Properties"
+            {
+              "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movement_speed_slow"
+              "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_slow"
+            }
+         }
+	}
+   }

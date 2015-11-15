@@ -1,0 +1,106 @@
+//=================================================================================================================
+// Ability: Critical Shot (Covert Sniper)
+//=================================================================================================================
+   "primary_covert_sniper_critical_shot"
+   {
+      // General
+      //-------------------------------------------------------------------------------------------------------------
+      "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Critical Shot"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+      "SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+      "MaxLevel"                 "8"
+      "LevelsBetweenUpgrades"    "0"
+      "AbilityTextureName"       "chaos_knight_chaos_strike"
+
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "crit_chance"				"0 10 15 20 25 30 35 40 45 50 55 60"
+         }
+         "02"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "crit_damage"				"100 200 220 240 260 280 300 320 340 360 380 400"
+         }
+         "03"
+         {
+            "var_type"					"FIELD_INTEGER"
+            "aim_crit_damage"			"100 260 320 480 440 500 560 620 680 740 800 860"
+         }
+      }
+      "Modifiers"
+      {
+         "modifier_crit_chance"
+         {
+            "Passive"   "1"
+            "IsHidden"	"1"
+            "OnAttackStart"
+            {
+               "RemoveModifier"
+               {
+                  "ModifierName"	"modifier_crit"
+                  "Target"		"CASTER"
+               }
+               "Random"
+               {
+                  "Chance"		"%crit_chance"
+
+                  "OnSuccess"
+                  {
+                     "ApplyModifier"
+                     {
+                        "ModifierName"	"modifier_crit"
+                        "Target"		"CASTER"
+                     }
+                  }
+               }
+               "RunScript"
+               {
+                  "ScriptFile"   "scripts/vscripts/heroes/hero_covert_sniper/critical_shot.lua"
+                  "Function"     "aimCheck"
+               }
+            }
+         }
+         "modifier_crit"
+         {
+            "IsHidden"		"1"
+            "IsPurgable"	"0"
+            "OnAttackLanded"
+            // "%attack_damage" is set to the damage value before mitigation
+            {
+               "RemoveModifier"
+               {
+                  "ModifierName"	"modifier_crit"
+                  "Target" 		"CASTER"
+               }
+            }
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+            }
+         }
+         "modifier_aim_crit"
+         {
+            "IsHidden"		"1"
+            "IsPurgable"	"0"
+            "OnAttackLanded"
+            // "%attack_damage" is set to the damage value before mitigation
+            {
+               "RemoveModifier"
+               {
+                  "ModifierName"	"modifier_aim_crit"
+                  "Target" 		"CASTER"
+               }
+            }
+            "Properties"
+            {
+               "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%aim_crit_damage"
+            }
+         }
+      }
+   }
