@@ -75,9 +75,15 @@ end
 -- trait  - the trait the player selected
 -- spec   - the specialty the player selected
 function PlayerBuilder:BuildMarine( event )
+    local playerId = event.playerId
+    print("PlayerBuilder | Building Marine for playerId= " .. playerId)
+    local ply = PlayerResource:GetPlayer(playerId)
+    print("PlayerBuilder | playerName= " .. (PlayerResource:GetPlayerName(playerId) or "Unknown"))
+
     -- Get the player entity from the playerid
-    local entIndex = event.playerId+1
-    local ply = EntIndexToHScript(entIndex)
+    -- TODO: BUGGY? Replaced with above code
+    --local entIndex = event.playerId+1
+    --local ply = EntIndexToHScript(entIndex)
 
     -- Create the default hero
     --local hero = CreateHeroForPlayer("npc_dota_hero_sniper", ply)
