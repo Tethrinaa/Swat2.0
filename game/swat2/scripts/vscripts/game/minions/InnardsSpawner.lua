@@ -87,13 +87,16 @@ function InnardsSpawner:spawnMinion(position, specialType, targetUnit)
         -- This will spawn more innards when it dies!
         unit = CreateUnitByName( "npc_dota_creature_basic_innards", position, true, nil, nil, DOTA_TEAM_BADGUYS )
         unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
-        unit:SetHealth(2 + RandomInt(0, 2))
+        local duration = 2 + RandomFloat(0.0, 1.0) + RandomFloat(0.0, 1.0)
+        unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})
     else
         -- Spawn an invulnerable, timed life innard
         unit = CreateUnitByName( "npc_dota_creature_innards_respawned", position, true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply a timed life to the unit
         local duration = 6 + (14 * g_GameManager.nightmareOrSurvivalValue)
         unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})
+        unit:SetHealth(duration)
+        -- TODO: Shooting the innard should reduce its timed life by 1 per hit regardless of damage)
     end
 
     unit:SetRenderColor(105,0,0)

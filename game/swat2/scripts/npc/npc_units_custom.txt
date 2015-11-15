@@ -621,7 +621,7 @@
     //=================================================================================
     // Creature: Basic innards
     //=================================================================================
-        "npc_dota_creature_basic_innards"
+        "npc_dota_creature_innards_respawned"
     {
         // General
         "BaseClass"					"npc_dota_creature"	// Class of entity of link to.
@@ -735,9 +735,9 @@
     }
 
     //=================================================================================
-	// Creature: Innards (respawned ones)
+	// Creature: Innards (The initial invulnerable ones)
 	//=================================================================================
-		"npc_dota_creature_innards_respawned"
+		"npc_dota_creature_basic_innards"
 	{
 		// General
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
@@ -1572,7 +1572,7 @@
         "AbilityLayout"				"4"
         "Ability1"					"invulnerable_unselectable"
     }
-	
+
 	"medic_mending_station"
 	{
 		// General
@@ -1594,8 +1594,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"1"			// Physical protection.	
-		
+		"ArmorPhysical"				"1"			// Physical protection.
+
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
