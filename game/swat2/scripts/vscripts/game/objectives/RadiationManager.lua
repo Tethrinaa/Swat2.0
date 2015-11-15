@@ -10,6 +10,8 @@ RAD_RESISTANCE_REDUCTION_VALUE = 0.95
 INITIAL_RAD_COUNT = 32
 RAD_COUNT_LIMIT = 130
 
+RadiationManager.RAD_UNIT_NAME = "game_radiation_fragment"
+
 function RadiationManager:new(o)
     o = o or {}
     setmetatable(o, self)
@@ -172,7 +174,7 @@ function RadiationManager:spawnRadFragment()
         point = GetRandomPointInWarehouse()
     end
 
-    local rad_frag = CreateUnitByName( "npc_dota_creature_rad_frag", point, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, point, true, nil, nil, DOTA_TEAM_BADGUYS )
     -- Apply rad modifier to unit to reduce rad count on death and update bracket
     rad_frag:AddAbility("rad_frag_datadriven")
     rad_frag:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
@@ -224,7 +226,7 @@ function RadiationManager:spawnRadlets(radPosition, ioned)
 
         for i = 1, radletsToSpawn do
             if self:canSpawnRadFragment() then
-                local radlet = CreateUnitByName( "npc_dota_creature_rad_frag", radPosition + RandomSizedVector(160), true, nil, nil, DOTA_TEAM_BADGUYS )
+                local radlet = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, radPosition + RandomSizedVector(160), true, nil, nil, DOTA_TEAM_BADGUYS )
 
                 -- Generate a random "size"
                 local size = RandomInt( 40 + ionPenalty - self.radResistPlayers, 80 + (3 * ionPenalty) - (3 * self.radResistPlayers))
@@ -272,7 +274,7 @@ function RadiationManager:spawnInitialRadFragments()
     -- Spawn a guarenteed normal rad in the rooms
     for i = 1,INITIAL_RAD_COUNT do
         local room = rooms[i]
-        local rad_frag = CreateUnitByName( "npc_dota_creature_rad_frag", room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
+        local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply rad modifier to unit to reduce rad count on death and update bracket
 
         if (rad_frag) then

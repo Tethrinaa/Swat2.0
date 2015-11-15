@@ -5,6 +5,9 @@ SHOW_INNARDS_LOGS = SHOW_MINION_LOGS -- these are a bit verbose so probably not 
 
 InnardsSpawner = {}
 
+InnardsSpawner.INNARD_UNIT_NAME_FIRST = "enemy_minion_innard_initial" -- The first type of innard spawned
+InnardsSpawner.INNARD_UNIT_NAME_SECOND = "enemy_minion_innard_reborn" -- The second type of innard spawned (after first one dies)
+
 function InnardsSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
@@ -85,13 +88,13 @@ function InnardsSpawner:spawnMinion(position, specialType, targetUnit)
         -- Spawn a normal innard
         -- EnemySpawner will look for onDeathFunctions and call them
         -- This will spawn more innards when it dies!
-        unit = CreateUnitByName( "npc_dota_creature_basic_innards", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+        unit = CreateUnitByName( InnardsSpawner.INNARD_UNIT_NAME_FIRST, position, true, nil, nil, DOTA_TEAM_BADGUYS )
         unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
         local duration = 2 + RandomFloat(0.0, 1.0) + RandomFloat(0.0, 1.0)
         unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})
     else
         -- Spawn an invulnerable, timed life innard
-        unit = CreateUnitByName( "npc_dota_creature_innards_respawned", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+        unit = CreateUnitByName( InnardsSpawner.INNARD_UNIT_NAME_SECOND, position, true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply a timed life to the unit
         local duration = 6 + (14 * g_GameManager.nightmareOrSurvivalValue)
         unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})

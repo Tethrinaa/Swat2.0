@@ -5,6 +5,7 @@ SHOW_POWER_MANAGER_LOGS = SHOW_GAME_SYSTEM_LOGS
 PowerManager = {}
 
 PowerManager.POWER_PLANTS_FOR_CITY = 3
+PowerManager.POWER_CORE_UNIT_NAME = "game_power_core"
 
 function PowerManager:new(o)
     o = o or {}
@@ -59,7 +60,7 @@ function PowerManager:spawnPower(damagedCount, badlyCount, severeCount, hasHidde
     for i = 1,6 do
         -- Spawn a power plant
         local room = powerPlantRooms[i]
-        local powerCore = CreateUnitByName("npc_power_core_damaged", room:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_GOODGUYS)
+        local powerCore = CreateUnitByName(PowerManager.POWER_CORE_UNIT_NAME, room:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_GOODGUYS)
         local degenAbility = nil
         if damagedCount > 0 then
             if SHOW_POWER_MANAGER_LOGS then

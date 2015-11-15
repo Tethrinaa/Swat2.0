@@ -1,7 +1,7 @@
 //=================================================================================
     // Zombie Corpse
     //=================================================================================
-    "zombie_corpse"
+    "enemy_minion_zombie_corpse"
     {
             "BaseClass"                 "npc_dota_creature"
             "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
