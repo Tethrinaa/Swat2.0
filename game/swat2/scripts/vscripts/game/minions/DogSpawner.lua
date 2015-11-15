@@ -5,6 +5,8 @@ SHOW_DOG_LOGS = SHOW_MINION_LOGS
 
 DogSpawner = {}
 
+DogSpawner.DOG_UNIT_NAME = "enemy_minion_dog"
+
 function DogSpawner:new(o)
     o = o or {}
     setmetatable(o, self)
@@ -19,7 +21,7 @@ end
 -- returns the created unit
 function DogSpawner:spawnMinion(position, specialType)
     --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
-    local unit = CreateUnitByName( "npc_dota_creature_basic_dog", position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = CreateUnitByName( DogSpawner.DOG_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     -- EnemySpawner will look for onDeathFunctions and call them
     unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end

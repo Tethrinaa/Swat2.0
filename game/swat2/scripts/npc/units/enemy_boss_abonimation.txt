@@ -1,16 +1,18 @@
 //=================================================================================
-// Creature: Basic Garg
+// Creature: ABOMINATION
 //=================================================================================
-	"npc_dota_creature_basic_garg"
+	"enemy_boss_abomination"
 {
 	// General
 
 	"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
-	"Model"						"models/creeps/neutral_creeps/n_creep_gargoyle/n_creep_gargoyle.vmdl"
+	"Model"						"models/heroes/undying/undying_flesh_golem.vmdl"	// Model.
 	"SoundSet"					"Undying_Zombie"					// Name of sound set.
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
-	"ModelScale"				"0.7"
+	"ModelScale"				"2"
 	"Level"						"1"
+        "ConsideredHero"            "1" // Hero style health bar
+
 
 	// Abilities
 	//----------------------------------------------------------------
@@ -31,9 +33,9 @@
 	// Attack
 	//----------------------------------------------------------------
 	"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-	"AttackDamageMin"			"128"		// Damage range min.
-	"AttackDamageMax"			"173"		// Damage range max.
-	"AttackRate"				"2.3"		// Speed of attack.
+	"AttackDamageMin"			"510"		// Damage range min.
+	"AttackDamageMax"			"730"		// Damage range max.
+	"AttackRate"				"3.8"		// Speed of attack.
 	"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
 	"AttackAcquisitionRange"	"1800"		// Range within a target can be acquired.
 	"AttackRange"				"128"		// Range within a target can be attacked.
@@ -42,28 +44,28 @@
 
 	// Bounty
 	//----------------------------------------------------------------
-        "SwatXP"					"4"		// SWAT Custom Variable | Experience base value earned when killing enemy
+        "SwatXP"					"13"	// SWAT Custom Variable | Experience base value earned when killing enemy
 	"BountyXP"					"0"		// Experience earn.
 	"BountyGoldMin"				"0"		// Gold earned min.
 	"BountyGoldMax"				"0"		// Gold earned max.
 
 	// Bounds
 	//----------------------------------------------------------------
-	"RingRadius"				"35"
-	"HealthBarOffset"			"160"
-	"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	"RingRadius"				"100"
+	"HealthBarOffset"			"600"
+	"BoundsHullName"			"DOTA_HULL_SIZE_HERO" // Defines unit collision
 
 	// Movement
 	//----------------------------------------------------------------
 	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-	"MovementSpeed"				"330"		// Speed
+	"MovementSpeed"				"254"		// Speed
 	"MovementTurnRate"			"0.5"		// Turning rate.
 
 	// Status
 	//----------------------------------------------------------------
-	"StatusHealth"				"400"		// Base health.
-	"StatusHealthRegen"			"0.15"		// Health regeneration rate.
-	"StatusMana"				"50"			// Base mana.
+	"StatusHealth"				"2000"		// Base health.
+	"StatusHealthRegen"			"0.00"		// Health regeneration rate.
+	"StatusMana"				"0"			// Base mana.
 	"StatusManaRegen"			"0"			// Mana regeneration rate.
 
 	// Team
@@ -75,8 +77,8 @@
 
 	// Vision
 	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1800"		// Range of vision during day light.
-	"VisionNighttimeRange"		"1800"		// Range of vision at night time.
+	"VisionDaytimeRange"		"400"		// Range of vision during day light.
+	"VisionNighttimeRange"		"400"		// Range of vision at night time.
 
 	// Creature Data
 	//----------------------------------------------------------------------------------------------------------------------
@@ -93,7 +95,7 @@
 		{
 			"Invade"
 			{
-				"Name"				"Invade"
+                    "Name"				"Invade"
                     "Aggression"		"90.0"
                     "Avoidance"			"0.0"
                     "Support"			"30.0"
@@ -103,7 +105,7 @@
 		//Level Up Parameters
 		//-----------------------------------------------------------------
 		"HPGain"					"0"
-		"DamageGain"				"8"
+		"DamageGain"				"38"
 		"ArmorGain"					"0"
 		"MagicResistGain"			"0"
 		"MoveSpeedGain"				"0"

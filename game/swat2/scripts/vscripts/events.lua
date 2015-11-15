@@ -40,8 +40,8 @@ function GameMode:OnNPCSpawned(keys)
   npc.sdata.OnEntityKilled = {}
   npc.sdata.OnEntityHurt = {}
 
-  if not npc:HasAbility("friendly_fire_on") and npc:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-	npc:AddAbility("friendly_fire_on"):SetLevel(1)
+  if not npc:HasAbility("common_friendly_fire_on") and npc:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+	npc:AddAbility("common_friendly_fire_on"):SetLevel(1)
   end
 end
 

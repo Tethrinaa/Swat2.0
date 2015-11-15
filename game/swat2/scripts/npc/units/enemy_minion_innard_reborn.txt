@@ -1,7 +1,7 @@
 //=================================================================================
     // Creature: Basic innards
     //=================================================================================
-        "npc_dota_creature_innards_respawned"
+        "enemy_minion_innard_reborn"
     {
         // General
         "BaseClass"					"npc_dota_creature"	// Class of entity of link to.

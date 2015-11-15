@@ -4,6 +4,7 @@ SHOW_ABOMINATION_LOGS = SHOW_BOSS_LOGS
 
 AbominationSpawner = {}
 
+AbominationSpawner.ABOMINATION_UNIT_NAME = "enemy_boss_abomination"
 
 function AbominationSpawner:new(o)
     o = o or {}
@@ -29,7 +30,7 @@ function AbominationSpawner:spawnBoss()
     g_EnemySpawner.abomsCurrentlyAlive = g_EnemySpawner.abomsCurrentlyAlive + 1
 
     local warehouse = GetRandomWarehouse()
-    local boss = CreateUnitByName( "npc_dota_creature_basic_abomination", GetCenterInRegion(warehouse), true, nil, nil, DOTA_TEAM_BADGUYS )
+    local boss = CreateUnitByName( AbominationSpawner.ABOMINATION_UNIT_NAME, GetCenterInRegion(warehouse), true, nil, nil, DOTA_TEAM_BADGUYS )
 
     -- Apply upgrades
     onUberChangedAbom(boss, g_EnemyUpgrades.currentBossLevel, g_EnemyUpgrades.currentBossHealthBonus)

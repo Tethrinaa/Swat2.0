@@ -112,7 +112,7 @@ function PowerCheck( keys )
       caster.filled = true
       caster:RemoveAbility(ability:GetAbilityName())
       caster:RemoveModifierByName("modifier_mana_drain_autocast")
-      caster:RemoveModifierByName("modifier_swat_ability_power_core_degen")
+      caster:RemoveModifierByName("modifier_game_power_core_degen")
    end
 end
 

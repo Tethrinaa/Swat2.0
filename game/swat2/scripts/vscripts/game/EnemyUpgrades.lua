@@ -388,17 +388,17 @@ function GiveUnitArmor(unit, armor)
     local armor1 = armor % 20
     local armor2 = math.floor(armor / 20)
 
-    local armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+    local armorAbil1 = unit:FindAbilityByName("common_armor_upgrade_1")
     if armorAbil1 == nil then
-        unit:AddAbility("armor_upgrade_1")
-        armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+        unit:AddAbility("common_armor_upgrade_1")
+        armorAbil1 = unit:FindAbilityByName("common_armor_upgrade_1")
     end
     armorAbil1:SetLevel(armor1)
 
-    local armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+    local armorAbil2 = unit:FindAbilityByName("common_armor_upgrade_20")
     if armorAbil2 == nil then
-        unit:AddAbility("armor_upgrade_2")
-        armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+        unit:AddAbility("common_armor_upgrade_20")
+        armorAbil2 = unit:FindAbilityByName("common_armor_upgrade_20")
     end
     armorAbil2:SetLevel(armor2)
 end
