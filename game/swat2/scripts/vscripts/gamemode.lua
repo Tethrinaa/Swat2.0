@@ -168,24 +168,6 @@ function GameMode:InitGameMode()
 	--BDO what is this?  Didn't work after i switched us to barebones
    --GameMode:SetThink( "OnThink", self, "GlobalThink", 2 )
 
-   -- Set time to Noon (game will start PRE_GAME_TIME seconds before noon)
-   -- Not sure why this needs to be in a Timer but it not putting it in a timer means the game will ignore it
-   Timers:CreateTimer(1, function()
-       GameRules:SetTimeOfDay(0.5)
-
-       -- Make 1 hour == 1 minute
-       local cvar_name = "dota_time_of_day_rate"
-       local cvar_value = 0.0006933333333 -- This is 1/3 the normal rate
-       local current = cvar_getf(cvar_name)
-       if SHOW_DEBUG_LOGS then
-           print("Trying to slow time time | cvarname=" .. cvar_name .. "  |  " .. current .. " -> " .. cvar_value)
-       end
-       cvar_setf(cvar_name, cvar_value)
-       if SHOW_DEBUG_LOGS then
-           print("Successfully slowed down time")
-       end
-   end)
-
    -- Register chat commands
    SetUpDebugGameChatCommands()
 end

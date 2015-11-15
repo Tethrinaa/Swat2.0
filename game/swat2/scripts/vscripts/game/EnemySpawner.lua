@@ -205,7 +205,7 @@ function EnemySpawner:spawnWave()
         Timers:CreateTimer(waveInitialWaitTime, function()
             -- There is a random chance we don't do anything
             local i = 0
-            if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then
+            if g_GameManager.nightmareValue > 0 and g_DayNightManager.currentDay > 1 then
                 i = 18 - (g_PlayerManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
             else
                 i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_PlayerManager.playerCount / 4))
@@ -470,7 +470,7 @@ function EnemySpawner:startBossCycle()
     end
 
     if (not self.survivalDoubleBoss)
-        and (g_GameManager.currentDay > 1)
+        and (g_DayNightManager.currentDay > 1)
         and (g_GameManager.nightmareOrSurvivalValue > 0)
         and (RandomInt(0, 4) < g_GameManager.nightmareOrSurvivalValue) then
         -- Spawn this boss really quickly (the ole Survival double boss)
@@ -563,7 +563,7 @@ end
 
 function EnemySpawner:spawnBoss()
     local boss = nil
-    if g_GameManager.currentDay == 1 then
+    if g_DayNightManager.currentDay == 1 then
         -- We can only spawn Aboms on day 1
         boss = self.abomSpawner:spawnBoss()
     elseif g_GameManager.difficultyName == "normal" then

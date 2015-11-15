@@ -180,7 +180,7 @@ function RadiationManager:spawnRadFragment()
 
     -- For Nightmare+, there is a chance the rad will be an exploding rad
     if g_GameManager.nightmareValue > 0 then
-        if RandomInt(0, 999) < ( 177 * g_GameManager.nightmareValue ) - ( 10 * g_GameManager.nightmareValue * g_GameManager.currentDay * g_GameManager.currentDay) then
+        if RandomInt(0, 999) < ( 177 * g_GameManager.nightmareValue ) - ( 10 * g_GameManager.nightmareValue * g_DayNightManager.currentDay * g_DayNightManager.currentDay) then
             rad_frag:AddAbility("rad_explosion")
             rad_frag:FindAbilityByName("rad_explosion"):SetLevel(1)
             rad_frag:SetRenderColor(255, 50, 0)
@@ -445,7 +445,7 @@ end
 
 -- Updates the radiation UI display based on radiation count
 function RadiationManager:updateRadiationDisplay()
-	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,radneeded = self.radSafeLimit, hazmats = self.hazmatContainers})	
+	CustomGameEventManager:Send_ServerToAllClients("display_rad", {radcount = self.radFragments ,radneeded = self.radSafeLimit, hazmats = self.hazmatContainers})
 end
 
 -- TODO
