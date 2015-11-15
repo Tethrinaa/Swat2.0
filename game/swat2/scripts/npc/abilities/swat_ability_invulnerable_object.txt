@@ -1,0 +1,32 @@
+//=================================================================================================================
+// Ability: Power_Core_Mod // Based on Overthrow treasure courier ability
+//=================================================================================================================
+"swat_ability_invulnerable_object"
+{
+	"BaseClass"          			    "ability_datadriven"
+	"AbilityName"           			"dota_ability_health_granter"
+	"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"Modifiers"
+	{
+		"modifier_swat_ability_invulnerable_object"
+		{
+			"IsHidden"				"1"
+			"Passive"				"1"
+
+			"Aura"					""
+			"Aura_Radius"			"10"
+			"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_NONE"
+			"Aura_Types"			"DOTA_UNIT_TARGET_NONE"
+			"Aura_ApplyToCaster"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+		}
+	}
+}

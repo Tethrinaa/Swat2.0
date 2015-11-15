@@ -1,0 +1,93 @@
+//=================================================================================================================
+// Ability: Defense Network (Mender)
+//=================================================================================================================
+"mender_defense_network"
+    {
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"           	    "Defense Network"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"MaxLevel"                 	 	"16"
+	"AbilityTextureName"			"rubick_spell_steal"
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_bonus_percentage"				"-9 -10 -11 -12 -13 -14 -15 -16 -17 -18 -19 -20 -21 -22 -23 -24 -25"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"aura_radius"				"800"
+		}
+		"03"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"linger_duration"	"3"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"info_bonus_percentage"				"9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"info_aura_radius"				"625"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_mender_defense_network"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Aura" "modifier_mender_defense_network_buff"
+			"Aura_Radius" "%aura_radius"
+			"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"Aura_Types" "DOTA_UNIT_TARGET_ALL"
+			"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+		}
+		"modifier_mender_defense_network_buff"
+		{
+			"Duration" "%linger_duration"
+			"IsDebuff" "1"
+			"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"EffectAttachType"	"follow_origin"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE" "%damage_bonus_percentage"
+			}
+		}
+		"modifier_mender_defense_network_info"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Aura" "modifier_mender_defense_network_buff_info"
+			"Aura_Radius" "%info_aura_radius"
+			"Aura_Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types" "DOTA_UNIT_TARGET_ALL"
+			"Aura_Flags" "DOTA_UNIT_TARGET_FLAG_NONE"
+		}
+		"modifier_mender_defense_network_buff_info"
+		{
+			"Duration" "%linger_duration"
+			"EffectName"		"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"EffectAttachType"	"follow_origin"
+		}
+	}
+}

@@ -1,0 +1,41 @@
+//=================================================================================================================
+// Ability: Adrenaline Junkie (Medic)
+//================================================================================================================= 
+   "primary_medic_adrenaline_junkie"
+   {
+  	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityName"              "medic_adrenaline_junkie"
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"MaxLevel"                 "8"
+
+	"AbilityTextureName"			"doom_bringer_devour"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		
+
+	}	
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"junkie_chance"		"65 70 75 80 85 90 95 100"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"max_rush_bonus"	"2 4 6 8 10 12 14 16"
+		}
+	}
+}

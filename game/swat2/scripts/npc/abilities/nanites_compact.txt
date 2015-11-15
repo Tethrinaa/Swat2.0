@@ -1,0 +1,123 @@
+//=================================================================================================================
+   // Ability: Mana Shield Light (Nanites-Light Armor)
+   // NOTE: This is a POST DAMAGE REDUCTION Mana Shield
+   //=================================================================================================================
+   "nanites_compact"
+   {
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	"AbilityTextureName"			"medusa_mana_shield"
+	"MaxLevel"                 "20"
+	"LevelsBetweenUpgrades"    "0"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0.4"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				   "FIELD_FLOAT"
+			//"damage_per_mana"		"0.25 0.285 0.333 0.370 0.417 0.476 0.541 0.606 0.690 0.80 0.909 1.053 1.25 1.429 1.667 2.0 2.5 2.857"
+            // Putting 21 values here crashes it - don't know why - BDO
+			"efficiency"            "4.0 3.5 3.0 2.7 2.4 2.1 1.85 1.65 1.45 1.25 1.10 0.95 0.80 0.70 0.60 0.50 0.45 0.40 0.35 0.32"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"absorption_tooltip"		"90 90 90 90 90 90 91 91 91 91 91 91 91 91 91 91 91 92 92 92"
+		}
+         "03"
+         {
+            "var_type"           "FIELD_FLOAT"
+            "damage_reduction_percent" "-90 -90 -90 -90 -90 -90 -91 -91 -91 -91 -91 -91 -91 -91 -91 -91 -91 -92 -92 -92"
+         }
+	}
+	"OnToggleOn"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Medusa.ManaShield.On"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_cast.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_mana_shield_datadriven"
+			"Target" 		"CASTER"
+		}
+	}
+	"OnToggleOff"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Medusa.ManaShield.Off"
+			"Target" 		"CASTER"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_medusa/medusa_mana_shield_end.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "CASTER"
+		}
+
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_mana_shield_datadriven"
+			"Target"
+			{
+				"Center"	"CASTER"
+				"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+			}
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_mana_shield_datadriven"
+		{
+			"Passive"			"0"
+			"IsHidden"			"0"
+			"IsBuff"			   "1"
+
+			"Properties"
+			{
+				// This property will reduce incoming damage by the % listed, making us not need to modify hero health later
+				// and preventing heroes from dying when they shouldn't, requires calculating back out later in lua
+				"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction_percent"
+			}
+
+			"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"OnTakeDamage"
+			// "%attack_damage" is set to the damage value after mitigation
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Medusa.ManaShield.Proc"
+					"Target" 		"UNIT"
+				}
+
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_medusa/mana_shield.lua"
+					"Function"		"ManaShield"
+					"Damage"		   "%attack_damage"
+				}
+			}
+		}
+	}
+   }

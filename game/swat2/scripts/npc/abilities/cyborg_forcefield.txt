@@ -1,0 +1,70 @@
+//=================================================================================================================
+// Cyborg: Forcefield
+//=================================================================================================================
+"cyborg_forcefield"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityTextureName"	"abaddon_aphotic_shield"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityManaCost"		"120"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+		"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"2"
+	
+	"OnSpellStart"
+	{
+		"ApplyModifier"
+		{
+			"ModifierName" 		"modifier_cyborg_forcefield"
+			"Target"			"CASTER"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+			"Function"		"SwapInDeactivate"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_cyborg_forcefield"
+		{
+			"ThinkInterval" 	"1"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+					"Function"		"ForcefieldThink"
+				}
+			}
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+					"Function"		"ForcefieldCreate"
+				}
+			}
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+					"Function"		"ForcefieldDestroy"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,78 @@
+//=================================================================================================================
+// Ability: Emergency Power(Cyborg)
+   //=================================================================================================================
+  "cyborg_emergency_power"
+   {
+// General
+//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				     "ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"MaxLevel"                 "6"
+	"AbilityTextureName"			"tinker_rearm"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+
+
+				"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+				"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"5 115 95 80 70 60"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"mana_restore"			"500"
+		}
+	}
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+			"Target"		"TARGET"
+		}
+
+		"FireEffect"
+		{
+			"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+			"EffectAttachType"	"start_at_customorigin"
+
+			"ControlPointEntities"
+			{
+				"CASTER"	"follow_origin"
+				"TARGET"	"follow_origin"
+			}
+
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power_lua"
+			"Function"		"OnSpellStart"
+		}
+	}
+}
