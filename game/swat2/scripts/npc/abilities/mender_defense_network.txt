@@ -10,7 +10,7 @@
 	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 	"MaxLevel"                 	 	"16"
-	"AbilityTextureName"			"rubick_spell_steal"
+	"AbilityTextureName"			"vengefulspirit_command_aura"
 
 	"precache"
 	{
@@ -54,7 +54,7 @@
 		{
 			"Passive"			"1"
 			"IsHidden"			"1"
-			"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+			"EffectName"		"particles/addons_gameplay/fountain_tintable_top.vpcf"
 			"EffectAttachType"	"follow_origin"
 			"Aura" "modifier_mender_defense_network_buff"
 			"Aura_Radius" "%aura_radius"
