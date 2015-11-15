@@ -12,13 +12,14 @@
 	
 	
 	<Panel>
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select_screen.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/squad_status.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/squad_member.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/objectives.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/resource_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/action_bar.xml" />
-<!--  		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/inventory.xml" />
+		<!--  		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/inventory.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/buff_list.xml" /> -->
-      <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select.xml" />
+        <!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select.xml" />-->
 	</Panel>
 </root>

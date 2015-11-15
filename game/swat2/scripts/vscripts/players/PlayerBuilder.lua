@@ -73,100 +73,106 @@ CustomGameEventManager:RegisterListener("class_setup_complete", Dynamic_Wrap(Pla
 -- trait  - the trait the player selected
 -- spec   - the specialty the player selected
 function PlayerBuilder:BuildMarine( event )
-    -- Get the player entity from the playerid
-    local entIndex = event.playerId+1
-    local ply = EntIndexToHScript(entIndex)
+    --TODO Remove
+	print(event.class)
+	print(event.armor)
+	print(event.weapon)
+	print(event.playerId)
 
-    -- Create the default hero
-    --local hero = CreateHeroForPlayer("npc_dota_hero_sniper", ply)
+	---- Get the player entity from the playerid
+    --local entIndex = event.playerId+1
+    --local ply = EntIndexToHScript(entIndex)
 
-    --Get hero instead TODO
-    hero = ply:GetAssignedHero()
-    hero:SetUnitName("npc_swat_hero_tactician")
+    ---- Create the default hero
+    ----local hero = CreateHeroForPlayer("npc_dota_hero_sniper", ply)
 
-    --Clean the hero up first
-    RemoveAllSkills(hero)
+    ----Get hero instead TODO
+    --hero = ply:GetAssignedHero()
+    --hero:SetUnitName("npc_swat_hero_tactician")
+
+    ----Clean the hero up first
+    --RemoveAllSkills(hero)
 
 
 
-    -- set attributes - Why no SetBaseStrengthGain volvo?
-    hero:SetBaseStrength(PLAYER_BUILDER_CONSTS.classes[event.class].strength)
-    hero.AttributeStrengthGain = PLAYER_BUILDER_CONSTS.classes[event.class].strengthPerLevel
-    hero:SetBaseAgility(PLAYER_BUILDER_CONSTS.classes[event.class].agility)
-    hero.AttributeAgilityGain = PLAYER_BUILDER_CONSTS.classes[event.class].agilityPerLevel
-    hero:SetBaseIntellect(PLAYER_BUILDER_CONSTS.classes[event.class].intellect)
-    hero.AttributeIntellectGain = PLAYER_BUILDER_CONSTS.classes[event.class].intellectPerLevel
-    hero:SetBaseManaRegen(6)
-    hero:SetBaseHealthRegen(0)
+    ---- set attributes - Why no SetBaseStrengthGain volvo?
+    --hero:SetBaseStrength(PLAYER_BUILDER_CONSTS.classes[event.class].strength)
+    --hero.AttributeStrengthGain = PLAYER_BUILDER_CONSTS.classes[event.class].strengthPerLevel
+    --hero:SetBaseAgility(PLAYER_BUILDER_CONSTS.classes[event.class].agility)
+    --hero.AttributeAgilityGain = PLAYER_BUILDER_CONSTS.classes[event.class].agilityPerLevel
+    --hero:SetBaseIntellect(PLAYER_BUILDER_CONSTS.classes[event.class].intellect)
+    --hero.AttributeIntellectGain = PLAYER_BUILDER_CONSTS.classes[event.class].intellectPerLevel
+    --hero:SetBaseManaRegen(6)
+    --hero:SetBaseHealthRegen(0)
 
-    -- -- Set weapon stats -Why no SetAttackRange???
-    hero:SetBaseAttackTime(PLAYER_BUILDER_CONSTS.weapons[event.weapon].bat)
-    hero:SetBaseDamageMin(PLAYER_BUILDER_CONSTS.weapons[event.weapon].damageMin)
-    hero:SetBaseDamageMax(PLAYER_BUILDER_CONSTS.weapons[event.weapon].damageMax)
-    hero:SetAcquisitionRange(PLAYER_BUILDER_CONSTS.weapons[event.weapon].range) -- can't actually set range?  Doing this with weapon skills
-    hero:AddAbility(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill)
-    hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill):SetLevel(1)
-    --hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill).MaxLevel = 16
-    print(hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill):GetMaxLevel())
+    ---- -- Set weapon stats -Why no SetAttackRange???
+    --hero:SetBaseAttackTime(PLAYER_BUILDER_CONSTS.weapons[event.weapon].bat)
+    --hero:SetBaseDamageMin(PLAYER_BUILDER_CONSTS.weapons[event.weapon].damageMin)
+    --hero:SetBaseDamageMax(PLAYER_BUILDER_CONSTS.weapons[event.weapon].damageMax)
+    --hero:SetAcquisitionRange(PLAYER_BUILDER_CONSTS.weapons[event.weapon].range) -- can't actually set range?  Doing this with weapon skills
+    --hero:AddAbility(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill)
+    --hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill):SetLevel(1)
+    ----hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill).MaxLevel = 16
+    --print(hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill):GetMaxLevel())
 
-    print(event.weapon)
+    --print(event.weapon)
 
-    if ((event.weapon == "flamethrowerI") or (event.weapon == "flamethrowerII")) then
-       hero:SetRangedProjectileName("particles/units/heroes/hero_lina/lina_base_attack.vpcf")
-       if (event.class == "maverick") then
-          hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill).MaxLevel = 19
-          hero.AttackType = flame
-       end
-    elseif ((event.weapon == "rocketI") or (event.weapon == "rocketII")) then
-       hero:SetRangedProjectileName("particles/units/heroes/hero_techies/techies_base_attack.vpcf")
-       hero.AttackType = "rockets"
-       print(hero:GetProjectileSpeed())
-       print(hero.ProjectileSpeed)
-       hero.ProjectileSpeed=200
-       for k,v in pairs(hero) do
-          print(k, v)
-       end
-       print(hero:GetProjectileSpeed())
-    else
-       hero.AttackType = "bullets"
-    end
+    --if ((event.weapon == "flamethrowerI") or (event.weapon == "flamethrowerII")) then
+    --   hero:SetRangedProjectileName("particles/units/heroes/hero_lina/lina_base_attack.vpcf")
+    --   if (event.class == "maverick") then
+    --      hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill).MaxLevel = 19
+    --      hero.AttackType = flame
+    --   end
+    --elseif ((event.weapon == "rocketI") or (event.weapon == "rocketII")) then
+    --   hero:SetRangedProjectileName("particles/units/heroes/hero_techies/techies_base_attack.vpcf")
+    --   hero.AttackType = "rockets"
+    --   print(hero:GetProjectileSpeed())
+    --   print(hero.ProjectileSpeed)
+    --   hero.ProjectileSpeed=200
+    --   for k,v in pairs(hero) do
+    --      print(k, v)
+    --   end
+    --   print(hero:GetProjectileSpeed())
+    --else
+    --   hero.AttackType = "bullets"
+    --end
 
     --set armor stats
-    hero.sdata.armor_index = PLAYER_BUILDER_CONSTS.armors[event.armor].index
-    hero:SetBaseMoveSpeed(PLAYER_BUILDER_CONSTS.armors[event.armor].moveSpeed)
-    print(hero:GetBaseMoveSpeed())
-    hero:SetPhysicalArmorBaseValue(PLAYER_BUILDER_CONSTS.armors[event.armor].armor)
-    hero:SetBaseMagicalResistanceValue(0)
+    --hero.sdata.armor_index = PLAYER_BUILDER_CONSTS.armors[event.armor].index
+    --hero:SetBaseMoveSpeed(PLAYER_BUILDER_CONSTS.armors[event.armor].moveSpeed)
+    --print(hero:GetBaseMoveSpeed())
+    --hero:SetPhysicalArmorBaseValue(PLAYER_BUILDER_CONSTS.armors[event.armor].armor)
+    --hero:SetBaseMagicalResistanceValue(0)
 
     -- else if cyborg, get rank and increase movespeed
 
     -- set abilities
-    for i, abil in ipairs(PLAYER_BUILDER_CONSTS.classes[event.class].abilities) do
-         hero:AddAbility(abil)
-         local ability = hero:FindAbilityByName(abil)
-         if ability then
-             if hasbit(ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE) then
-                 ability:SetLevel(1)
-             end
-             if string.find(abil, "_off") then
-                 hero:SwapAbilities(abil,abil,false,false)
-             end
-         end
-    end
+    --for i, abil in ipairs(PLAYER_BUILDER_CONSTS.classes[event.class].abilities) do
+    --     hero:AddAbility(abil)
+    --     local ability = hero:FindAbilityByName(abil)
+    --     if ability then
+    --         if hasbit(ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE) then
+    --             ability:SetLevel(1)
+    --         end
+    --         if string.find(abil, "_off") then
+    --             hero:SwapAbilities(abil,abil,false,false)
+    --         end
+    --     end
+    --end
 
-    hero:AddAbility(PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill)
-    -- This will change based on rank and trait
-    hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill):SetLevel(1)
+    --hero:AddAbility(PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill)
+    ---- This will change based on rank and trait
+    --hero:FindAbilityByName(PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill):SetLevel(1)
 
     -- Add the appropriate sprint
-    if (event.class ~= "cyborg") then
-       hero:AddAbility("sprint_datadriven")
-       hero:FindAbilityByName("sprint_datadriven"):SetLevel(PLAYER_BUILDER_CONSTS.armors[event.armor].sprintSkill)
-    end
+    --if (event.class ~= "cyborg") then
+    --   hero:AddAbility("sprint_datadriven")
+    --   hero:FindAbilityByName("sprint_datadriven"):SetLevel(PLAYER_BUILDER_CONSTS.armors[event.armor].sprintSkill)
+    --end
 
-    hero:SetAbilityPoints(1) -- This will change based on rank
+    --hero:SetAbilityPoints(1) -- This will change based on rank
 
-    GameMode:ModifyStatBonuses(hero)
+    --GameMode:ModifyStatBonuses(hero)
 
     -- set trait TODO
     -- set maverick mutate TODO
@@ -179,17 +185,17 @@ function PlayerBuilder:BuildMarine( event )
     -- We'll store the information here in this player info object
     -- and pass that to PlayerManager so other systems can easily figure out information
     -- about the players
-    local playerInfo = PlayerInfo:new()
-    playerInfo.playerId = event.playerId
-    playerInfo.playerIndex = event.playerId + 1
-	playerInfo.playerName = PlayerResource:GetPlayerName(event.playerId) or "Unknown"
-    playerInfo.hero = hero
+    --local playerInfo = PlayerInfo:new()
+    --playerInfo.playerId = event.playerId
+    --playerInfo.playerIndex = event.playerId + 1
+	--playerInfo.playerName = PlayerResource:GetPlayerName(event.playerId) or "Unknown"
+    --playerInfo.hero = hero
 
-    playerInfo.className = event.class
-    playerInfo.weaponName = event.weapon
-    playerInfo.armorName = event.armor
+    --playerInfo.className = event.class
+    --playerInfo.weaponName = event.weapon
+    --playerInfo.armorName = event.armor
 
-    g_PlayerManager:onPlayerLoadedSwatHero(playerInfo)
+    --g_PlayerManager:onPlayerLoadedSwatHero(playerInfo)
 end
 
 -- pass this a hero entity to remove all of that hero's skills
