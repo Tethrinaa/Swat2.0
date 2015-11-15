@@ -9,7 +9,7 @@
 	"BaseClass"					"npc_dota_creature"
 	"SoundSet"					"Hero_leshrac"
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
-	"Level"						"10"
+	"Level"						"13"
 	"ModelScale"				"1.3"
 	//"UnitLabel"				"power_core" // saw this somewhere, unsure of effect
 
@@ -22,11 +22,12 @@
 
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1" 					"swat_ability_mana_drain"
+	"Ability1" 					"game_power_core_mana_drain"
 	"Ability2"					"centaur_stomp"
 	"Ability3"					"true_sight"	// Needed to drain from invis
-	"Ability4"					"swat_ability_invulnerable_object" // Modifiers.
-      "Ability5"              "" // Mana degen (based on damaged/badly/severly
+	"Ability4"					"common_invulnerable" // Modifiers.
+    "Ability5"					"common_no_health_bar" // Modifiers.
+    "Ability6"              "" // Mana degen (based on damaged/badly/severly
 
 	// Armor
 	//----------------------------------------------------------------

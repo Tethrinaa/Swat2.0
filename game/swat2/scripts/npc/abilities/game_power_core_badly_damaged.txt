@@ -1,7 +1,7 @@
 //=================================================================================================================
-// Ability: Power_Core_Damaged (Power Core)
+// Ability: Mana_Drain_Badly_Damaged (Power Core)
 //=================================================================================================================
-"swat_ability_power_core_damaged"
+"game_power_core_badly_damaged"
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -17,14 +17,14 @@
          "01"
          {
             "var_type"			"FIELD_FLOAT"
-            "mana_regen"		"-30"
+            "mana_regen"		"-45"
          }
       }
       // Data driven
       //-------------------------------------------------------------------------------------------------------------
       "Modifiers"
       {
-         "modifier_swat_ability_power_core_degen"
+         "modifier_game_power_core_degen"
          {
             "Passive"				"1"
             "IsPurgable"			"0"

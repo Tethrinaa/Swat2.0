@@ -1,5 +1,5 @@
 //=================================================================================================================
-    // Ability: Dummy unit - Ability that keeps this dummy unit from being detectable
+    // Ability: Dummy unit - Ability that keeps this dummy unit from being detectable/attackable...etc
     //=================================================================================================================
     "dummy_passive"
     {

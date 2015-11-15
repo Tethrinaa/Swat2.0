@@ -1,0 +1,25 @@
+//=================================================================================================================
+ // Unselectable
+ //=================================================================================================================
+    "common_unselectable"
+    {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "AbilityTextureName"            "disruptor_glimpse"
+
+        // Modifiers
+        //-------------------------------------------------------------------------------------------------------------
+        "Modifiers"
+        {
+            "common_unselectable"
+            {
+                "Passive"                       "1"
+                    "States"
+                    {
+                        "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+                    }
+            }
+        }
+    }

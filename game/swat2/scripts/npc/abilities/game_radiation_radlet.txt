@@ -1,7 +1,7 @@
 //=================================================================================================================
-    // Friendly Fire
+    // Invulnerability && Unselectability && NO Health bar (ex: radlets)
     //=================================================================================================================
-    "friendly_fire_on"
+    "game_radiation_radlet"
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -13,14 +13,22 @@
         //-------------------------------------------------------------------------------------------------------------
         "Modifiers"
         {
-            "modifier_deniable"
+            "Invulnerable"
             {
                 "Passive"                       "1"
-                "IsHidden"						"1"
                 "States"
-                {
-                    "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-                }
+			{
+				"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_NO_TEAM_MOVE_TO"	"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_NO_TEAM_SELECT"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				//"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
+			}
             }
         }
     }

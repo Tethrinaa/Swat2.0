@@ -176,15 +176,11 @@ function RadiationManager:spawnRadFragment()
 
     local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, point, true, nil, nil, DOTA_TEAM_BADGUYS )
     -- Apply rad modifier to unit to reduce rad count on death and update bracket
-    rad_frag:AddAbility("rad_frag_datadriven")
-    rad_frag:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
     rad_frag:SetRenderColor(50,205,50)
 
     -- For Nightmare+, there is a chance the rad will be an exploding rad
     if g_GameManager.nightmareValue > 0 then
         if RandomInt(0, 999) < ( 177 * g_GameManager.nightmareValue ) - ( 10 * g_GameManager.nightmareValue * g_DayNightManager.currentDay * g_DayNightManager.currentDay) then
-            rad_frag:AddAbility("rad_explosion")
-            rad_frag:FindAbilityByName("rad_explosion"):SetLevel(1)
             rad_frag:SetRenderColor(255, 50, 0)
         end
     end
@@ -237,8 +233,8 @@ function RadiationManager:spawnRadlets(radPosition, ioned)
                 radlet:SetRenderColor(152, 251, 152)
                 radlet:SetModelScale(size / 100.0)
 
-                radlet:AddAbility("invulnerable_unselectable")
-                radlet:FindAbilityByName("invulnerable_unselectable"):SetLevel(1)
+                radlet:AddAbility("game_radiation_radlet")
+                radlet:FindAbilityByName("game_radiation_radlet"):SetLevel(1)
 
                 -- Kill the radlet after size seconds
                 Timers:CreateTimer(size, function()
@@ -276,12 +272,7 @@ function RadiationManager:spawnInitialRadFragments()
         local room = rooms[i]
         local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply rad modifier to unit to reduce rad count on death and update bracket
-
-        if (rad_frag) then
-            rad_frag:AddAbility("rad_frag_datadriven")
-            rad_frag:FindAbilityByName("rad_frag_datadriven"):SetLevel(1)
-            rad_frag:SetRenderColor(50,205,50)
-        end
+        rad_frag:SetRenderColor(50,205,50)
     end
     self:incrementRadCount(INITIAL_RAD_COUNT)
 end

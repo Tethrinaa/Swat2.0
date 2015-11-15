@@ -67,19 +67,19 @@ function PowerManager:spawnPower(damagedCount, badlyCount, severeCount, hasHidde
                 print("PowerManager |     Damaged")
             end
             damagedCount = damagedCount - 1
-            degenAbility = "swat_ability_power_core_damaged"
+            degenAbility = "game_power_core_damaged"
         elseif badlyCount > 0 then
             if SHOW_POWER_MANAGER_LOGS then
                 print("PowerManager |     Badly")
             end
             badlyCount = badlyCount - 1
-            degenAbility = "swat_ability_power_core_badly_damaged"
+            degenAbility = "game_power_core_badly_damaged"
         elseif severeCount > 0 then
             if SHOW_POWER_MANAGER_LOGS then
                 print("PowerManager |     Severe")
             end
             severeCount = severeCount - 1
-            degenAbility = "swat_ability_power_core_severly_damaged"
+            degenAbility = "game_power_core_severly_damaged"
         else
             print("PowerManager | Not enough tor counts??")
         end

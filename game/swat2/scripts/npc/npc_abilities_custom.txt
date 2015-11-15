@@ -3,12 +3,12 @@
 	//=================================================================================================================
 	    // Ability: Armor Upgrade
 	    // Note: We need this to go past level 20, we will accomplish this with two abilities
-	    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_2 will cover in increments of 20
-	    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_2 = level 0
-	    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_2 = level 1
+	    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_20 will cover in increments of 20
+	    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_20 = level 0
+	    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_20 = level 1
 	    //       See EnemyUpgrades GiveUnitArmor() method
 	    //=================================================================================================================
-	    "armor_upgrade_1"
+	    "common_armor_upgrade_1"
 	    {
 	        "BaseClass"					"ability_datadriven"
 	        "AbilityTextureName"		"lone_druid_rabid"
@@ -27,7 +27,7 @@
 	
 	        "Modifiers"
 	        {
-	            "modifier_armor_upgrade_1"
+	            "modifier_common_armor_upgrade_1"
 	            {
 	                "Passive"			"1"
 	                "IsHidden"			"1"
@@ -39,7 +39,15 @@
 	            }
 	        }
 	    }
-	"armor_upgrade_2"
+	//=================================================================================================================
+	    // Ability: Armor Upgrade
+	    // Note: We need this to go past level 20, we will accomplish this with two abilities
+	    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_20 will cover in increments of 20
+	    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_20 = level 0
+	    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_20 = level 1
+	    //       See EnemyUpgrades GiveUnitArmor() method
+	    //=================================================================================================================
+	"common_armor_upgrade_20"
 	    {
 	        "BaseClass"					"ability_datadriven"
 	        "AbilityTextureName"		"lone_druid_rabid"
@@ -58,7 +66,7 @@
 	
 	        "Modifiers"
 	        {
-	            "modifier_armor_upgrade_2"
+	            "modifier_common_armor_upgrade_20"
 	            {
 	                "Passive"			"1"
 	                "IsHidden"			"1"
@@ -67,6 +75,108 @@
 	                {
 	                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
 	                }
+	            }
+	        }
+	    }
+	//=================================================================================================================
+	    // Friendly Fire
+	    //=================================================================================================================
+	    "common_friendly_fire_on"
+	    {
+	        // General
+	        //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "AbilityTextureName"            "disruptor_glimpse"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "modifier_deniable"
+	            {
+	                "Passive"                       "1"
+	                "IsHidden"						"1"
+	                "States"
+	                {
+	                    "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+	                }
+	            }
+	        }
+	    }
+	//=================================================================================================================
+	 // Invulnerability
+	 //=================================================================================================================
+	    "common_invulnerable"
+	    {
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "AbilityTextureName"            "disruptor_glimpse"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "common_invulnerable"
+	            {
+	                "Passive"                       "1"
+	                    "States"
+	                    {
+	                        "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
+	                    }
+	            }
+	        }
+	    }
+	//=================================================================================================================
+	    // No Health Bar
+	    //=================================================================================================================
+	    "common_no_health_bar"
+	    {
+	        // General
+	        //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	            "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	            "AbilityTextureName"            "disruptor_glimpse"
+	
+	            // Modifiers
+	            //-------------------------------------------------------------------------------------------------------------
+	            "Modifiers"
+	            {
+	
+	                "common_no_health_bar"
+	                {
+	                    "Passive"                       "1"
+	                        "States"
+	                        {
+	                            "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+	                        }
+	                }
+	            }
+	    }
+	//=================================================================================================================
+	 // Unselectable
+	 //=================================================================================================================
+	    "common_unselectable"
+	    {
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "AbilityTextureName"            "disruptor_glimpse"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "common_unselectable"
+	            {
+	                "Passive"                       "1"
+	                    "States"
+	                    {
+	                        "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+	                    }
 	            }
 	        }
 	    }
@@ -748,7 +858,7 @@
 		}
 	}
 	//=================================================================================================================
-	    // Ability: Dummy unit - Ability that keeps this dummy unit from being detectable
+	    // Ability: Dummy unit - Ability that keeps this dummy unit from being detectable/attackable...etc
 	    //=================================================================================================================
 	    "dummy_passive"
 	    {
@@ -777,9 +887,281 @@
 	            }
 	    }
 	//=================================================================================================================
-	    // Friendly Fire
+	// Ability: Mana_Drain_Badly_Damaged (Power Core)
+	//=================================================================================================================
+	"game_power_core_badly_damaged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
+	      "MaxLevel"                 "1"
+	      // Special
+	      //-------------------------------------------------------------------------------------------------------------
+	      "AbilitySpecial"
+	      {
+	         "01"
+	         {
+	            "var_type"			"FIELD_FLOAT"
+	            "mana_regen"		"-45"
+	         }
+	      }
+	      // Data driven
+	      //-------------------------------------------------------------------------------------------------------------
+	      "Modifiers"
+	      {
+	         "modifier_game_power_core_degen"
+	         {
+	            "Passive"				"1"
+	            "IsPurgable"			"0"
+	            "IsHidden"				"0"
+	            "Properties"
+	            {
+	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+	            }
+	         }
+	      }
+	   }
+	//=================================================================================================================
+	// Ability: Power_Core_Damaged (Power Core)
+	//=================================================================================================================
+	"game_power_core_damaged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
+	      "MaxLevel"                 "1"
+	      // Special
+	      //-------------------------------------------------------------------------------------------------------------
+	      "AbilitySpecial"
+	      {
+	         "01"
+	         {
+	            "var_type"			"FIELD_FLOAT"
+	            "mana_regen"		"-30"
+	         }
+	      }
+	      // Data driven
+	      //-------------------------------------------------------------------------------------------------------------
+	      "Modifiers"
+	      {
+	         "modifier_game_power_core_degen"
+	         {
+	            "Passive"				"1"
+	            "IsPurgable"			"0"
+	            "IsHidden"				"0"
+	            "Properties"
+	            {
+	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+	            }
+	         }
+	      }
+	   }
+	//=================================================================================================================
+	// Ability: Mana_Drain (Power Core)
+	//=================================================================================================================
+	"game_power_core_mana_drain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"lion_mana_drain"
+	      "MaxLevel"                 "1"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"30.1"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.5"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"5.0"	// better then the mana cost implies
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"30.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_per_second"			"60"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"break_distance"			"650"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"			"0.25"
+			}
+		}
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.ManaDrain"
+				"Target"		   "TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mana_drain"
+				"Target"			"TARGET"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+				"Function"		"mana_drain_stop_sound"
+				"sound"			"Hero_Lion.ManaDrain"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_drain"
+				"Target"			"TARGET"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+				"Function"		"mana_drain_stop_sound"
+				"sound"			"Hero_Lion.ManaDrain"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_mana_drain"
+				"Target"			"TARGET"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_mana_drain"
+			{
+				"IsHidden"	"1"
+	            "IsDebuff"	"1"
+				"Duration"	"%duration"
+	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	      "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target"		         "TARGET"
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+							"CASTER"	"attach_hitloc"
+						}
+					}
+				}
+				"ThinkInterval"	"%tick_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+						"Function"		"mana_drain"
+					}
+				}
+			}
+	         "modifier_mana_drain_autocast"
+	         {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	            "ThinkInterval"   "1"
+	            "OnIntervalThink"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile"   "scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+	                  "Function"     "auto_cast"
+	               }
+	            }
+	         }
+		}
+	}
+	//=================================================================================================================
+	// Ability: Mana_Drain_Severly_Damaged (Power Core)
+	//=================================================================================================================
+	"game_power_core_severly_damaged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
+	      "MaxLevel"                 "1"
+	      // Special
+	      //-------------------------------------------------------------------------------------------------------------
+	      "AbilitySpecial"
+	      {
+	         "01"
+	         {
+	            "var_type"			"FIELD_FLOAT"
+	            "mana_regen"		"-55"
+	         }
+	      }
+	      // Data driven
+	      //-------------------------------------------------------------------------------------------------------------
+	      "Modifiers"
+	      {
+	         "modifier_game_power_core_degen"
+	         {
+	            "Passive"				"1"
+	            "IsPurgable"			"0"
+	            "IsHidden"				"0"
+	            "Properties"
+	            {
+	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+	            }
+	         }
+	      }
+	   }
+	//=================================================================================================================
+	    // Invulnerability && Unselectability && NO Health bar (ex: radlets)
 	    //=================================================================================================================
-	    "friendly_fire_on"
+	    "game_radiation_radlet"
 	    {
 	        // General
 	        //-------------------------------------------------------------------------------------------------------------
@@ -791,17 +1173,121 @@
 	        //-------------------------------------------------------------------------------------------------------------
 	        "Modifiers"
 	        {
-	            "modifier_deniable"
+	            "Invulnerable"
 	            {
 	                "Passive"                       "1"
-	                "IsHidden"						"1"
 	                "States"
-	                {
-	                    "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-	                }
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_NO_TEAM_MOVE_TO"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_NO_TEAM_SELECT"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
+				}
 	            }
 	        }
 	    }
+	//=================================================================================================================
+	    // Rad damage for exploding rads - BOOM!
+	    //=================================================================================================================
+	    "game_radiation_rad_explosion"
+	    {
+	        // General
+	        //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	        "AbilityTextureName"            "disruptor_glimpse"
+	        "MaxLevel"     "1"
+	
+	        "Modifiers"
+	        {
+	
+	            "modifier_rad_frag_explosion_datadriven"
+	            {
+	                "Passive" "1"
+	
+	                "OnDeath"
+	                {
+	                    "FireEffect"
+	                    {
+	                        "EffectName"        "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+	                        "EffectAttachType"  "follow_hitloc"
+	                        "Target"
+	                        {
+	                            "Center"   "UNIT"
+	                            "Flags"            "DOTA_UNIT_TARGET_FLAG_DEAD"
+	                        }
+	                    }
+	
+	                    "ActOnTargets"
+	                    {
+	                        "Target"
+	                        {
+	                            "Center"   "UNIT"
+	                            "Radius"   "144"
+	                            "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                            "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	                            "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                        }
+	
+	                        "Action"
+	                        {
+	                            "Damage"
+	                            {
+	                                "Target"
+	                                {
+	                                    "Center"   "TARGET"
+	                                    "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                                }
+	                                "Type"                 "DAMAGE_TYPE_PHYSICAL"
+	                                "MinDamage"            "2000"
+	                                "MaxDamage"            "4000"
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	
+	        }
+	    }
+	//=================================================================================================================
+	// Ability: Radiation Fragment
+	//=================================================================================================================
+	"game_radiation_rad_frag"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"		"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 	"viper_corrosive_skin"
+		"MaxLevel"	"1"
+	
+		"Modifiers"
+		{
+			"modifier_rad_frag_datadriven"
+			{
+				"Passive" "1"
+	                "States"
+	                {
+	                    "MODIFIER_STATE_NOT_ON_MINIMAP"      "MODIFIER_STATE_VALUE_ENABLED"
+	                }
+	
+				"OnDeath"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "units/rad_frag.lua"
+	                  "Function"   "RadRemoved"
+	               }
+	            }
+			}
+		}
+	}
 	//=================================================================================================================
 	// Ability: Radiation Fragment
 	//=================================================================================================================
@@ -856,65 +1342,6 @@
 			}
 		}
 	}
-	//=================================================================================================================
-	 // Invulnerability
-	 //=================================================================================================================
-	    "invulnerable"
-	    {
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-	        "BaseClass"                     "ability_datadriven"
-	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	        "AbilityTextureName"            "disruptor_glimpse"
-	
-	        // Modifiers
-	        //-------------------------------------------------------------------------------------------------------------
-	        "Modifiers"
-	        {
-	            "Invulnerable"
-	            {
-	                "Passive"                       "1"
-	                    "States"
-	                    {
-	                        "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
-	                    }
-	            }
-	        }
-	    }
-	//=================================================================================================================
-	    // Invulnerability && Unselectability && NO Health bar (ex: radlets)
-	    //=================================================================================================================
-	    "invulnerable_unselectable"
-	    {
-	        // General
-	        //-------------------------------------------------------------------------------------------------------------
-	        "BaseClass"                     "ability_datadriven"
-	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	        "AbilityTextureName"            "disruptor_glimpse"
-	
-	        // Modifiers
-	        //-------------------------------------------------------------------------------------------------------------
-	        "Modifiers"
-	        {
-	            "Invulnerable"
-	            {
-	                "Passive"                       "1"
-	                "States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_NO_TEAM_MOVE_TO"	"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_NO_TEAM_SELECT"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_ATTACK_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					//"MODIFIER_STATE_FLYING"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		   "MODIFIER_STATE_VALUE_ENABLED"
-				}
-	            }
-	        }
-	    }
 	// This is just for use with flamethrower bouncy stuff
 	
 	   "luna_moon_glaive_dummy_datadriven"
@@ -1967,32 +2394,6 @@
 			}
 		}
 	}
-	//=================================================================================================================
-	    // No Health Bar
-	    //=================================================================================================================
-	    "no_health_bar"
-	    {
-	        // General
-	        //-------------------------------------------------------------------------------------------------------------
-	        "BaseClass"                     "ability_datadriven"
-	            "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	            "AbilityTextureName"            "disruptor_glimpse"
-	
-	            // Modifiers
-	            //-------------------------------------------------------------------------------------------------------------
-	            "Modifiers"
-	            {
-	
-	                "Invulnerable"
-	                {
-	                    "Passive"                       "1"
-	                        "States"
-	                        {
-	                            "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-	                        }
-	                }
-	            }
-	    }
 	//=================================================================================================================
 	// Ability: Aim (Covert Sniper)
 	//=================================================================================================================
@@ -3365,102 +3766,6 @@
 	        }
 	}
 	//=================================================================================================================
-	    // Rad damage for exploding rads - BOOM!
-	    //=================================================================================================================
-	    "rad_explosion"
-	    {
-	        // General
-	        //-------------------------------------------------------------------------------------------------------------
-	        "BaseClass"                     "ability_datadriven"
-	        "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	        "AbilityTextureName"            "disruptor_glimpse"
-	        "MaxLevel"     "1"
-	
-	        "Modifiers"
-	        {
-	
-	            "modifier_rad_frag_explosion_datadriven"
-	            {
-	                "Passive" "1"
-	
-	                "OnDeath"
-	                {
-	                    "FireEffect"
-	                    {
-	                        "EffectName"        "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
-	                        "EffectAttachType"  "follow_hitloc"
-	                        "Target"
-	                        {
-	                            "Center"   "UNIT"
-	                            "Flags"            "DOTA_UNIT_TARGET_FLAG_DEAD"
-	                        }
-	                    }
-	
-	                    "ActOnTargets"
-	                    {
-	                        "Target"
-	                        {
-	                            "Center"   "UNIT"
-	                            "Radius"   "144"
-	                            "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                            "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-	                            "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	                        }
-	
-	                        "Action"
-	                        {
-	                            "Damage"
-	                            {
-	                                "Target"
-	                                {
-	                                    "Center"   "TARGET"
-	                                    "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	                                }
-	                                "Type"                 "DAMAGE_TYPE_PHYSICAL"
-	                                "MinDamage"            "2000"
-	                                "MaxDamage"            "4000"
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	
-	        }
-	    }
-	//=================================================================================================================
-	// Ability: Radiation Fragment
-	//=================================================================================================================
-	"rad_frag_datadriven"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"		"ability_datadriven"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 	"viper_corrosive_skin"
-		"MaxLevel"	"1"
-	
-		"Modifiers"
-		{
-			"modifier_rad_frag_datadriven"
-			{
-				"Passive" "1"
-	                "States"
-	                {
-	                    "MODIFIER_STATE_NOT_ON_MINIMAP"      "MODIFIER_STATE_VALUE_ENABLED"
-	                }
-	
-				"OnDeath"
-	            {
-	               "RunScript"
-	               {
-	                  "ScriptFile" "units/rad_frag.lua"
-	                  "Function"   "RadRemoved"
-	               }
-	            }
-			}
-		}
-	}
-	//=================================================================================================================
 	// Ability: Sprint (Light,Medium,Heavy)
 	//=================================================================================================================
 	"sprint_datadriven"
@@ -3532,38 +3837,6 @@
 	            {
 	               "MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 	            }
-			}
-		}
-	}
-	//=================================================================================================================
-	// Ability: Power_Core_Mod // Based on Overthrow treasure courier ability
-	//=================================================================================================================
-	"swat_ability_invulnerable_object"
-	{
-		"BaseClass"          			    "ability_datadriven"
-		"AbilityName"           			"dota_ability_health_granter"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	
-		"Modifiers"
-		{
-			"modifier_swat_ability_invulnerable_object"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-	
-				"Aura"					""
-				"Aura_Radius"			"10"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_NONE"
-				"Aura_Types"			"DOTA_UNIT_TARGET_NONE"
-				"Aura_ApplyToCaster"	"1"
-	
-				"States"
-				{
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -3725,120 +3998,6 @@
 	         }
 		}
 	}
-	//=================================================================================================================
-	// Ability: Mana_Drain_Badly_Damaged (Power Core)
-	//=================================================================================================================
-	"swat_ability_power_core_badly_damaged"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
-	      "MaxLevel"                 "1"
-	      // Special
-	      //-------------------------------------------------------------------------------------------------------------
-	      "AbilitySpecial"
-	      {
-	         "01"
-	         {
-	            "var_type"			"FIELD_FLOAT"
-	            "mana_regen"		"-45"
-	         }
-	      }
-	      // Data driven
-	      //-------------------------------------------------------------------------------------------------------------
-	      "Modifiers"
-	      {
-	         "modifier_swat_ability_power_core_degen"
-	         {
-	            "Passive"				"1"
-	            "IsPurgable"			"0"
-	            "IsHidden"				"0"
-	            "Properties"
-	            {
-	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-	            }
-	         }
-	      }
-	   }
-	//=================================================================================================================
-	// Ability: Power_Core_Damaged (Power Core)
-	//=================================================================================================================
-	"swat_ability_power_core_damaged"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
-	      "MaxLevel"                 "1"
-	      // Special
-	      //-------------------------------------------------------------------------------------------------------------
-	      "AbilitySpecial"
-	      {
-	         "01"
-	         {
-	            "var_type"			"FIELD_FLOAT"
-	            "mana_regen"		"-30"
-	         }
-	      }
-	      // Data driven
-	      //-------------------------------------------------------------------------------------------------------------
-	      "Modifiers"
-	      {
-	         "modifier_swat_ability_power_core_degen"
-	         {
-	            "Passive"				"1"
-	            "IsPurgable"			"0"
-	            "IsHidden"				"0"
-	            "Properties"
-	            {
-	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-	            }
-	         }
-	      }
-	   }
-	//=================================================================================================================
-	// Ability: Mana_Drain_Severly_Damaged (Power Core)
-	//=================================================================================================================
-	"swat_ability_power_core_severly_damaged"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
-	      "MaxLevel"                 "1"
-	      // Special
-	      //-------------------------------------------------------------------------------------------------------------
-	      "AbilitySpecial"
-	      {
-	         "01"
-	         {
-	            "var_type"			"FIELD_FLOAT"
-	            "mana_regen"		"-55"
-	         }
-	      }
-	      // Data driven
-	      //-------------------------------------------------------------------------------------------------------------
-	      "Modifiers"
-	      {
-	         "modifier_swat_ability_power_core_degen"
-	         {
-	            "Passive"				"1"
-	            "IsPurgable"			"0"
-	            "IsHidden"				"0"
-	            "Properties"
-	            {
-	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-	            }
-	         }
-	      }
-	   }
 	//=================================================================================================================
 	// Ability: assault_rifleI // Mark 1 Assault Rifle skill
 	//=================================================================================================================

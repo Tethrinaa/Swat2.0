@@ -9,13 +9,13 @@
 	"SoundSet"					"Undying_Zombie"					// Name of sound set.
 	"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
 	"ModelScale"				"0.3"
-	"Level"						"3"
+	"Level"						"7"
 
 	// Abilities
 	//----------------------------------------------------------------
-        "Ability1"					"invulnerable_unselectable"			// Ability 2.
-	"Ability2"					"no_health_bar"			// Ability 1.
-	"Ability3"					""			// Ability 3.
+    "Ability1"  				"common_invulnerable"			// Ability 1.
+	"Ability2"					"common_no_health_bar"			// Ability 2.
+	"Ability3"					"common_unselectable"			// Ability 3.
 	"Ability4"					""			// Ability 4.
 	"Ability5"					""			// Ability 5.
 	"Ability6"					""			// Ability 6 - Extra.

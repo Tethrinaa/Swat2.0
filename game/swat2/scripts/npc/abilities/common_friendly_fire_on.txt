@@ -1,10 +1,10 @@
 //=================================================================================================================
- // Invulnerability
- //=================================================================================================================
-    "invulnerable"
+    // Friendly Fire
+    //=================================================================================================================
+    "common_friendly_fire_on"
     {
-    // General
-    //-------------------------------------------------------------------------------------------------------------
+        // General
+        //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "ability_datadriven"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
         "AbilityTextureName"            "disruptor_glimpse"
@@ -13,13 +13,14 @@
         //-------------------------------------------------------------------------------------------------------------
         "Modifiers"
         {
-            "Invulnerable"
+            "modifier_deniable"
             {
                 "Passive"                       "1"
-                    "States"
-                    {
-                        "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
-                    }
+                "IsHidden"						"1"
+                "States"
+                {
+                    "MODIFIER_STATE_SPECIALLY_DENIABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+                }
             }
         }
     }
