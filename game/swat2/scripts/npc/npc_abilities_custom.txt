@@ -4955,7 +4955,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"MaxLevel"                 "8"
 
-		"AbilityTextureName"			"rattletrap_power_cogs"
+		"AbilityTextureName"			"doom_bringer_devour"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -4993,7 +4993,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"gyrocopter_flak_cannon"
+		"AbilityTextureName"			"dazzle_shallow_grave"
 		"MaxLevel"						"2"
 		"LevelsBetweenUpgrades"  	"0"
 
