@@ -72,7 +72,7 @@ end
 function EnemyCommander:doMobAction(unit, target)
     target = target or self.targettedHero
     local position = nil
-    if target ~= nil and target:GetHealth() > 0 then
+    if target ~= nil and (not target:IsNull()) and target:GetHealth() > 0 then
         -- Attack move to that targets locations
         position = target:GetAbsOrigin() + RandomSizedVector(499)
     else
