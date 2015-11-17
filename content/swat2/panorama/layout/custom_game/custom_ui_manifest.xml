@@ -13,6 +13,7 @@
 	
 	<Panel>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select_screen.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select_screen_button.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/squad_status.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/squad_member.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/objectives.xml" />

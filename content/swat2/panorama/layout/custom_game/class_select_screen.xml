@@ -8,85 +8,31 @@
 	</scripts>
 	<Panel class="ClassSelectScreenRoot">
 		<Image id="BackgroundImage" />
-			<Label id="CharacterName" text="TEST"/>
 		<Panel class="CharacterPortrait" >
 			<Image id="CharacterPicture" />
 			<Label id="CharacterName" text="TEST"/>
 		</Panel>	
-		<Panel class="AbilityPanel" id="AbilityPanel" />
-		<Panel class="ClassesPanel" id="ClassesPanel" >
+		<Panel class="AbilityPanel" >
+			<Panel id="abilities_list" />
+		</Panel>
+		<Panel class="ClassesPanel" >
 			<Label text="Class" />
-			<Button id="SniperButton" onactivate="Selected('sniper', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/covert_sniper.png" />
-			</Button>
-			<Button id="CyborgButton" onactivate="Selected('cyborg', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/cyborg.png" />
-			</Button>
-			<Button id="DemoButton" onactivate="Selected('demo', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/demolitions.png" />
-			</Button>
-			<Button id="MedicButton" onactivate="Selected('medic', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/field_medic.png" />
-			</Button>
-			<Button id="MaverickButton" onactivate="Selected('maverick', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/maverick.png" />
-			</Button>
-			<Button id="HeavyOrdnanceButton" onactivate="Selected('ho', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/heavy_ord.png" />
-			</Button>
-			<Button id="PsychologistButton" onactivate="Selected('psychologist', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/psychologist.png" />
-			</Button>
-			<Button id="TacticianButton" onactivate="Selected('tactician', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/tactician.png" />
-			</Button>
-			<Button id="PyrotechnicianButton" onactivate="Selected('pyrotechnician', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/pyrotechnician.png" />
-			</Button>			
-			<Button id="TechOpsButton" onactivate="Selected('techops', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/tech_ops.png" />
-			</Button>			
-			<Button id="UmbrellaCloneButton" onactivate="Selected('umbrellaclone', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/umbrella_clone.png" />
-			</Button>			
-			<Button id="WatchmanButton" onactivate="Selected('watchman', 'ClassesPanel')" >
-				<Image src="file://{images}/class_icons/watchman.png" />
-			</Button>			
+			<Panel id="class_button_list" />
 		</Panel>
-		<Panel class="WeaponsPanel" id="WeaponsPanel" >
+		<Panel class="WeaponsPanel" >
 			<Label text="Weapons" />
-			<Button id="AssaultRifleButton" onactivate="Selected('assault_rifle', 'WeaponsPanel')" >
-				<Image src="file://{images}/weapon_icons/assault_rifle.png" />
-			</Button>
-			<Button id="ChaingunButton" onactivate="Selected('chaingun', 'WeaponsPanel')" >
-				<Image src="file://{images}/weapon_icons/chaingun.png" />
-			</Button>
-			<Button id="FlamethrowerButton" onactivate="Selected('flamethrower', 'WeaponsPanel')" >
-				<Image src="file://{images}/weapon_icons/flamethrower.png" />
-			</Button>
-			<Button id="RocketButton" onactivate="Selected('rocket', 'WeaponsPanel')" >
-				<Image src="file://{images}/weapon_icons/rocket.png" />
-			</Button>
-			<Button id="SniperRifleButton" onactivate="Selected('sniper_rifle', 'WeaponsPanel')" >
-				<Image src="file://{images}/weapon_icons/sniper_rifle.png" />
-			</Button>
+			<Panel id="weapons_button_list" />
 		</Panel>
-		<Panel class="ArmorPanel" id="ArmorPanel" >
+		<Panel class="ArmorPanel" >
 			<Label text="Armor" />
-			<Button id="LightArmorButton" onactivate="Selected('light', 'ArmorPanel')" >
-				<Image src="file://{images}/armor_icons/light_armor.png" />
-			</Button>
-			<Button id="MediumArmorButton" onactivate="Selected('medium', 'ArmorPanel')" >
-				<Image src="file://{images}/armor_icons/med_armor.png" />
-			</Button>			
-			<Button id="HeavyArmorButton" onactivate="Selected('heavy', 'ArmorPanel')" >
-				<Image src="file://{images}/armor_icons/heavy_armor.png" />
-			</Button>			
-			<Button id="AdvancedArmorButton" onactivate="Selected('advanced', 'ArmorPanel')" >
-				<Image src="file://{images}/armor_icons/advanced_armor.png" />
-			</Button>
+			<Panel id="armor_button_list" />
 		</Panel>
-		<Panel class="TraitsPanel" id="TraitsPanel" />
+		<Panel id="TraitsPanel" >
+			<Panel id="traits_button_list" />
+		</Panel>
+		<Panel id="SpecsPanel" >
+			<Panel id="specs_button_list" />
+		</Panel>
 		<Button id="ConfirmSelections" onactivate="ConfirmSelected()">
 			<Label text="Confirm Selections" />
 		</Button>

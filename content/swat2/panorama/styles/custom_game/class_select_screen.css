@@ -13,6 +13,14 @@
 	visibility: visible;
 }
 
+.test #BackgroundImage
+{
+	width: 1920px;
+	height: 1080px;
+	background-color: white;
+	visibility: visible;
+}
+
 .CharacterPortrait
 {
 	margin-top: 130px;
@@ -43,28 +51,24 @@
 	height: 370px;
 	margin-top: 90px;
 	margin-left: 74px;
-	flow-children: right-wrap;
-	visibility: visible;
-	background-color: green;
+	background-color: black;
 }
 
 .ClassesPanel Label
 {
-	margin-left: 196px;
-	margin-right: 196px;
+	horizontal-align: center;
+	vertical-align: top;
 	color: #FFFFFF;
 	text-shadow: 2px 2px 8px 3.0 #333333b0;
 	font-size: 50px;
 	font-weight: bold;
 }
 
-.ClassesPanel Button
+#class_button_list
 {
-	width: 65px;
-	height: 65px;
-	margin: 15px;
-	background-color: white;
-	border: 2px solid goldenrod;
+	horizontal-align: center;
+	margin-top: 56px;
+	flow-children: right-wrap;
 }
 
 .WeaponsPanel
@@ -73,28 +77,25 @@
 	height: 260px;
 	margin-top: 470px;
 	margin-left: 74px;
-	flow-children: right-wrap;
 	visibility: visible;
-	background-color: green;
+	background-color: black;
 }
 
 .WeaponsPanel Label
 {
-	margin-left: 150px;
-	margin-right: 150px;
+	horizontal-align: center;
+	vertical-align: top;
 	color: #FFFFFF;
 	text-shadow: 2px 2px 8px 3.0 #333333b0;
 	font-size: 50px;
 	font-weight: bold;
 }
 
-.WeaponsPanel Button
+#weapons_button_list
 {
-	width: 65px;
-	height: 65px;
-	margin: 15px;
-	background-color: white;
-	border: 2px solid goldenrod;
+	horizontal-align: center;
+	margin-top: 56px;
+	flow-children: right-wrap;
 }
 
 .ArmorPanel
@@ -103,35 +104,27 @@
 	height: 260px;
 	margin-top: 740px;
 	margin-left: 74px;
-	flow-children: right-wrap;
 	visibility: visible;
-	background-color: green;
+	background-color: black;
 }
 
 .ArmorPanel Label
 {
-	margin-left: 150px;
-	margin-right: 150px;
+	horizontal-align: center;
+	vertical-align: top;
 	color: #FFFFFF;
 	text-shadow: 2px 2px 8px 3.0 #333333b0;
 	font-size: 50px;
 	font-weight: bold;
 }
 
-.ArmorPanel Button
+#armor_button_list
 {
-	width: 65px;
-	height: 65px;
-	margin: 15px;
-	background-color: white;
-	border: 2px solid goldenrod;
-	wash-color: #39b0d325;
+	horizontal-align: center;
+	margin-top: 56px;
+	flow-children: right-wrap;
 }
 
-.TraitsPanel
-{
-	visibility: collapse;
-}
 
 #ConfirmSelections
 {
@@ -142,6 +135,7 @@
 	width: 500px;
 	height: 100px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006500 ), to( #00C000 ) );
+	visibility: collapse;
 }
 
 #ConfirmSelections Label
@@ -156,11 +150,6 @@
 
 #ConfirmSelections:hover
 {
-	/*vertical-align: bottom;
-	horizontal-align: center;
-	margin-bottom: 50px;
-	width: 500px;
-	height: 100px;*/
 	border: 2px solid white;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #004700 ), to( #00A500 ) );
 }

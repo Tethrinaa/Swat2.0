@@ -1,0 +1,20 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/class_select_screen.css" />
+		<include src="file://{resources}/styles/custom_game/class_select_screen_button.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/class_select_screen_button.js" />
+	</scripts>
+	<Panel class="SelectionButtonPanel">
+		<Label id = "ButtonLabel" />
+		<Label id = "ButtonType" />
+		<Button id="SelectionButton"
+				onactivate="Selected()"
+		>
+			<Panel id="UnavailableOverlay" />
+		</Button>
+	</Panel>	
+</root>
+
