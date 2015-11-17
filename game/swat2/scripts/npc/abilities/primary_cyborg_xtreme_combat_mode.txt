@@ -1,0 +1,99 @@
+//=================================================================================================================
+// Ability: Xtreme Combat Mode (Cyborg)
+//=================================================================================================================
+   "primary_cyborg_xtreme_combat_mode"
+   {
+      // General
+      //-------------------------------------------------------------------------------------------------------------
+      "BaseClass"				      "ability_datadriven"
+      "AbilityName"              "Xtreme Combat Mode"
+      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+      "MaxLevel"                 "16"
+      "LevelsBetweenUpgrades"    "0"
+      "AbilityTextureName"			"bristleback_warpath"
+
+      // Casting
+      "AbilityCastPoint"			"0.0"
+      "AbilityCooldown"				"21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 31.0 36.0 40.0 44.0 48.0 52.0 56.0 60.0"
+      "AbilityManaCost"				"90 92 94 96 98 100 102 104 106 108 110 112 114 116 118 120"
+      // Special
+      //-------------------------------------------------------------------------------------------------------------
+      	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"	"models/heroes/wisp/wisp_overcharge.vmdl"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+	}
+
+
+
+
+
+  "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				   "FIELD_FLOAT"
+            "duration"				   "20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 31.0 35.0 39.0 43.0 47.0 51.0 55.0 59.0"
+         }
+         "02"
+         {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage_percent"           "19 21 23 25 27 29 31 33 36 40 45 51 58 66 75 85"
+         }
+         "03"
+         {
+            "var_type"              "FIELD_FLOAT"
+            "bonus_health_regen"         "0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0"
+         }
+	 "04"
+         {
+            "var_type"              "FIELD_FLOAT"
+            "bonus_armor"         "1 2 3 4 5 6 7 8 8 8 8 8 8 8 8 8"
+         }
+      }
+      "OnSpellStart"
+      {
+         "ApplyModifier"
+         {
+            "ModifierName" "modifier_cyborg_xtreme_combat_mode"
+            "Target"       "CASTER"
+            "Duration"     "%duration"
+         }
+      }
+
+	"Modifiers"
+	{
+		"modifier_cyborg_xtreme_combat_mode"
+		{
+		"OnCreated"
+			{
+				"FireSound"
+				{
+					"EffectName"	"Hero_Sven.WarCry"
+					"Target"		"CASTER"
+				}
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_hitloc"
+					}
+				}
+			}
+
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"   "%bonus_health_regen"
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE" "%bonus_damage_percent"
+			}
+		}
+        }
+   }

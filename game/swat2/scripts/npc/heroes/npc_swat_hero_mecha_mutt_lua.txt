@@ -1,0 +1,16 @@
+//=================================================================================================================
+// HERO: Mecha Mutt
+//=================================================================================================================
+"npc_swat_hero_mecha_mutt_lua"
+{
+	"override_hero"					"npc_dota_hero_chaos_knight"			// Hero to override
+	"Ability1"					""	// Turbo
+	"Ability2"					""	// Advanced Generator
+	"Ability3"					""	// Thrash
+	"Ability4"					""	// Nanites Advanced
+	// A.R.S. (Dog_Level_Relation)
+	// Retrieve Items
+	// Evasion (Dog_Level_Relation)
+	// Armor (Dog_Level_Relation)
+	// Integrate Shield Capacitor (Dog_Level_Relation)
+}

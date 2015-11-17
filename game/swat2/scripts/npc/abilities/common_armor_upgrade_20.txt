@@ -1,0 +1,39 @@
+//=================================================================================================================
+    // Ability: Armor Upgrade
+    // Note: We need this to go past level 20, we will accomplish this with two abilities
+    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_20 will cover in increments of 20
+    //       So armor 17 = armor_upgrade_1 = level 17, armor_upgrade_20 = level 0
+    //       So armor 34 = armor_upgrade_1 = level 14, armor_upgrade_20 = level 1
+    //       See EnemyUpgrades GiveUnitArmor() method
+    //=================================================================================================================
+"common_armor_upgrade_20"
+    {
+        "BaseClass"					"ability_datadriven"
+        "AbilityTextureName"		"lone_druid_rabid"
+        "MaxLevel"					"20"
+
+        "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"				"FIELD_INTEGER"
+                "bonus_armor"			"20 40 60 80 100 120 140 180 200 220 240 260 280 300 320 340 360 380 400"
+            }
+        }
+
+        "Modifiers"
+        {
+            "modifier_common_armor_upgrade_20"
+            {
+                "Passive"			"1"
+                "IsHidden"			"1"
+
+                "Properties"
+                {
+                    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                }
+            }
+        }
+    }

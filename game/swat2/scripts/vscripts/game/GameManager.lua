@@ -10,6 +10,7 @@ require('game/Locations')
 require('game/EnemyUpgrades')
 require('game/EnemySpawner')
 require('game/EnemyCommander')
+require('game/DayNightManager')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
 require('game/DebugChatCommands')
@@ -20,6 +21,7 @@ g_PowerManager = {}
 g_EnemyUpgrades = {}
 g_EnemySpawner = {}
 g_EnemyCommander = {}
+g_DayNightManager = {}
 
 function GameManager:new(o)
     o = o or {}
@@ -55,9 +57,6 @@ function GameManager:new(o)
     -- Boolean for if we're in survival mode
     self.isSurvival = false
 
-    -- Current day (incremented every day cycle)
-    self.currentDay = 1
-
     -- Difficulty related variables
     -- difficultyBase - A constant value (except on survival), which scales the difficulty of the game over time
     --                - LOWER == MORE DIFFICULT
@@ -82,10 +81,7 @@ function GameManager:new(o)
 end
 
 function GameManager:initializeSystems()
-    -- Note: Make sure locations are set up before anything else
-    initializeGlobalLocations()
-
-
+    g_DayNightManager = DayNightManager:new()
     g_RadiationManager = RadiationManager:new()
     g_PowerManager = PowerManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()
@@ -177,7 +173,13 @@ function GameManager:onGameStarted()
         print("Game has started!")
     end
     g_EnemySpawner:onGameStarted()
-    g_EnemyUpgrades:onGameStarted()
+    g_DayNightManager:onGameStarted()
+end
+
+-- Called when the horn blows and the game begins
+function GameManager:onPlayerLeavesGame()
+    g_EnemySpawner.innardsSpawner:updateInnardsChance()
+    g_EnemyUpgrades:onPlayerLeavesGame(playerIndex)
 end
 
 -- Called once difficulty set.

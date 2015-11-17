@@ -19,14 +19,19 @@ function Precache( context )
 			PrecacheResource( "particle", "*.vpcf", context )
 			PrecacheResource( "particle_folder", "particles/folder", context )
 	]]
-    PrecacheUnitByNameSync("npc_dota_creature_basic_zombie", context)
     PrecacheUnitByNameSync("npc_dota_creature", context)
-    PrecacheUnitByNameSync("npc_dota_creature_basic_garg", context)
-    PrecacheUnitByNameSync("npc_dota_creature_basic_mutant", context)
-    PrecacheUnitByNameSync("npc_dota_creature_basic_beast", context)
-    PrecacheUnitByNameSync("npc_dota_creature_basic_dog", context)
-    PrecacheUnitByNameSync("npc_dota_creature_basic_innards", context)
-    PrecacheUnitByNameSync("zombie_corpse", context)
+
+    -- Enemies
+    PrecacheUnitByNameSync("enemy_boss_abomination", context)
+    PrecacheUnitByNameSync("enemy_minion_beast", context)
+    PrecacheUnitByNameSync("enemy_minion_dog", context)
+    PrecacheUnitByNameSync("enemy_minion_garg", context)
+    PrecacheUnitByNameSync("enemy_minion_innard_initial", context)
+    PrecacheUnitByNameSync("enemy_minion_innard_reborn", context)
+    PrecacheUnitByNameSync("enemy_minion_mutant", context)
+    PrecacheUnitByNameSync("enemy_minion_zombie", context)
+    PrecacheUnitByNameSync("enemy_minion_zombie_corpse", context)
+
     PrecacheUnitByNameSync("npc_dota_create_rad_frag", context)
     PrecacheUnitByNameSync("npc_dota_hero_lina", context)
     PrecacheUnitByNameSync("npc_dota_hero_techies", context)
@@ -50,7 +55,7 @@ function Precache( context )
     PrecacheUnitByNameSync("npc_dota_hero_vengefulspirit", context)
     PrecacheUnitByNameSync("npc_dota_hero_ursa", context)
     PrecacheUnitByNameSync("npc_dota_hero_storm_spirit", context)
-    	
+
 end
 
 -- Create the game mode when we activate

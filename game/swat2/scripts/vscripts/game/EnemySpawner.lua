@@ -125,6 +125,8 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
+    self.innardsSpawner:updateInnardsChance()
+
     -- Spawn some initial zombies (we had to wait for difficulty so we can get the room layouts)
     self:spawnInitialZombies()
 end
@@ -177,7 +179,7 @@ function EnemySpawner:spawnWave()
     if self.minionCount > EnemySpawner.MAX_MINIONS_WAVE_START then
         -- Too many minions out to spawn a new wave!
         if SHOW_ENEMY_SPAWNER_LOGS then
-            print("EnemySpawner | Too many minions out to start a new wave")
+            print("EnemySpawner | Too many minions out to start a new wave. [minionCount=" .. self.minionCount .. " , waveCheck=" .. EnemySpawner.MAX_MINIONS_WAVE_START)
         end
         -- Wait 15 seconds
         Timers:CreateTimer(15, function()
@@ -197,14 +199,13 @@ function EnemySpawner:spawnWave()
         local waveInitialWaitTime = 75.0 + (math.min(self.bossCount, 2) * 20.0) + 10 * ( g_GameManager.difficultyValue - math.min(g_GameManager.survivalValue, 4) )
 
         if SHOW_ENEMY_SPAWNER_LOGS then
-            print("EnemySpawner | New Wave Starting in " .. waveInitialWaitTime .. " seconds")
-            print("EnemySpawner | Spawning " .. numberOfWaveGroups .. " wave groups!")
+            print("EnemySpawner | New Wave! Spawning " .. numberOfWaveGroups .. " wave groups in " .. waveInitialWaitTime .. " seconds!")
         end
 
         Timers:CreateTimer(waveInitialWaitTime, function()
             -- There is a random chance we don't do anything
             local i = 0
-            if g_GameManager.nightmareValue > 0 and g_GameManager.currentDay > 1 then
+            if g_GameManager.nightmareValue > 0 and g_DayNightManager.currentDay > 1 then
                 i = 18 - (g_PlayerManager.playerCount / 4) - (g_GameManager.nightmareValue * g_GameManager.nightmareValue)
             else
                 i = math.max(g_GameManager.difficultyValue * 10, 19 - (g_PlayerManager.playerCount / 4))
@@ -255,7 +256,7 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
         end
         if SHOW_ENEMY_SPAWNER_LOGS then
             if shouldAddToMinionQueueIfFail then
-                print("EnemySpawner | Spawning WaveGroup of " .. groupSize .. " enemies")
+                print("EnemySpawner | Spawning WaveGroup of " .. groupSize .. " enemies. [minionCount=" .. self.minionCount .. " , minionQueue = " .. self.minionQueue .. "]")
             else
                 print("EnemySpawner | Spawning Queue WaveGroup of " .. groupSize .. " enemies. Queue size = " .. self.minionQueue)
             end
@@ -326,14 +327,14 @@ end
 function EnemySpawner:spawnQueueGroups()
     if self.minionQueue > 0 then
         if SHOW_ENEMY_SPAWNER_LOGS then
-            print("EnemySpawner | Spawning from Queue")
+            print("EnemySpawner | Spawning from Queue [MinionCount=" .. self.minionCount .. " , QueueSize=" .. self.minionQueue .. "]")
         end
         local waitTimeBetweenQueueWaves = self.waveGroupDelay - g_GameManager.difficultyValue
         Timers:CreateTimer(waitTimeBetweenQueueWaves, function()
             if self.minionQueue  > 0 then
                 if self.minionCount >= EnemySpawner.MAX_MINIONS then
                     if SHOW_ENEMY_SPAWNER_LOGS then
-                        print("EnemySpawner | Queue Waiting - too many enemies already out")
+                        print("EnemySpawner | Queue Waiting - too many enemies already out! [minionCount=" .. self.minionCount .. "]")
                     end
                     -- Too many minions for the queue
                     -- Collect up the current zombies (which minorly buffs them) and wait to try again
@@ -421,7 +422,7 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
         -- Let's hurt the unit a bit
         unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
         -- Set its speed
-        unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
+        --unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
 
         return unit
     end
@@ -469,7 +470,7 @@ function EnemySpawner:startBossCycle()
     end
 
     if (not self.survivalDoubleBoss)
-        and (g_GameManager.currentDay > 1)
+        and (g_DayNightManager.currentDay > 1)
         and (g_GameManager.nightmareOrSurvivalValue > 0)
         and (RandomInt(0, 4) < g_GameManager.nightmareOrSurvivalValue) then
         -- Spawn this boss really quickly (the ole Survival double boss)
@@ -562,7 +563,7 @@ end
 
 function EnemySpawner:spawnBoss()
     local boss = nil
-    if g_GameManager.currentDay == 1 then
+    if g_DayNightManager.currentDay == 1 then
         -- We can only spawn Aboms on day 1
         boss = self.abomSpawner:spawnBoss()
     elseif g_GameManager.difficultyName == "normal" then
@@ -640,7 +641,9 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
     end
     Timers:CreateTimer(10.0, function()
         for _,unit in pairs(units) do
-            ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
+            if not unit:IsNull() then
+                ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_MOVE , Position = GetRandomPointInGraveyard(), Queue = false})
+            end
         end
     end)
 end

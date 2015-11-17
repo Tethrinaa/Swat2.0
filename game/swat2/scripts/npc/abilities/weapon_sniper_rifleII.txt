@@ -1,0 +1,78 @@
+//=================================================================================================================
+// Ability: sniper_rifleII // Mark 2 Sniper Rifle skill
+//=================================================================================================================
+"weapon_sniper_rifleII"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				      "ability_datadriven"
+	"AbilityName"              "Refined Rifle"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
+	"MaxLevel"                 "11"
+	"LevelsBetweenUpgrades"    "0"
+	"AbilityTextureName"       "sven_great_cleave"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+         "04"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"crit_chance"				"0 10 15 20 25 30 35 40 45 50 55 60"
+		}
+		"05"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"crit_damage"				"100 200 220 240 260 280 300 320 340 360 380 400"
+		}
+      }
+      "Modifiers"
+      {
+         "modifier_chance_to_crit_sniper2_datadriven"
+         {
+            "Passive"   "1"
+            "IsHidden"	"1"
+            "OnAttackStart"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_sniper2_crit_datadriven"
+					"Target"		"CASTER"
+				}
+				"Random"
+				{
+					"Chance"		"%crit_chance"
+
+					"OnSuccess"
+					{
+						"ApplyModifier"
+						{
+							"ModifierName"	"modifier_sniper2_crit_datadriven"
+							"Target"		"CASTER"
+						}
+					}
+				}
+			}
+         }
+      	"modifier_sniper2_crit_datadriven"
+		{
+			"IsHidden"		"1"
+			"IsPurgable"	"0"
+			"OnAttackLanded"
+			// "%attack_damage" is set to the damage value before mitigation
+			{
+				"RemoveModifier"
+				{
+					"ModifierName"	"modifier_sniper2_crit_datadriven"
+					"Target" 		"CASTER"
+				}
+			}
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+			}
+		}
+      }
+   }

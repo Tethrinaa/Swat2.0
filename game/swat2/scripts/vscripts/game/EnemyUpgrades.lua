@@ -98,14 +98,8 @@ function EnemyUpgrades:onDifficultySet(difficulty)
         -- Unknown? Error! (Shouldn't happen)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
-end
 
--- Called when the horn blows and the game begins
-function EnemyUpgrades:onGameStarted()
-    -- Queue up the Midnight Difficulty Increase or survival
-    Timers:CreateTimer(12 * 60, function() -- Wait 12 minutes
-        self:onFirstMidnight()
-    end)
+    self:startIncreaseMoveSpeedLoop()
 end
 
 -- Calculates what the movespeed should be for the given mob
@@ -113,13 +107,16 @@ end
 -- @param zombieBonus(float) | Adds this to the returned value (has a max)
 -- Returns back the value to set for the movespeed
 function EnemyUpgrades:calculateMovespeed(mob, zombieBonus)
-    local moveSpeed = mob:GetBaseMoveSpeed()
+    local moveSpeed = GameMode.unit_infos[mob:GetUnitName()]["MovementSpeed"] or 0
+    if moveSpeed == 0 then
+        print("ERROR! | No Movementspeed value found for mob=" .. mob:GetUnitName())
+    end
 
-    local maxMobSpeedBonus = self.mobSpeedBase * 1.1
+    local maxMobSpeedBonus = moveSpeed * 1.1
     if(moveSpeed + self.mobSpeedBase < maxMobSpeedBonus) then
         moveSpeed = moveSpeed + self.mobSpeedBase
     else
-        moveSpeed = maxMobSpeedBonus
+        moveSpeed = moveSpeed + maxMobSpeedBonus
     end
 
     if zombieBonus < EnemyUpgrades.MAX_ZOMBIE_BONUS then
@@ -127,6 +124,8 @@ function EnemyUpgrades:calculateMovespeed(mob, zombieBonus)
     else
         moveSpeed = moveSpeed + self.mobSpeed + EnemyUpgrades.MAX_ZOMBIE_BONUS
     end
+
+    --print("DEBUG | CalculateMoveSpeed | " .. mob:GetUnitName() .. "  [base=" .. mob:GetBaseMoveSpeed() .. " set=" .. moveSpeed .. " , mobSpeedBase=" .. self.mobSpeedBase .. " , mobSpeed=" .. self.mobSpeed .. " , zombieBonus=" .. zombieBonus .. "]")
 
     return moveSpeed
 end
@@ -139,6 +138,34 @@ function EnemyUpgrades:calculateZombieBonus(mob)
 	else
 		return 0.0
 	end
+end
+
+-- Every 30 seconds, move speed is increased (or decreased) based on the minion queue
+function EnemyUpgrades:startIncreaseMoveSpeedLoop()
+    Timers:CreateTimer(30, function()
+
+        local bonusPenalty = 0.0
+        if g_GameManager.isSurvival then
+            bonusPenalty = 2.0
+            self.mobSpeedBase = (-14.28 * (g_GameManager.difficultyBase + 0.75)) + g_GameManager.difficultyTime + (g_PlayerManager.playerCount * ( 2.5 - g_GameManager.difficultyBase ))
+        else
+            self.mobSpeedBase = (-14.28 * (g_GameManager.difficultyBase + 0.75)) + (g_GameManager.difficultyTime / (18.0 - (g_PlayerManager.playerCount / 3.0))) + (g_PlayerManager.playerCount * ( 2.5 - g_GameManager.difficultyBase ))
+        end
+
+        if g_EnemySpawner.minionQueue > 29 then
+            self.mobSpeed = self.mobSpeed + 1.9 + bonusPenalty
+        elseif g_EnemySpawner.minionQueue > 0 then
+            self.mobSpeed = self.mobSpeed + 1.0 + bonusPenalty
+        else
+            self.mobSpeed = math.max(0, self.mobSpeed - 1.0 - bonusPenalty)
+        end
+
+        if SHOW_ENEMY_UPGRADES_LOGS then
+            print("EnemyUpgrades | Increasing movespeed. [mobSpeedBase=" .. self.mobSpeedBase .. " , moveSpeed=" .. self.mobSpeed .. "]")
+        end
+
+        return 30
+    end)
 end
 
 function EnemyUpgrades:upgradeMobs()
@@ -280,8 +307,25 @@ function EnemyUpgrades:onPlayerLeavesGame(playerIndex)
     self:updateUber()
 end
 
+-- This function is called at Dawn/Dusk (and also Midnight/Noon on NM+
+-- It increases the base difficulty factor of the game
+function EnemyUpgrades:onTimeDifficultyIncreased()
+    -- Increase difficulty time scaling factor
+    g_GameManager.difficultyTime = g_GameManager.difficultyTime + (1.8 / g_GameManager.difficultyBase)
+
+    if SHOW_ENEMY_UPGRADES_LOGS then
+        print("EnemyUpgrades | onTimeDifficultyIncreased! new difficultyTime=" .. g_GameManager.difficultyTime)
+    end
+
+    if g_GameManager.isSurvival then
+        g_GameManager.difficultyBase = math.max(0.8, g_GameManager.difficultyBase - 0.1)
+        self:updateUber()
+    end
+end
+
 -- 'Midnight' Difficulty
 -- The harder difficulties will permanently boost enemy upgrades at certain times
+-- This is triggered on the first midnight of the game
 function EnemyUpgrades:onFirstMidnight()
     -- Enable midnight difficulty!!
     if g_GameManager.nightmareValue > 1 then
@@ -344,17 +388,17 @@ function GiveUnitArmor(unit, armor)
     local armor1 = armor % 20
     local armor2 = math.floor(armor / 20)
 
-    local armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+    local armorAbil1 = unit:FindAbilityByName("common_armor_upgrade_1")
     if armorAbil1 == nil then
-        unit:AddAbility("armor_upgrade_1")
-        armorAbil1 = unit:FindAbilityByName("armor_upgrade_1")
+        unit:AddAbility("common_armor_upgrade_1")
+        armorAbil1 = unit:FindAbilityByName("common_armor_upgrade_1")
     end
     armorAbil1:SetLevel(armor1)
 
-    local armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+    local armorAbil2 = unit:FindAbilityByName("common_armor_upgrade_20")
     if armorAbil2 == nil then
-        unit:AddAbility("armor_upgrade_2")
-        armorAbil2 = unit:FindAbilityByName("armor_upgrade_2")
+        unit:AddAbility("common_armor_upgrade_20")
+        armorAbil2 = unit:FindAbilityByName("common_armor_upgrade_20")
     end
     armorAbil2:SetLevel(armor2)
 end

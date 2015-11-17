@@ -12,7 +12,8 @@ function GameMode:OnDisconnect(keys)
   local userid = keys.userid
 
   -- TODO: Not sure if this is called correctly (UNTESTED)
-  EnemyUpgrades:onPlayerLeavesGame(keys.player)
+  g_PlayerManager:onPlayerLeavesGame(userid)
+  g_GameManager.onPlayerLeavesGame(userid)
 end
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
@@ -39,8 +40,8 @@ function GameMode:OnNPCSpawned(keys)
   npc.sdata.OnEntityKilled = {}
   npc.sdata.OnEntityHurt = {}
 
-  if not npc:HasAbility("friendly_fire_on") and npc:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-	npc:AddAbility("friendly_fire_on"):SetLevel(1)
+  if not npc:HasAbility("common_friendly_fire_on") and npc:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+	npc:AddAbility("common_friendly_fire_on"):SetLevel(1)
   end
 end
 

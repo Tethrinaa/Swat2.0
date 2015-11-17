@@ -32,9 +32,6 @@ function PlayerManager:new(o)
 end
 
 function PlayerManager:initializeSystems()
-    -- Note: Make sure locations are set up before anything else
-    initializeGlobalLocations()
-
     g_ExperienceManager = ExperienceManager:new()
     g_PlayerBuilder = PlayerBuilder:new()
     g_PlayerHudManager = PlayerHudManager:new()
@@ -42,6 +39,7 @@ end
 
 -- Called when the first player loads in and pregame has started
 function PlayerManager:onPreGameStarted()
+    g_PlayerBuilder:onPreGameStarted()
     g_ExperienceManager:onPreGameStarted()
     g_PlayerHudManager:startHudUpdateLoop()
 end

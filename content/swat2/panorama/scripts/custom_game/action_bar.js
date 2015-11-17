@@ -16,7 +16,7 @@ function Test()
 
 	testBackground.addEventListener("click", function(event) {
 		event.preventDefault()
-	});	
+	});
 }
 
 function OnLevelUpClicked()
@@ -51,7 +51,7 @@ function UpdateAbilityList()
 	var secondaryAbilityListPanel = $( "#secondary_ability_list" );
 	if ( !secondaryAbilityListPanel )
 		return;
-	
+
 	var queryUnit = Players.GetLocalPlayerPortraitUnit();
 
 	// see if we can level up
@@ -60,7 +60,7 @@ function UpdateAbilityList()
 	var bControlsUnit = Entities.IsControllableByPlayer( queryUnit, Game.GetLocalPlayerID() );
 	$.GetContextPanel().SetHasClass( "could_level_up", ( bControlsUnit && bPointsToSpend ) );
 
-	// update all the panels 
+	// update all the panels
 	var nUsedNanitePanels = 0;
 	var nUsedWeaponPanels = 0;
 	var nUsedPrimaryPanels = 0;
@@ -71,14 +71,14 @@ function UpdateAbilityList()
 		var ability_name = Abilities.GetAbilityName( ability );
 		var index = ability_name.indexOf("_");
 		var ability_type = ability_name.substring(0, index);
-		
+
 		if ( ability == -1 )
 			continue;
 
 		if ( !Abilities.IsDisplayedAbility(ability) )
 			continue;
-		
-		
+
+
 		if (ability_type == "nanites") {
 			if ( nUsedNanitePanels >= m_NaniteAbilityPanels.length )
 			{
@@ -91,10 +91,10 @@ function UpdateAbilityList()
 			// update the panel for the current unit / ability
 			var naniteAbilityPanel = m_NaniteAbilityPanels[ nUsedNanitePanels ];
 			naniteAbilityPanel.data().SetAbility( ability, queryUnit, Game.IsInAbilityLearnMode() );
-		
-			nUsedNanitePanels++;	
+
+			nUsedNanitePanels++;
 		}
-		
+
 		else if (ability_type == "weapon") {
 			if ( nUsedWeaponPanels >= m_WeaponAbilityPanels.length )
 			{
@@ -107,11 +107,11 @@ function UpdateAbilityList()
 			// update the panel for the current unit / ability
 			var weaponAbilityPanel = m_WeaponAbilityPanels[ nUsedWeaponPanels ];
 			weaponAbilityPanel.data().SetAbility( ability, queryUnit, Game.IsInAbilityLearnMode() );
-		
+
 			nUsedWeaponPanels++;
-	
+
 		}
-		
+
 		else if (ability_type == "primary") {
 			if ( nUsedPrimaryPanels >= m_PrimaryAbilityPanels.length )
 			{
@@ -124,10 +124,10 @@ function UpdateAbilityList()
 			// update the panel for the current unit / ability
 			var primaryAbilityPanel = m_PrimaryAbilityPanels[ nUsedPrimaryPanels ];
 			primaryAbilityPanel.data().SetAbility( ability, queryUnit, Game.IsInAbilityLearnMode() );
-		
-			nUsedPrimaryPanels++;	
+
+			nUsedPrimaryPanels++;
 		}
-		
+
 		else {
 			if ( nUsedSecondaryPanels >= m_SecondaryAbilityPanels.length )
 			{
@@ -140,8 +140,8 @@ function UpdateAbilityList()
 			// update the panel for the current unit / ability
 			var secondaryAbilityPanel = m_SecondaryAbilityPanels[ nUsedSecondaryPanels ];
 			secondaryAbilityPanel.data().SetAbility( ability, queryUnit, Game.IsInAbilityLearnMode() );
-		
-			nUsedSecondaryPanels++;	
+
+			nUsedSecondaryPanels++;
 		}
 	}
 
@@ -151,20 +151,20 @@ function UpdateAbilityList()
 		var naniteAbilityPanel = m_NaniteAbilityPanels[ i ];
 		naniteAbilityPanel.data().SetAbility( -1, -1, false );
 	}
-	
+
 	for ( var i = nUsedWeaponPanels; i < m_WeaponAbilityPanels.length; ++i )
 	{
 		var weaponAbilityPanel = m_WeaponAbilityPanels[ i ];
 		weaponAbilityPanel.data().SetAbility( -1, -1, false );
 	}
-	
-	for ( var i = nUsedPrimaryPanels; i < m_PrimaryAbilityPanels; ++i )
+
+	for ( var i = nUsedPrimaryPanels; i < m_PrimaryAbilityPanels.length; ++i )
 	{
 		var primaryAbilityPanel = m_PrimaryAbilityPanels[ i ];
 		primaryAbilityPanel.data().SetAbility( -1, -1, false );
 	}
-	
-	for ( var i = nUsedSecondaryPanels; i < m_SecondaryAbilityPanels; ++i )
+
+	for ( var i = nUsedSecondaryPanels; i < m_SecondaryAbilityPanels.length; ++i )
 	{
 		var secondaryAbilityPanel = m_SecondaryAbilityPanels[ i ];
 		secondaryAbilityPanel.data().SetAbility( -1, -1, false );
@@ -180,7 +180,7 @@ function UpdateAbilityList()
 	GameEvents.Subscribe( "dota_player_update_query_unit", UpdateAbilityList );
 	GameEvents.Subscribe( "dota_ability_changed", UpdateAbilityList );
 	GameEvents.Subscribe( "dota_hero_ability_points_changed", UpdateAbilityList );
-	
+
 	UpdateAbilityList(); // initial update
 })();
 

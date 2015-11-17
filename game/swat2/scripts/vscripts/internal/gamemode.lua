@@ -88,7 +88,7 @@ function GameMode:_InitGameMode()
   ListenToGameEvent("dota_tower_kill", Dynamic_Wrap(GameMode, 'OnTowerKill'), self)
   ListenToGameEvent("dota_player_selected_custom_team", Dynamic_Wrap(GameMode, 'OnPlayerSelectedCustomTeam'), self)
   ListenToGameEvent("dota_npc_goal_reached", Dynamic_Wrap(GameMode, 'OnNPCGoalReached'), self)
-  
+
   --ListenToGameEvent("dota_tutorial_shop_toggled", Dynamic_Wrap(GameMode, 'OnShopToggled'), self)
 
   --ListenToGameEvent('player_spawn', Dynamic_Wrap(GameMode, 'OnPlayerSpawn'), self)
@@ -127,7 +127,7 @@ mode = nil
 function GameMode:_CaptureGameMode()
   if mode == nil then
     -- Set GameMode parameters
-    mode = GameRules:GetGameModeEntity()        
+    mode = GameRules:GetGameModeEntity()
     mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
     mode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
     mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
@@ -151,7 +151,7 @@ function GameMode:_CaptureGameMode()
     if FORCE_PICKED_HERO ~= nil then
       mode:SetCustomGameForceHero( FORCE_PICKED_HERO )
     end
-    mode:SetFixedRespawnTime( FIXED_RESPAWN_TIME ) 
+    mode:SetFixedRespawnTime( FIXED_RESPAWN_TIME )
     mode:SetFountainConstantManaRegen( FOUNTAIN_CONSTANT_MANA_REGEN )
     mode:SetFountainPercentageHealthRegen( FOUNTAIN_PERCENTAGE_HEALTH_REGEN )
     mode:SetFountainPercentageManaRegen( FOUNTAIN_PERCENTAGE_MANA_REGEN )
@@ -167,5 +167,5 @@ function GameMode:_CaptureGameMode()
     mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
     self:OnFirstPlayerLoaded()
-  end 
+  end
 end

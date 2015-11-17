@@ -1,0 +1,36 @@
+"cyborg_forcefield_off"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityTextureName"			"wisp_spirits"
+	"AbilityManaCost"		"0"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+		"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"0"
+	
+	"OnSpellStart"
+	{
+		"RemoveModifier"
+		{
+			"ModifierName" 		"modifier_cyborg_forcefield"
+			"Target"			"CASTER"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+			"Function"		"SwapOutDeactivate"
+		}
+	}
+}

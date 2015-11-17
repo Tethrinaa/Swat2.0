@@ -1,0 +1,102 @@
+//=================================================================================================================
+// Ability: Mend Wounds (Mender)
+//=================================================================================================================
+"mender_mend_wounds"
+    {
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"           	    "Mend Wounds"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+
+	"MaxLevel"                 	 	"17"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	"AbilityTextureName"			"rubick_spell_steal"
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"625"
+	"AbilityCastPoint"				"0.05"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"1"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"heal"				"12 17 23 28 34 39 45 50 56 61 67 72 78 83 89 94 100"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"auto_cast_range"	"625"
+		}
+	}
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_mend_wounds.lua"
+			"Function"		"OnAbilityPhaseStart"
+			"Target"		"TARGET"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star"
+			"Target"		"TARGET"
+		}
+		"Heal"
+		{
+			"Target" 		"TARGET"
+			"HealAmount"	"%heal"
+		}
+
+	}
+	
+	"Modifiers"
+	{
+		"modifier_mender_mend_wounds_autocast"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
+					"Function"		"HealAutocast"
+				}
+			}
+
+			"ThinkInterval" ".15"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
+					"Function"		"HealAutocast"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,87 @@
+//=================================================================================================================
+// Demolitions: Biochemical Energy
+// This levels up with AdvGen and needs to level DOWN when lockdown gets toggled off
+//=================================================================================================================
+"demo_biochemical_energy"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityUnitDamageType"  	"DAMAGE_TYPE_PURE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	"AbilityTextureName"	"razor_static_link"
+	"AbilityManaCost"		"0"
+	"MaxLevel"              "18"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+		"particle"					"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"20"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"base_efficiency"  			".35"
+		}
+		"01"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"max_life_percent"  		".5"
+		}
+		"01"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"base_loss"  				".5"
+		}
+		"01"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"loss_factor" 		 		"2"
+		}
+		"01"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"min_eps"  					"2"
+		}
+	}
+
+	"OnSpellStart"
+	{
+			"FireSound"
+		{
+			"Target"				"TARGET"
+			"EffectName"			"Hero_StormSpirit.ElectricVortexCast"
+		}
+	
+		"TrackingProjectile"
+		{
+			"Target"				"TARGET"
+			"EffectName"			"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+			"MoveSpeed"				"1100"
+			"Dodgeable"				"1"
+			"ProvidesVision"		"0"
+			"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_2"
+		}
+	
+		"RunScript"
+		{
+			"ScriptFile" 	"heroes/hero_demo/biochem.lua"
+			"Function" 		"OnSpellStart"
+			"Target" 		"TARGET"
+		}
+	}
+}

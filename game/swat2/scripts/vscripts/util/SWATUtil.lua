@@ -1,16 +1,28 @@
---- Returns if a unit is mechanical.
--- Determines this by looking at the K-V pairs of its unit type
--- @param unit Unit to check
-function IsMechanical(unit) 
-	local unit_info = GameMode.unit_infos[unit:GetUnitName()]
-
-	-- If it is defined, and IsMechanical is 1 then it's mechanical
-	-- otherwise, the default is organic
-	return unit_info ~= nil and unit_info["IsMechanical"] == 1
+--- Returns true if the unit type is mechanical.
+function IsMechanical(unit)
+    return HasUnitTypeFlag(unit, "IsMechanical")
 end
 
-function IsOrganic(unit) 
-	return not IsMechanical(unit) 
+--- Returns true if the unit type is organic.
+function IsOrganic(unit)
+    return not IsMechanical(unit)
+end
+
+--- Returns true if the unit type is wearing PA.
+function IsPowerArmor(unit)
+    return HasUnitTypeFlag(unit, "IsPowerArmor")
+end
+
+--- Returns if a unit type has a flag.
+-- Determines this by checking the K-V pairs for a unit's type for a value of 1.
+-- @param unit Unit to check
+-- @param flag_name The name of the key to check
+function HasUnitTypeFlag(unit, flag_name)
+    local unit_info = GameMode.unit_infos[unit:GetUnitName()]
+
+	-- If it is defined, and the flag_name value is 1 then return true
+	-- otherwise, the default is false
+    return unit_info ~= nil and unit_info[flag_name] == 1
 end
 
 --- Searches for valid revive targets in an area.
@@ -162,7 +174,7 @@ end
 
 --- Determine if a unit is a target for Mend Wounds
 function IsMendWoundsTarget(unit)
-	return not IsMechanical(unit) and unit:GetHealthDeficit() > 0
+	return IsOrganic(unit) and unit:GetHealthDeficit() > 0
 end
 
 --- Ensure that the target of an ability is valid.
