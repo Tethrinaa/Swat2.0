@@ -68,7 +68,7 @@
 		"03"
 		{
 			"var_type"                	"FIELD_INTEGER"
-			"outer_damage"              "50" //scaled upt to 16
+			"outer_damage"              "150" //scaled upt to 16
 		}
 		"04"
 		{
@@ -142,34 +142,34 @@
 			"ProvidesVision"	"0"
 			"HasFrontalCone"	"0"
 		}
-				"FireSound"
-	{
-		"Target"			"CASTER"
-		"EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
-	}
+		"FireSound"
+        {
+            "Target"			"CASTER"
+            "EffectName"		"Hero_Tinker.Heat-Seeking_Missile"
+        }
 
 	}
 
-		"OnProjectileHitUnit"
-{
-	"FireSound"
-	{
-		"Target"			"TARGET"
-		"EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
-	}
-
-	"FireEffect"
-	{
-		"Target"			"TARGET"
-		"EffectName"		"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
-		"EffectAttachType"	"start_at_customorigin"
-		"ControlPointEntities"
-		{
-			"TARGET"		"attach_origin"
-		}
-	}
-
-}
+	"OnProjectileHitUnit"
+       {
+           "FireSound"
+           {
+               "Target"			"TARGET"
+               "EffectName"		"Hero_Tinker.Heat-Seeking_Missile.Impact"
+           }
+       
+           "FireEffect"
+           {
+               "Target"			"TARGET"
+               "EffectName"		"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+               "EffectAttachType"	"start_at_customorigin"
+               "ControlPointEntities"
+               {
+                   "TARGET"		"attach_origin"
+               }
+           }
+       
+       }
 
 
 
@@ -251,7 +251,7 @@
 					"Damage"		"%inner_damage"
 				}
 			}
-			}
+		}
 
 		"modifier_demo_mirv_napalm"
 		{
