@@ -392,8 +392,8 @@
 			}
 			"RunScript"
 			{
-				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power_lua"
-				"Function"		"OnSpellStart"
+				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power"
+				"Function"		"RestoreMana"
 			}
 		}
 	}
@@ -431,8 +431,10 @@
 			}
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-				"Function"		"SwapInDeactivate"
+				"ScriptFile"	"util/SWATUtil.lua"
+				"Function"		"SwapAbilitiesDataDriven"
+	            "on_ability"    "cyborg_forcefield_off"
+	            "off_ability"    "cyborg_forcefield"
 			}
 		}
 		"Modifiers"
@@ -464,6 +466,12 @@
 						"Function"		"ForcefieldDestroy"
 					}
 				}
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
+	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
+	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
+	            }
 			}
 		}
 	}
@@ -498,8 +506,10 @@
 			}
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-				"Function"		"SwapOutDeactivate"
+				"ScriptFile"	"util/SWATUtil.lua"
+				"Function"		"SwapAbilitiesDataDriven"
+	            "on_ability"    "cyborg_forcefield"
+	            "off_ability"    "cyborg_forcefield_off"
 			}
 		}
 	}
@@ -537,9 +547,10 @@
 			}
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
-				"Function"		"SwapAbilities"
-				"sub_ability_name"		"cyborg_pheromones_off"
+				"ScriptFile"	"util/SWATUtil.lua"
+				"Function"		"SwapAbilitiesDataDriven"
+				"on_ability"		"cyborg_pheromones_off"
+				"off_ability"		"cyborg_pheromones"
 			}
 		}
 	}
@@ -610,10 +621,16 @@
 	
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
-				"Function"		"OnSpellStart"
-				"main_ability_name"		"cyborg_pheromones"
-				"radius"		"%radius"
+				"ScriptFile"	"util/SWATUtil.lua"
+				"Function"		"SwapAbilitiesDataDriven"
+				"on_ability"		"cyborg_pheromones"
+				"off_ability"		"cyborg_pheromones_off"
+			}
+	        "RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_pheromones.lua"
+				"Function"		"AttractUndead"
+	            "radius"        "%radius"
 			}
 		}
 	}
@@ -2817,8 +2834,7 @@
 		"AbilityTextureName"		"gyrocopter_flak_cannon"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_TEAM_ALL"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_TEAM_NONE"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"MaxLevel"					"16"
 		"LevelsBetweenUpgrades"  	"0"
 	

@@ -4,12 +4,9 @@
 -- Tick count and interval controlled by a datadriven thinker
 function ClusterThink(keys)
 	local radius = keys.ability:GetSpecialValueFor("radius")
-	-- local team =  keys.ability:GetAbilityTargetTeam()
-	-- local Type =  keys.ability:GetAbilityTargetType()
-	-- local flags = keys.ability:GetAbilityTargetFlags()
-	local team =  DOTA_UNIT_TARGET_TEAM_BOTH
-	local Type =  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	local flags = DOTA_UNIT_TARGET_FLAG_NONE
+	local team =  keys.ability:GetAbilityTargetTeam()
+	local Type =  keys.ability:GetAbilityTargetType()
+	local flags = keys.ability:GetAbilityTargetFlags()
 	local damage_type = keys.ability:GetAbilityDamageType()
 
     print(radius, keys.target:GetAbsOrigin(),team, Type, flags, damage_type)

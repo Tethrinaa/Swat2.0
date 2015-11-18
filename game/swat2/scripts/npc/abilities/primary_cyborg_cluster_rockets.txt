@@ -10,8 +10,7 @@
 	"AbilityTextureName"		"gyrocopter_flak_cannon"
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC"
-	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NONE"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 	"MaxLevel"					"16"
 	"LevelsBetweenUpgrades"  	"0"
 

@@ -29,8 +29,10 @@
 		}
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-			"Function"		"SwapOutDeactivate"
+			"ScriptFile"	"util/SWATUtil.lua"
+			"Function"		"SwapAbilitiesDataDriven"
+            "on_ability"    "cyborg_forcefield"
+            "off_ability"    "cyborg_forcefield_off"
 		}
 	}
 }

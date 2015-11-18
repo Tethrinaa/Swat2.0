@@ -30,7 +30,7 @@ function SwapAbilitiesLua(caster, on_ability, off_ability)
     caster:SwapAbilities(on_ability, off_ability, true, false)
 end
 
-function SwapAbilityDataDriven(keys)
+function SwapAbilitiesDataDriven(keys)
     SwapAbilitiesLua(keys.caster, keys.on_ability, keys.off_ability)
 end
 
