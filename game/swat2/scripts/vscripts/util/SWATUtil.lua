@@ -25,6 +25,15 @@ function HasUnitTypeFlag(unit, flag_name)
     return unit_info ~= nil and unit_info[flag_name] == 1
 end
 
+
+function SwapAbilitiesLua(caster, on_ability, off_ability)
+    caster:SwapAbilities(on_ability, off_ability, true, false)
+end
+
+function SwapAbilityDataDriven(keys)
+    SwapAbilitiesLua(keys.caster, keys.on_ability, keys.off_ability)
+end
+
 --- Searches for valid revive targets in an area.
 -- @param location The center of the search area
 -- @param location The radius of the search area

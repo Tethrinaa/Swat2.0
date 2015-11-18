@@ -2,19 +2,16 @@
 
 function ValidPheroTarget(unit)
 	-- TODO this needs to exclude phero immune units like innards and umbs
-	return unit:GetAttackCapability() > 0
+    if string.find(unit:GetUnitName(), "innard") then
+           return false
+    elseif string.find(unit:GetUnitName(), "firefly") then
+           return false
+    elseif IsOrganic(unit) and not IsPowerArmor(unit) then
+        return unit:GetAttackCapability() > 0
+    end
 end
 
-function SwapAbilities(keys)
-	DeepPrintTable(keys)
-	if keys.main_ability_name then
-		keys.caster:SwapAbilities( keys.main_ability_name, keys.ability:GetAbilityName(), true, false )
-	elseif keys.sub_ability_name then
-		keys.caster:SwapAbilities( keys.ability:GetAbilityName(), keys.sub_ability_name, false, true )
-	end
-end
-
-function OnSpellStart(keys)
+function AttractUndead(keys)
 	local caster = keys.caster
 	
 	-- find the units in the phero raidus
@@ -40,11 +37,4 @@ function OnSpellStart(keys)
 			ExecuteOrderFromTable( order )
 		end
 	end
-	
-	-- Swap the abilities back out
-	local params = {}
-	params.main_ability_name = keys.main_ability_name
-	params.caster = caster
-	params.ability = keys.ability
-	SwapAbilities( params )
 end

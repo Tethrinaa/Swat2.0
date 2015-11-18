@@ -3,16 +3,21 @@
 --- A single instance of a cluster tick.
 -- Tick count and interval controlled by a datadriven thinker
 function ClusterThink(keys)
-
 	local radius = keys.ability:GetSpecialValueFor("radius")
-	local team =  keys.ability:GetAbilityTargetTeam()
-	local Type =  keys.ability:GetAbilityTargetType()
-	local flags = keys.ability:GetAbilityTargetFlags()
+	-- local team =  keys.ability:GetAbilityTargetTeam()
+	-- local Type =  keys.ability:GetAbilityTargetType()
+	-- local flags = keys.ability:GetAbilityTargetFlags()
+	local team =  DOTA_UNIT_TARGET_TEAM_BOTH
+	local Type =  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	local flags = DOTA_UNIT_TARGET_FLAG_NONE
 	local damage_type = keys.ability:GetAbilityDamageType()
 
+    print(radius, keys.target:GetAbsOrigin(),team, Type, flags, damage_type)
+    
 	-- Grab all the units in cluster rockets target area	
 	local units = FindUnitsInRadius(keys.caster:GetTeamNumber(), keys.target:GetAbsOrigin(), nil, radius, team, Type, flags, FIND_ANY_ORDER, false)
 	local count = #units
+    print(count)
 	if count < 1 then
 		return
 	end
@@ -29,7 +34,7 @@ function ClusterThink(keys)
 	
 	for _,unit in pairs(units) do
 		if unit ~= nil then
-		
+            
 			-- Set the stun duration so they all end at the same time regardless of when they walk into the area
 			local thinker_modifier = keys.target:FindModifierByName("modifier_cyborg_cluster_rockets_thinker")
 			local stun_time = keys.ability:GetSpecialValueFor("stun_duration")

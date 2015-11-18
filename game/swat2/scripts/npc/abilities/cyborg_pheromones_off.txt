@@ -65,10 +65,16 @@
 
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
-			"Function"		"OnSpellStart"
-			"main_ability_name"		"cyborg_pheromones"
-			"radius"		"%radius"
+			"ScriptFile"	"util/SWATUtil.lua"
+			"Function"		"SwapAbilitiesDataDriven"
+			"on_ability"		"cyborg_pheromones"
+			"off_ability"		"cyborg_pheromones_off"
+		}
+        "RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_pheromones.lua"
+			"Function"		"AttractUndead"
+            "radius"        "%radius"
 		}
 	}
 }

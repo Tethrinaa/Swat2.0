@@ -32,9 +32,10 @@
 		}
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/hero_cyborg/cyborg_pheromones_lua.lua"
-			"Function"		"SwapAbilities"
-			"sub_ability_name"		"cyborg_pheromones_off"
+			"ScriptFile"	"util/SWATUtil.lua"
+			"Function"		"SwapAbilitiesDataDriven"
+			"on_ability"		"cyborg_pheromones_off"
+			"off_ability"		"cyborg_pheromones"
 		}
 	}
 }

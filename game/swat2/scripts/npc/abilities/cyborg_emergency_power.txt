@@ -71,8 +71,8 @@
 		}
 		"RunScript"
 		{
-			"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power_lua"
-			"Function"		"OnSpellStart"
+			"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power"
+			"Function"		"RestoreMana"
 		}
 	}
 }

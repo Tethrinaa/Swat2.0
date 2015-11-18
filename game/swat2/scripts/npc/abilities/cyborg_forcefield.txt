@@ -32,8 +32,10 @@
 		}
 		"RunScript"
 		{
-			"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-			"Function"		"SwapInDeactivate"
+			"ScriptFile"	"util/SWATUtil.lua"
+			"Function"		"SwapAbilitiesDataDriven"
+            "on_ability"    "cyborg_forcefield_off"
+            "off_ability"    "cyborg_forcefield"
 		}
 	}
 	"Modifiers"
@@ -65,6 +67,12 @@
 					"Function"		"ForcefieldDestroy"
 				}
 			}
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
+                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
+                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
+            }
 		}
 	}
 }
