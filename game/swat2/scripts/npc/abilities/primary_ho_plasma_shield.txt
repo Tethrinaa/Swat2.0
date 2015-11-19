@@ -1,0 +1,101 @@
+//=================================================================================================================
+// Ability: Organic Replacement(Cyborg)
+//=================================================================================================================
+   "primary_ho_plasma_shield"
+   {
+  	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityName"               "primary_ho_plasma_shield"
+	"BaseClass"				    "ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityTargetType"         "DOTA_UNIT_TARGET_ALL"
+	"MaxLevel"                  "8"
+    "AbilityManaCost"		    "1 2 3 4 5 6 7 8"   
+    "LevelsBetweenUpgrades"  	"1"
+	"AbilityTextureName"		"rattletrap_power_cogs"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_evasion"				"7 13 19 24 29 33 37 40"
+		}
+		"02"
+		{
+			"var_type"				    "FIELD_INTEGER"
+			"eps_cost"			        "-1 -2 -3 -4 -5 -6 -7 -8"
+		}
+        "03"
+		{
+			"var_type"			        "FIELD_INTEGER"
+			"aura_radius"				"144"
+		}
+        "04"
+		{
+			"var_type"			        "FIELD_FLOAT"
+			"aura_damage"               "41.67 62.5 83.33 104.17 125 145.83 166.67 187.5"
+		}
+        "05"
+		{
+			"var_type"			        "FIELD_INTEGER"
+			"aura_interval"				"1"
+		}
+        "06"
+		{
+			"var_type"			        "FIELD_INTEGER"
+			"linger_duration"				"2"
+		}
+    }
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"Target"		"CASTER"
+			"EffectName"	"Hero_Tinker.Rearm"
+
+		}
+        "RunScript"
+		{
+			"ScriptFile"	    "util/SWATUtil.lua"
+			"Function"		    "SwapAbilitiesDataDriven"
+			"on_ability"		"primary_ho_plasma_shield_off"
+			"off_ability"		"primary_ho_plasma_shield"
+		}
+        "RunScript"
+		{
+			"ScriptFile"	    "heroes/hero_heavy_ordnance/ho_plasma_shield.lua"
+			"Function"		    "ApplyAura"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_ho_plasma_shield_burn"
+		{
+			"ThinkInterval"         "%aura_interval"
+            "Duration"              "%linger_duration"
+            "OnIntervalThink"
+            {
+                "ApplyDamage"
+                {
+                    "Damage"        "%aura_damage"
+                    "Target"        "TARGET"
+                }
+            }
+		}
+	}
+}

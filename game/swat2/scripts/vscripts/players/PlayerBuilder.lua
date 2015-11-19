@@ -161,6 +161,10 @@ function PlayerBuilder:BuildMarine( event )
              end
          end
     end
+    
+    -- add any abilities for testing but this should be emptied out each time
+    hero:AddAbility("primary_ho_plasma_shield")
+    
 
     hero:AddAbility(PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill)
     -- This will change based on rank and trait
