@@ -9,6 +9,7 @@
 	        "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 	        "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 	        "AbilityLayout"				"4"
+	        "Level"						"10"
 	        "Ability1"					"invulnerable_unselectable"
 	    }
 	//=================================================================================
@@ -1157,7 +1158,7 @@
 	        "SoundSet"					"Undying_Zombie"					// Name of sound set.
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
 		"ModelScale"				"1"
-		"Level"						"1"
+		"Level"						"9"
 		"IsMechanical"				"1"
 		"IsSummoned"				"1"
 		"Duration"				"20"
@@ -1165,8 +1166,9 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"mender_mend_wounds"			// Ability 1.
-		"Ability2"					"mender_defense_network"			// Ability 1.
-		"Ability3"					"mender_contraption_plating"			// Ability 1.
+		"Ability2"					"mender_defense_network"			// Ability 2.
+		"Ability3"					"mender_contraption_plating"			// Ability 3.
+	    "Ability4"					"common_magic_immune"			// Ability 4.
 	
 		// Armor
 		//----------------------------------------------------------------

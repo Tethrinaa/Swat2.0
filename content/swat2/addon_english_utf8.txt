@@ -2,15 +2,15 @@
 {
 	"Language"		"English"
 	"Tokens"
-	{		
+	{
 		"game_mode_15"				"BAREBONES"
 		"addon_game_name"			"Swat Proj (WIP)"
-		
+
 		//"DOTA_Basics"							"ABILITIES"
 		//"DOTA_Upgrades"							"ITEMS"
 		//"DOTA_Shop_Category_Basics"				"ABILITIES"
 		//"DOTA_Shop_Category_Upgrades"			"ITEMS"
-		
+
 		//--------------------
 		//Abilities
 		//--------------------
@@ -19,21 +19,21 @@
 		"DOTA_Tooltip_ability_assault_rifle_datadriven_Lore"								""
       "DOTA_Tooltip_ability_assault_rifle_datadriven_distance"							"Bonus Damage:"
       "DOTA_Tooltip_ability_assault_rifle_datadriven_range"							   "Bonus Range:"
-	  
+
 		// DEMO
 		//--------------------------------------------------------------------------
-		
+
 		//MIRV
-		"DOTA_Tooltip_Ability_demo_mirv"  "M.I.R.V."  
+		"DOTA_Tooltip_Ability_demo_mirv"  "M.I.R.V."
 		"DOTA_Tooltip_Ability_demo_mirv_Description"  "Uses energy to create a napalm-laced rocket which detonates multiple times in a line away from the point of impact, damaging units and leaving a persistent trail of burning napalm."
 		"DOTA_Tooltip_Ability_demo_mirv_iMIRV"    "Detonations:"
 		"DOTA_Tooltip_Ability_demo_mirv_napalm_damage"    "Napalm Damage:"
 		"DOTA_Tooltip_Ability_demo_mirv_napalm_duration"    "Napalm Duration:"
 		"DOTA_Tooltip_Ability_demo_mirv_armor_reduction"    "Armor Reduction:"
-		
+
 		// Cyborg
 		//------------------------
-		
+
 		// Plasma V-Rounds
 		"DOTA_Tooltip_ability_vindicator"										"Plasma-V Rounds"
 		"DOTA_Tooltip_ability_vindicator_Description"										"This system can be activated to fuse destructive nanites with each round fired. Upon impact, these nanites tear through the target, briefly hindering its movement."
@@ -41,10 +41,10 @@
 		"DOTA_Tooltip_ability_vindicator_movement_speed_slow"										"%MOVE SPEED SLOW:"
 		"DOTA_Tooltip_ability_vindicator_attack_speed_slow"										"%ATTACK SPEED SLOW:"
 		"DOTA_Tooltip_ability_vindicator_slow_duration"										"DURATION:"
-		
+
 		"DOTA_Tooltip_modifier_plasma_slow_datadriven"										"Plasma Rounds"
 		"DOTA_Tooltip_modifier_plasma_slow_datadriven_Description"										"This unit is hindered."
-		
+
 		// Emergency Power
 		"DOTA_Tooltip_ability_cyborg_emergency_power"										"Emergency Power"
 		"DOTA_Tooltip_ability_cyborg_emergency_power_Description"										"Instantly recharges energy by draining the cyborg's backup battery."
@@ -55,19 +55,19 @@
 		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement_Description"										"Cybernetic implants improve the officer's reflexes, allowing him to evade some attacks, and increase his maximum health."
 		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement_bonus_evasion"										"%EVASION:"
 		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement_bonus_health"										"MAX HEALTH:"
-		
+
 		// Xtreme Combat Mode
 		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode"										"Xtreme Combat Mode"
 		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_Description"										"Uses an energy surge to temporarily boost damage and defense."
 		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_bonus_damage_percent"										"%DAMAGE:"
 		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_bonus_armor"										"ARMOR:"
 		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_bonus_health_regen"										"HEALTH REGEN:"
-		
+
 		"DOTA_Tooltip_modifier_cyborg_xtreme_combat_mode"	"Xtreme Combat Mode"
 		"DOTA_Tooltip_modifier_cyborg_xtreme_combat_mode_Description"	"This unit is offensively and defensively boosted."
-		
+
 		// Cluster Rockets
-		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets"  "Cluster Rockets"  
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets"  "Cluster Rockets"
 		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_Description"  "Bombards an area with multiple rockets, briefly stunning and damaging units in the vicinity. Launcher also provides capacity for the cyborg to integrate micro-fusion generators."
 		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_total_damage_cap"    	"DAMAGE:"
 		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_unit_damage_cap"    	"DAMAGE PER UNIT:"
@@ -78,29 +78,29 @@
 		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_damage_duration"             "DAMAGE DURATION:"
 		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_rockets"                     "ROCKETS:"
 		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_delay"                       "DELAY:"
-		
+
 		// Pheromones
-		"DOTA_Tooltip_Ability_cyborg_pheromones"  "Recharge Tank"  
+		"DOTA_Tooltip_Ability_cyborg_pheromones"  "Recharge Tank"
 		"DOTA_Tooltip_Ability_cyborg_pheromones_Description"  "Fills the pheromones tank with a compressed gas that can be released to attract nearby undead."
-		
-		
-				
+
+
+
 		// Forcefield
-		"DOTA_Tooltip_Ability_cyborg_forcefield_lua_ability"  "Force Field"  
+		"DOTA_Tooltip_Ability_cyborg_forcefield_lua_ability"  "Force Field"
 		"DOTA_Tooltip_Ability_cyborg_forcefield_lua_ability_Description"  "Creates an external field of energy which absorbs all incoming damage until deactivated."
 		"DOTA_Tooltip_Ability_cyborg_forcefield_lua_ability_note0"	"Drains progressively more energy while active, and energy efficiency permanently decreased by each activation."
 		"DOTA_Tooltip_Ability_cyborg_forcefield_lua_ability_note1"	"Damage from toxins will bypass the force field."
-		
-		"DOTA_Tooltip_Ability_cyborg_forcefield_off_lua_ability"  "Deactivate Force Field"  
+
+		"DOTA_Tooltip_Ability_cyborg_forcefield_off_lua_ability"  "Deactivate Force Field"
 		"DOTA_Tooltip_Ability_cyborg_forcefield_off_lua_ability_Description"  "Deactivate Force Field to stop draining energy."
-		
-		
-		
-		
+
+
+
+
 		// Medic
 		//------------------------
-		
-		
+
+
 		"DOTA_Tooltip_ability_medic_revive"                                               "Revive"
 		"DOTA_Tooltip_ability_medic_revive_Description"                                   "Injects nanites into a recently slain comrade, bringing him back to life. Comrade suffers from resurrection sickness dependent on his armor type. There is a chance that the ability will require half energy and recharge instantly."
 		"DOTA_Tooltip_ability_medic_revive_recharge_chance"                               "RECHARGE CHANCE:"
@@ -115,14 +115,14 @@
 		"DOTA_Tooltip_ability_primary_medic_mend_wounds_Description"                      "Uses standard medical techniques to restore health to a non-mechanical unit. Also improves effectiveness of bandages. The Mending Station is upgraded by this ability."
 		"DOTA_Tooltip_ability_primary_medic_mend_wounds_heal"                             "HEAL:"
 		//"DOTA_Tooltip_ability_primary_medic_mend_wounds_auto_cast_range"                  "AUTO CAST RANGE:"
-		"DOTA_Tooltip_ability_primary_medic_mend_wounds_bandage_bonus"                    "BANDAGE BONUS:"		
-		
+		"DOTA_Tooltip_ability_primary_medic_mend_wounds_bandage_bonus"                    "BANDAGE BONUS:"
+
 		"DOTA_Tooltip_ability_mender_mend_wounds"                                         "Mend Wounds"
 		"DOTA_Tooltip_ability_mender_mend_wounds_Description"                             "Uses standard medical techniques to restore health to a non-mechanical unit. Autocast is initially enabled."
 		"DOTA_Tooltip_ability_mender_mend_wounds_Note0"                        	     	  "Levels in the medic's Mend Wounds ability will improve this ability."
 		"DOTA_Tooltip_ability_mender_mend_wounds_heal"                                    "HEAL:"
 		"DOTA_Tooltip_ability_mender_mend_wounds_auto_cast_range"                         "RANGE:"
-		
+
 		"DOTA_Tooltip_ability_mender_defense_network"                                     "Defense Network"
 		"DOTA_Tooltip_ability_mender_defense_network_Description"                         "Reduces the amount of melee damage received by closeby allies."
 		"DOTA_Tooltip_ability_mender_defense_network_Note0"                        	      "Levels in the medic's Mend Wounds ability will improve this ability."
@@ -131,13 +131,13 @@
 		//"DOTA_Tooltip_ability_mender_defense_network_linger_duration"                     "LINGER DURATION:"
 		//"DOTA_Tooltip_ability_mender_defense_network_info_bonus_percentage"               "INFO BONUS PERCENTAGE:"
 		"DOTA_Tooltip_ability_mender_defense_network_info_aura_radius"                    "RADIUS:"
-		
+
 		"DOTA_Tooltip_ability_mender_contraption_plating"                                 "Contraption Plating"
 		"DOTA_Tooltip_ability_mender_contraption_plating_Description"                     "Special plating reduces damage from physical attacks."
 		"DOTA_Tooltip_ability_mender_contraption_plating_Note0"                        	  "Levels in the medic's Mend Wounds ability will improve this ability."
 		"DOTA_Tooltip_ability_mender_contraption_plating_bonus_armor"                     "BONUS ARMOR:"
 		"DOTA_Tooltip_ability_mender_contraption_plating_damage_absorption"               "DAMAGE ABSORPTION:"
-		
+
 		"DOTA_Tooltip_ability_medic_adrenaline"                                           "Adrenaline"
 		"DOTA_Tooltip_ability_medic_adrenaline_Description"                               "Quadruples the attack rate of the recipient. Cannot be used on robots. Excessive kills may cause an adrenaline rush, extending the duration."
 		"DOTA_Tooltip_ability_medic_adrenaline_duration"                                  "DURATION:"
@@ -147,7 +147,7 @@
 		//"DOTA_Tooltip_ability_medic_adrenaline_rush_wait_duration"                        "RUSH WAIT DURATION:"
 		//"DOTA_Tooltip_ability_medic_adrenaline_rush_check_duration"                       "RUSH CHECK DURATION:"
 		//"DOTA_Tooltip_ability_medic_adrenaline_rush_gap_duration"                         "RUSH GAP DURATION:"
-		
+
 		"DOTA_Tooltip_ability_primary_medic_nano_injection"                               "Nano-Injection"
 		"DOTA_Tooltip_ability_primary_medic_nano_injection_Description"                   "Uses a beamed injection of biomed nanites to restore health to a non-mechanical unit. Also restores additional health and prevents injuries over a short period. Has a chance to remove injuries and resurrection sickness."
 		"DOTA_Tooltip_ability_primary_medic_nano_injection_heal"                          "HEAL:"
@@ -155,23 +155,23 @@
 		"DOTA_Tooltip_ability_primary_medic_nano_injection_AbilityCastRange"              "RANGE:"
 		//"DOTA_Tooltip_ability_primary_medic_nano_injection_HoT_chance"                  "HOT CHANCE:"
 		"DOTA_Tooltip_ability_primary_medic_nano_injection_remove_rez_sick_chance"        "REMOVE REZ SICK CHANCE:"
-		
+
 		"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie"                            "Adrenaline Junkie"
 		"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie_Description"                "Chance that the medic administers himself an adrenaline shot when using adrenaline on others. Also causes the medic to experience more and longer adrenaline rushes."
 		"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie_junkie_chance"              "JUNKIE CHANCE:"
 		//"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie_max_rush_bonus"             "MAX RUSH BONUS:"
-		
+
 		"DOTA_Tooltip_ability_medic_mending_station"                                      "Mending Station"
 		"DOTA_Tooltip_ability_medic_mending_station_Description"                          "Uses a supply of nanites to rapidly construct a mending station which automatically heals nearby allies and provides a defense network. Frequent use increases cost."
 		"DOTA_Tooltip_ability_medic_mending_station_mender_duration"                      "MENDER DURATION:"
 		"DOTA_Tooltip_ability_medic_mending_station_recharge_time"                        "RECHARGE TIME:"
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		//------------------------
 		// Modifiers
 		//------------------------
@@ -186,21 +186,35 @@
 
 		"DOTA_Tooltip_modifier_adrenaline"                                                "Adrenaline"
 		"DOTA_Tooltip_modifier_adrenaline_Description"                                    "This unit is on an adrenaline rush and attacks at a greatly increased rate."
-		
+
 		"DOTA_Tooltip_modifier_nano_hot_thinker"                                          "Nano-Injection"
 		"DOTA_Tooltip_modifier_nano_hot_thinker_Description"                              "This unit is gaining health over time."
-		
-		"DOTA_Tooltip_Ability_cyborg_pheromones_off"  									  "Pheromones"  
+
+		"DOTA_Tooltip_Ability_cyborg_pheromones_off"  									  "Pheromones"
 		"DOTA_Tooltip_Ability_cyborg_pheromones_off_Description"  						  "Releases an artificial scent which attracts nearby undead and provokes them into attacking the cyborg."
 
 		"DOTA_Tooltip_modifier_cyborg_forcefield_lua"									  "Force field"
 		"DOTA_Tooltip_modifier_cyborg_forcefield_lua_Description"						  "A force field is protecting this unit by absorbing all incoming damage."
-		
+
 		"DOTA_Tooltip_modifier_demo_mirv_napalm"                                          "Napalm"
 		"DOTA_Tooltip_modifier_demo_mirv_napalm_Description"                              "This unit is taking damage and has seared defenses."
-		
-		
-		
+
+
+        //------------------------
+        // Radiation
+        //------------------------
+        "DOTA_Tooltip_modifier_rad_damage_civ_aura"                                       "Rad Damage Civ Aura"
+        "DOTA_Tooltip_modifier_rad_damage_civ_aura_Description"                           "Extra Aura"
+
+        "DOTA_Tooltip_modifier_rad_damage_civ_aura_effect"                                "Rad Damage Civ Aura Effect"
+        "DOTA_Tooltip_modifier_rad_damage_civ_aura_effect_Description"                    "Extra Effect"
+
+        "DOTA_Tooltip_modifier_rad_damage_hero_aura"                                      "Rad Damage Hero Aura"
+        "DOTA_Tooltip_modifier_rad_damage_hero_aura_Description"                          "Extra Aura"
+
+        "DOTA_Tooltip_modifier_rad_damage_hero_aura_effect"                               "Rad Damage Hero Aura Effect"
+        "DOTA_Tooltip_modifier_rad_damage_hero_aura_effect_Description"                   "Extra Effect"
+
 		//------------------------
 		// Items
 		//------------------------

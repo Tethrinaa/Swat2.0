@@ -226,11 +226,13 @@ function EnemyUpgrades:upgradeMobs()
                 -- This unit is a boss and will update itself
                 unit.onUberChangesBoss(unit, newBossLevel, bossHealthAdjust)
             else
-                -- Leveling up will set them to max health, so we need to store it before we level them up
+                -- Leveling up will set them to max health/mana, so we need to store it before we level them up
                 local mobHealth = unit:GetHealth()
+                local mobMana = unit:GetMana()
                 unit:CreatureLevelUp(mobLevelAdjust) -- NOTE: Sets to max health
                 unit:SetMaxHealth(unit:GetMaxHealth() * mobConvertValue)
                 unit:SetHealth(mobHealth * mobConvertValue)
+                unit:SetMana(mobMana)
             end
         end
 

@@ -48,7 +48,7 @@ function RadiationManager:new(o)
     self.hazmatContainers = 0
 
     -- Dummy aura units
-    self.radHeroDamageAuraUnit = nil
+    self.radDummyAuraUnit = nil
     self.radCivillianDamageAuraUnit = nil
     self.radZombieManaBuffAuraUnit = nil
     self.radMutantBuffAuraUnit = nil
@@ -77,9 +77,7 @@ function RadiationManager:new(o)
     ------------
 
     -- Create dummy aura units
-    --self.radHeroDamageAuraUnit = CreateUnitByName("npc_dummy_blank",Entities:FindByName( nil, "room_lab"):GetAbsOrigin(),true, nil, nil, DOTA_TEAM_BADGUYS)
-    --self.radHeroDamageAuraUnit:AddAbility("global_radiation_damage")
-    --self.radHeroDamageAuraUnit:AddAbility("swat_ability_invulnerable_object")
+    self.radDummyAuraUnit = nil
 
     -- TODO: Create more dummy aura units
 
@@ -95,6 +93,10 @@ function RadiationManager:onDifficultySet()
     if SHOW_RADIATION_MANAGER_LOGS then
         print("RadManager | Setting difficulty to: " .. g_GameManager.difficultyName)
     end
+    if self.radDummyAuraUnit == nil then
+        print("RadManager | WARNING onDifficultySet() before onPreGame(). Calling onPreGame()")
+        self:onPreGameStarted()
+    end
     if g_GameManager.nightmareValue == 0 then
         self:spawnInitialDifficultyRads(g_GameManager.difficultyValue, g_GameManager.isSurvival)
     else
@@ -105,8 +107,24 @@ function RadiationManager:onDifficultySet()
 end
 
 function RadiationManager:onPreGameStarted()
-    self:spawnInitialRadFragments()
-    self:startRadSpawner()
+    -- Make sure this is called before onDifficultySet (just a sanity check here)
+    if self.radDummyAuraUnit == nil then
+        -- Create Dummy Aura units
+        print("Making Aura Dummy Unit")
+        self.radDummyAuraUnit = CreateUnitByName("dummy_unit",GetCenterInRegion(Locations.lab),true, nil, nil, DOTA_TEAM_BADGUYS)
+        self.radDummyAuraUnit:AddAbility("common_invulnerable")
+        self.radDummyAuraUnit:FindAbilityByName("common_invulnerable"):SetLevel(1)
+        self.radDummyAuraUnit:AddAbility("common_no_health_bar")
+        self.radDummyAuraUnit:FindAbilityByName("common_no_health_bar"):SetLevel(1)
+        self.radDummyAuraUnit:AddAbility("common_unselectable")
+        self.radDummyAuraUnit:FindAbilityByName("common_unselectable"):SetLevel(1)
+        self.radDummyAuraUnit:AddAbility("radiation_damage_hero")
+        self.radDummyAuraUnit:AddAbility("radiation_damage_civ")
+        self.radDummyAuraUnit:AddAbility("radiation_mob_buff")
+
+        self:spawnInitialRadFragments()
+        self:startRadSpawner()
+    end
 end
 
 -- Checks to see if the rad level as changed since last called.
@@ -131,8 +149,7 @@ function RadiationManager:updateRadLevel()
         end
 
         self:updateRadiationFog(newRadLevel)
-        self:updateRadiationDamageAura(newRadLevel)
-        self:updateRadiationBuffAura(newRadLevel)
+        self:updateRadiationAuras(newRadLevel)
         self:playRadLevelChangedSound(newRadLevel)
     end
 end
@@ -443,21 +460,55 @@ end
 
 -- TODO
 -- Updates the radiation damage aura (for heroes and civillians) based on the current radiation level
-function RadiationManager:updateRadiationDamageAura(radLevel)
+function RadiationManager:updateRadiationAuras(radLevel)
     if SHOW_RADIATION_MANAGER_LOGS then
-        print("RadManager | Updating radiation damage aura for radLevel = " .. radLevel)
+        print("RadManager | Updating radiation auras for radLevel = " .. radLevel)
     end
-    --self.radHeroDamageAuraUnit:FindAbilityByName("global_radiation_damage"):SetLevel(radLevel)
-end
 
--- TODO
--- Updates the radiation buff aura (for zombies) based on the current radiation level
-function RadiationManager:updateRadiationBuffAura(radLevel)
-    if SHOW_RADIATION_MANAGER_LOGS then
-        print("RadManager | TODO: update radiation buff for radLevel = " .. radLevel)
+    -- Remove the rad damage civ ability if it's not active
+    local radDamageCivAbility = self.radDummyAuraUnit:FindAbilityByName("radiation_damage_civ")
+    if radLevel >= 0 then
+        if radDamageCivAbility == nil then
+            self.radDummyAuraUnit:AddAbility("radiation_damage_civ")
+            radDamageCivAbility = self.radDummyAuraUnit:FindAbilityByName("radiation_damage_civ")
+        end
+        radDamageCivAbility:SetLevel(radLevel + 1)
+    else
+        if radDamageCivAbility then
+            radDamageCivAbility:SetLevel(0)
+            self.radDummyAuraUnit:RemoveAbility("radiation_damage_civ")
+            -- Have to remove the modifiers so the aura affect goes away
+            self.radDummyAuraUnit:RemoveModifierByName("modifier_rad_damage_civ_aura")
+            self.radDummyAuraUnit:RemoveModifierByName("modifier_rad_damage_civ_aura_effect")
+        end
     end
-end
 
+    -- Remove the rad damage hero ability if it's not active
+    local radDamageHeroAbility = self.radDummyAuraUnit:FindAbilityByName("radiation_damage_hero")
+    --print("IsAura: " .. radDamageHeroAbility:IsAura())
+    --print("Destroy: " .. radDamageHeroAbility:DestroyOnExpire())
+    if radLevel >= 2 then
+        print("Set damage hero to " .. (radLevel - 1))
+        if radDamageHeroAbility == nil then
+            self.radDummyAuraUnit:AddAbility("radiation_damage_hero")
+            radDamageHeroAbility = self.radDummyAuraUnit:FindAbilityByName("radiation_damage_hero")
+        end
+        radDamageHeroAbility:SetLevel(radLevel - 1)
+    else
+        print("Set damage hero to 0")
+        if radDamageHeroAbility then
+            radDamageHeroAbility:SetLevel(0)
+            self.radDummyAuraUnit:RemoveAbility("radiation_damage_hero")
+            -- Have to remove the modifiers so the aura affect goes away
+            self.radDummyAuraUnit:RemoveModifierByName("modifier_rad_damage_hero_aura")
+            self.radDummyAuraUnit:RemoveModifierByName("modifier_rad_damage_hero_aura_effect")
+        end
+    end
+
+    -- This buff is hidden so I don't care if it's set to level 0
+    self.radDummyAuraUnit:FindAbilityByName("radiation_mob_buff"):SetLevel(1)
+    self.radDummyAuraUnit:FindAbilityByName("radiation_mob_buff"):SetLevel(0)
+end
 
 -- TODO
 -- Updates the radiation fog of the map based on the current radiation level.

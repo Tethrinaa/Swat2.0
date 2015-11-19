@@ -421,8 +421,9 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
 
         -- Let's hurt the unit a bit
         unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
+        unit:SetMana(0)
         -- Set its speed
-        --unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
+        unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
 
         return unit
     end
@@ -661,7 +662,7 @@ function EnemySpawner:getAllMobs()
                                             false)
 	for _,unit in pairs(enemyUnits) do
         -- Units that are Ancients on the DOTA_TEAM_BADGUYS should not be controlled or counted (like rad frags)
-        if not unit:IsAncient() then
+        if not unit:IsAncient() and not unit:IsInvulnerable() then
             table.insert(retval, unit)
         end
     end
