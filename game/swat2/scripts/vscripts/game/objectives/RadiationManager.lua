@@ -72,6 +72,11 @@ function RadiationManager:new(o)
     -- Horror rads - rads contributed by a currently alive horror
     self.horrorRads = 0
 
+    -- "Walkers" (units with the Radinating effect)
+    self.walkersCount = 0
+    self.walkers = {}
+
+
     ------------
     -- SETUP
     ------------
@@ -112,12 +117,8 @@ function RadiationManager:onPreGameStarted()
         -- Create Dummy Aura units
         print("Making Aura Dummy Unit")
         self.radDummyAuraUnit = CreateUnitByName("dummy_unit",GetCenterInRegion(Locations.lab),true, nil, nil, DOTA_TEAM_BADGUYS)
-        self.radDummyAuraUnit:AddAbility("common_invulnerable")
-        self.radDummyAuraUnit:FindAbilityByName("common_invulnerable"):SetLevel(1)
-        self.radDummyAuraUnit:AddAbility("common_no_health_bar")
-        self.radDummyAuraUnit:FindAbilityByName("common_no_health_bar"):SetLevel(1)
-        self.radDummyAuraUnit:AddAbility("common_unselectable")
-        self.radDummyAuraUnit:FindAbilityByName("common_unselectable"):SetLevel(1)
+        self.radDummyAuraUnit:AddAbility("common_make_dummy")
+        self.radDummyAuraUnit:FindAbilityByName("common_make_dummy"):SetLevel(1)
         self.radDummyAuraUnit:AddAbility("radiation_damage_hero")
         self.radDummyAuraUnit:AddAbility("radiation_damage_civ")
         self.radDummyAuraUnit:AddAbility("radiation_mob_buff")
@@ -174,7 +175,7 @@ end
 
 -- Spawns a rad somewhere on the map and increments the count
 -- NOTE: Does not increment rad count
-function RadiationManager:spawnRadFragment()
+function RadiationManager:spawnRadFragmentOnMap()
     local randomNum = RandomInt(1, 999)
     local point = nil
     if randomNum < 99 then
@@ -191,9 +192,8 @@ function RadiationManager:spawnRadFragment()
         point = GetRandomPointInWarehouse()
     end
 
-    local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, point, true, nil, nil, DOTA_TEAM_BADGUYS )
-    -- Apply rad modifier to unit to reduce rad count on death and update bracket
-    rad_frag:SetRenderColor(50,205,50)
+    -- Spawn the rad fragment
+    local rad_frag = self:spawnRadFragment(point)
 
     -- For Nightmare+, there is a chance the rad will be an exploding rad
     if g_GameManager.nightmareValue > 0 then
@@ -201,7 +201,16 @@ function RadiationManager:spawnRadFragment()
             rad_frag:SetRenderColor(255, 50, 0)
         end
     end
+end
 
+-- Spawns a rad somewhere at the provided position
+-- NOTE: Does not increment rad count
+function RadiationManager:spawnRadFragment(position)
+    local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    -- Apply rad modifier to unit to reduce rad count on death and update bracket
+    rad_frag:SetRenderColor(50,205,50)
+
+    return rad_frag
 end
 
 -- Called when a rad fragment is destroyed
@@ -273,6 +282,20 @@ function RadiationManager:canSpawnRadFragment()
     return self.radFragments < RAD_COUNT_LIMIT
 end
 
+-- Returns whether or not we can spawn a radinating unit (rolls for some things)
+function RadiationManager:canSpawnRadinating()
+    if self.hazmatContainer == 0 and self.radFragments < 4 then
+        -- Too few rad fragments / hazmat out, so prevent walkers
+        return false
+    elseif RandomInt(0, 99) < self.radResistPlayers * 5 then
+        -- Rad Resist players reduce chance of walkers
+        return false
+    else
+        -- Finally, just make sure we can even spawn a rad fragment
+        return self:canSpawnRadFragment()
+    end
+end
+
 -- Spawns the initial amount of rad fragments around the map
 -- This needs to be called after map initialization!
 -- This will spawn INITIA_RAD_COUNT rad fragments in 32 random rooms (no park or graveyard)
@@ -309,7 +332,7 @@ function RadiationManager:spawnInitialDifficultyRads(difficultyValue, isSurvival
     end
 
     for i = 1,initialRads do
-        self:spawnRadFragment()
+        self:spawnRadFragmentOnMap()
     end
     self:incrementRadCount(initialRads)
 end
@@ -417,7 +440,7 @@ function RadiationManager:startRadSpawner()
                     -- TODO: Update nuke rad penalty if extra rads were spawned
                     for i = 1,radsToSpawn do
                         if self:canSpawnRadFragment() then
-                            self:spawnRadFragment()
+                            self:spawnRadFragmentOnMap()
                             self:incrementRadCount()
                         end
                     end
@@ -506,8 +529,7 @@ function RadiationManager:updateRadiationAuras(radLevel)
     end
 
     -- This buff is hidden so I don't care if it's set to level 0
-    self.radDummyAuraUnit:FindAbilityByName("radiation_mob_buff"):SetLevel(1)
-    self.radDummyAuraUnit:FindAbilityByName("radiation_mob_buff"):SetLevel(0)
+    self.radDummyAuraUnit:FindAbilityByName("radiation_mob_buff"):SetLevel(math.max(0,radLevel))
 end
 
 -- TODO
@@ -575,4 +597,24 @@ function RadiationManager:getNukeRadiationResistance(double)
         retval = retval * RAD_RESISTANCE_REDUCTION_VALUE
     end
     return retval
+end
+
+-- Called when a walker is created
+-- @param walker | The walker created
+function RadiationManager:onWalkerCreated(unit)
+    self.walkers[unit] = true
+    self.walkersCount = self.walkersCount + 1
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Adding Walker (Count=" .. self.walkersCount .. ")")
+    end
+end
+
+-- Called when a walker is killed
+-- @param walker | The walker created
+function RadiationManager:onWalkerKilled(unit)
+    self.walkersCount = math.max(0, self.walkersCount - 1)
+    self.walkers[unit] = nil
+    if SHOW_RADIATION_MANAGER_LOGS then
+        print("RadManager | Removing Walker (Count=" .. self.walkersCount .. ")")
+    end
 end

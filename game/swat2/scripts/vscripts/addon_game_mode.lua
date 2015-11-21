@@ -31,6 +31,8 @@ function Precache( context )
     PrecacheUnitByNameSync("enemy_minion_mutant", context)
     PrecacheUnitByNameSync("enemy_minion_zombie", context)
     PrecacheUnitByNameSync("enemy_minion_zombie_corpse", context)
+    PrecacheUnitByNameSync("enemy_minion_zombie_radinating", context)
+    PrecacheUnitByNameSync("enemy_minion_rat", context)
 
     PrecacheUnitByNameSync("npc_dota_create_rad_frag", context)
     PrecacheUnitByNameSync("npc_dota_hero_lina", context)

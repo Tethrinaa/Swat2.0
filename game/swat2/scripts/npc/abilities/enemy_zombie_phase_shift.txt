@@ -1,0 +1,103 @@
+//=================================================================================================================
+// Ability: Zombie Phase Shift
+// Increases zombie movement speed and attack speed temporarily
+//=================================================================================================================
+"enemy_zombie_phase_shift"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+    "AbilityTextureName"            "puck_phase_shift"
+    "MaxLevel"	"3"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastPoint"              "0"
+    "AbilityChannelTime"            "0.75 1.25 1.50"
+
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"               "1.0 1.0 0.0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"               "40 40 20"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_FLOAT"
+            "duration"                  "0.75 1.25 1.50"
+        }
+    }
+
+    // Data driven
+    //-------------------------------------------------------------------------------------------------------------
+    "precache"
+    {
+        "particle"                  "particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+    }
+
+    "OnSpellStart"
+    {
+        "ApplyModifier"
+        {
+            "ModifierName"  "modifier_enemy_zombie_phase_shift"
+            "Target"        "CASTER"
+        }
+    }
+
+    "OnChannelFinish"
+    {
+        "RemoveModifier"
+        {
+            "ModifierName"  "modifier_enemy_zombie_phase_shift"
+            "Target"        "CASTER"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_enemy_zombie_phase_shift"
+        {
+            "Duration"      "%duration"
+
+            "EffectName"        "particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+            "EffectAttachType"  "attach_origin"
+
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "abilities/enemy_zombie_phase_shift.lua"
+                    "Function"          "HideCaster"
+                }
+            }
+
+            "OnDestroy"
+            {
+
+                "RunScript"
+                {
+                    "ScriptFile"    "abilities/enemy_zombie_phase_shift.lua"
+                    "Function"          "ShowCaster"
+                }
+            }
+
+            "States"
+            {
+            //  "MODIFIER_STATE_INVULNERABLE"           "MODIFIER_STATE_VALUE_ENABLED"  // Don't use these state for a channeling ability.
+            //  "MODIFIER_STATE_OUT_OF_GAME"            "MODIFIER_STATE_VALUE_ENABLED"
+
+                "MODIFIER_STATE_ATTACK_IMMUNE"          "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_MAGIC_IMMUNE"           "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_UNSELECTABLE"           "MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_HEALTH_BAR"          "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+}

@@ -7,8 +7,16 @@ ZombieSpawner = {}
 
 ZombieSpawner.ZOMBIE_REVIVE_QUEUE_SIZE = 600
 ZombieSpawner.ZOMBIE_UNIT_NAME = "enemy_minion_zombie"
+ZombieSpawner.ZOMBIE_RADINATING_UNIT_NAME = "enemy_minion_zombie_radinating"
 ZombieSpawner.ZOMBIE_CORPSE_UNIT_NAME = "enemy_minion_zombie_corpse"
 ZombieSpawner.ZOMBIE_CORPSE_MODEL = "models/heroes/undying/undying_minion_torso.vmdl"
+
+-- Special zombie type codes (pass to spawnMinion)
+ZombieSpawner.SPECIAL_TYPE_NONE = -1 -- Will not apply any special type
+ZombieSpawner.SPECIAL_TYPE_NORMAL = 0 -- Rolls the dice to see what it will be
+ZombieSpawner.SPECIAL_TYPE_BURN_OR_TOXIC = 1 -- Rolls the dice to see what it will be
+ZombieSpawner.SPECIAL_TYPE_LIGNTENATING_CHANCE = 2 -- Rolls the dice to see if this will be a ligntenating zombie
+
 
 function ZombieSpawner:new(o)
     o = o or {}
@@ -37,10 +45,70 @@ end
 -- @param specialType | a field that can be used to spawn special types of this minion
 -- returns the created unit
 function ZombieSpawner:spawnMinion(position, specialType)
-    --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
-    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
-    self:addZombieMutation(unit)
+    specialType = specialType or ZombieSpawner.SPECIAL_TYPE_NORMAL
 
+    -- Yes, this method is a bit ugly, but it's more or less the same as Red's.
+
+    --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
+
+    if specialType == ZombieSpawner.SPECIAL_TYPE_NONE then
+        return self:createNormal(position)
+    elseif specialType == ZombieSpawner.SPECIAL_TYPE_NORMAL then
+        -- Normal roll for zombie type
+        if RandomInt(0, 10) == 0 then
+            if RandomInt(0, 8) < 1 then
+                -- Create TNT
+                return self:createTnt(position)
+            elseif RandomInt(0, 8) < 2 then
+                -- Create Toxic
+                return self:createToxic(position)
+            else
+                -- Create burninating
+                return self:createBurninating(position)
+            end
+        elseif RandomInt(-1, 398) < math.min(1, g_RadiationManager.radiationLevel) then
+            -- Spawn radinating (if we can)
+            if g_RadiationManager:canSpawnRadinating() then
+                return self:createRadinating(position)
+            else
+                -- Couldn't create a radinating, just make a normal
+                return self:createNormal(position)
+            end
+        else
+            -- Nothing special
+            return self:createNormal(position)
+        end
+    elseif specialType == ZombieSpawner.SPECIAL_TYPE_BURN_OR_TOXIC then
+        -- rolls for burn/tnt/toxic (but higher chance) for tnt and toxic
+        if RandomInt(0, 8) < 4 then
+            -- Create TNT
+            return self:createTnt(position)
+        elseif RandomInt(0, 8) < 5 then
+            -- Create Toxic
+            return self:createToxic(position)
+        else
+            -- Create burninating
+            return self:createBurninating(position)
+        end
+    elseif RandomInt(-1, 398) < math.min(1, g_RadiationManager.radiationLevel) then
+        -- Yes, if we're not one of the first 2 types, we always have a chance to be walker
+        -- This was in original code
+        if g_RadiationManager:canSpawnRadinating() then
+            return self:createRadinating(position)
+        else
+            -- Couldn't create a radinating, just make a normal
+            return self:createNormal(position)
+        end
+    elseif specialType == ZombieSpawner.SPECIAL_TYPE_LIGNTENATING_CHANCE then
+        return self:createLightenating(position)
+    else
+        return self:createNormal(position)
+    end
+end
+
+-- Allows the zombie to revive (and spawns a corpse)
+function ZombieSpawner:addReviveAbility(unit)
+    -- Set up Zombie lives
     if self.zombieLivesQueue:getSize() == 0 then
         -- No zombie lives stored from queue
         unit.zombieLives = 0
@@ -55,12 +123,117 @@ function ZombieSpawner:spawnMinion(position, specialType)
 
     -- EnemySpawner will look for onDeathFunctions and call them
     unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
+end
+
+-- Sets a single random zombie mutation to the zombie (or no mutation)
+function ZombieSpawner:setZombieMutation(zombie)
+    local brainlust = zombie:FindAbilityByName("enemy_zombie_brainlust")
+    local regeneration = zombie:FindAbilityByName("enemy_zombie_regeneration")
+    local phase_shift = zombie:FindAbilityByName("enemy_zombie_phase_shift")
+
+    local rand = RandomInt(0, 9)
+    if rand > 5 then
+        -- Give Brainlust (an no others)
+        brainlust:SetLevel(g_GameManager.nightmareValue + 1)
+        regeneration:SetLevel(0)
+        phase_shift:SetLevel(0)
+    elseif rand > 2 then
+        -- Give Regeneration (an no others)
+        brainlust:SetLevel(0)
+        regeneration:SetLevel(g_GameManager.nightmareValue + 1)
+        phase_shift:SetLevel(0)
+    elseif rand > 0 then
+        -- Give Planar (an no others)
+        brainlust:SetLevel(0)
+        regeneration:SetLevel(0)
+        phase_shift:SetLevel(g_GameManager.nightmareValue + 1)
+    else
+        -- Give Nothing
+        brainlust:SetLevel(0)
+        regeneration:SetLevel(0)
+        phase_shift:SetLevel(0)
+    end
+end
+
+-- Returns a normal zombie
+function ZombieSpawner:createNormal(position)
+    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    self:setZombieMutation(unit)
+    self:addReviveAbility(unit)
+    unit:SetMana(0)
 
     return unit
 end
 
--- Adds a random zombie mutation to the zombie
-function ZombieSpawner:addZombieMutation(zombie)
+-- Returns a burninating zombie
+function ZombieSpawner:createBurninating(position)
+    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    unit:AddAbility("enemy_common_burninating")
+    unit:FindAbilityByName("enemy_common_burninating"):SetLevel(1)
+    self:setZombieMutation(unit)
+    self:addReviveAbility(unit)
+    unit:SetRenderColor(133, 0, 0)
+    unit:SetMana(0)
+
+    return unit
+end
+
+-- Returns a tnt zombie (can't revive)
+function ZombieSpawner:createTnt(position)
+    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    unit:AddAbility("enemy_common_tnt")
+    unit:FindAbilityByName("enemy_common_tnt"):SetLevel(1)
+    self:setZombieMutation(unit)
+    unit:SetRenderColor(240, 150, 150)
+    unit:SetMana(0)
+
+    return unit
+end
+
+-- Returns a toxic zombie (can't revive)
+function ZombieSpawner:createToxic(position)
+    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    unit:AddAbility("enemy_common_toxic_aura")
+    unit:FindAbilityByName("enemy_common_toxic_aura"):SetLevel(1)
+    self:setZombieMutation(unit)
+    unit:SetRenderColor(107, 142, 35)
+    unit:SetMana(0)
+
+    return unit
+end
+
+-- Returns a radinating zombie
+function ZombieSpawner:createRadinating(position)
+    g_RadiationManager:incrementRadCount()
+
+    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_RADINATING_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+
+    unit:FindAbilityByName("enemy_common_radinating"):SetLevel(1)
+    unit:FindAbilityByName("enemy_common_radinating_rad_bolt"):SetLevel(2)
+    unit:FindAbilityByName("enemy_zombie_brainlust"):SetLevel(g_GameManager.nightmareValue + 1)
+    unit:FindAbilityByName("enemy_zombie_regeneration"):SetLevel(g_GameManager.nightmareValue + 1)
+    self:addReviveAbility(unit)
+    unit:SetRenderColor(80, 199, 0)
+    unit:SetMana(300)
+
+    -- Alert radiation manager of the new walker
+    g_RadiationManager:onWalkerCreated(unit)
+
+    return unit
+end
+
+-- Returns a lightenating zombie (can't revive)
+function ZombieSpawner:createLightenating(position)
+    -- TODO
+    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+
+    --unit:FindAbilityByName("enemy_common_radinating"):SetLevel(1)
+    --unit:FindAbilityByName("enemy_common_radinating_rad_bolt"):SetLevel(2)
+    self:setZombieMutation(unit)
+    unit:SetRenderColor(255, 255, 0)
+    unit:SetMana(0)
+
+    return unit
 end
 
 -- Called when this zombie dies
@@ -180,7 +353,7 @@ function ZombieSpawner:reviveZombie(zombieInfo)
 
             -- Revive the zombie
             local position = zombieInfo.corpse:GetAbsOrigin()
-            local zombie = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+            local zombie = self:createNormal(position)
 
             -- Apply enemy upgrades
             g_EnemyUpgrades:upgradeMob(zombie)
@@ -207,7 +380,7 @@ function ZombieSpawner:reviveZombie(zombieInfo)
             -- Set its speed
             zombie:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(zombie, math.floor((zombieInfo.zombieLives + livesIncrement) / livesIncrement) * (9.0 / g_GameManager.difficultyBase)))
             -- Give it a mutation
-            self:addZombieMutation(zombie)
+            self:setZombieMutation(zombie)
 
             -- Give it some XP worth
             zombie.experience = self.zombieExperienceValue

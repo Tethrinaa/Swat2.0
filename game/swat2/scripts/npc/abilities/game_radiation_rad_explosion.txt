@@ -10,6 +10,11 @@
         "AbilityTextureName"            "disruptor_glimpse"
         "MaxLevel"     "1"
 
+        "precache"
+        {
+            "particle"	    "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+        }
+
         "Modifiers"
         {
 

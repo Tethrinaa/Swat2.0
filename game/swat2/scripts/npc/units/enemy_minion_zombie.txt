@@ -14,9 +14,9 @@
 
         // Abilities
         //----------------------------------------------------------------
-        "Ability1"					""			// Ability 1.
-        "Ability2"					""			// Ability 2.
-        "Ability3"					""			// Ability 3.
+        "Ability1"					"enemy_zombie_brainlust"			// Ability 1.
+        "Ability2"					"enemy_zombie_regeneration"			// Ability 2.
+        "Ability3"					"enemy_zombie_phase_shift"			// Ability 3.
         "Ability4"					""			// Ability 4.
         "Ability5"					""			// Ability 5.
         "Ability6"					""			// Ability 6 - Extra.
@@ -96,9 +96,9 @@
                 "Invade"
                 {
                     "Name"				"Invade"
-                    "Aggression"		"90.0"
+                    "Aggression"		"100.0"
                     "Avoidance"			"0.0"
-                    "Support"			"30.0"
+                    "Support"			"60.0"
                 }
             }
 
@@ -114,5 +114,42 @@
 
             //Ability Usage Parameters
             //-----------------------------------------------------------------
+            "OffensiveAbilities"
+            {
+                "Ability1"
+                {
+                    "Name"                "enemy_zombie_brainlust"
+                    "UseSelfishly"        "1"
+                    "Buff"                "1"
+                    "UseAtHealthPercent"  "100"
+                }
+            }
+            "DefensiveAbilities"
+            {
+                "Ability2"
+                {
+                    "Name"                "enemy_zombie_regeneration"
+                    "UseSelfishly"        "1"
+                    "Heal"                 "1"
+                    "UseAtHealthPercent"  "60"
+                }
+                "Ability3"
+                {
+                    "Name"                "enemy_zombie_phase_shift"
+                    "UseSelfishly"        "1"
+                    "Buff"                "1"
+                    "UseAtHealthPercent"  "80"
+                }
+                // This is set in the defensive area because sometimes the AI does
+                // not kick off the brainlust in the offense (usually when behind units)
+                // Adding it here seems to have the brainlust kick off at least when the unit is hit
+                "Ability4"
+                {
+                    "Name"                "enemy_zombie_brainlust"
+                    "UseSelfishly"        "1"
+                    "Buff"                "1"
+                    "UseAtHealthPercent"  "80"
+                }
+            }
         }
     }

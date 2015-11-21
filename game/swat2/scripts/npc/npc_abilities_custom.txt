@@ -156,6 +156,34 @@
 	    }
 	}
 	//=================================================================================================================
+	 // Make "dummy" (makes this unit invulnerable, unselectable, no minimap, and no healthbar)
+	 //=================================================================================================================
+	    "common_make_dummy"
+	    {
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "AbilityTextureName"            "disruptor_glimpse"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "common_unselectable"
+	            {
+	                "Passive"                       "1"
+	                    "States"
+	                    {
+	                        "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
+	                        "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+	                        "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+	                        "MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+	                    }
+	            }
+	        }
+	    }
+	//=================================================================================================================
 	    // No Health Bar
 	    //=================================================================================================================
 	    "common_no_health_bar"
@@ -181,6 +209,106 @@
 	                }
 	            }
 	    }
+	//=================================================================================================================
+	 // No minimap
+	 //=================================================================================================================
+	    "common_no_minimap"
+	    {
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "AbilityTextureName"            "disruptor_glimpse"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "common_unselectable"
+	            {
+	                "IsHidden"                      "1"
+	                "Passive"                       "1"
+	                    "States"
+	                    {
+	                        "MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+	                    }
+	            }
+	        }
+	    }
+	//=================================================================================================================
+	// Ability: Truesight
+	// Aura that grants visibility to invisible units within a certain radius
+	// TODO: Look up all true sight values and put them as levels
+	//=================================================================================================================
+	"common_truesight_aura"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"			"keeper_of_the_light_blinding_light"
+	    "MaxLevel"	"1"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"				"FIELD_INTEGER"
+	            "radius"				"120 1500"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_truesight_aura"
+	        {
+	            "Passive"			"1"
+	            "IsHidden"			"1"
+	
+	            "ThinkInterval"  "0.05"
+	            "OnIntervalThink"
+	            {
+	                "ActOnTargets"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"  	"TARGET"
+	                        "Radius" 	"%radius"
+	                        "Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                    }
+	
+	                    "Action"
+	                    {
+	                        "RemoveModifier"
+	                        {
+	                            "ModifierName"	"modifier_truesight_reveal"
+	                            "Target" 		"TARGET"
+	                        }
+	
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"	"modifier_truesight_reveal"
+	                            "Target" 		"TARGET"
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	
+	        "modifier_truesight_reveal"
+	        {
+	            "IsHidden"			"1"
+	            "Duration"			"0.5"	//The True Sight effect lingers for 0.5 seconds.
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+	            }
+	        }
+	    }
+	}
 	//=================================================================================================================
 	 // Unselectable
 	 //=================================================================================================================
@@ -913,6 +1041,944 @@
 	            }
 	    }
 	//=================================================================================================================
+	// Ability: Burninating (the country side...burninating the peasants...)
+	// Applies the "burninating" ability, which increases damage and applies a burning effect
+	//=================================================================================================================
+	"enemy_common_burninating"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"        	"invoker_exort"
+	    "MaxLevel"	"2"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_damage"           "100 250"
+	          }
+	      }
+	
+	    "precache"
+	    {
+	        "particle"			"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+	    }
+	
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_common_burninating"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	
+	            "OnCreated"
+	            {
+	                "FireEffect"
+	                {
+	                    "EffectName"	"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+	                    "EffectAttachType"	"follow_origin"
+	                    "Target"		"CASTER"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "FireEffect"
+	                {
+	                    "EffectName"	"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+	                    "EffectAttachType"	"follow_origin"
+	                    "Target"		"CASTER"
+	                }
+	            }
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Radinating
+	// Units with this carry a radiation fragment - giving them more armor and energy regen
+	//=================================================================================================================
+	"enemy_common_radinating"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"earth_spirit_petrify"
+	    "MaxLevel"	"1"
+	
+	      "AbilitySpecial"
+	      {
+	         "01"
+	         {
+	            "var_type"				"FIELD_INTEGER"
+	            "bonus_armor"		    "10"
+	         }
+	         "02"
+	         {
+	             "var_type"          "FIELD_INTEGER"
+	             "bonus_mana"        "250"
+	         }
+	      }
+	
+	    "precache"
+	    {
+	        "particle"  	    "particles/econ/items/undying/undying_manyone/undying_tombstone_manyone_eye_rope.vpcf"
+	        "particle"   	    "particles/econ/items/undying/undying_manyone/undying_pale_tower_destruct_flash.vpcf"
+	    }
+	
+	
+	    "Modifiers"
+	    {
+	        "modifier_enemy_common_radinating"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	
+	            "OnCreated"
+	            {
+	                "FireEffect"
+	                {
+	                    "EffectName"	    "particles/econ/items/undying/undying_manyone/undying_tombstone_manyone_eye_rope.vpcf"
+	                    "EffectAttachType"	"follow_overheard"
+	                    "Target"		"CASTER"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_radinating.lua"
+	                    "Function"              "modifier_spawn_rad"
+	                }
+	
+	                "FireEffect"
+	                {
+	                    "EffectName"	    "particles/econ/items/undying/undying_manyone/undying_pale_tower_destruct_flash.vpcf"
+	                    "EffectAttachType"	"follow_origin"
+	                    "Target"		"CASTER"
+	                }
+	            }
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+	                // Doesn't work on non heroes :(
+	                "MODIFIER_PROPERTY_MANA_BONUS"          "%bonus_mana"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Radinating Rad Bolt
+	// Fires a bolt of radiation at the target
+	// Level 1: For grotlings / lesser radinating enemies
+	// Level 2: For normal radinating (including zombies)
+	//=================================================================================================================
+	"enemy_common_radinating_rad_bolt"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+	    "FightRecapLevel"               "1"
+	    "AbilityTextureName"            "skeleton_king_hellfire_blast"
+	
+	    // Precache
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+		{
+			"soundfile"	"sounds/weapons/hero/skeleton_king/hellfire_blast.vsnd"
+	        "soundfile"	"sounds/weapons/hero/warlock/shadowword_cast_damage.vsnd"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+			"particle"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+		}
+	
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"              "1200 1600"
+	    "AbilityCastPoint"              "0.3 0.3"
+	
+	    // Time
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"               "10.0 10.0"
+	
+	    // Damage.
+	    //-------------------------------------------------------------------------------------------------------------
+	    //"AbilityDamage"                 "200 500"
+	    "AbilityDamage"                 "200 50"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"               "25 25"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "magic_missile_speed"   "1600"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	
+	        "FireSound"
+	        {
+	            "EffectName"	"sounds/weapons/hero/warlock/shadowword_cast_damage.vsnd"
+	            "Target"		"CASTER"
+	        }
+	
+	        "TrackingProjectile"
+	        {
+	            "Target"            "TARGET"
+	            "EffectName"       	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
+	            "Dodgeable"         "1"
+	            "ProvidesVision"    "0"
+	            "VisionRadius"     	"0"
+	            "MoveSpeed"         "%magic_missile_speed"
+	            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+	        }
+	    }
+	
+	    "OnAbilityPhaseStart"
+	    {
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+	            "EffectAttachType"  "start_at_customorigin"
+	
+	            "ControlPointEntities"
+	            {
+	                "CASTER"	"attach_attack1"
+	            }
+	        }
+	    }
+	
+	    "OnProjectileHitUnit"
+	    {
+	        "DeleteOnHit"   "1"
+	
+	        "Damage"
+	        {
+	            "Target"        "TARGET"
+	            "Type"          "DAMAGE_TYPE_MAGICAL"
+	            "Damage"        "%AbilityDamage"
+	        }
+	
+	        "FireSound"
+	        {
+	            "EffectName"	"sounds/weapons/hero/skeleton_king/hellfire_blast.vsnd"
+	            "Target"		"CASTER"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "ModifierName"	"modifier_common_radinating_rad_bolt"
+	            "Target"		"TARGET"
+	        }
+	
+	        "FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_explosion.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"TARGET"
+	
+				//CP3 needs to be attached to the target hit
+				"ControlPointEntities"
+				{
+					"TARGET"		"attach_hitloc"
+					"TARGET"		"attach_hitloc"
+					"TARGET"		"attach_hitloc"
+					"TARGET"		"attach_hitloc"
+				}
+			}
+	    }
+	
+		"Modifiers"
+		{
+	
+	        // This modifier doesn't do anything. Just makes the unit glow a bit, indicating it was hit
+			"modifier_common_radinating_rad_bolt"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"1.5"
+	
+				"EffectName"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: TNT
+	// On death, unit explodes for massive damage
+	//=================================================================================================================
+	"enemy_common_tnt"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "techies_remote_mines"
+	    "MaxLevel"     "1"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"			"FIELD_INTEGER"
+	            "damage_full"		"600"
+	        }
+	
+	        "02"
+	        {
+	            "var_type"		    "FIELD_INTEGER"
+	            "radius_full"	        "120"
+	        }
+	
+	        "03"
+	        {
+	            "var_type"			"FIELD_INTEGER"
+	            "damage_partial"		"120"
+	        }
+	
+	        "04"
+	        {
+	            "var_type"		    "FIELD_INTEGER"
+	            "radius_partial"	        "230"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+	        "particle"	    "particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_smoke.vpcf"
+	        "particle"	    "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_common_tnt"
+	        {
+	            "Passive" "1"
+	
+	            "EffectName"        "particles/units/heroes/hero_warlock/golem_ambient_fire_mane_smoke.vpcf"
+	            "EffectAttachType"  "follow_attack"
+	
+	            "OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_smoke.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"			"attach_overhead"
+						}
+					}
+	
+				}
+	
+	            "OnDeath"
+	            {
+	
+	                "FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+						"EffectAttachType"  "follow_hitloc"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+	                "FireSound"
+					{
+						"EffectName"	"Hero_Techies.RemoteMine.Detonate"
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+	                "ActOnTargets"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"   "UNIT"
+	                        "Radius"   "%radius_full"
+	                        "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	
+	                    "Action"
+	                    {
+	                        "RunScript"
+	                        {
+	                            "ScriptFile"            "abilities/enemy_common_tnt.lua"
+	                            "Function"              "deal_raw_damage"
+	                            "Damage"                "%damage_full"
+	                        }
+	                    }
+	                }
+	
+	                "ActOnTargets"
+	                {
+	                    "Target"
+	                    {
+	                        "Center"   "UNIT"
+	                        "Radius"   "%radius_partial"
+	                        "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+	                        "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	                    }
+	
+	                    "Action"
+	                    {
+	                        "RunScript"
+	                        {
+	                            "ScriptFile"            "abilities/enemy_common_tnt.lua"
+	                            "Function"              "deal_raw_damage"
+	                            "Damage"                "%damage_partial"
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Toxic Aura
+	// Units with this emit an aura that damages and slows nearby enemies
+	//=================================================================================================================
+	"enemy_common_toxic_aura"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"        	"undying_decay"
+	    "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "MaxLevel"	"1"
+	
+	      "AbilitySpecial"
+	      {
+	         "01"
+	         {
+	            "var_type"				"FIELD_FLOAT"
+	            "damage_per_second"		"3.25"
+	         }
+	         "02"
+	         {
+	             "var_type"          "FIELD_INTEGER"
+	             "aura_radius"     "400"
+	         }
+	         "03"
+	         {
+	             "var_type"                  "FIELD_FLOAT"
+	             "aura_damage_interval"      "0.1"
+	         }
+	         "04"
+	         {
+	             "var_type"                  "FIELD_INTEGER"
+	             "movespeed_percentage"      "-20"
+	         }
+	      }
+	
+	    "precache"
+		{
+			"particle"			"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+		}
+	
+	
+	    "Modifiers"
+	    {
+	        "modifier_common_toxic_aura"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	            "Aura"                  "modifier_common_toxic_aura_effect"
+	            "Aura_Radius"           "%aura_radius"
+	            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	            "Aura_Types"            "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	            "OnCreated"
+				{
+					"FireEffect"
+					{
+	                    "EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+					}
+				}
+	
+				"OnDestroy"
+				{
+					"FireEffect"
+					{
+	                    "EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+					}
+				}
+	        }
+	
+	        "modifier_common_toxic_spawn_rat_on_death"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "0"
+	            "IsBuff"            "0"
+	            "IsDebuff"          "1"
+	            "IsPurgable"        "0"
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_toxic_damage.lua"
+	                    "Function"              "drop_rat"
+	                }
+	            }
+	        }
+	
+	        "modifier_common_toxic_aura_effect"
+	        {
+	            "Passive"           "0"
+	            "IsHidden"          "0"
+	            "IsBuff"            "0"
+	            "IsDebuff"          "1"
+	            "IsPurgable"        "0"
+	
+	            "ThinkInterval"         "%aura_damage_interval"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_toxic_damage.lua"
+	                    "Function"              "modifier_enemy_toxic_damage"
+	                    "DamagePerSecond"      "%damage_per_second"
+	                    "DamageInterval"        "%aura_damage_interval"
+	                }
+	            }
+	
+	            "EffectName"    "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%movespeed_percentage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Toxic Aura (rat)
+	// Rats with this emit an aura that damages and slows nearby enemies
+	// (This one is very similar to the generic one, except the effect looks a bit different (for the rat) and it doesn't spawn a rat on death
+	//=================================================================================================================
+	"enemy_rat_toxic_aura"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"        	"undying_decay"
+	    "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "MaxLevel"	"1"
+	
+	      "AbilitySpecial"
+	      {
+	         "01"
+	         {
+	            "var_type"				"FIELD_FLOAT"
+	            "damage_per_second"		"3.25"
+	         }
+	         "02"
+	         {
+	             "var_type"          "FIELD_INTEGER"
+	             "aura_radius"     "300"
+	         }
+	         "03"
+	         {
+	             "var_type"                  "FIELD_FLOAT"
+	             "aura_damage_interval"      "0.1"
+	         }
+	         "04"
+	         {
+	             "var_type"                  "FIELD_INTEGER"
+	             "movespeed_percentage"      "-20"
+	         }
+	      }
+	
+	    "precache"
+	    {
+	        "particle"			"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	    }
+	
+	
+	    "Modifiers"
+	    {
+	        "modifier_rat_toxic_aura"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	            "Aura"                  "modifier_rat_toxic_aura_effect"
+	            "Aura_Radius"           "%aura_radius"
+	            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	            "Aura_Types"            "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	
+	            "EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	            "EffectAttachType"	"follow_overhead"
+	
+	            "OnCreated"
+	            {
+	                "FireEffect"
+	                {
+	                    "EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	                    "EffectAttachType"	"follow_overhead"
+	                    "Target"		"CASTER"
+	                    "ControlPoints"
+	                   {
+	                       "00" "0 0 0"
+	                       "01" "200 1 1"   // Radius
+	                       "15" "255 200 0" // Color
+	                       "16" "1 0 0"
+	                   }
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "FireEffect"
+	                {
+	                    "EffectName"	"particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	                    "EffectAttachType"	"follow_origin"
+	                    "Target"		"CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_rat_toxic_aura_effect"
+	        {
+	            "Passive"           "0"
+	            "IsHidden"          "0"
+	            "IsBuff"            "0"
+	            "IsDebuff"          "1"
+	            "IsPurgable"        "0"
+	
+	            "ThinkInterval"         "%aura_damage_interval"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_toxic_damage.lua"
+	                    "Function"              "modifier_enemy_toxic_damage"
+	                    "DamagePerSecond"      "%damage_per_second"
+	                    "DamageInterval"        "%aura_damage_interval"
+	                }
+	            }
+	
+	            "EffectName"    "particles/units/heroes/hero_viper/viper_poison_debuff.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%movespeed_percentage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Zombie Brainlust
+	// Increases zombie movement speed and attack speed temporarily
+	//=================================================================================================================
+	"enemy_zombie_brainlust"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"				        "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityTextureName"			"ogre_magi_bloodlust"
+	    "MaxLevel"	"5"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.45"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 15 15 15 15"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 50 40 40 40"
+	
+	    "precache"
+	    {
+	        "particle"	    "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+	        "particle"	    "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+	    }
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"15 20 20 20 20"
+			}
+	
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"		"20 40 50 200 300"
+			}
+	
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"50 150 200 200 200"
+			}
+		}
+	
+	    "OnSpellStart"
+		{
+			"FireEffect"
+		    {
+		        "EffectName"       "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+		        "EffectAttachType" "follow_customorigin"
+		        "Target"           "CASTER"
+		        "ControlPointEntities"
+		        {
+		            "CASTER" "attach_attack1" //Start
+		            "CASTER" "attach_origin"  //Velocity noise, not used
+		            "CASTER" "attach_attack2" //CASTER or TARGET?
+		            "CASTER" "attach_hitloc"  //Hit
+		        }
+		    }
+	
+	        "ApplyModifier"
+	        {
+	           "ModifierName" "modifier_enemy_zombie_brainlust"
+	           "Target"       "CASTER"
+	           "Duration"     "%duration"
+	        }
+		}
+	
+	    "Modifiers"
+	    {
+	        "modifier_enemy_zombie_brainlust"
+	        {
+	            "IsBuff"                "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	            "Duration"              "%duration"
+	
+	            "EffectName"            "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+	            "EffectAttachType"      "follow_origin"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed"
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Zombie Phase Shift
+	// Increases zombie movement speed and attack speed temporarily
+	//=================================================================================================================
+	"enemy_zombie_phase_shift"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+	    "AbilityTextureName"            "puck_phase_shift"
+	    "MaxLevel"	"3"
+	
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"              "0"
+	    "AbilityChannelTime"            "0.75 1.25 1.50"
+	
+	    // Time
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"               "1.0 1.0 0.0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"               "40 40 20"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_FLOAT"
+	            "duration"                  "0.75 1.25 1.50"
+	        }
+	    }
+	
+	    // Data driven
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "particle"                  "particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_enemy_zombie_phase_shift"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "OnChannelFinish"
+	    {
+	        "RemoveModifier"
+	        {
+	            "ModifierName"  "modifier_enemy_zombie_phase_shift"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_enemy_zombie_phase_shift"
+	        {
+	            "Duration"      "%duration"
+	
+	            "EffectName"        "particles/units/heroes/hero_puck/puck_phase_shift.vpcf"
+	            "EffectAttachType"  "attach_origin"
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "abilities/enemy_zombie_phase_shift.lua"
+	                    "Function"          "HideCaster"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "abilities/enemy_zombie_phase_shift.lua"
+	                    "Function"          "ShowCaster"
+	                }
+	            }
+	
+	            "States"
+	            {
+	            //  "MODIFIER_STATE_INVULNERABLE"           "MODIFIER_STATE_VALUE_ENABLED"  // Don't use these state for a channeling ability.
+	            //  "MODIFIER_STATE_OUT_OF_GAME"            "MODIFIER_STATE_VALUE_ENABLED"
+	
+	                "MODIFIER_STATE_ATTACK_IMMUNE"          "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_MAGIC_IMMUNE"           "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_UNSELECTABLE"           "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_HEALTH_BAR"          "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Zombie Regeneration
+	// Allows zombies to self heal
+	//=================================================================================================================
+	"enemy_zombie_regeneration"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"				        "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityTextureName"			"rubick_spell_steal"
+	    "MaxLevel"	"5"
+	
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"				"0"
+	    "AbilityCastPoint"				"0.45"
+	
+	    // Time
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"				"0 0 0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"				"30 30 20"
+	
+	    "precache"
+	    {
+	        "particle"	    "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodbath_heal.vpcf"
+	    }
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"			"FIELD_FLOAT"
+	            "heal"			"500 1000 3000"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "EffectName"       "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodbath_heal.vpcf"
+	            "EffectAttachType" "follow_origin"
+	            "Target"           "CASTER"
+	        }
+	
+	        "Heal"
+	        {
+	            "Target" 		"CASTER"
+	            "HealAmount"	"%heal"
+	        }
+	
+	    }
+	}
+	//=================================================================================================================
 	// Ability: Mana_Drain_Badly_Damaged (Power Core)
 	//=================================================================================================================
 	"game_power_core_badly_damaged"
@@ -1229,6 +2295,11 @@
 	        "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	        "AbilityTextureName"            "disruptor_glimpse"
 	        "MaxLevel"     "1"
+	
+	        "precache"
+	        {
+	            "particle"	    "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+	        }
 	
 	        "Modifiers"
 	        {

@@ -227,12 +227,34 @@ function EnemyUpgrades:upgradeMobs()
                 unit.onUberChangesBoss(unit, newBossLevel, bossHealthAdjust)
             else
                 -- Leveling up will set them to max health/mana, so we need to store it before we level them up
+                -- We have to prevent DOTA from fucking upgrading all of the abilities and setting max mana and heals, and setting max health/mana
                 local mobHealth = unit:GetHealth()
                 local mobMana = unit:GetMana()
+                local abilities = {}
+                local i = 0
+                while true do
+                    local ability = unit:GetAbilityByIndex(i)
+                    i = i + 1
+                    if ability then
+                        abilities[ability:GetName()] = ability:GetLevel()
+                    else
+                        break
+                    end
+                end
                 unit:CreatureLevelUp(mobLevelAdjust) -- NOTE: Sets to max health
                 unit:SetMaxHealth(unit:GetMaxHealth() * mobConvertValue)
                 unit:SetHealth(mobHealth * mobConvertValue)
                 unit:SetMana(mobMana)
+                local i = 0
+                while true do
+                    local ability = unit:GetAbilityByIndex(i)
+                    i = i + 1
+                    if ability then
+                        ability:SetLevel(abilities[ability:GetName()])
+                    else
+                        break
+                    end
+                end
             end
         end
 
@@ -246,10 +268,34 @@ end
 
 -- Upgrades a single mob (called when they are spawned, NOT when they are upgraded in upgradeMobs()
 function EnemyUpgrades:upgradeMob(unit)
+	-- We have to prevent DOTA from fucking upgrading all of the abilities and setting max mana and heals, and setting max health/mana
     local mobHealth = unit:GetHealth()
+    local mobMana = unit:GetMana()
+    local abilities = {}
+    local i = 0
+    while true do
+        local ability = unit:GetAbilityByIndex(i)
+        i = i + 1
+        if ability then
+            abilities[ability:GetName()] = ability:GetLevel()
+        else
+            break
+        end
+    end
     unit:CreatureLevelUp(self.currentMobLevel)
 	unit:SetMaxHealth(unit:GetMaxHealth() * self.currentMobHealthBonus)
     unit:SetHealth(mobHealth * self.currentMobHealthBonus)
+    unit:SetMana(mobMana)
+    local i = 0
+    while true do
+        local ability = unit:GetAbilityByIndex(i)
+        i = i + 1
+        if ability then
+            ability:SetLevel(abilities[ability:GetName()])
+        else
+            break
+        end
+    end
 end
 
 function EnemyUpgrades:updateUber()

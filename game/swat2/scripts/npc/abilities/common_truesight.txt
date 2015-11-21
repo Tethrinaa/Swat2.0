@@ -1,0 +1,74 @@
+//=================================================================================================================
+// Ability: Truesight
+// Aura that grants visibility to invisible units within a certain radius
+// TODO: Look up all true sight values and put them as levels
+//=================================================================================================================
+"common_truesight_aura"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"			"keeper_of_the_light_blinding_light"
+    "MaxLevel"	"1"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"				"FIELD_INTEGER"
+            "radius"				"120 1500"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_truesight_aura"
+        {
+            "Passive"			"1"
+            "IsHidden"			"1"
+
+            "ThinkInterval"  "0.05"
+            "OnIntervalThink"
+            {
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"  	"TARGET"
+                        "Radius" 	"%radius"
+                        "Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+                        "Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                    }
+
+                    "Action"
+                    {
+                        "RemoveModifier"
+                        {
+                            "ModifierName"	"modifier_truesight_reveal"
+                            "Target" 		"TARGET"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"	"modifier_truesight_reveal"
+                            "Target" 		"TARGET"
+                        }
+                    }
+                }
+            }
+        }
+
+        "modifier_truesight_reveal"
+        {
+            "IsHidden"			"1"
+            "Duration"			"0.5"	//The True Sight effect lingers for 0.5 seconds.
+            "States"
+            {
+                "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+            }
+        }
+    }
+}

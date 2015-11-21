@@ -17,6 +17,7 @@ require("game/minions/MutantSpawner")
 require("game/minions/DogSpawner")
 require("game/minions/GrotesqueSpawner")
 require("game/minions/InnardsSpawner")
+require("game/minions/RatSpawner")
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
@@ -69,6 +70,7 @@ function EnemySpawner:new(o)
     self.dogSpawner = DogSpawner:new()
     self.grotesqueSpawner = GrotesqueSpawner:new()
     self.innardsSpawner = InnardsSpawner:new()
+    self.ratSpawner = RatSpawner:new()
 
     -- Boss parameters
     self.abomsCurrentlyAlive = 0
@@ -421,7 +423,7 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
 
         -- Let's hurt the unit a bit
         unit:SetHealth(math.max(1, unit:GetHealth() - RandomInt(0,99)))
-        unit:SetMana(0)
+
         -- Set its speed
         unit:SetBaseMoveSpeed(g_EnemyUpgrades:calculateMovespeed(unit, g_GameManager.nemesisStage))
 
@@ -628,7 +630,7 @@ end
 function EnemySpawner:spawnZombiesInGraveyard()
     local zombiesToSpawn = RandomInt(24 / g_GameManager.difficultyValue, 50 - (8 * g_GameManager.difficultyValue))
     for i = 1,zombiesToSpawn do
-        self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInGraveyard(), 0, true)
+        self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInGraveyard(), ZombieSpawner.SPECIAL_TYPE_NONE, true)
     end
 end
 
@@ -638,7 +640,7 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
     local zombiesToSpawn = RandomInt(-5, 4 - g_GameManager.difficultyValue)
     local units = {}
     for i = 1,zombiesToSpawn do
-        units[i] = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(region), 0, true)
+        units[i] = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(region), ZombieSpawner.SPECIAL_TYPE_NONE, true)
     end
     Timers:CreateTimer(10.0, function()
         for _,unit in pairs(units) do
