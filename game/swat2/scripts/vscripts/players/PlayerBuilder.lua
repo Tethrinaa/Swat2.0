@@ -163,7 +163,7 @@ function PlayerBuilder:BuildMarine( event )
     end
     
     -- add any abilities for testing but this should be emptied out each time
-    hero:AddAbility("primary_ho_plasma_shield")
+
     
 
     hero:AddAbility(PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill)

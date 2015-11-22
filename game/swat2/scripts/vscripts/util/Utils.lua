@@ -24,23 +24,28 @@ function RandomizeList(list)
 end
 
 function ShallowPrintTable(t)
-	for k,v in pairs(t) do
-		print(k,v)
+	if t and type(t) == "table" then
+		for k,v in pairs(t) do
+			print(k,v)
+		end
 	end
 end
 
-function PrintEntityFunctions(t)
+function PrintEntityFunctions(t, all)
 
 	local mt = getmetatable(t)
 	if not mt then
 		print("Object has no metatable.")
 		return
 	end
-	
+
+	print("**********************Object methods**********************")	
 	mt = mt.__index
 	if mt and mt ~= t then
 		ShallowPrintTable(mt)
-		PrintEntityFunctions(mt)
+		if all then
+			PrintEntityFunctions(mt)
+		end
 	end
 end
 

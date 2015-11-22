@@ -1,5 +1,5 @@
 //=================================================================================================================
-// Ability: Organic Replacement(Cyborg)
+// Ability: Plasma Shield (Heavy Ordnance)
 //=================================================================================================================
    "primary_ho_plasma_shield"
    {
@@ -7,11 +7,12 @@
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilityName"               "primary_ho_plasma_shield"
 	"BaseClass"				    "ability_datadriven"
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-    "AbilityTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-    "AbilityTargetType"         "DOTA_UNIT_TARGET_ALL"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 	"MaxLevel"                  "8"
-    "AbilityManaCost"		    "1 2 3 4 5 6 7 8"   
+    "AbilityManaCost"		    "1 2 3 4 5 6 7 8"
+	"AbilityDamage"				"50 75 100 125 150 175 200 225"
+	"AbilityCastRange"			"%burn_radius"
+	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
     "LevelsBetweenUpgrades"  	"1"
 	"AbilityTextureName"		"rattletrap_power_cogs"
 
@@ -41,26 +42,16 @@
         "03"
 		{
 			"var_type"			        "FIELD_INTEGER"
-			"aura_radius"				"144"
+			"burn_radius"				"144"
 		}
         "04"
 		{
-			"var_type"			        "FIELD_FLOAT"
-			"aura_damage"               "41.67 62.5 83.33 104.17 125 145.83 166.67 187.5"
-		}
-        "05"
-		{
 			"var_type"			        "FIELD_INTEGER"
-			"aura_interval"				"1"
-		}
-        "06"
-		{
-			"var_type"			        "FIELD_INTEGER"
-			"linger_duration"				"2"
+			"burn_interval"				"1"
 		}
     }
 
-	"OnSpellStart"
+	"OnToggleOn"
 	{
 		"FireSound"
 		{
@@ -68,34 +59,47 @@
 			"EffectName"	"Hero_Tinker.Rearm"
 
 		}
-        "RunScript"
+        "ApplyModifier"
 		{
-			"ScriptFile"	    "util/SWATUtil.lua"
-			"Function"		    "SwapAbilitiesDataDriven"
-			"on_ability"		"primary_ho_plasma_shield_off"
-			"off_ability"		"primary_ho_plasma_shield"
+			"ModifierName"		"modifier_ho_plasma_shield"
+			"Target"			"CASTER"
 		}
-        "RunScript"
+	}
+	
+	"OnToggleOff"
+	{
+		"FireSound"
 		{
-			"ScriptFile"	    "heroes/hero_heavy_ordnance/ho_plasma_shield.lua"
-			"Function"		    "ApplyAura"
+			"Target"		"CASTER"
+			"EffectName"	"Hero_Tinker.Rearm"
+
+		}
+        "RemoveModifier"
+		{
+			"ModifierName"		"modifier_ho_plasma_shield"
+			"Target"			"CASTER"
 		}
 	}
 
 	"Modifiers"
 	{
-		"modifier_ho_plasma_shield_burn"
+		"modifier_ho_plasma_shield"
 		{
-			"ThinkInterval"         "%aura_interval"
-            "Duration"              "%linger_duration"
+			"ThinkInterval"         "%burn_interval"
             "OnIntervalThink"
             {
-                "ApplyDamage"
-                {
-                    "Damage"        "%aura_damage"
-                    "Target"        "TARGET"
-                }
+                "RunScript"
+				{
+					"ScriptFile"	    "heroes/hero_heavy_ordnance/ho_plasma_shield.lua"
+					"Function"		    "BurnInnards"
+					"radius"			"%burn_radius"
+				}
             }
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%eps_cost"
+			}
 		}
 	}
 }

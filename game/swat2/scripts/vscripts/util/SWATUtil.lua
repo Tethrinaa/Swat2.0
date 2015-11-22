@@ -34,6 +34,24 @@ function SwapAbilitiesDataDriven(keys)
     SwapAbilitiesLua(keys.caster, keys.on_ability, keys.off_ability)
 end
 
+--- Adjust a units mana to account for increased capacity
+-- DOTA, like WC3, keeps the percentage of mana constant when increasing your max mana.
+-- This method adjusts it down beforehand so when the bonus is received, the current mana stays constant
+-- @param unit The unit whose mana will be adjusted
+-- @param storage_bonus The positive amount of the max mana gain
+function AdjustManaDownPre(unit, storage_bonus)
+	-- print("Mana:", unit:GetMana())
+	-- print("MaxMana:", unit:GetMaxMana())
+	-- print("storage_bonus:", storage_bonus)
+	-- print("NewMax:", unit:GetMaxMana() + storage_bonus)
+	-- print("Target %:", unit:GetMana() / (unit:GetMaxMana() + storage_bonus))
+	-- print("New Value:", unit:GetMana() / (unit:GetMaxMana() + storage_bonus) * unit:GetMaxMana())
+	
+	local target_proportion = unit:GetMana() / (unit:GetMaxMana() + storage_bonus)
+	local new_pre_value = target_proportion * unit:GetMaxMana()
+	unit:SetMana( math.max( 0,  new_pre_value ) )
+end
+
 --- Searches for valid revive targets in an area.
 -- @param location The center of the search area
 -- @param location The radius of the search area
