@@ -13,7 +13,6 @@
 		<Button id="SelectionButton"
 				onactivate="Selected()"
 		>
-			<Panel id="UnavailableOverlay" />
 		</Button>
 	</Panel>	
 </root>

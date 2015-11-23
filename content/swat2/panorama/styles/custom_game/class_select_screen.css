@@ -1,5 +1,6 @@
 .ClassSelectScreenRoot
 {
+	visibility: visible;
 	margin-left: 0px;
 	margin-top: 0px;
 	z-index: 100;
@@ -9,7 +10,7 @@
 {
 	width: 1920px;
 	height: 1080px;
-	background-color: black;
+	background-color: gradient( radial, 50% 50%, 0% 0%, 40% 40%, from( #212121 ), to( #000000 ) );
 	visibility: visible;
 }
 
@@ -23,12 +24,14 @@
 
 .CharacterPortrait
 {
-	margin-top: 130px;
-	margin-left: 706px;
+	margin-top: 200px;
+	margin-left: 825px;
+
 }
 
 .CharacterPortrait Label
 {
+	margin-top: -10px;
 	horizontal-align: center;
 	vertical-align: top;
 	color: #FFFFFF;
@@ -37,12 +40,104 @@
 	font-weight: bold;
 }
 
-#CharacterPicture
+#PyroImage
 {
 	margin-top: 54px;
-	width: 507px;
-	height: 537px;
-	background-image: url("file://{images}/class_portraits/default.png");
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#MedicImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#HoImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#TacticianImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#CyborgImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#MaverickImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#SniperImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#TechopsImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#PsychImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#DemoImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
 }
 
 .ClassesPanel
@@ -51,7 +146,6 @@
 	height: 370px;
 	margin-top: 90px;
 	margin-left: 74px;
-	background-color: black;
 }
 
 .ClassesPanel Label
@@ -60,14 +154,14 @@
 	vertical-align: top;
 	color: #FFFFFF;
 	text-shadow: 2px 2px 8px 3.0 #333333b0;
-	font-size: 50px;
+	font-size: 40px;
 	font-weight: bold;
 }
 
 #class_button_list
 {
 	horizontal-align: center;
-	margin-top: 56px;
+	margin-top: 80px;
 	flow-children: right-wrap;
 }
 
@@ -75,10 +169,8 @@
 {
 	width: 500px;
 	height: 260px;
-	margin-top: 470px;
+	margin-top: 460px;
 	margin-left: 74px;
-	visibility: visible;
-	background-color: black;
 }
 
 .WeaponsPanel Label
@@ -87,14 +179,14 @@
 	vertical-align: top;
 	color: #FFFFFF;
 	text-shadow: 2px 2px 8px 3.0 #333333b0;
-	font-size: 50px;
+	font-size: 40px;
 	font-weight: bold;
 }
 
 #weapons_button_list
 {
 	horizontal-align: center;
-	margin-top: 56px;
+	margin-top: 80px;
 	flow-children: right-wrap;
 }
 
@@ -102,10 +194,8 @@
 {
 	width: 500px;
 	height: 260px;
-	margin-top: 740px;
+	margin-top: 730px;
 	margin-left: 74px;
-	visibility: visible;
-	background-color: black;
 }
 
 .ArmorPanel Label
@@ -114,17 +204,28 @@
 	vertical-align: top;
 	color: #FFFFFF;
 	text-shadow: 2px 2px 8px 3.0 #333333b0;
-	font-size: 50px;
+	font-size: 40px;
 	font-weight: bold;
 }
 
 #armor_button_list
 {
 	horizontal-align: center;
-	margin-top: 56px;
+	margin-top: 80px;
 	flow-children: right-wrap;
 }
 
+.AbilityPanel
+{
+	horizontal-align: center;
+	vertical-align: center;
+	margin-top: 550px;
+}
+
+#ability_panel
+{
+	margin-top: 10px;
+}
 
 #ConfirmSelections
 {

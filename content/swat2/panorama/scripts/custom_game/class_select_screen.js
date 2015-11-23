@@ -38,11 +38,8 @@ armor.push( "medium" );
 armor.push( "heavy" );
 armor.push( "advanced" );
 	
-	
 function UpdateLists()
 {
-	
-	
 	// make sure xml files are loaded before running function
 	var classButtonList = $( "#class_button_list" );
 	if ( !classButtonList )
@@ -53,6 +50,9 @@ function UpdateLists()
 	var armorButtonList = $( "#armor_button_list" );
 	if ( !armorButtonList )
 		return;
+	var abilityList = $( "#ability_panel" );
+	if ( !abilityList )
+		return;
 	
 	//makes all class buttons
 	for ( var i = 0; i<classes.length; ++i )
@@ -62,6 +62,7 @@ function UpdateLists()
 		classButton.data().SetClassButtonInfo( classes[i] );
 		m_ClassButtons.push( classButton );
 		classButtonList.data().ClassSelected = ClassSelected;
+		classButton.visible = true;
 	}
 	
 	//makes all weapons buttons
@@ -72,6 +73,7 @@ function UpdateLists()
 		weaponButton.data().SetWeaponButtonInfo( weapons[i] );
 		m_WeaponButtons.push( weaponButton );
 		weaponButtonList.data().WeaponSelected = WeaponSelected;
+		weaponButton.visible = true;
 	}
 	
 	//makes all armor buttons
@@ -82,7 +84,15 @@ function UpdateLists()
 		armorButton.data().SetArmorButtonInfo( armor[i] );
 		m_ArmorButtons.push( armorButton );
 		armorButtonList.data().ArmorSelected = ArmorSelected;
+		armorButton.visible = true;
 	}
+	
+	//makes the ability panel
+	var abilityPanel = $.CreatePanel( "Panel", abilityList, "" );
+	abilityPanel.BLoadLayout( "file://{resources}/layout/custom_game/class_select_screen_ability_bar.xml", false, false );
+	abilityPanel.data().SetWeaponAbility( "" );
+	abilityPanel.data().SetArmorAbility( "" );
+	abilityPanel.data().SetPlayerAbilities( "" );
 }
 
 
@@ -92,39 +102,46 @@ function ClassSelected( playerclass, charactername )
 	playerClass = playerclass;
 	
 	$( "#CharacterName" ).text = charactername;
-
-	//if a weapon has been selected before a class, sets the correct weapon version
-	if ( playerWeapon != "" )
+	SetPortrait( playerClass )
+	
+	for ( var i = 0; i < 10 ; ++i )
 	{
-		WeaponSelected( playerWeapon );
+		var classButton = m_ClassButtons[ i ];
+		var className = classButton.data().GetKey();
+		classButton.SetHasClass( "is_selected", false );
+		if ( className == playerclass )
+		{
+			classButton.SetHasClass( "is_selected", true );
+		}
 	}
 	
 	//sees if current armor selections are valid
 	//sets which armor buttons are available
 	if ( playerClass == "cyborg" )
 	{
-		if ( playerArmor != "advanced" )
-		{
-			playerArmor = "";
-		}
+		//selects advanced armor
 		for ( var i = 0; i < 3; ++i )
 		{
 			var armorButton = m_ArmorButtons[ i ];
 			armorButton.SetHasClass( "not_available", true );
+			armorButton.SetHasClass( "is_selected", false );
 		}
 		var armorButton = m_ArmorButtons[ 3 ];
 		armorButton.SetHasClass( "not_available", false );
-		if ( playerWeapon != "vindicator" )
-		{
-			playerWeapon = "";
-		}
+		armorButton.SetHasClass( "is_selected", true );
+		ArmorSelected( "advanced" );
+		
+		//selects vindicator
 		for ( var i = 0; i < 5; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 1 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "chaingun" );
 	}
 	if ( playerClass != "cyborg" )
 	{
@@ -139,50 +156,48 @@ function ClassSelected( playerclass, charactername )
 		}
 		var armorButton = m_ArmorButtons[ 3 ];
 		armorButton.SetHasClass( "not_available", true );
+		armorButton.SetHasClass( "is_selected", false );
 	}
 	//sees if current weapon selections are valid
 	//sets which weapon buttons are available
 	if ( playerClass == "sniper"  || playerClass == "techops")
 	{
-		if ( playerWeapon != "sniper_rifleI" )
-		{
-			playerWeapon = "";
-		}
 		for ( var i = 0; i < 4; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 4 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "sniper_rifle");
 	}
 	else if ( playerClass == "ho" )
 	{
-		if ( playerWeapon != "chaingunI" )
-		{
-			playerWeapon = "";
-		}
 		for ( var i = 0; i < 5; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 1 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "chaingun" );
 	}
 	else if ( playerClass == "demo" )
 	{
-		if ( playerWeapon != "rocketI" )
-		{
-			playerWeapon = "";
-		}
 		for ( var i = 0; i < 5; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 3 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "rocket" );
 	}
 	else if ( playerClass == "maverick" )
 	{
@@ -190,52 +205,57 @@ function ClassSelected( playerclass, charactername )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", false );
+			if ( weaponButton.BHasClass ( "is_selected" ) )
+			{
+				var weaponName = weaponButton.data().GetKey();
+				WeaponSelected( weaponName );
+			}
 		}
 	}
 	else if ( playerClass == "pyrotechnician" )
 	{
-		if ( playerWeapon != "flamethrowerI" )
-		{
-			playerWeapon = "";
-		}
 		for ( var i = 0; i < 5; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 2 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "flamethrower" );
 	}
 	else if ( playerClass == "medic" )
 	{
-		if ( playerWeapon != "assault_rifle_urban" )
-		{
-			playerWeapon = "";
-		}
 		for ( var i = 1; i < 5; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 0 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "assault_rifle" );
 	}
 	else if ( playerClass == "tactician" || playerClass == "psychologist" )
 	{
-		if ( playerWeapon != "assault_rifleI" )
-		{
-			playerWeapon = "";
-		}
 		for ( var i = 1; i < 5; ++i )
 		{
 			var weaponButton = m_WeaponButtons[ i ];
 			weaponButton.SetHasClass( "not_available", true );
+			weaponButton.SetHasClass( "is_selected", false );
 		}
 		var weaponButton = m_WeaponButtons[ 0 ];
 		weaponButton.SetHasClass( "not_available", false );
+		weaponButton.SetHasClass( "is_selected", true );
+		WeaponSelected( "assault_rifle" );
 	}
-	$.Msg( playerClass );
 	
+	var abilityPanel = $( "#ability_panel" ).GetChild( 0 );
+	abilityPanel.data().SetWeaponAbility( playerWeapon );
+	abilityPanel.data().SetArmorAbility( playerArmor );
+	abilityPanel.data().SetPlayerAbilities( playerClass );
 	PlayerReady();
 }
 
@@ -246,19 +266,21 @@ function WeaponSelected( weapon )
 	{
 		var weaponButton = m_WeaponButtons[ i ];
 		var weaponName = weaponButton.data().GetKey();
+		weaponButton.SetHasClass( "is_selected", false );
 		
 		if ( weaponName == weapon )
 		{
 			//if the button is unavailable, do nothing
 			if ( weaponButton.BHasClass( "not_available" ) )
 			{
-				return;
+				playerWeapon = "";
 			}
 			
 			//otherwise sets the correct player weapon
 			else
 			{
 				playerWeapon = weapon;
+				weaponButton.SetHasClass( "is_selected", true );
 				//Cyborg weapon has no versions
 				if (playerClass != "cyborg")
 				{
@@ -281,7 +303,8 @@ function WeaponSelected( weapon )
 			}
 		}	
 	}
-	$.Msg ( playerWeapon );
+	var abilityPanel = $( "#ability_panel" ).GetChild( 0 );
+	abilityPanel.data().SetWeaponAbility( playerWeapon );
 	PlayerReady();
 }
 
@@ -289,26 +312,86 @@ function ArmorSelected( armor )
 {
 	//finds the button for that armor, sees if its available
 	for ( var i = 0; i < 4; ++i )
-	{
+	{	
 		var armorButton = m_ArmorButtons[ i ];
 		var armorName = armorButton.data().GetKey();
+		armorButton.SetHasClass( "is_selected", false );
 		if ( armorName == armor )
 		{
 			//if the button is unavailable, do nothing
 			if ( armorButton.BHasClass( "not_available" ) )
 			{
-				return;
+				playerArmor = "";
 			}
 			
 			else
 			{
+				armorButton.SetHasClass( "is_selected", true );
 				playerArmor = armor;
 			}
 		}
 	}
-	$.Msg ( playerArmor );
+	var abilityPanel = $( "#ability_panel" ).GetChild( 0 );
+	abilityPanel.data().SetArmorAbility( playerArmor );
 	PlayerReady();
 }
+
+function SetPortrait( playerClass )
+{
+	$( "#PyroImage" ).visible = false;
+	$( "#MedicImage" ).visible = false;
+	$( "#HoImage" ).visible = false;
+	$( "#TacticianImage" ).visible = false;
+	$( "#CyborgImage" ).visible = false;
+	$( "#MaverickImage" ).visible = false;
+	$( "#SniperImage" ).visible = false;
+	$( "#TechopsImage" ).visible = false;
+	$( "#PsychImage" ).visible = false;
+	$( "#DemoImage" ).visible = false;
+	
+	if ( playerClass == "sniper" )
+	{
+		$( "#SniperImage" ).visible = true;
+	}
+	else if ( playerClass == "cyborg" )
+	{
+		$( "#CyborgImage" ).visible = true;
+	}
+	else if ( playerClass == "demo" )
+	{
+		$( "#DemoImage" ).visible = true;
+	}
+	else if ( playerClass == "medic" )
+	{
+		$( "#MedicImage" ).visible = true;
+	}
+	else if ( playerClass == "maverick" )
+	{
+		$( "#MaverickImage" ).visible = true;
+	}
+	else if ( playerClass == "ho" )
+	{
+		$( "#HoImage" ).visible = true;
+	}
+	else if ( playerClass == "psychologist" )
+	{
+		$( "#PsychImage" ).visible = true;
+	}
+	else if ( playerClass == "tactician" )
+	{
+		$( "#TacticianImage" ).visible = true;
+	}
+	else if ( playerClass == "pyrotechnician" )
+	{
+		$( "#PyroImage" ).visible = true;
+	}
+	else if ( playerClass == "techops" )
+	{
+		$( "#TechopsImage" ).visible = true;
+	}
+}
+
+
 
 //sees if the player has selected all options, if so show confirm button
 function PlayerReady()
@@ -326,8 +409,10 @@ function PlayerReady()
 function ConfirmSelected()
 {
 	var playerId = Players.GetLocalPlayer();
-	//$.( "#ClassSelectScreenRoot" ).style.visibility = "collapse";
 	GameEvents.SendCustomGameEventToServer( "class_setup_complete", { playerId:playerId, class:playerClass, weapon:playerWeapon, armor:playerArmor, trait:"none", spec:"none" });
+	//makes class select screen collapse
+	$.GetContextPanel().visible = false;
+	$.GetContextPanel().RemoveAndDeleteChildren();
 }
 
 (function()
