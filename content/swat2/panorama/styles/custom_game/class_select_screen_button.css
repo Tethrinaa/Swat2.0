@@ -1,0 +1,47 @@
+.SelectionButtonPanel
+{
+
+}
+
+#ButtonLabel
+{
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+#SelectionButton
+{
+	width: 65px;
+	height: 65px;
+	margin: 16px;
+	margin-top: 18px;
+	background-size: 100% 100%;
+	border: 2px solid #89998990;
+	saturation: 1;
+}
+
+#SelectionButton:hover
+{
+	border: 2px solid goldenrod;
+}
+
+.is_selected #SelectionButton
+{
+	border: 2px solid goldenrod;
+	box-shadow: -2px -2px 8px 5px #DAA520;
+}
+
+.not_available #SelectionButton
+{
+	saturation: 0;
+}
+
+.not_available #SelectionButton:hover
+{
+	saturation: 0;
+	border: 2px solid #89998990;
+}

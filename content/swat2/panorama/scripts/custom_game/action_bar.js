@@ -9,16 +9,6 @@ var m_WeaponAbilityPanels = []; // created up to a high-water mark, but reused w
 var m_PrimaryAbilityPanels = []; // created up to a high-water mark, but reused when selection changes
 var m_SecondaryAbilityPanels = []; // created up to a high-water mark, but reused when selection changes
 
-
-function Test()
-{
-	var testBackground = $( "#TestBackground");
-
-	testBackground.addEventListener("click", function(event) {
-		event.preventDefault()
-	});
-}
-
 function OnLevelUpClicked()
 {
 	if ( Game.IsInAbilityLearnMode() )
@@ -65,6 +55,8 @@ function UpdateAbilityList()
 	var nUsedWeaponPanels = 0;
 	var nUsedPrimaryPanels = 0;
 	var nUsedSecondaryPanels = 0;
+	
+	
 	for ( var i = 0; i < Entities.GetAbilityCount( queryUnit ); ++i )
 	{
 		var ability = Entities.GetAbility( queryUnit, i );
