@@ -3,6 +3,11 @@
 
 }
 
+.SelectionButtonPanel Image
+{
+	visibility: collapse;
+}
+
 #ButtonLabel
 {
 	horizontal-align: center;
