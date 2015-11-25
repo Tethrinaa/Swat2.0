@@ -1,0 +1,77 @@
+//=================================================================================================================
+// Ability: Radinating
+// Units with this carry a radiation fragment - giving them more armor and energy regen
+//=================================================================================================================
+"enemy_common_radinating"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"        	"earth_spirit_petrify"
+    "MaxLevel"	"1"
+
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				"FIELD_INTEGER"
+            "bonus_armor"		    "10"
+         }
+         "02"
+         {
+             "var_type"          "FIELD_INTEGER"
+             "bonus_mana"        "250"
+         }
+      }
+
+    "precache"
+    {
+        "particle"  	    "particles/econ/items/undying/undying_manyone/undying_tombstone_manyone_eye_rope.vpcf"
+        "particle"   	    "particles/econ/items/undying/undying_manyone/undying_pale_tower_destruct_flash.vpcf"
+    }
+
+
+    "Modifiers"
+    {
+        "modifier_enemy_common_radinating"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "0"
+
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "EffectName"	    "particles/econ/items/undying/undying_manyone/undying_tombstone_manyone_eye_rope.vpcf"
+                    "EffectAttachType"	"follow_overheard"
+                    "Target"		"CASTER"
+                }
+            }
+
+            "OnDeath"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_radinating.lua"
+                    "Function"              "modifier_spawn_rad"
+                }
+
+                "FireEffect"
+                {
+                    "EffectName"	    "particles/econ/items/undying/undying_manyone/undying_pale_tower_destruct_flash.vpcf"
+                    "EffectAttachType"	"follow_origin"
+                    "Target"		"CASTER"
+                }
+            }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+                // Doesn't work on non heroes :(
+                "MODIFIER_PROPERTY_MANA_BONUS"          "%bonus_mana"
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+//=================================================================================================================
+// Magic Immune
+//=================================================================================================================
+"common_magic_immune"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "AbilityTextureName"            "disruptor_glimpse"
+
+    // Modifiers
+    //-------------------------------------------------------------------------------------------------------------
+    "Modifiers"
+    {
+        "common_invulnerable"
+        {
+            "IsHidden"                       "1"
+                "Passive"                       "1"
+                "States"
+                {
+                    "MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+                }
+        }
+    }
+}
