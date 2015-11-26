@@ -1,0 +1,96 @@
+	//=================================================================================================================
+	// Ability: Heavy Ordnance Power Grid
+	//=================================================================================================================
+	"primary_ho_power_grid"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"16"
+		"AbilityTextureName"			"pudge_dismember"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCooldown"				"120 104 91 79 69 60 52 45 40 34 30 26 23 20 17 15"
+		"AbilityChannelTime"			"20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"unpowered_eps"			"20 22.5 25 27.5 30 32.5 34.5 36.5 38.5 40.5 42.5 44 45.5 47 48.5 50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"powered_eps"			"40 45 50 55 60 65 69 73 77 81 85 88 91 94 97 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"linger_duration"		"3"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"        "heroes/hero_heavy_ordnance/ho_power_grid.lua"
+				"Function"          "ApplyPowerModifier"
+			}
+			
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"hero_Crystal.freezingField.wind"
+			}
+		}
+		
+		"OnChannelFinish"
+		{
+			"DelayedAction"
+			{
+				"Delay" 			"%linger_duration"
+				"Action"
+				{
+					"RemoveModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_power_grid_unpowered"
+					}
+					"RemoveModifier"
+					{
+						"Target"			"CASTER"
+						"ModifierName"		"modifier_power_grid_powered"
+					}
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_power_grid_unpowered"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%unpowered_eps"
+				}				
+			}
+			"modifier_power_grid_powered"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"			"%powered_eps"
+				}				
+			}
+		}
+	}

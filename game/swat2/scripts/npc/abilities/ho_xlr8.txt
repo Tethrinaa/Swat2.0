@@ -1,0 +1,171 @@
+	//=================================================================================================================
+	// Ability: Heavy Ordnance XLR8
+	//=================================================================================================================
+	"ho_xlr8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityTextureName"			"pudge_dismember"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"attack_speed_bonus"				"25 50 100 200 400"
+			}
+			"02"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"unphased_radius"					"144"
+			}			
+			"03"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"phased_radius"						"900"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"location_check_interval"			"3"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"speed_up_initial"					"5"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"speed_up_interval"					"7.5"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"duration"							"120"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"        	"modifier_xlr8_location_thinker"
+				"Target"          		"CASTER"
+			}
+			"FireSound"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"hero_Crystal.freezingField.wind"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_xlr8_location_thinker"
+			{
+				"ThinkInterval"				"%location_check_interval"
+				"Duration"					"%duration"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "heroes/hero_heavy_ordnance/ho_xlr8.lua"
+						"Function"          "UpdateLocation"  // This will murder everything if it moves too far
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "heroes/hero_heavy_ordnance/ho_xlr8.lua"
+						"Function"          "SetLocation"
+					}
+					"RunScript"
+					{
+						"ScriptFile"        "heroes/hero_heavy_ordnance/ho_xlr8.lua"
+						"Function"          "SpeedUpLoop"
+						"initial"			"%speed_up_initial"
+						"interval"			"%speed_up_interval"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"        	"modifier_xlr8_attack_bonus"
+						"Target"          		"CASTER"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"        	"modifier_xlr8_unphased_aura"
+						"Target"          		"CASTER"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"        	"modifier_xlr8_phased_aura"
+						"Target"          		"CASTER"
+					}
+				}
+				"OnDestroy" // This guy is responsible for cleaning everything up too
+				{
+					"RunScript"
+					{
+						"ScriptFile"        "heroes/hero_heavy_ordnance/ho_xlr8.lua"
+						"Function"          "ResetAbility"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_xlr8_unphased_aura"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_xlr8_phased_aura"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_xlr8_attack_bonus"
+						"Target"			"CASTER"
+					}
+				}
+			}
+			
+			"modifier_xlr8_unphased_aura"
+			{
+				"IsHidden"					"1"
+				"Aura"						"modifier_xlr8_attack_bonus"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC" // TODO this really needs to target only minidroids
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+				"Aura_Radius" 				"%unphased_radius"
+			}
+			
+			"modifier_xlr8_phased_aura"
+			{
+				"IsHidden"					"1"
+				"Aura"						"modifier_xlr8_attack_bonus"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC" // TODO this really needs to target only minidroids
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Aura_Radius" 				"%phased_radius"
+			}
+
+			"modifier_xlr8_attack_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_bonus"
+				}
+			}
+		}
+	}

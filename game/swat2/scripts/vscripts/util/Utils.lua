@@ -57,3 +57,7 @@ end
 function bit(p)
     return 2 ^ (p - 1)  -- 1-based indexing
 end
+
+function round(n)
+  return math.floor((math.floor(n*2) + 1)/2)
+end
