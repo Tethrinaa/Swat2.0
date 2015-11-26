@@ -1,0 +1,44 @@
+.AbilityPanelRoot
+{
+	flow-children: right;
+	height: 400px;
+}
+
+#weapon_ability
+{
+	margin-top: 10px;
+	flow-children: down;
+}
+
+#weapon_ability Label
+{
+	horizontal-align: center;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#armor_ability
+{
+	margin-top: 10px;
+	flow-children: down;
+}
+
+#armor_ability Label
+{
+	horizontal-align: center;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+
+#player_ability_list
+{
+	width: 213px;
+	margin-top: 30px;
+	vertical-align: top;
+	flow-children: right-wrap;
+}

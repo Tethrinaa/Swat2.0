@@ -1,0 +1,256 @@
+.ClassSelectScreenRoot
+{
+	visibility: visible;
+	margin-left: 0px;
+	margin-top: 0px;
+	z-index: 100;
+}
+
+#BackgroundImage
+{
+	width: 1920px;
+	height: 1080px;
+	background-color: gradient( radial, 50% 50%, 0% 0%, 40% 40%, from( #212121 ), to( #000000 ) );
+	visibility: visible;
+}
+
+.test #BackgroundImage
+{
+	width: 1920px;
+	height: 1080px;
+	background-color: white;
+	visibility: visible;
+}
+
+.CharacterPortrait
+{
+	margin-top: 200px;
+	margin-left: 825px;
+
+}
+
+.CharacterPortrait Label
+{
+	margin-top: -10px;
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#PyroImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#MedicImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#HoImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#TacticianImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#CyborgImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#MaverickImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#SniperImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#TechopsImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#PsychImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+#DemoImage
+{
+	margin-top: 54px;
+	width: 270px;
+	height: 350px;
+	border: 3px solid grey;
+	background-size: 100% 100%;
+	visibility: collapse;
+}
+
+.ClassesPanel
+{
+	width: 500px;
+	height: 370px;
+	margin-top: 90px;
+	margin-left: 74px;
+}
+
+.ClassesPanel Label
+{
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#class_button_list
+{
+	horizontal-align: center;
+	margin-top: 80px;
+	flow-children: right-wrap;
+}
+
+.WeaponsPanel
+{
+	width: 500px;
+	height: 260px;
+	margin-top: 460px;
+	margin-left: 74px;
+}
+
+.WeaponsPanel Label
+{
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#weapons_button_list
+{
+	horizontal-align: center;
+	margin-top: 80px;
+	flow-children: right-wrap;
+}
+
+.ArmorPanel
+{
+	width: 500px;
+	height: 260px;
+	margin-top: 730px;
+	margin-left: 74px;
+}
+
+.ArmorPanel Label
+{
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#armor_button_list
+{
+	horizontal-align: center;
+	margin-top: 80px;
+	flow-children: right-wrap;
+}
+
+.AbilityPanel
+{
+	horizontal-align: center;
+	vertical-align: center;
+	margin-top: 550px;
+}
+
+#ability_panel
+{
+	margin-top: 10px;
+}
+
+#ConfirmSelections
+{
+	border-radius: 2px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-bottom: 50px;
+	width: 500px;
+	height: 100px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006500 ), to( #00C000 ) );
+	visibility: collapse;
+}
+
+#ConfirmSelections Label
+{
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 50px;
+	font-weight: bold;
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+#ConfirmSelections:hover
+{
+	border: 2px solid white;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #004700 ), to( #00A500 ) );
+}

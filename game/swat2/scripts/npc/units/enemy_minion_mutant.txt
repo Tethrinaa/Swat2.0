@@ -1,7 +1,7 @@
 //=================================================================================
 // Creature: Basic Mutant
 //=================================================================================
-	"enemy_minion__mutant"
+	"enemy_minion_mutant"
 {
 	// General
 	"BaseClass"					"npc_dota_creature"	// Class of entity of link to.

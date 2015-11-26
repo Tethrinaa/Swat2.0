@@ -11,6 +11,8 @@ function SetUpDebugGameChatCommands()
         Convars:RegisterCommand( "swat_award_xp", DebugGameChatCommand_AwardXP, "Chat Command | Award XP", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_level_up", DebugGameChatCommand_LevelUp, "Chat Command | Level Up", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_collect_em_up", DebugGameChatCommand_CollectEmUp, "Chat Command | Collect em up", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_spawn_rad", DebugGameChatCommand_SpawnRad, "Chat Command | Spawn Rad", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_kill_rad", DebugGameChatCommand_KillRad, "Chat Command | Kill Rad", FCVAR_CHEAT )
     end
 end
 
@@ -72,4 +74,33 @@ end
 function DebugGameChatCommand_CollectEmUp()
     print("DEBUG | Calling CollectEmUp")
     g_EnemyCommander:collectEmUp()
+end
+
+function DebugGameChatCommand_SpawnRad()
+    print("DEBUG | Calling SpawnRad")
+    g_RadiationManager:spawnRadFragment()
+    g_RadiationManager:incrementRadCount()
+end
+
+function DebugGameChatCommand_KillRad()
+    print("DEBUG | Calling KillRad")
+    local enemyUnits = FindUnitsInRadius(DOTA_TEAM_BADGUYS,
+                                            Vector(0, 0, 0),
+                                            nil,
+                                            FIND_UNITS_EVERYWHERE,
+                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                            DOTA_UNIT_TARGET_ALL,
+                                            DOTA_UNIT_TARGET_FLAG_NONE,
+                                            FIND_ANY_ORDER,
+                                            false)
+
+    for _,unit in pairs(enemyUnits) do
+        if unit:GetUnitName() == "game_radiation_fragment" then
+            -- This is a rad fragment
+            unit:ForceKill(true)
+            return
+        end
+    end
+    print("DEBUG | KillRad | <None to kill>")
+
 end

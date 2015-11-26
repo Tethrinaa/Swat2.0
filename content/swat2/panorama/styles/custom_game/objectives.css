@@ -1,7 +1,14 @@
 .BaseHud
 {
-    flow-children: down;
+    /*flow-children: down;*/
 	position: 88.6% 80.9% 0px;
+}
+
+.AspectRatio4x3 .BaseHud
+{
+	margin-top: 60px;
+	margin-left: 50px;
+	
 }
 
 .Background

@@ -1,0 +1,28 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/class_select_screen.css" />
+		<include src="file://{resources}/styles/custom_game/class_select_screen_button.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/class_select_screen_button.js" />
+	</scripts>
+	<Panel class="SelectionButtonPanel">
+		<Label id = "ButtonLabel" />
+		<Label id = "ButtonType" />
+		<Button id="SelectionButton"
+				onactivate="Selected()"
+		>
+		</Button>
+		<Image src="file://{images}/armor_icons/advanced_armor.png" />
+		<Image src="file://{images}/armor_icons/heavy_armor.png" />
+		<Image src="file://{images}/armor_icons/light_armor.png" />
+		<Image src="file://{images}/armor_icons/med_armor.png" />
+		<Image src="file://{images}/weapon_icons/assault_rifle.png" />
+		<Image src="file://{images}/weapon_icons/chaingun.png" />
+		<Image src="file://{images}/weapon_icons/flamethrower.png" />
+		<Image src="file://{images}/weapon_icons/rocket.png" />
+		<Image src="file://{images}/weapon_icons/sniper_rifle.png" />	
+	</Panel>	
+</root>
+
