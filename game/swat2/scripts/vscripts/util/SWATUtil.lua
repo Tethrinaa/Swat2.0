@@ -34,6 +34,26 @@ function SwapAbilitiesDataDriven(keys)
     SwapAbilitiesLua(keys.caster, keys.on_ability, keys.off_ability)
 end
 
+--- Change the level of an ability for a unit.
+-- @param unit The unit who owns the ability
+-- @param ability The name of the ability to change
+-- @param level The level to set the ability to
+-- @param increment The flag that turns level into a modifier instead of an absolute
+function SetUnitAbilityLevel(unit, ability_name, level, increment)
+    local ability = unit:FindAbilityByName(ability_name)
+    local new_level = level
+    
+    -- if the increment param exists and is non-zero, use the flag to determine the direction
+    if increment and increment ~= 0 then
+        if increment > 0 then
+            new_level = ability:GetLevel() + level 
+        elseif increment < 0 then
+            new_level = ability:GetLevel() - level        
+        end
+    end
+    ability:SetLevel(new_level)
+end
+
 --- Adjust a units mana to account for increased capacity
 -- DOTA, like WC3, keeps the percentage of mana constant when increasing your max mana.
 -- This method adjusts it down beforehand so when the bonus is received, the current mana stays constant

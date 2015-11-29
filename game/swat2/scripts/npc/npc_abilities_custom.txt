@@ -2404,6 +2404,265 @@
 	//=================================================================================================================
 	// Ability: Heavy Ordnance XLR8
 	//=================================================================================================================
+	"ho_construct_droid"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"6"
+		"AbilityTextureName"			"pudge_dismember"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"250 500 750 1000 1250 9999"
+        "AbilityCooldown"               "20"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"plasma_rounds_constant"			"-1"
+			}
+			"02"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"plasma_rounds_factor"				"1"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"plasma_shield_constant"			"0"
+			}
+			"04"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"plasma_shield_factor"				"2"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"storage_cells_constant"			"0"
+			}
+			"06"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"storage_cells_factor"				"2"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"power_grid_constant"			    "0"
+			}
+			"08"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"power_grid_factor"				    "2"
+			}
+            "09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"distance"			                "-95"
+			}
+			"10"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"mini_count"				        "1"
+			}
+			"11"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"owner_armor_bonus"				    "0 1 2 3 3 3"
+			}
+			"12"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"all_armor_bonus"				    "0 1 2 3 4 5"
+			}
+			"13"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"owner_radius"				        "144"
+			}
+			"14"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"all_radius"    				    "625"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"			"enemy_minion_zombie"
+				"Target"
+				{
+					"Center"				"CASTER"
+					"ScriptSelectPoints"
+					{
+						"ScriptFile"    "heroes/hero_heavy_ordnance/ho_construct_droid.lua"
+	        			"Function"      "GetFrontPoint"
+						"Target"		"CASTER"
+						"Distance"		"%distance"
+					}
+				}
+	
+				"UnitCount"			"%mini_count"
+	
+				// This makes sure units never get stuck
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_phased"
+						"Target"		"TARGET"
+						"Duration"		"0.03"
+					}
+                    "ApplyModifier"
+					{
+						"ModifierName"	"modifier_ho_minidroid"
+						"Target"		"TARGET"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/ho_construct_droid.lua"
+						"Function"		"SetUnitsMoveForward"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_ho_minidroid"
+			{
+				"IsHidden"              "1"
+                "OnCreated"
+                {
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/ho_construct_droid.lua"
+						"Function"		"SpinUpDroid"
+					}
+                }
+                "OnDestroy"
+                {
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/ho_construct_droid.lua"
+						"Function"		"SpinDownDroid"
+					}
+                }
+			}
+            
+			"modifier_defense_matrix_owner1"
+			{
+				"Aura"				        "modifier_defense_matrix_owner1_armor_bonus"
+				"AuraRadius"				"%owner_radius"
+                "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+			}
+            "modifier_defense_matrix_owner1_armor_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%owner_armor_bonus"
+				}
+			}
+            
+			"modifier_defense_matrix_owner2"
+			{
+				"Aura"				        "modifier_defense_matrix_owner2_armor_bonus"
+				"AuraRadius"				"%owner_radius"
+                "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+			}
+            "modifier_defense_matrix_owner2_armor_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%owner_armor_bonus"
+				}
+			}
+            
+			"modifier_defense_matrix_owner3"
+			{
+				"Aura"				        "modifier_defense_matrix_owner3_armor_bonus"
+				"AuraRadius"				"%owner_radius"
+                "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+			}
+            "modifier_defense_matrix_owner3_armor_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%owner_armor_bonus"
+				}
+			}
+            
+			"modifier_defense_matrix_owner4"
+			{
+				"Aura"				        "modifier_defense_matrix_owner4_armor_bonus"
+				"AuraRadius"				"%owner_radius"
+                "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
+                "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+			}
+            "modifier_defense_matrix_owner4_armor_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%owner_armor_bonus"
+				}
+			}
+            
+			"modifier_defense_matrix_owner5"
+			{
+				"Aura"				        "modifier_defense_matrix_owner5_armor_bonus"
+				"AuraRadius"				"%owner_radius"
+                "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+			}
+            "modifier_defense_matrix_owner5_armor_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%owner_armor_bonus"
+				}
+			}
+			
+			"modifier_defense_matrix_all"
+			{
+				"Aura"						"modifier_defense_matrix_all_armor_bonus"
+				"AuraRadius"				"%all_radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO" // TODO this really needs to target only minidroids
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+			}
+			
+			"modifier_defense_matrix_all_armor_bonus"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%all_armor_bonus"
+				}
+			}
+		}
+	}
+        
+	//=================================================================================================================
+	// Ability: Heavy Ordnance XLR8
+	//=================================================================================================================
 	"ho_xlr8"
 	{
 		// General
