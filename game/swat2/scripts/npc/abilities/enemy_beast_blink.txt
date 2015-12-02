@@ -1,0 +1,44 @@
+//=================================================================================================================
+// Ability: Blink
+// Beast blinks to the targetted location
+//=================================================================================================================
+"enemy_beast_blink"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES "
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityTextureName"            "antimage_blink"
+    "MaxLevel"                      "1"
+
+    // Stats
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"              "1200"
+    "AbilityCastPoint"              "0.0"
+    "AbilityCooldown"               "1.0"
+    "AbilityManaCost"               "25"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                      "FIELD_INTEGER"
+            "max_blink_range"               "1200"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"            "abilities/enemy_beast_blink.lua"
+            "Function"              "blink_on_spell_start"
+            "Target"                "TARGET"
+            "MaxBlinkRange"         "%max_blink_range"
+        }
+    }
+}

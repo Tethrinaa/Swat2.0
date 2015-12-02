@@ -24,6 +24,8 @@ function Precache( context )
     -- Enemies
     PrecacheUnitByNameSync("enemy_boss_abomination", context)
     PrecacheUnitByNameSync("enemy_minion_beast", context)
+    PrecacheResource( "particle", "particiles/items_fx/blink_dagger_start.vpcf", context )
+    PrecacheResource( "particle", "particiles/items_fx/blink_dagger_end.vpcf", context )
     PrecacheUnitByNameSync("enemy_minion_dog", context)
     PrecacheUnitByNameSync("enemy_minion_garg", context)
     PrecacheUnitByNameSync("enemy_minion_innard_initial", context)
