@@ -23,6 +23,8 @@ function BeastSpawner:spawnMinion(position, specialType)
     --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
     local unit = CreateUnitByName( BeastSpawner.BEAST_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
+    unit:SetMana(0)
+
     -- EnemySpawner will look for onDeathFunctions and call them
     unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
 

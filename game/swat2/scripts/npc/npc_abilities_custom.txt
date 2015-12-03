@@ -1759,6 +1759,166 @@
 	    }
 	}
 	//=================================================================================================================
+	// Ability: Grotesque Ensnare
+	// Ensnares a target, making them unable to move
+	//=================================================================================================================
+	"enemy_grotesque_ensnare"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"naga_siren_ensnare"
+	    "MaxLevel"	"1"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.65"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"10"
+	
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"net_speed"					"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fake_ensnare_distance"		"900"
+			}
+		}
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+			"particle"					"particles/units/heroes/hero_siren/siren_net.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"1"
+				"VisionRadius"			"0"
+				"MoveSpeed"				"%net_speed"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_NagaSiren.Ensnare.Cast"
+				"Target"				"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_NagaSiren.Ensnare.Target"
+				"Target"				"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_ensnare_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ensnare_datadriven"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+	
+				"Duration"		"%duration"
+	
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+	
+				"EffectName"			"particles/units/heroes/hero_siren/siren_net.vpcf"
+				"EffectAttachType"		"follow_origin"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: Grotesque Evasion
+	// Chance to dodge an attack
+	// Levels are based on difficulty (Normal-Insane: 1, NM: 2, Ext: 3)
+	//=================================================================================================================
+	"enemy_grotesque_evasion"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"phantom_assassin_blur"
+	    "MaxLevel"	"3"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "evasion"           "20 50 75"
+	          }
+	      }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_grotesque_evasion"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
 	// Ability: Mutant Bash
 	// Chance to stun
 	// Should be level 1 for Normal-Insane, 2 for nightmare, and 3 for extinction
@@ -1870,7 +2030,8 @@
 	// into this one ability. So, this ability should be 1 level for every rad bracket (up to 60+)
 	// Additionally, 2 skills had 4 variants based on difficulty
 	// In order to save processing, all variants and brackets are merged here as well
-	// The level of this skill should be 4 * (1-(1-19),2-(20-39),3-(40-59),4-(60+)) + (1-normal, 2-hard, 3-insane, 4-NM+)
+	// The level of this skill should be 4 * (1-(20-39),2-(40-59),3-(60-79),4-(80+)) + (1-normal, 2-hard, 3-insane, 4-NM+)
+	//                              (or 0 if the radiation level is < 1)
 	//=================================================================================================================
 	"enemy_mutant_upgrades"
 	{
@@ -1888,25 +2049,22 @@
 	             "var_type"              "FIELD_INTEGER"
 	             "bonus_armor"           "6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6"
 	          }
-	          "01"
+	          "02"
 	          {
 	             "var_type"              "FIELD_INTEGER"
-	             //"bonus_damage"           "0 35 35 35 0 70 70 70 0 100 100 100 0 150 150 150"
 	             "bonus_damage"           "0 0 0 0 35 70 100 150 35 70 100 150 35 70 100 150"
 	          }
-	          "01"
+	          "03"
 	          {
 	             "var_type"              "FIELD_INTEGER"
-	             //"bonus_attack_speed"    "0 0 30 30 0 0 50 50 0 0 65 65 0 0 85 85"
 	             "bonus_attack_speed"    "0 0 0 0 0 0 0 0 30 50 65 85 30 50 65 85"
 	          }
-	          "01"
+	          "04"
 	          {
 	             "var_type"              "FIELD_INTEGER"
-	             //"bonus_movement_speed"  "0 0 15 15 0 0 20 20 0 0 30 30 0 0 45 45"
 	             "bonus_movement_speed"  "0 0 0 0 0 0 0 0 15 20 30 45 15 20 30 45"
 	          }
-	          "01"
+	          "05"
 	          {
 	             "var_type"              "FIELD_INTEGER"
 	             "bonus_health_regen"    "0 0 0 0 0 0 0 0 0 0 0 0 20 20 20 20"
@@ -5332,6 +5490,9 @@
 	
 	        "modifier_rad_mob_buff_effect"
 	        {
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"     "%mana_regen"

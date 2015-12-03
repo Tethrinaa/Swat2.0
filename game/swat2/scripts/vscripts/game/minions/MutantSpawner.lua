@@ -25,6 +25,8 @@ function MutantSpawner:spawnMinion(position, specialType)
     --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
     local unit = CreateUnitByName(MutantSpawner.MUTANT_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
+    unit:SetMana(0)
+
     -- Set the mutants abilities
     unit:FindAbilityByName("enemy_mutant_upgrades"):SetLevel(self.mutantUpgradesLevel)
     unit:FindAbilityByName("enemy_mutant_bash"):SetLevel(g_GameManager.nightmareValue + 1)

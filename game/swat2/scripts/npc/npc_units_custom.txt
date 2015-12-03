@@ -396,8 +396,8 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""			// Ability 1.
-		"Ability2"					""			// Ability 2.
+		"Ability1"					"enemy_grotesque_ensnare"			// Ability 1.
+		"Ability2"					"enemy_grotesque_evasion"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
 		"Ability5"					""			// Ability 5.
@@ -476,9 +476,9 @@
 				"Invade"
 				{
 					"Name"				"Invade"
-	                    "Aggression"		"90.0"
+	                    "Aggression"		"100.0"
 	                    "Avoidance"			"0.0"
-	                    "Support"			"30.0"
+	                    "Support"			"0.0"
 				}
 			}
 	
@@ -494,6 +494,24 @@
 	
 			//Ability Usage Parameters
 			//-----------------------------------------------------------------
+	        "OffensiveAbilities"
+	        {
+	            "Ability1"
+	            {
+	                "Name"                "enemy_grotesque_ensnare"
+	                "Damage"              "1"
+	                "UseAtHealthPercent"  "100"
+	            }
+	        }
+	        "DefensiveAbilities"
+	        {
+	            "Ability2"
+	            {
+	                "Name"                "grotesque_ensnare"
+	                "Damage"              "1"
+	                "UseAtHealthPercent"  "100"
+	            }
+	        }
 		}
 	}
 	//=================================================================================

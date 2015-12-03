@@ -23,6 +23,11 @@ function GrotesqueSpawner:spawnMinion(position, specialType)
     --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
     local unit = CreateUnitByName( GrotesqueSpawner.GROTESQUE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
+    -- Evasion level is based on difficulty
+    unit:FindAbilityByName("enemy_grotesque_evasion"):SetLevel(g_GameManager.nightmareValue + 1)
+
+    unit:SetMana(0)
+
     -- EnemySpawner will look for onDeathFunctions and call them
     unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
 

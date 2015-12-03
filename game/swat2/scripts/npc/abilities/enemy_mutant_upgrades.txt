@@ -23,22 +23,22 @@
              "var_type"              "FIELD_INTEGER"
              "bonus_armor"           "6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6"
           }
-          "01"
+          "02"
           {
              "var_type"              "FIELD_INTEGER"
              "bonus_damage"           "0 0 0 0 35 70 100 150 35 70 100 150 35 70 100 150"
           }
-          "01"
+          "03"
           {
              "var_type"              "FIELD_INTEGER"
              "bonus_attack_speed"    "0 0 0 0 0 0 0 0 30 50 65 85 30 50 65 85"
           }
-          "01"
+          "04"
           {
              "var_type"              "FIELD_INTEGER"
              "bonus_movement_speed"  "0 0 0 0 0 0 0 0 15 20 30 45 15 20 30 45"
           }
-          "01"
+          "05"
           {
              "var_type"              "FIELD_INTEGER"
              "bonus_health_regen"    "0 0 0 0 0 0 0 0 0 0 0 0 20 20 20 20"
