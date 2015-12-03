@@ -78,7 +78,7 @@ end
 
 function DebugGameChatCommand_SpawnRad()
     print("DEBUG | Calling SpawnRad")
-    g_RadiationManager:spawnRadFragment()
+    g_RadiationManager:spawnRadFragmentOnMap()
     g_RadiationManager:incrementRadCount()
 end
 

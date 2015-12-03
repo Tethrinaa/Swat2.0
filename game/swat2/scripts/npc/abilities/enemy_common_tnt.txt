@@ -16,7 +16,7 @@
         "01"
         {
             "var_type"			"FIELD_INTEGER"
-            "damage_full"		"600"
+            "damage_full"		"300"
         }
 
         "02"
@@ -28,7 +28,7 @@
         "03"
         {
             "var_type"			"FIELD_INTEGER"
-            "damage_partial"		"200"
+            "damage_partial"		"100"
         }
 
         "04"

@@ -1507,7 +1507,7 @@
 	        "01"
 	        {
 	            "var_type"			"FIELD_INTEGER"
-	            "damage_full"		"600"
+	            "damage_full"		"300"
 	        }
 	
 	        "02"
@@ -1519,7 +1519,7 @@
 	        "03"
 	        {
 	            "var_type"			"FIELD_INTEGER"
-	            "damage_partial"		"200"
+	            "damage_partial"		"100"
 	        }
 	
 	        "04"
@@ -1754,6 +1754,181 @@
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%movespeed_percentage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Mutant Bash
+	// Chance to stun
+	// Should be level 1 for Normal-Insane, 2 for nightmare, and 3 for extinction
+	//=================================================================================================================
+	"enemy_mutant_bash"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"slardar_bash"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+		  "particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+		 }
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance"				"8 40 66"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.40 0.40 1.20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_creep"		"0.40 0.40 1.20"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_bash_stun_datadriven"
+			{
+				"IsDebuff" 		"1"
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+	
+				"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+	        	"EffectAttachType" "follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+	
+			"modifier_bash_datadriven"
+			{
+				"IsHidden"	"1"
+				"Passive"	"1"
+	
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"%chance"
+	
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_Slardar.Bash"
+								"Target"		"TARGET"
+							}
+	
+							"ApplyModifier"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_HERO"
+								}
+								"ModifierName"	"modifier_bash_stun_datadriven"
+								"Duration"		"%duration"
+							}
+	
+							"ApplyModifier"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_BASIC"
+								}
+								"ModifierName"	"modifier_bash_stun_datadriven"
+								"Duration"		"%duration_creep"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: Mutant Upgrades
+	// In warcraft 3, mutants used tech to be upgraded, but without that in dota 2, we'll just merge all of the upgrades
+	// into this one ability. So, this ability should be 1 level for every rad bracket (up to 60+)
+	// Additionally, 2 skills had 4 variants based on difficulty
+	// In order to save processing, all variants and brackets are merged here as well
+	// The level of this skill should be 4 * (1-(1-19),2-(20-39),3-(40-59),4-(60+)) + (1-normal, 2-hard, 3-insane, 4-NM+)
+	//=================================================================================================================
+	"enemy_mutant_upgrades"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"dragon_knight_dragon_blood"
+	    "MaxLevel"	"16"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_armor"           "6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6"
+	          }
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             //"bonus_damage"           "0 35 35 35 0 70 70 70 0 100 100 100 0 150 150 150"
+	             "bonus_damage"           "0 0 0 0 35 70 100 150 35 70 100 150 35 70 100 150"
+	          }
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             //"bonus_attack_speed"    "0 0 30 30 0 0 50 50 0 0 65 65 0 0 85 85"
+	             "bonus_attack_speed"    "0 0 0 0 0 0 0 0 30 50 65 85 30 50 65 85"
+	          }
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             //"bonus_movement_speed"  "0 0 15 15 0 0 20 20 0 0 30 30 0 0 45 45"
+	             "bonus_movement_speed"  "0 0 0 0 0 0 0 0 15 20 30 45 15 20 30 45"
+	          }
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_health_regen"    "0 0 0 0 0 0 0 0 0 0 0 0 20 20 20 20"
+	          }
+	      }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_mutant_upgrades"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+	                "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movement_speed"
+	                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
 	            }
 	        }
 	    }

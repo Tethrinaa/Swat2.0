@@ -1,0 +1,67 @@
+//=================================================================================================================
+// Ability: Mutant Upgrades
+// In warcraft 3, mutants used tech to be upgraded, but without that in dota 2, we'll just merge all of the upgrades
+// into this one ability. So, this ability should be 1 level for every rad bracket (up to 60+)
+// Additionally, 2 skills had 4 variants based on difficulty
+// In order to save processing, all variants and brackets are merged here as well
+// The level of this skill should be 4 * (1-(20-39),2-(40-59),3-(60-79),4-(80+)) + (1-normal, 2-hard, 3-insane, 4-NM+)
+//                              (or 0 if the radiation level is < 1)
+//=================================================================================================================
+"enemy_mutant_upgrades"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"        	"dragon_knight_dragon_blood"
+    "MaxLevel"	"16"
+
+      "AbilitySpecial"
+      {
+          "01"
+          {
+             "var_type"              "FIELD_INTEGER"
+             "bonus_armor"           "6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6"
+          }
+          "01"
+          {
+             "var_type"              "FIELD_INTEGER"
+             "bonus_damage"           "0 0 0 0 35 70 100 150 35 70 100 150 35 70 100 150"
+          }
+          "01"
+          {
+             "var_type"              "FIELD_INTEGER"
+             "bonus_attack_speed"    "0 0 0 0 0 0 0 0 30 50 65 85 30 50 65 85"
+          }
+          "01"
+          {
+             "var_type"              "FIELD_INTEGER"
+             "bonus_movement_speed"  "0 0 0 0 0 0 0 0 15 20 30 45 15 20 30 45"
+          }
+          "01"
+          {
+             "var_type"              "FIELD_INTEGER"
+             "bonus_health_regen"    "0 0 0 0 0 0 0 0 0 0 0 0 20 20 20 20"
+          }
+      }
+
+    "Modifiers"
+    {
+
+        "modifier_enemy_mutant_upgrades"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "1"
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+                "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movement_speed"
+                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+            }
+        }
+    }
+}

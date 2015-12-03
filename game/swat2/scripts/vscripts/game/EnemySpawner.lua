@@ -127,6 +127,7 @@ function EnemySpawner:onDifficultySet(difficulty)
         print("EnemyUpgrades | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
+    self.mutantSpawner:updateMutantUpgrades()
     self.innardsSpawner:updateInnardsChance()
 
     -- Spawn some initial zombies (we had to wait for difficulty so we can get the room layouts)
