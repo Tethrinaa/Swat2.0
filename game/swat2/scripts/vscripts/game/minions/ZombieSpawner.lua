@@ -172,7 +172,6 @@ function ZombieSpawner:createBurninating(position)
     unit:FindAbilityByName("enemy_common_burninating"):SetLevel(1)
     self:setZombieMutation(unit)
     self:addReviveAbility(unit)
-    unit:SetRenderColor(133, 0, 0)
     unit:SetMana(0)
 
     return unit

@@ -240,7 +240,7 @@
 	// Aura that grants visibility to invisible units within a certain radius
 	// TODO: Look up all true sight values and put them as levels
 	//=================================================================================================================
-	"common_truesight_aura"
+	"common_truesight"
 	{
 	    // General
 	    //-------------------------------------------------------------------------------------------------------------
@@ -1245,6 +1245,12 @@
 	                    "EffectAttachType"	"follow_origin"
 	                    "Target"		"CASTER"
 	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_burninating"
+	                }
 	            }
 	
 	            "OnDestroy"
@@ -1313,6 +1319,12 @@
 	                    "EffectName"	    "particles/econ/items/undying/undying_manyone/undying_tombstone_manyone_eye_rope.vpcf"
 	                    "EffectAttachType"	"follow_overheard"
 	                    "Target"		"CASTER"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_radinating"
 	                }
 	            }
 	
@@ -1383,7 +1395,7 @@
 	
 	    // Damage.
 	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 "200 500"
+	    "AbilityDamage"                 "100 250"
 	
 	    // Cost
 	    //-------------------------------------------------------------------------------------------------------------
@@ -1559,6 +1571,12 @@
 						}
 					}
 	
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_tnt"
+	                }
 				}
 	
 	            "OnDeath"
@@ -1697,6 +1715,12 @@
 						"EffectAttachType"	"follow_origin"
 						"Target"		"CASTER"
 					}
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_toxic"
+	                }
 				}
 	
 				"OnDestroy"

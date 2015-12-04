@@ -68,6 +68,12 @@
 					}
 				}
 
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_tnt"
+                }
 			}
 
             "OnDeath"
