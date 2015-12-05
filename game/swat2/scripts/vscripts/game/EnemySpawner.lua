@@ -31,13 +31,6 @@ EnemySpawner.BOSS_CHECK_MINION_COUNT = EnemySpawner.MAX_MINIONS / 4 * 3 -- The c
 EnemySpawner.BOSS_CHECK_QUEUE_COUNT = EnemySpawner.MAX_MINIONS / 8 -- The minion queue must be lower than this
 EnemySpawner.BOSS_CHECK_TYRANT_QUEUE_COUNT = EnemySpawner.MAX_MINIONS / 8  * 7 -- The minion queue + this amount must be less than last queue amount when we spawned a tyrant
 
--- An enum for the type of enemy to spawn
-EnemySpawner.ENEMY_CODE_ZOMBIE = 0
-EnemySpawner.ENEMY_CODE_GROTESQUE = 1
-EnemySpawner.ENEMY_CODE_BEAST = 2
-EnemySpawner.ENEMY_CODE_DOG = 3
-EnemySpawner.ENEMY_CODE_MUTANT = 4
-
 function EnemySpawner:new(o)
     o = o or {}
     setmetatable(o, self)
@@ -267,18 +260,18 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
 
         local spawnedUnits = {}
 
-        -- 75% of the wave is always zombies (and maybe one mutant based on radiation level)
+        -- 75% of the wave is always *normal* zombies (and maybe one mutant based on radiation level)
         local j = Round(groupSize * .25) + 1
         if groupSize > j and RandomInt(1, 4) < g_RadiationManager.radiationLevel then
             groupSize = groupSize - 1
-            local unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail)
+            local unit = self:spawnEnemy(self.mutantSpawner, self.mutantSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
             if unit ~= nil then
                 table.insert(spawnedUnits, unit)
             end
         end
         while groupSize > j do
             groupSize = groupSize - 1
-            local unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), 0, shouldAddToMinionQueueIfFail)
+            local unit = self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
             if unit ~= nil then
                 table.insert(spawnedUnits, unit)
             end
@@ -292,17 +285,17 @@ function EnemySpawner:spawnMinionGroup(location, shouldAddToMinionQueueIfFail)
 
             local unit = nil
             if j < 1 then
-                unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail)
+                unit = self:spawnEnemy(self.beastSpawner, self.beastSpawner.spawnMinion, position, shouldAddToMinionQueueIfFail)
             elseif j < 2 then
-                unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 30, shouldAddToMinionQueueIfFail)
+                unit = self:spawnEnemy(self.grotesqueSpawner, self.grotesqueSpawner.spawnMinion, position, shouldAddToMinionQueueIfFail)
             elseif j < 4 then
-                unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, RandomInt(0 - g_EnemyUpgrades.nightmareUpgrade, 77), shouldAddToMinionQueueIfFail)
+                unit = self:spawnEnemy(self.dogSpawner, self.dogSpawner.spawnMinion, position, shouldAddToMinionQueueIfFail)
             else
-                -- TODO: Not 100% this is radiationLevel (which it is in source) and not radiationFragments
                 if RandomInt(-1, 43) < g_RadiationManager.radiationLevel then
-                    unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_MUTANT, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+                    unit = self:spawnEnemy(self.mutantSpawner, self.mutantSpawner.spawnMinion, position, shouldAddToMinionQueueIfFail)
                 else
-                    unit = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(location), RandomInt(1, 13), shouldAddToMinionQueueIfFail)
+                    -- Spawn (potentially) special zombies
+                    unit = self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.spawnMinion, position, shouldAddToMinionQueueIfFail)
                 end
             end
             if unit ~= nil then
@@ -367,8 +360,16 @@ function EnemySpawner:spawnQueueGroups()
 
 end
 
--- Generic enemy spawner. Should pass in an enemy code defined here
-function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinionQueueIfFail)
+-- Generic enemy spawner generally used for wave group spawns
+-- Will take a supplied spawner and use it to make a minion (if we have room)
+-- and then apply generic effects to it like experience and starting health/upgrades
+-- @param spawner | The spawner object to call the spawn method on
+-- @param spawnMethod | A method that takes a position and returns a unit there
+--                    | In general, this is spawner:createMinion, but others can be used like spawner:createRadinating (for horrors)
+-- @param position | The position to create the new unit
+-- @param shouldAddToMinionQueueIfFail | If we can't create this unit (because too many out), if true, it will add one to the minion queue
+--
+function EnemySpawner:spawnEnemy(spawner, spawnMethod, position, shouldAddToMinionQueueIfFail)
     if self.minionCount >= EnemySpawner.MAX_MINIONS then
         -- Too many units in play, just add this unit to the minion queue
         -- Nauty players will be punished, but the minions now go into the minion queue
@@ -383,6 +384,8 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
                 print("EnemySpawner | Couldn't spawn queued enemy!")
             end
         end
+
+        return nil
     else
         -- We can spawn this unit
 
@@ -392,20 +395,8 @@ function EnemySpawner:spawnEnemy(enemy, position, specialType, shouldAddToMinion
         end
         self.minionCount = self.minionCount + 1
 
-        local unit = nil
-        if enemy == EnemySpawner.ENEMY_CODE_ZOMBIE then
-            unit = self.zombieSpawner:spawnMinion(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_GROTESQUE then
-            unit = self.grotesqueSpawner:spawnMinion(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_BEAST then
-            unit = self.beastSpawner:spawnMinion(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_DOG then
-            unit = self.dogSpawner:spawnMinion(position, specialType)
-        elseif enemy == EnemySpawner.ENEMY_CODE_MUTANT then
-            unit = self.mutantSpawner:spawnMinion(position)
-        else
-            print("EnemySpawner | WARNING - ATTEMPT TO SPAWN INVALID ENEMY CODE: " .. enemy)
-        end
+        -- Spawn the minion
+        local unit = spawnMethod(spawner, position)
 
         -- Apply an experience value to the unit, if one was not already set in the spawner
         -- This value will be retrieved from the npc_units_custom file under the key SwatXP
@@ -631,7 +622,7 @@ end
 function EnemySpawner:spawnZombiesInGraveyard()
     local zombiesToSpawn = RandomInt(24 / g_GameManager.difficultyValue, 50 - (8 * g_GameManager.difficultyValue))
     for i = 1,zombiesToSpawn do
-        self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInGraveyard(), ZombieSpawner.SPECIAL_TYPE_NONE, true)
+        self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInGraveyard(), shouldAddToMinionQueueIfFail)
     end
 end
 
@@ -641,7 +632,7 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
     local zombiesToSpawn = RandomInt(-5, 4 - g_GameManager.difficultyValue)
     local units = {}
     for i = 1,zombiesToSpawn do
-        units[i] = self:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, GetRandomPointInRegion(region), ZombieSpawner.SPECIAL_TYPE_NONE, true)
+        units[i] = self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInRegion(region), shouldAddToMinionQueueIfFail)
     end
     Timers:CreateTimer(10.0, function()
         for _,unit in pairs(units) do

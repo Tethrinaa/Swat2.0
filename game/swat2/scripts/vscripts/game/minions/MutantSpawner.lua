@@ -17,22 +17,26 @@ function MutantSpawner:new(o)
     return o
 end
 
--- Generic enemy creation method called by EnemySpawner
+-- Generic enemy creation method called by EnemySpawner during normal spawning
+-- Will generate a random type and return it
 -- @param position | the position to create the unit
--- @param specialType | a field that can be used to spawn special types of this minion
 -- returns the created unit
-function MutantSpawner:spawnMinion(position, specialType)
-    --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
-    local unit = CreateUnitByName(MutantSpawner.MUTANT_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+function MutantSpawner:spawnMinion(position)
+    --if (udg_CurrentDay > 1) and (GetRandomInt(0,14-udg_iPlayerCount) < udg_nmsurv) then
+    --  TODO: Create charred (NM)
+    return self:createNormal(position)
+end
 
-    unit:SetMana(0)
+function MutantSpawner:createNormal(position)
+    local unit = CreateUnitByName(MutantSpawner.MUTANT_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     -- Set the mutants abilities
     unit:FindAbilityByName("enemy_mutant_upgrades"):SetLevel(self.mutantUpgradesLevel)
     unit:FindAbilityByName("enemy_mutant_bash"):SetLevel(g_GameManager.nightmareValue + 1)
 
     -- EnemySpawner will look for onDeathFunctions and call them
-    unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
+    -- TODO: Use or remove
+    --unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
 
     return unit
 end

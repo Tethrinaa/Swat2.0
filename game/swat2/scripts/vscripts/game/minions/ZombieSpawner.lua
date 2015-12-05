@@ -40,12 +40,12 @@ function ZombieSpawner:new(o)
     return o
 end
 
+-- NOTE: This is only for rolling to spawn SPECIAL zombies. Normal zombies should be spawned with createNormal() (although this can create a normal zombie)
 -- Generic enemy creation method called by EnemySpawner
 -- @param position | the position to create the unit
--- @param specialType | a field that can be used to spawn special types of this minion
 -- returns the created unit
-function ZombieSpawner:spawnMinion(position, specialType)
-    specialType = specialType or ZombieSpawner.SPECIAL_TYPE_NORMAL
+function ZombieSpawner:spawnMinion(position)
+    local specialType = RandomInt(1, 13)
 
     -- Yes, this method is a bit ugly, but it's more or less the same as Red's.
 
@@ -67,13 +67,7 @@ function ZombieSpawner:spawnMinion(position, specialType)
                 return self:createBurninating(position)
             end
         elseif RandomInt(-1, 398) < math.min(1, g_RadiationManager.radiationLevel) then
-            -- Spawn radinating (if we can)
-            if g_RadiationManager:canSpawnRadinating() then
-                return self:createRadinating(position)
-            else
-                -- Couldn't create a radinating, just make a normal
-                return self:createNormal(position)
-            end
+            return self:createRadinating(position)
         else
             -- Nothing special
             return self:createNormal(position)
@@ -82,6 +76,7 @@ function ZombieSpawner:spawnMinion(position, specialType)
         -- rolls for burn/tnt/toxic (but higher chance) for tnt and toxic
         if RandomInt(0, 8) < 4 then
             -- Create TNT
+            -- TODO: NM/Ext roll for double TNT
             return self:createTnt(position)
         elseif RandomInt(0, 8) < 5 then
             -- Create Toxic
@@ -91,14 +86,7 @@ function ZombieSpawner:spawnMinion(position, specialType)
             return self:createBurninating(position)
         end
     elseif RandomInt(-1, 398) < math.min(1, g_RadiationManager.radiationLevel) then
-        -- Yes, if we're not one of the first 2 types, we always have a chance to be walker
-        -- This was in original code
-        if g_RadiationManager:canSpawnRadinating() then
-            return self:createRadinating(position)
-        else
-            -- Couldn't create a radinating, just make a normal
-            return self:createNormal(position)
-        end
+        return self:createRadinating(position)
     elseif specialType == ZombieSpawner.SPECIAL_TYPE_LIGNTENATING_CHANCE then
         return self:createLightenating(position)
     else
@@ -158,6 +146,7 @@ end
 -- Returns a normal zombie
 function ZombieSpawner:createNormal(position)
     local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+
     self:setZombieMutation(unit)
     self:addReviveAbility(unit)
     unit:SetMana(0)
@@ -167,23 +156,22 @@ end
 
 -- Returns a burninating zombie
 function ZombieSpawner:createBurninating(position)
-    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+    local unit = self:createNormal(position)
+
     unit:AddAbility("enemy_common_burninating")
     unit:FindAbilityByName("enemy_common_burninating"):SetLevel(1)
-    self:setZombieMutation(unit)
-    self:addReviveAbility(unit)
-    unit:SetMana(0)
 
     return unit
 end
 
 -- Returns a tnt zombie (can't revive)
 function ZombieSpawner:createTnt(position)
+    -- Not Normal unit (tnt zombies do not revive)
     local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+
     unit:AddAbility("enemy_common_tnt")
     unit:FindAbilityByName("enemy_common_tnt"):SetLevel(1)
     self:setZombieMutation(unit)
-    unit:SetRenderColor(240, 150, 150)
     unit:SetMana(0)
 
     return unit
@@ -191,11 +179,12 @@ end
 
 -- Returns a toxic zombie (can't revive)
 function ZombieSpawner:createToxic(position)
+    -- Not Normal unit (toxic zombies do not revive)
     local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+
     unit:AddAbility("enemy_common_toxic_aura")
     unit:FindAbilityByName("enemy_common_toxic_aura"):SetLevel(1)
     self:setZombieMutation(unit)
-    unit:SetRenderColor(107, 142, 35)
     unit:SetMana(0)
 
     return unit
@@ -203,33 +192,42 @@ end
 
 -- Returns a radinating zombie
 function ZombieSpawner:createRadinating(position)
-    g_RadiationManager:incrementRadCount()
+    if g_RadiationManager:canSpawnRadinating() then
+        g_RadiationManager:incrementRadCount()
 
-    local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_RADINATING_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
+        local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_RADINATING_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
-    unit:FindAbilityByName("enemy_common_radinating"):SetLevel(1)
-    unit:FindAbilityByName("enemy_common_radinating_rad_bolt"):SetLevel(2)
-    unit:FindAbilityByName("enemy_zombie_brainlust"):SetLevel(g_GameManager.nightmareValue + 1)
-    unit:FindAbilityByName("enemy_zombie_regeneration"):SetLevel(g_GameManager.nightmareValue + 1)
-    self:addReviveAbility(unit)
-    unit:SetRenderColor(80, 199, 0)
-    unit:SetMana(300)
+        unit:FindAbilityByName("enemy_common_radinating"):SetLevel(1)
+        unit:FindAbilityByName("enemy_common_radinating_rad_bolt"):SetLevel(2)
+        -- Zombie radinating get extra brainlust ability
+        unit:FindAbilityByName("enemy_zombie_brainlust"):SetLevel(g_GameManager.nightmareValue + 1)
+        if RandomInt(1, g_GameManager.difficultyValue) == 1 then
+            unit:FindAbilityByName("enemy_common_radinating_regeneration"):SetLevel(g_GameManager.nightmareValue + 1)
+        else
+            unit:RemoveAbility("enemy_common_radinating_regeneration")
+        end
+        self:addReviveAbility(unit)
 
-    -- Alert radiation manager of the new walker
-    g_RadiationManager:onWalkerCreated(unit)
+        unit:SetMana(300)
 
-    return unit
+        -- Alert radiation manager of the new walker
+        g_RadiationManager:onWalkerCreated(unit)
+
+        return unit
+    else
+        return self:createNormal(position)
+    end
 end
 
 -- Returns a lightenating zombie (can't revive)
 function ZombieSpawner:createLightenating(position)
-    -- TODO
+    -- Not Normal unit (lightenating zombies do not revive)
     local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     --unit:FindAbilityByName("enemy_common_radinating"):SetLevel(1)
     --unit:FindAbilityByName("enemy_common_radinating_rad_bolt"):SetLevel(2)
     self:setZombieMutation(unit)
-    unit:SetRenderColor(255, 255, 0)
+    unit:SetRenderColor(255, 255, 0) -- TODO REMOVE
     unit:SetMana(0)
 
     return unit
