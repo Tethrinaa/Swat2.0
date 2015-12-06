@@ -35,7 +35,7 @@ PLAYER_BUILDER_CONSTS = {}
 
 PLAYER_BUILDER_CONSTS.classes.cyborg.abilities = {"primary_cyborg_cluster_rockets","primary_cyborg_xtreme_combat_mode","primary_cyborg_organic_replacement","cyborg_pheromones", "cyborg_pheromones_off","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield", "cyborg_forcefield_off"}
 PLAYER_BUILDER_CONSTS.classes.demo.abilities = {"primary_demo_mirv","primary_demo_place_c4","primary_demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"}
-PLAYER_BUILDER_CONSTS.classes.ho.abilities = {"primary_ho_plasma_shield","primary_ho_storage_cells","primary_ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
+PLAYER_BUILDER_CONSTS.classes.ho.abilities = {"primary_ho_plasma_shield","primary_ho_storage_cells","primary_ho_droid_ammo","primary_ho_droid_integrity","primary_ho_droid_mobility","primary_ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"}
 PLAYER_BUILDER_CONSTS.classes.maverick.abilities = {"primary_maverick_plasma_grenade","primary_maverick_robodog","primary_maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"}
 PLAYER_BUILDER_CONSTS.classes.medic.abilities  = {"primary_medic_nano_injection","primary_medic_mend_wounds","primary_medic_adrenaline_junkie","medic_adrenaline","medic_rapid_therapy","medic_mending_station","medic_revive"}
 PLAYER_BUILDER_CONSTS.classes.psychologist.abilities = {"primary_psychologist_mental_clarity","primary_psychologist_confidence","primary_psychologist_self_motivation", "psychologist_mind_slay","psychologist_mind_rot","psychologist_clairvoyance"}
@@ -108,6 +108,7 @@ function PlayerBuilder:BuildMarine( event )
     hero:SetBaseHealthRegen(0)
 
     -- -- Set weapon stats -Why no SetAttackRange???
+	hero.sdata.weaponSkill = PLAYER_BUILDER_CONSTS.weapons[event.weapon].weaponSkill
     hero:SetBaseAttackTime(PLAYER_BUILDER_CONSTS.weapons[event.weapon].bat)
     hero:SetBaseDamageMin(PLAYER_BUILDER_CONSTS.weapons[event.weapon].damageMin)
     hero:SetBaseDamageMax(PLAYER_BUILDER_CONSTS.weapons[event.weapon].damageMax)
@@ -140,7 +141,8 @@ function PlayerBuilder:BuildMarine( event )
     end
 
     --set armor stats
-    hero.sdata.armor_index = PLAYER_BUILDER_CONSTS.armors[event.armor].index
+    hero.sdata.armorIndex = PLAYER_BUILDER_CONSTS.armors[event.armor].index
+    hero.sdata.nanitesSkill = PLAYER_BUILDER_CONSTS.armors[event.armor].nanitesSkill
     hero:SetBaseMoveSpeed(PLAYER_BUILDER_CONSTS.armors[event.armor].moveSpeed)
     print(hero:GetBaseMoveSpeed())
     hero:SetPhysicalArmorBaseValue(PLAYER_BUILDER_CONSTS.armors[event.armor].armor)

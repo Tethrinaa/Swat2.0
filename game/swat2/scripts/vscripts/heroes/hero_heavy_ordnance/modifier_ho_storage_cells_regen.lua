@@ -54,7 +54,7 @@ function modifier_ho_storage_cells_regen:GetModifierConstantManaRegen()
 	
 	-- Only apply the regen bonus if you're under the threshhold
 	-- This is the whole reason for the lua buff and ability.
-	if (self:GetParent():GetMana() < threshhold) then
+	if (self:GetParent():GetMana() < threshhold and string.find(self:GetParent():GetUnitName(), "sniper")) then -- here, sniper is the main hero, so that minidroids don't get this
 		regen = self.bonus_regen or 0
 	end
 	

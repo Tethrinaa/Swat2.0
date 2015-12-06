@@ -1,0 +1,27 @@
+	//=================================================================================================================
+	// Ability: Droid Integrity (Heavy Ordnance)
+	//=================================================================================================================
+	"primary_ho_droid_integrity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"3"
+		"AbilityTextureName"			"shredder_reactive_armor"
+		
+		"AbilitySpecial" //duplicated in primary_minidroid_xyz for display purposes
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_regen"		"1 2 3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction"			"-4 -8 -12"
+			}
+		}
+	}

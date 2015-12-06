@@ -1,0 +1,43 @@
+	//=================================================================================================================
+	// Ability: Droid Mobility (Minidroid)
+	//=================================================================================================================
+	"primary_minidroid_storage_cells"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"4"
+		"AbilityTextureName"			"rattletrap_power_cogs"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"storage"				"250 500 750 1000"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
+				"Function"		"AdjustManaDown"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_minidroid_storage_cells"
+			{	
+				"Passive"				"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS" 				"%storage"
+				}
+			}
+		}
+	}

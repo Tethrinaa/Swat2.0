@@ -1,0 +1,22 @@
+	//=================================================================================================================
+	// Ability: Droid Mobility (Heavy Ordnance)
+	//=================================================================================================================
+	"primary_ho_droid_mobility"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"1"
+		"AbilityTextureName"			"bounty_hunter_track"
+		
+		"AbilitySpecial" //duplicated in primary_minidroid_xyz for display purposes
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"30"
+			}
+		}
+	}

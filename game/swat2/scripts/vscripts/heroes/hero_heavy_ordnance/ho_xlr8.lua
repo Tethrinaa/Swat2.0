@@ -1,19 +1,39 @@
 function SpeedUpLoop(keys)
 	print("**************function SpeedUp(keys)")
-	-- ShallowPrintTable(keys)
+	ShallowPrintTable(keys)
 	-- ShallowPrintTable(keys.caster.sdata)
 	local delay = keys.interval
-	if not keys.ability:GetLevel() == 1 then
-		delay = initial
+	if keys.initial then
+		delay = keys.initial
+		keys.initial = nil
+	else
+		local lvl = math.min( keys.ability:GetLevel() + 1, keys.ability:GetMaxLevel() )
+		keys.ability:SetLevel(lvl)
+		
+		local radius = keys.ability:GetSpecialValueFor("phased_radius")
+		
+		local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, keys.caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
+		
+		for _, unit in pairs(units) do
+			print("Stripping the old buff")
+			unit:RemoveModifierByNameAndCaster( "modifier_xlr8_attack_bonus", keys.caster)
+		end
 	end
 	
-	local lvl = math.min( keys.ability:GetLevel() + 1, keys.ability:GetMaxLevel() )
-	keys.ability:SetLevel(lvl)
+	if keys.ability:GetLevel() >= keys.ability:GetMaxLevel() then
+		return
+	end
 	Timers:CreateTimer(delay, function() 
 		if keys.caster:HasModifier("modifier_xlr8_location_thinker") then
 			SpeedUpLoop(keys)
 		end
 	end )
+	
+end
+
+function RefreshBuff(keys)
+	print("**************function SetLocation(keys)")
+	ShallowPrintTable(keys)
 end
 
 function SetLocation(keys)

@@ -1,0 +1,34 @@
+	//=================================================================================================================
+	// Ability: Droid Mobility (Minidroid)
+	//=================================================================================================================
+	"primary_minidroid_mobility"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"4"
+		"AbilityTextureName"			"bounty_hunter_track"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"250 500 750 1000"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_minidroid_mobility"
+			{	
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 				"%move_speed"
+				}
+			}
+		}
+	}

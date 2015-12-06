@@ -32,6 +32,7 @@ function Splash( keys )
 		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then 
 			damage_table.victim = v
 			ApplyDamage(damage_table)
+			ability:ApplyDataDrivenModifier(caster, v, keys.orb_modifier, {})
 		end
 	end
 	--loop for doing the medium splash damage
@@ -49,6 +50,7 @@ function Splash( keys )
 				damage_table.damage = caster:GetAttackDamage() * splash_damage_medium
 				damage_table.victim = v
 				ApplyDamage(damage_table)
+				ability:ApplyDataDrivenModifier(caster, v, keys.orb_modifier, {})
 			--resets the target check	
 			else
 				target_exists = false
@@ -69,6 +71,7 @@ function Splash( keys )
 				damage_table.damage = caster:GetAttackDamage() * splash_damage_big
 				damage_table.victim = v
 				ApplyDamage(damage_table)
+				ability:ApplyDataDrivenModifier(caster, v, keys.orb_modifier, {})
 			else
 				target_exists = false
 			end

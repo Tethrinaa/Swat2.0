@@ -149,7 +149,7 @@ function ReviveUnit(corpse, ability, victimized)
 		-- move over its sdata
 		unit.sdata = sdata
 		
-		-- set the appropriate amount of revive energy (main for returners)
+		-- set the appropriate amount of revive energy (mainly for returners)
 		if sdata.revive_energy then
 			unit:SetMana(sdata.revive_energy)
 		end
@@ -172,8 +172,8 @@ function ReviveUnit(corpse, ability, victimized)
         -- As long as the player was neither a victim or noob, break armor and apply rez sick
         if not victimized then
             local armor_index = 0
-            if unit.sdata.armor_index then
-				armor_index = unit.sdata.armor_index
+            if unit.sdata.armor then
+				armor_index = unit.sdata.armor.index
 			end
         
             -- If this revive needs to apply rez_sickness to the target

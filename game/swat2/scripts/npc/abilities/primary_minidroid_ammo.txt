@@ -1,0 +1,63 @@
+	//=================================================================================================================
+	// Ability: Droid Ammo (Minidroid)
+	//=================================================================================================================
+	"primary_minidroid_ammo"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"4"
+		"AbilityTextureName"			"sniper_shrapnel"
+		
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_min"				"1 2 3 4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_max"				"5 10 15 20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"75 150 225 300"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_minidroid_ammo"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"AddBonusDamageDice"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"RemoveBonusDamageDice"
+					}
+				}
+			}
+		}
+		
+	}

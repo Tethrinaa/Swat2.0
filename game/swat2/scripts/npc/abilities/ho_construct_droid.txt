@@ -8,7 +8,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"6"
-		"AbilityTextureName"			"pudge_dismember"
+		"AbilityTextureName"			"tinker_march_of_the_machines"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -24,32 +24,62 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"plasma_rounds_constant"			"-1"
+				"weapon_plasma_rounds_mini_constant"	"-1"
 			}
 			"02"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"plasma_rounds_factor"				"1"
+				"weapon_plasma_rounds_mini_factor"	"1"
 			}
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"plasma_shield_constant"			"0"
+				"primary_ho_plasma_shield_constant"	"0"
 			}
 			"04"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"plasma_shield_factor"				"2"
+				"primary_ho_plasma_shield_factor"	"2"
 			}
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"storage_cells_constant"			"0"
+				"primary_minidroid_storage_cells_constant"	"0"
 			}
 			"06"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"storage_cells_factor"				"2"
+				"primary_minidroid_storage_cells_factor"	"2"
+			}
+			"17"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"primary_minidroid_ammo_constant"			"0"
+			}
+			"18"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"primary_minidroid_ammo_factor"				"1"
+			}
+			"19"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"primary_minidroid_integrity_constant"		"0"
+			}
+			"20"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"primary_minidroid_integrity_factor"		"1"
+			}
+			"21"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"primary_minidroid_mobility_constant"		"0"
+			}
+			"22"			
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"primary_minidroid_mobility_factor"			"1"
 			}
 			"07"
 			{
@@ -60,6 +90,16 @@
 			{			
 				"var_type"							"FIELD_INTEGER"
 				"power_grid_factor"				    "2"
+			}
+			"15"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"nanites_standard_constant"			"0"
+			}
+			"16"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"nanites_standard_factor"			"1"
 			}
             "09"
 			{
@@ -91,13 +131,38 @@
 				"var_type"							"FIELD_INTEGER"
 				"all_radius"    				    "625"
 			}
+			"23"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"base_cells_energy"				    "50"
+			}
+			"24"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"per_level_cells_energy"			"25"
+			}
+			"25"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"base_beam_energy"				    "80"
+			}
+			"26"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"per_level_beam_energy"    			"40"
+			}
+			"27"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"birth_energy_reserve"    			"250"
+			}
 		}
 		
 		"OnSpellStart"
 		{
 			"SpawnUnit"
 			{
-				"UnitName"			"enemy_minion_zombie"
+				"UnitName"			"ho_minidroid"
 				"Target"
 				{
 					"Center"				"CASTER"
@@ -161,7 +226,7 @@
 			"modifier_defense_matrix_owner1"
 			{
 				"Aura"				        "modifier_defense_matrix_owner1_armor_bonus"
-				"AuraRadius"				"%owner_radius"
+				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
                 "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
@@ -177,7 +242,7 @@
 			"modifier_defense_matrix_owner2"
 			{
 				"Aura"				        "modifier_defense_matrix_owner2_armor_bonus"
-				"AuraRadius"				"%owner_radius"
+				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
                 "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
@@ -193,7 +258,7 @@
 			"modifier_defense_matrix_owner3"
 			{
 				"Aura"				        "modifier_defense_matrix_owner3_armor_bonus"
-				"AuraRadius"				"%owner_radius"
+				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
                 "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
@@ -209,7 +274,7 @@
 			"modifier_defense_matrix_owner4"
 			{
 				"Aura"				        "modifier_defense_matrix_owner4_armor_bonus"
-				"AuraRadius"				"%owner_radius"
+				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
                 "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
@@ -225,7 +290,7 @@
 			"modifier_defense_matrix_owner5"
 			{
 				"Aura"				        "modifier_defense_matrix_owner5_armor_bonus"
-				"AuraRadius"				"%owner_radius"
+				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
                 "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
@@ -241,7 +306,7 @@
 			"modifier_defense_matrix_all"
 			{
 				"Aura"						"modifier_defense_matrix_all_armor_bonus"
-				"AuraRadius"				"%all_radius"
+				"Aura_Radius"				"%all_radius"
 				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO" // TODO this really needs to target only minidroids
 				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"

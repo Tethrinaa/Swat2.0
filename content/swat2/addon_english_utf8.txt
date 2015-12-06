@@ -1,0 +1,342 @@
+﻿"lang"
+{
+	"Language"		"English"
+	"Tokens"
+	{		
+		"game_mode_15"				"BAREBONES"
+		"addon_game_name"			"Swat Proj (WIP)"
+		
+		//"DOTA_Basics"							"ABILITIES"
+		//"DOTA_Upgrades"							"ITEMS"
+		//"DOTA_Shop_Category_Basics"				"ABILITIES"
+		//"DOTA_Shop_Category_Upgrades"			"ITEMS"
+		
+		//--------------------
+		//Abilities
+		//--------------------
+		"DOTA_Tooltip_ability_assault_rifle_datadriven"										"Refined Rifle"
+		"DOTA_Tooltip_ability_assault_rifle_datadriven_Description"				      "Increases the damage and range of the assault rifle."
+		"DOTA_Tooltip_ability_assault_rifle_datadriven_Lore"								""
+      "DOTA_Tooltip_ability_assault_rifle_datadriven_distance"							"Bonus Damage:"
+      "DOTA_Tooltip_ability_assault_rifle_datadriven_range"							   "Bonus Range:"
+	  
+		// DEMO
+		//--------------------------------------------------------------------------
+		
+		//MIRV
+		"DOTA_Tooltip_Ability_primary_demo_mirv"  "M.I.R.V."  
+		"DOTA_Tooltip_Ability_primary_demo_mirv_Description"  "Uses energy to create a napalm-laced rocket which detonates multiple times in a line away from the point of impact, damaging units and leaving a persistent trail of burning napalm."
+		"DOTA_Tooltip_Ability_primary_demo_mirv_iMIRV"    "Detonations:"
+		"DOTA_Tooltip_Ability_primary_demo_mirv_napalm_damage"    "Napalm Damage:"
+		"DOTA_Tooltip_Ability_primary_demo_mirv_napalm_duration"    "Napalm Duration:"
+		"DOTA_Tooltip_Ability_primary_demo_mirv_armor_reduction"    "Armor Reduction:"
+		
+		// Cyborg
+		//------------------------
+		
+		// Plasma V-Rounds
+		"DOTA_Tooltip_ability_vindicator"										"Plasma-V Rounds"
+		"DOTA_Tooltip_ability_vindicator_Description"										"This system can be activated to fuse destructive nanites with each round fired. Upon impact, these nanites tear through the target, briefly hindering its movement."
+		"DOTA_Tooltip_ability_vindicator_bonus_damage"										"DAMAGE:"
+		"DOTA_Tooltip_ability_vindicator_movement_speed_slow"										"%MOVE SPEED SLOW:"
+		"DOTA_Tooltip_ability_vindicator_attack_speed_slow"										"%ATTACK SPEED SLOW:"
+		"DOTA_Tooltip_ability_vindicator_slow_duration"										"DURATION:"
+		
+		"DOTA_Tooltip_modifier_plasma_slow_datadriven"										"Plasma Rounds"
+		"DOTA_Tooltip_modifier_plasma_slow_datadriven_Description"										"This unit is hindered."
+		
+		// Emergency Power
+		"DOTA_Tooltip_ability_cyborg_emergency_power"										"Emergency Power"
+		"DOTA_Tooltip_ability_cyborg_emergency_power_Description"										"Instantly recharges energy by draining the cyborg's backup battery."
+		"DOTA_Tooltip_ability_cyborg_emergency_power_mana_restore"										"ENERGY RESTORED:"
+
+		// Organic Replacements
+		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement"										"Organic Replacements"
+		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement_Description"										"Cybernetic implants improve the officer's reflexes, allowing him to evade some attacks, and increase his maximum health."
+		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement_bonus_evasion"										"%EVASION:"
+		"DOTA_Tooltip_ability_primary_cyborg_organic_replacement_bonus_health"										"MAX HEALTH:"
+		
+		// Xtreme Combat Mode
+		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode"										"Xtreme Combat Mode"
+		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_Description"										"Uses an energy surge to temporarily boost damage and defense."
+		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_bonus_damage_percent"										"%DAMAGE:"
+		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_bonus_armor"										"ARMOR:"
+		"DOTA_Tooltip_ability_primary_cyborg_xtreme_combat_mode_bonus_health_regen"										"HEALTH REGEN:"
+		
+		"DOTA_Tooltip_modifier_cyborg_xtreme_combat_mode"	"Xtreme Combat Mode"
+		"DOTA_Tooltip_modifier_cyborg_xtreme_combat_mode_Description"	"This unit is offensively and defensively boosted."
+		
+		// Cluster Rockets
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets"  "Cluster Rockets"  
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_Description"  "Bombards an area with multiple rockets, briefly stunning and damaging units in the vicinity. Launcher also provides capacity for the cyborg to integrate micro-fusion generators."
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_total_damage_cap"    	"DAMAGE:"
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_unit_damage_cap"    	"DAMAGE PER UNIT:"
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_stun_duration"    		"DURATION:"
+		"DOTA_Tooltip_Ability_primary_cyborg_cluster_rockets_radius"    			"RADIUS:"
+		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_tick_rate"                   "TICK RATE:"
+		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_ticks"                       "TICKS:"
+		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_damage_duration"             "DAMAGE DURATION:"
+		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_rockets"                     "ROCKETS:"
+		//"DOTA_Tooltip_ability_primary_cyborg_cluster_rockets_delay"                       "DELAY:"
+		
+		// Pheromones
+		"DOTA_Tooltip_Ability_cyborg_pheromones"  "Recharge Tank"  
+		"DOTA_Tooltip_Ability_cyborg_pheromones_Description"  "Fills the pheromones tank with a compressed gas that can be released to attract nearby undead."
+		
+		
+				
+		// Forcefield
+		"DOTA_Tooltip_Ability_cyborg_forcefield"  "Force Field"  
+		"DOTA_Tooltip_Ability_cyborg_forcefield_Description"  "Creates an external field of energy which absorbs all incoming damage until deactivated."
+		"DOTA_Tooltip_Ability_cyborg_forcefield_note0"	"Drains progressively more energy while active, and energy efficiency permanently decreased by each activation."
+		"DOTA_Tooltip_Ability_cyborg_forcefield_note1"	"Damage from toxins will bypass the force field."
+		
+		"DOTA_Tooltip_Ability_cyborg_forcefield_off"  "Deactivate Force Field"  
+		"DOTA_Tooltip_Ability_cyborg_forcefield_off_Description"  "Deactivate Force Field to stop draining energy."
+		
+		
+		
+		
+		// Medic
+		//------------------------
+		
+		
+		"DOTA_Tooltip_ability_medic_revive"                                               "Revive"
+		"DOTA_Tooltip_ability_medic_revive_Description"                                   "Injects nanites into a recently slain comrade, bringing him back to life. Comrade suffers from resurrection sickness dependent on his armor type. There is a chance that the ability will require half energy and recharge instantly."
+		"DOTA_Tooltip_ability_medic_revive_recharge_chance"                               "RECHARGE CHANCE:"
+		//"DOTA_Tooltip_ability_medic_revive_radius"                                        "RADIUS:"
+		//"DOTA_Tooltip_ability_medic_revive_revive_energy"                                 "REVIVE ENERGY:"
+		//"DOTA_Tooltip_ability_medic_revive_sickness_duration"                             "SICKNESS DURATION:"
+		//"DOTA_Tooltip_ability_medic_revive_ms_bonus_percent"                              "MS BONUS PERCENT:"
+		//"DOTA_Tooltip_ability_medic_revive_as_bonus_percent"                              "AS BONUS PERCENT:"
+		//"DOTA_Tooltip_ability_medic_revive_exp_bonus_percent"                             "EXP BONUS PERCENT:"
+
+		"DOTA_Tooltip_ability_primary_medic_mend_wounds"                                  "Mend Wounds"
+		"DOTA_Tooltip_ability_primary_medic_mend_wounds_Description"                      "Uses standard medical techniques to restore health to a non-mechanical unit. Also improves effectiveness of bandages. The Mending Station is upgraded by this ability."
+		"DOTA_Tooltip_ability_primary_medic_mend_wounds_heal"                             "HEAL:"
+		//"DOTA_Tooltip_ability_primary_medic_mend_wounds_auto_cast_range"                  "AUTO CAST RANGE:"
+		"DOTA_Tooltip_ability_primary_medic_mend_wounds_bandage_bonus"                    "BANDAGE BONUS:"		
+		
+		"DOTA_Tooltip_ability_mender_mend_wounds"                                         "Mend Wounds"
+		"DOTA_Tooltip_ability_mender_mend_wounds_Description"                             "Uses standard medical techniques to restore health to a non-mechanical unit. Autocast is initially enabled."
+		"DOTA_Tooltip_ability_mender_mend_wounds_Note0"                        	     	  "Levels in the medic's Mend Wounds ability will improve this ability."
+		"DOTA_Tooltip_ability_mender_mend_wounds_heal"                                    "HEAL:"
+		"DOTA_Tooltip_ability_mender_mend_wounds_auto_cast_range"                         "RANGE:"
+		
+		"DOTA_Tooltip_ability_mender_defense_network"                                     "Defense Network"
+		"DOTA_Tooltip_ability_mender_defense_network_Description"                         "Reduces the amount of melee damage received by closeby allies."
+		"DOTA_Tooltip_ability_mender_defense_network_Note0"                        	      "Levels in the medic's Mend Wounds ability will improve this ability."
+		"DOTA_Tooltip_ability_mender_defense_network_damage_bonus_percentage"             "%DAMAGE REDUCTION:"
+		//"DOTA_Tooltip_ability_mender_defense_network_aura_radius"                         "RADIUS:"
+		//"DOTA_Tooltip_ability_mender_defense_network_linger_duration"                     "LINGER DURATION:"
+		//"DOTA_Tooltip_ability_mender_defense_network_info_bonus_percentage"               "INFO BONUS PERCENTAGE:"
+		"DOTA_Tooltip_ability_mender_defense_network_info_aura_radius"                    "RADIUS:"
+		
+		"DOTA_Tooltip_ability_mender_contraption_plating"                                 "Contraption Plating"
+		"DOTA_Tooltip_ability_mender_contraption_plating_Description"                     "Special plating reduces damage from physical attacks."
+		"DOTA_Tooltip_ability_mender_contraption_plating_Note0"                        	  "Levels in the medic's Mend Wounds ability will improve this ability."
+		"DOTA_Tooltip_ability_mender_contraption_plating_bonus_armor"                     "BONUS ARMOR:"
+		"DOTA_Tooltip_ability_mender_contraption_plating_damage_absorption"               "DAMAGE ABSORPTION:"
+		
+		"DOTA_Tooltip_ability_medic_adrenaline"                                           "Adrenaline"
+		"DOTA_Tooltip_ability_medic_adrenaline_Description"                               "Quadruples the attack rate of the recipient. Cannot be used on robots. Excessive kills may cause an adrenaline rush, extending the duration."
+		"DOTA_Tooltip_ability_medic_adrenaline_duration"                                  "DURATION:"
+		//"DOTA_Tooltip_ability_medic_adrenaline_modelscale"                                "MODELSCALE:"
+		"DOTA_Tooltip_ability_medic_adrenaline_attack_speed_bonus_pct"                    "ATTACK SPEED BONUS:"
+		"DOTA_Tooltip_ability_medic_adrenaline_rush_duration"                             "RUSH DURATION:"
+		//"DOTA_Tooltip_ability_medic_adrenaline_rush_wait_duration"                        "RUSH WAIT DURATION:"
+		//"DOTA_Tooltip_ability_medic_adrenaline_rush_check_duration"                       "RUSH CHECK DURATION:"
+		//"DOTA_Tooltip_ability_medic_adrenaline_rush_gap_duration"                         "RUSH GAP DURATION:"
+		
+		"DOTA_Tooltip_ability_primary_medic_nano_injection"                               "Nano-Injection"
+		"DOTA_Tooltip_ability_primary_medic_nano_injection_Description"                   "Uses a beamed injection of biomed nanites to restore health to a non-mechanical unit. Also restores additional health and prevents injuries over a short period. Has a chance to remove injuries and resurrection sickness."
+		"DOTA_Tooltip_ability_primary_medic_nano_injection_heal"                          "HEAL:"
+		"DOTA_Tooltip_ability_primary_medic_nano_injection_HoT"                           "HEALTH PER TICK:"
+		"DOTA_Tooltip_ability_primary_medic_nano_injection_AbilityCastRange"              "RANGE:"
+		//"DOTA_Tooltip_ability_primary_medic_nano_injection_HoT_chance"                  "HOT CHANCE:"
+		"DOTA_Tooltip_ability_primary_medic_nano_injection_remove_rez_sick_chance"        "REMOVE REZ SICK CHANCE:"
+		
+		"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie"                            "Adrenaline Junkie"
+		"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie_Description"                "Chance that the medic administers himself an adrenaline shot when using adrenaline on others. Also causes the medic to experience more and longer adrenaline rushes."
+		"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie_junkie_chance"              "JUNKIE CHANCE:"
+		//"DOTA_Tooltip_ability_primary_medic_adrenaline_junkie_max_rush_bonus"             "MAX RUSH BONUS:"
+		
+		"DOTA_Tooltip_ability_medic_mending_station"                                      "Mending Station"
+		"DOTA_Tooltip_ability_medic_mending_station_Description"                          "Uses a supply of nanites to rapidly construct a mending station which automatically heals nearby allies and provides a defense network. Frequent use increases cost."
+		"DOTA_Tooltip_ability_medic_mending_station_mender_duration"                      "MENDER DURATION:"
+		"DOTA_Tooltip_ability_medic_mending_station_recharge_time"                        "RECHARGE TIME:"
+		
+		
+		// Heavy Ordnance
+		
+		//------------------------
+		"DOTA_Tooltip_ability_primary_ho_plasma_shield"                                   "Plasma Shield"
+		"DOTA_Tooltip_ability_primary_ho_plasma_shield_Description"                       "System which can be activated to over-excite the nanites in the hero's suit, making them leap away and deflect some attacks. They also cause damage to adjacent innards."
+		"DOTA_Tooltip_ability_primary_ho_plasma_shield_bonus_evasion"                     "EVASION:"
+		"DOTA_Tooltip_ability_primary_ho_plasma_shield_eps_cost"                          "EPS COST:"
+		"DOTA_Tooltip_ability_primary_ho_plasma_shield_burn_radius"                       "BURN RADIUS:"
+		"DOTA_Tooltip_ability_primary_ho_plasma_shield_burn_interval"                     "BURN INTERVAL:"
+
+		"DOTA_Tooltip_ability_primary_ho_storage_cells"                                   "Storage Cells"
+		"DOTA_Tooltip_ability_primary_ho_storage_cells_Description"                       "Increases the hero's maximum energy capacity, and increases energy regeneration while current energy is less than 1000. Also increases initial energy of constructed mini-droids."
+		"DOTA_Tooltip_ability_primary_ho_storage_cells_bonus_storage"                     "BONUS STORAGE:"
+		"DOTA_Tooltip_ability_primary_ho_storage_cells_bonus_regen"                       "BONUS REGEN:"
+		"DOTA_Tooltip_ability_primary_ho_storage_cells_regen_threshhold"                  "REGEN THRESHHOLD:"
+		
+		"DOTA_Tooltip_ability_primary_ho_power_grid"                                      "Power Grid"
+		"DOTA_Tooltip_ability_primary_ho_power_grid_Description"                          "Allows the officer to siphon energy from the city's power grid. Energy regeneration bonus is halved until partial power is restored."
+		"DOTA_Tooltip_ability_primary_ho_power_grid_duration"                             "DURATION:"
+		"DOTA_Tooltip_ability_primary_ho_power_grid_unpowered_eps"                        "ENERGY REGEN:"
+		//"DOTA_Tooltip_ability_primary_ho_power_grid_powered_eps"                          "POWERED EPS:"
+		//"DOTA_Tooltip_ability_primary_ho_power_grid_linger_duration"                      "LINGER DURATION:"
+		
+		"DOTA_Tooltip_ability_ho_xlr8"                                            "XLR8"
+		"DOTA_Tooltip_ability_ho_xlr8_Description"                                "Incrementally increases attack speed by accelerating the main firing mechanism, but also generates excess heat. Accelerates hero's adjacent mini-droids, too. Moving cancels the effect. Cooldown is determined by duration and rank."
+		"DOTA_Tooltip_ability_ho_xlr8_attack_speed_bonus"                         "ATTACK SPEED BONUS:"
+		"DOTA_Tooltip_ability_ho_xlr8_duration"                                   "MAX DURATION:"
+		"DOTA_Tooltip_ability_ho_xlr8_unphased_radius"                            "RADIUS:"
+		"DOTA_Tooltip_ability_ho_xlr8_phased_radius"                              "PHASED RADIUS:"
+		//"DOTA_Tooltip_ability_ho_xlr8_speed_up_initial"                                   "SPEED UP INITIAL:"
+		//"DOTA_Tooltip_ability_ho_XLR8_location_check_interval"                    "LOCATION CHECK INTERVAL:"
+		//"DOTA_Tooltip_ability_ho_XLR8_speed_up_interval"                          "SPEED UP INTERVAL:"
+        
+        "DOTA_Tooltip_ability_ho_construct_droid"                                         "Construct Droid"
+		"DOTA_Tooltip_ability_ho_construct_droid_Description"                             "Uses a large supply of nanites to rapidly construct a miniature assault droid. Each concurrent droid requires more energy to construct."
+		//"DOTA_Tooltip_ability_ho_construct_droid_plasma_rounds_constant"                  "PLASMA ROUNDS CONSTANT:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_plasma_rounds_factor"                    "PLASMA ROUNDS FACTOR:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_plasma_shield_constant"                  "PLASMA SHIELD CONSTANT:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_plasma_shield_factor"                    "PLASMA SHIELD FACTOR:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_storage_cells_constant"                  "STORAGE CELLS CONSTANT:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_storage_cells_factor"                    "STORAGE CELLS FACTOR:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_power_grid_constant"                     "POWER GRID CONSTANT:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_power_grid_factor"                       "POWER GRID FACTOR:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_distance"                                "DISTANCE:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_mini_count"                              "MINI COUNT:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_owner_radius"                            "OWNER RADIUS:"
+		"DOTA_Tooltip_ability_ho_construct_droid_owner_armor_bonus"                       "OWNER ARMOR BONUS:"
+		//"DOTA_Tooltip_ability_ho_construct_droid_all_radius"                              "ALL RADIUS:"
+		"DOTA_Tooltip_ability_ho_construct_droid_all_armor_bonus"                         "ALL ARMOR BONUS:"
+		
+		"DOTA_Tooltip_ability_primary_ho_droid_ammo"                                      "Droid Ammo"
+		"DOTA_Tooltip_ability_primary_ho_droid_ammo_Description"                          "Upgrades droid ammunition level and attack range."
+		"DOTA_Tooltip_ability_primary_ho_droid_ammo_damage_min"                           "DAMAGE MIN:"
+		"DOTA_Tooltip_ability_primary_ho_droid_ammo_damage_max"                           "DAMAGE MAX:"
+		"DOTA_Tooltip_ability_primary_ho_droid_ammo_range"                                "RANGE:"
+
+		"DOTA_Tooltip_ability_primary_ho_droid_integrity"                                 "Droid Integrity"
+		"DOTA_Tooltip_ability_primary_ho_droid_integrity_Description"                     "Improves mini-droid automated repair system and structural integrity."
+		"DOTA_Tooltip_ability_primary_ho_droid_integrity_health_regen"                    "HEALTH REGEN:"
+		"DOTA_Tooltip_ability_primary_ho_droid_integrity_damage_reduction"                "DAMAGE REDUCTION:"
+
+		"DOTA_Tooltip_ability_primary_ho_droid_mobility"                                  "Droid Mobility"
+		"DOTA_Tooltip_ability_primary_ho_droid_mobility_Description"                      "Increases droid movement speed."
+		"DOTA_Tooltip_ability_primary_ho_droid_mobility_move_speed"                       "MOVE SPEED:"
+		
+		"DOTA_Tooltip_ability_primary_minidroid_ammo"                                     "Droid Ammo"
+		"DOTA_Tooltip_ability_primary_minidroid_ammo_Description"                         "Upgrades droid ammunition level and attack range."
+		"DOTA_Tooltip_ability_primary_minidroid_ammo_damage_min"                          "DAMAGE MIN:"
+		"DOTA_Tooltip_ability_primary_minidroid_ammo_damage_max"                          "DAMAGE MAX:"
+		"DOTA_Tooltip_ability_primary_minidroid_ammo_range"                               "RANGE:"
+
+		"DOTA_Tooltip_ability_primary_minidroid_integrity"                                "Droid Integrity"
+		"DOTA_Tooltip_ability_primary_minidroid_integrity_Description"                    "Improves mini-droid automated repair system and structural integrity."
+		"DOTA_Tooltip_ability_primary_minidroid_integrity_health_regen"                   "HEALTH REGEN:"
+		"DOTA_Tooltip_ability_primary_minidroid_integrity_damage_reduction"               "DAMAGE REDUCTION:"
+
+		"DOTA_Tooltip_ability_primary_minidroid_mobility"                                 "Droid Mobility"
+		"DOTA_Tooltip_ability_primary_minidroid_mobility_Description"                     "Increases droid movement speed."
+		"DOTA_Tooltip_ability_primary_minidroid_mobility_move_speed"                      "MOVE SPEED:"		
+		
+		//------------------------
+		// Modifiers
+		//------------------------
+		"DOTA_Tooltip_modifier_medic_revive_rez_sickness"                                 "Resurrection Sickness"
+		"DOTA_Tooltip_modifier_medic_revive_rez_sickness_Description"                     "This unit moves and attacks more slowly and gains 75% less experience."
+
+		"DOTA_Tooltip_modifier_mender_defense_network_buff"                               "Defense Network"
+		"DOTA_Tooltip_modifier_mender_defense_network_buff_Description"                   "This unit causes less damage against targets protected by a defense network."
+
+		"DOTA_Tooltip_modifier_mender_defense_network_buff_info"                          "Defense Network"
+		"DOTA_Tooltip_modifier_mender_defense_network_buff_info_Description"              "This unit takes less damage from melee attacks."
+
+		"DOTA_Tooltip_modifier_adrenaline"                                                "Adrenaline"
+		"DOTA_Tooltip_modifier_adrenaline_Description"                                    "This unit is on an adrenaline rush and attacks at a greatly increased rate."
+		
+		"DOTA_Tooltip_modifier_nano_hot_thinker"                                          "Nano-Injection"
+		"DOTA_Tooltip_modifier_nano_hot_thinker_Description"                              "This unit is gaining health over time."
+		
+		"DOTA_Tooltip_Ability_cyborg_pheromones_off"  									  "Pheromones"  
+		"DOTA_Tooltip_Ability_cyborg_pheromones_off_Description"  						  "Releases an artificial scent which attracts nearby undead and provokes them into attacking the cyborg."
+
+		"DOTA_Tooltip_modifier_cyborg_forcefield"									      "Force field"
+		"DOTA_Tooltip_modifier_cyborg_forcefield_Description"						      "A force field is protecting this unit by absorbing all incoming damage."
+		
+		"DOTA_Tooltip_modifier_demo_mirv_napalm"                                          "Napalm"
+		"DOTA_Tooltip_modifier_demo_mirv_napalm_Description"                              "This unit is taking damage and has seared defenses."
+
+		"DOTA_Tooltip_modifier_power_grid_unpowered"                                      "Power Grid"
+		"DOTA_Tooltip_modifier_power_grid_unpowered_Description"                          "This unit has significantly increased energy regeneration."
+
+		"DOTA_Tooltip_modifier_power_grid_powered"                                        "Power Grid"
+		"DOTA_Tooltip_modifier_power_grid_powered_Description"                            "This unit has significantly increased energy regeneration."
+		
+		"DOTA_Tooltip_modifier_ho_plasma_shield"                                          "Plasma Shield"
+		"DOTA_Tooltip_modifier_ho_plasma_shield_Description"                              "This unit is surrounded by a plasma shield which deflects some attacks."
+		
+		"DOTA_Tooltip_modifier_xlr8_location_thinker"                                     "XLR8"
+		"DOTA_Tooltip_modifier_xlr8_location_thinker_Description"                         "This unit is boosting the attack speed of its mini-droids and itself."
+
+		"DOTA_Tooltip_modifier_xlr8_attack_bonus"                                         "XLR8'd"
+		"DOTA_Tooltip_modifier_xlr8_attack_bonus_Description"                             "This unit has increased attack speed."
+        
+        "DOTA_Tooltip_modifier_defense_matrix_owner1"                                     "Defense Matrix 1"
+		"DOTA_Tooltip_modifier_defense_matrix_owner1_Description"                         ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner1_armor_bonus"                         "Defense Matrix 1B"
+		"DOTA_Tooltip_modifier_defense_matrix_owner1_armor_bonus_Description"             ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner2"                                     "Defense Matrix 2"
+		"DOTA_Tooltip_modifier_defense_matrix_owner2_Description"                         ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner2_armor_bonus"                         "Defense Matrix 2B"
+		"DOTA_Tooltip_modifier_defense_matrix_owner2_armor_bonus_Description"             ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner3"                                     "Defense Matrix 3"
+		"DOTA_Tooltip_modifier_defense_matrix_owner3_Description"                         ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner3_armor_bonus"                         "Defense Matrix 3B"
+		"DOTA_Tooltip_modifier_defense_matrix_owner3_armor_bonus_Description"             ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner4"                                     "Defense Matrix 4"
+		"DOTA_Tooltip_modifier_defense_matrix_owner4_Description"                         ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner4_armor_bonus"                         "Defense Matrix 4B"
+		"DOTA_Tooltip_modifier_defense_matrix_owner4_armor_bonus_Description"             ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner5"                                     "Defense Matrix 5"
+		"DOTA_Tooltip_modifier_defense_matrix_owner5_Description"                         ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_owner5_armor_bonus"                         "Defense Matrix 5B"
+		"DOTA_Tooltip_modifier_defense_matrix_owner5_armor_bonus_Description"             ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_all"                                        "Defense Matrix A"
+		"DOTA_Tooltip_modifier_defense_matrix_all_Description"                            ""
+
+		"DOTA_Tooltip_modifier_defense_matrix_all_armor_bonus"                            "Defense Matrix AB"
+		"DOTA_Tooltip_modifier_defense_matrix_all_armor_bonus_Description"                ""
+		
+		
+		//------------------------
+		// Items
+		//------------------------
+		"DOTA_Tooltip_ability_item_example_item"										"Shield Blaster"
+		"DOTA_Tooltip_ability_item_example_item_Description"							"Gives the caster a 50% damage reduction for 4 seconds while firing a projectile that deals damage 125 PURE damage to any enemy it hits."
+		"DOTA_Tooltip_ability_item_example_item_Lore"								""
+		"DOTA_Tooltip_ability_item_example_item_duration"							"DURATION:"
+    "DOTA_Tooltip_ability_item_example_item_damage_reduction"							"DAMAGE REDUCTION:"
+    "DOTA_Tooltip_ability_item_example_item_radius"							"PROJECTILE RADIUS:"
+    "DOTA_Tooltip_ability_item_example_item_speed"							"PROJECTILE SPEED:"
+    "DOTA_Tooltip_ability_item_example_item_distance"							"DISTANCE:"
+    "DOTA_Tooltip_ability_item_example_item_damage"							"DAMAGE:"
+	}
+}
