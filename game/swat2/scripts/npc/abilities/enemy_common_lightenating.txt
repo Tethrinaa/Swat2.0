@@ -1,0 +1,55 @@
+//=================================================================================================================
+// Ability: Lightenating
+// Unit glows yellow and when it dies releases fireflies
+//=================================================================================================================
+"enemy_common_lightenating"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		"ability_datadriven"
+    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName" 	"wisp_spirits"
+    "MaxLevel"	"1"
+
+    "precache"
+    {
+        "particle"	    "particles/radiant_fx2/good_ancient001_rotatingwisps.vpcf"
+    }
+
+    "Modifiers"
+    {
+        "modifier_common_lightenating"
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
+
+            "OnCreated"
+            {
+                // Not working :(
+                "AttachEffect"
+                {
+                    "Target"                 "CASTER"
+                    "EffectName"			"particles/radiant_fx2/good_ancient001_rotatingwisps.vpcf"
+					"EffectAttachType"			"follow_origin"
+					"EffectRadius"				"300"
+                }
+
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_lightenating"
+                }
+            }
+
+            "OnDeath"
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "abilities/enemy_common_lightenating.lua"
+                  "Function"   "lightenating_death"
+               }
+            }
+        }
+    }
+}

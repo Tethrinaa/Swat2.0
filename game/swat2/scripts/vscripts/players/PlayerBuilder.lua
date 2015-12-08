@@ -197,6 +197,8 @@ function PlayerBuilder:BuildMarine( event )
     playerInfo.weaponName = event.weapon
     playerInfo.armorName = event.armor
 
+    playerInfo.armorValue = hero.sdata.armor_index
+
     g_PlayerManager:onPlayerLoadedSwatHero(playerInfo)
 end
 

@@ -224,10 +224,9 @@ function ZombieSpawner:createLightenating(position)
     -- Not Normal unit (lightenating zombies do not revive)
     local unit = CreateUnitByName( ZombieSpawner.ZOMBIE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
-    --unit:FindAbilityByName("enemy_common_radinating"):SetLevel(1)
-    --unit:FindAbilityByName("enemy_common_radinating_rad_bolt"):SetLevel(2)
+    unit:AddAbility("enemy_common_lightenating")
+    unit:FindAbilityByName("enemy_common_lightenating"):SetLevel(1)
     self:setZombieMutation(unit)
-    unit:SetRenderColor(255, 255, 0) -- TODO REMOVE
     unit:SetMana(0)
 
     return unit

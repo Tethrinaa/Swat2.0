@@ -51,6 +51,7 @@
         "modifier_enemy_common_tnt"
         {
             "Passive" "1"
+            "IsHidden"              "1"
 
             "EffectName"        "particles/units/heroes/hero_warlock/golem_ambient_fire_mane_smoke.vpcf"
             "EffectAttachType"  "follow_attack"

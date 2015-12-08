@@ -1,0 +1,71 @@
+//=================================================================================================================
+// Ability: Firefly
+// Just makes the firefly particle
+//=================================================================================================================
+"enemy_firefly"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		"ability_datadriven"
+    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName" 	"viper_corrosive_skin"
+    "MaxLevel"	"1"
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+    }
+
+    "Modifiers"
+    {
+        // This modifier will convert the firefly to its phase 2 (invuln and life duration)
+        // When it is attacked or attacks
+        "modifier_enemy_firefly_conversion"
+        {
+            "Passive" "1"
+            "IsHidden" "1"
+
+            // Convert the firefly when it takes damage
+            "OnTakeDamage"
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "abilities/enemy_firefly.lua"
+                  "Function"   "convert_firefly"
+               }
+            }
+
+            // Convert the firefly when it attacks
+            "OnAttack"
+            {
+               "RunScript"
+               {
+                  "ScriptFile" "abilities/enemy_firefly.lua"
+                  "Function"   "convert_firefly"
+               }
+            }
+        }
+
+        "modifier_enemy_firefly_passives"
+        {
+            "Passive" "1"
+            "IsHidden" "1"
+
+            // Glow effect Not working :(
+            "AttachEffect"
+            {
+                "EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+                "EffectAttachType"	"follow_overhead"
+                "Target"			"CASTER"
+            }
+
+            "States"
+            {
+                "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NOT_ON_MINIMAP"    	"MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "9001" // Max attack speed
+            }
+        }
+    }
+}

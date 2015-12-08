@@ -18,6 +18,7 @@ require("game/minions/DogSpawner")
 require("game/minions/GrotesqueSpawner")
 require("game/minions/InnardsSpawner")
 require("game/minions/RatSpawner")
+require("game/minions/FireflySpawner")
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
@@ -64,6 +65,7 @@ function EnemySpawner:new(o)
     self.grotesqueSpawner = GrotesqueSpawner:new()
     self.innardsSpawner = InnardsSpawner:new()
     self.ratSpawner = RatSpawner:new()
+    self.fireflySpawner = FireflySpawner:new()
 
     -- Boss parameters
     self.abomsCurrentlyAlive = 0

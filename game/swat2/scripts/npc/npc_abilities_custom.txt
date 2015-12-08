@@ -1235,7 +1235,7 @@
 	        {
 	            "Passive"               "1"
 	            "IsPurgable"            "0"
-	            "IsHidden"              "0"
+	            "IsHidden"              "1"
 	
 	            "OnCreated"
 	            {
@@ -1266,6 +1266,69 @@
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Lightenating
+	// Unit glows yellow and when it dies releases fireflies
+	//=================================================================================================================
+	"enemy_common_lightenating"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"wisp_spirits"
+	    "MaxLevel"	"1"
+	
+	    "precache"
+	    {
+	        "particle"	    "particles/radiant_fx2/good_ancient001_rotatingwisps.vpcf"
+	        "particle"	    "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_common_lightenating"
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	
+	            "OnCreated"
+	            {
+	                // Not working :(
+	                "AttachEffect"
+	                {
+	                    "Target"
+						{
+							"Center"  		"CASTER"
+							"Radius"		"300"
+							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ANY"
+							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+						"EffectName"				"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	                    //"EffectName"			"particles/radiant_fx2/good_ancient001_rotatingwisps.vpcf"
+						"EffectAttachType"			"follow_origin"
+						"EffectRadius"				"300"
+	                }
+	
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_lightenating"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "abilities/enemy_common_lightenating.lua"
+	                  "Function"   "lightenating_death"
+	               }
 	            }
 	        }
 	    }
@@ -1614,6 +1677,7 @@
 	        "modifier_enemy_common_tnt"
 	        {
 	            "Passive" "1"
+	            "IsHidden"              "1"
 	
 	            "EffectName"        "particles/units/heroes/hero_warlock/golem_ambient_fire_mane_smoke.vpcf"
 	            "EffectAttachType"  "follow_attack"
@@ -1761,7 +1825,7 @@
 	        {
 	            "Passive"               "1"
 	            "IsPurgable"            "0"
-	            "IsHidden"              "0"
+	            "IsHidden"              "1"
 	            "Aura"                  "modifier_common_toxic_aura_effect"
 	            "Aura_Radius"           "%aura_radius"
 	            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -1838,6 +1902,77 @@
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%movespeed_percentage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Firefly
+	// Just makes the firefly particle
+	//=================================================================================================================
+	"enemy_firefly"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"viper_corrosive_skin"
+	    "MaxLevel"	"1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	        // This modifier will convert the firefly to its phase 2 (invuln and life duration)
+	        // When it is attacked or attacks
+	        "modifier_enemy_firefly_conversion"
+	        {
+	            "Passive" "1"
+	            "IsHidden" "1"
+	
+	            // Convert the firefly when it takes damage
+	            "OnTakeDamage"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "abilities/enemy_firefly.lua"
+	                  "Function"   "convert_firefly"
+	               }
+	            }
+	
+	            // Convert the firefly when it attacks
+	            "OnAttack"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "abilities/enemy_firefly.lua"
+	                  "Function"   "convert_firefly"
+	               }
+	            }
+	        }
+	
+	        "modifier_enemy_firefly_passives"
+	        {
+	            "Passive" "1"
+	            "IsHidden" "1"
+	
+	            // Glow effect Not working :(
+	            "AttachEffect"
+	            {
+	                "EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+	                "EffectAttachType"	"follow_overhead"
+	                "Target"			"CASTER"
+	            }
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NOT_ON_MINIMAP"    	"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "9001" // Max attack speed
 	            }
 	        }
 	    }

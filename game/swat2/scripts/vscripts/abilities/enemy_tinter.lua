@@ -18,7 +18,7 @@ end
 
 -- Tints the unit for radinating
 function tint_radinating(keys)
-    keys.caster:SetRenderColor(80, 199, 0)
+    keys.caster:SetRenderColor(80, 255, 0)
 end
 
 -- Tints the unit for lightenating
