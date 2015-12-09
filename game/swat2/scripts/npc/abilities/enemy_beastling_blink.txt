@@ -1,8 +1,9 @@
 //=================================================================================================================
-// Ability: Blink
-// Beast blinks to the targetted location
+// Ability: Blink (Beastling)
+// Beastling blinks to the targetted location
+// This is an improved version of blink
 //=================================================================================================================
-"enemy_beast_blink"
+"enemy_beastling_blink"
 {
     // General
     //-------------------------------------------------------------------------------------------------------------
@@ -15,10 +16,10 @@
 
     // Stats
     //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastRange"              "1200"
+    "AbilityCastRange"              "1800"
     "AbilityCastPoint"              "0.0"
-    "AbilityCooldown"               "5.0"
-    "AbilityManaCost"               "25"
+    "AbilityCooldown"               "1.0"
+    "AbilityManaCost"               "1"
 
     // Special
     //-------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
         "01"
         {
             "var_type"                      "FIELD_INTEGER"
-            "max_blink_range"               "1200"
+            "max_blink_range"               "1800"
         }
     }
 
