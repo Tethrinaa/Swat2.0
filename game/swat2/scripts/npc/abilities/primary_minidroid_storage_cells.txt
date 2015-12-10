@@ -34,10 +34,14 @@
 			"modifier_minidroid_storage_cells"
 			{	
 				"Passive"				"1"
-				"Properties"
+				"OnCreated"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" 				"%storage"
-				}
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"SetStorageBonus"
+					}
+                }
 			}
 		}
 	}

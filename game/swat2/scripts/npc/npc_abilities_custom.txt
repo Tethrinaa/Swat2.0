@@ -5660,7 +5660,6 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"                 		"4"
 		"AbilityTextureName"			"sniper_shrapnel"
@@ -5697,10 +5696,15 @@
 						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
 						"Function"		"AddBonusDamageDice"
 					}
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"AddAcquisitionRange"
+					}
 				}
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
 				}
 				
 				"OnDestroy"
@@ -5709,6 +5713,11 @@
 					{
 						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
 						"Function"		"RemoveBonusDamageDice"
+					}
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"RemoveAcquisitionRange"
 					}
 				}
 			}
@@ -5733,7 +5742,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_regen"		"1 2 3"
+				"health_regen"		        "1 2 3"
 			}
 			"02"
 			{
@@ -5766,7 +5775,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"4"
+		"MaxLevel"                 		"1"
 		"AbilityTextureName"			"bounty_hunter_track"
 		
 		"AbilitySpecial"
@@ -5774,7 +5783,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_speed"			"250 500 750 1000"
+				"move_speed"			"30"
 			}
 		}
 		"Modifiers"
@@ -5826,10 +5835,14 @@
 			"modifier_minidroid_storage_cells"
 			{	
 				"Passive"				"1"
-				"Properties"
+				"OnCreated"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" 				"%storage"
-				}
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"SetStorageBonus"
+					}
+                }
 			}
 		}
 	}
@@ -6863,7 +6876,7 @@
 		"AbilityTextureName"       			"clinkz_searing_arrows"
 	    "AbilityUnitTargetTeam"    			"DOTA_UNIT_TARGET_TEAM_BOTH"
 	    "AbilityUnitTargetType"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		
+		"AbilityManaCost"                   "1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
 		"AbilityCooldown"					"0 0 0 0 .21 .21 .21 .21 .31 .31 .31 .31 .41 .41 .41 .41"
 	
 	

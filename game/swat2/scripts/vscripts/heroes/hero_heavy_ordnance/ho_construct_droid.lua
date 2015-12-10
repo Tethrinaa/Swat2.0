@@ -94,7 +94,7 @@ function SpinUpDroid(keys)
 		end
 		local mini_ability = minidroid:FindAbilityByName(mini_ability_name)
 		
-		-- as longa s the ability exists, try to set its level
+		-- as long as the ability exists, try to set its level
 		if mini_ability then
 			-- Calculate the ability level from the HO's ability
 			local ho_level = ho:FindAbilityByName(ho_ability_name):GetLevel()
@@ -102,19 +102,23 @@ function SpinUpDroid(keys)
 			local constant = keys.ability:GetSpecialValueFor(mini_ability_name.."_constant")
 			local mini_level = math.floor(ho_level / factor) + constant
 
-			-- Remove this buff so we can drop its level to 0 maybe
-			print("Maybe removing "..mini_ability_name.." buff: ", mini_ability:GetIntrinsicModifierName())
-			if mini_ability:GetIntrinsicModifierName() then
-				print("Removing ", mini_ability:GetIntrinsicModifierName())
-				minidroid:RemoveModifierByName(mini_ability:GetIntrinsicModifierName())
-			end			
+            -- This is commented out because it starts at 0 when we add them dynamically above
+			-- -- Remove this buff so we can drop its level to 0 maybe
+			-- print("Maybe removing "..mini_ability_name.." buff: ", mini_ability:GetIntrinsicModifierName())
+			-- if mini_ability:GetIntrinsicModifierName() then
+			-- 	print("Removing ", mini_ability:GetIntrinsicModifierName())
+			-- 	minidroid:RemoveModifierByName(mini_ability:GetIntrinsicModifierName())
+			-- end			
 			
 			-- Special things for some abilities
-			if mini_ability_name == "primary_ho_storage_cells" then
+			if mini_ability_name == "primary_minidroid_storage_cells" then
 				-- Standard energy from levels in cells
 				local base_energy = keys.ability:GetSpecialValueFor("base_cells_energy")
 				local per_level_cells_energy = keys.ability:GetSpecialValueFor("per_level_cells_energy")
-				minidroid:SetMana(base_energy + per_level_cells_energy * mini_level)
+                local initial_energy = base_energy + per_level_cells_energy * ho_level
+                print(base_energy, per_level_cells_energy, ho_level, initial_energy)
+				minidroid:SetMana(initial_energy)
+                print(minidroid:GetMana())
 				
 			elseif mini_ability_name == "primary_minidroid_energy_beam" then
 				-- Free beam on birth as long as the ho is above 250

@@ -21,3 +21,23 @@ function RemoveBonusDamageDice(keys)
 	print("Removing max", bonus_max)
 	keys.caster:SetBaseDamageMax(current_base_max - bonus_max )
 end
+
+function AddAcquisitionRange(keys)
+    local current_range = keys.caster:GetAcquisitionRange()
+    local bonus_range = keys.ability:GetSpecialValueFor("range")
+    print("Droid Ammo Range+", current_range, bonus_range)
+    keys.caster:SetAcquisitionRange(current_range + bonus_range)
+    local unit_info = GameMode.unit_infos[keys.caster:GetUnitName()]
+    print("Defaults:", unit_info["AttackAcquisitionRange"], unit_info["AttackRange"])
+    print("Currents:", keys.caster:GetAcquisitionRange(), keys.caster:GetAttackRange())
+end
+
+function RemoveAcquisitionRange(keys)
+    local current_range = keys.caster:GetAcquisitionRange()
+    local bonus_range = keys.ability:GetSpecialValueFor("range")
+    print("Droid Ammo Range-", current_range, bonus_range)
+    keys.caster:SetAcquisitionRange(current_range - bonus_range)
+    local unit_info = GameMode.unit_infos[keys.caster:GetUnitName()]
+    print("Defaults:", unit_info["AttackAcquisitionRange"], unit_info["AttackRange"])
+    print("Currents:", keys.caster:GetAcquisitionRange(), keys.caster:GetAttackRange())
+end

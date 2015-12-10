@@ -6,7 +6,6 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"                 		"4"
 		"AbilityTextureName"			"sniper_shrapnel"
@@ -43,10 +42,15 @@
 						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
 						"Function"		"AddBonusDamageDice"
 					}
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"AddAcquisitionRange"
+					}
 				}
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%bonus_attack_range"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
 				}
 				
 				"OnDestroy"
@@ -55,6 +59,11 @@
 					{
 						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
 						"Function"		"RemoveBonusDamageDice"
+					}
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"RemoveAcquisitionRange"
 					}
 				}
 			}

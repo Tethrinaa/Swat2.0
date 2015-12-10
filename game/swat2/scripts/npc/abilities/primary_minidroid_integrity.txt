@@ -16,7 +16,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_regen"		"1 2 3"
+				"health_regen"		        "1 2 3"
 			}
 			"02"
 			{

@@ -14,7 +14,7 @@
 	"AbilityTextureName"       			"clinkz_searing_arrows"
     "AbilityUnitTargetTeam"    			"DOTA_UNIT_TARGET_TEAM_BOTH"
     "AbilityUnitTargetType"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-	
+	"AbilityManaCost"                   "1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
 	"AbilityCooldown"					"0 0 0 0 .21 .21 .21 .21 .31 .31 .31 .31 .41 .41 .41 .41"
 
 
