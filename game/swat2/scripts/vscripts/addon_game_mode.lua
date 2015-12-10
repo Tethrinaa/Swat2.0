@@ -57,6 +57,7 @@ function Precache( context )
     PrecacheUnitByNameSync("npc_dota_hero_vengefulspirit", context)
     PrecacheUnitByNameSync("npc_dota_hero_ursa", context)
     PrecacheUnitByNameSync("npc_dota_hero_storm_spirit", context)
+    PrecacheUnitByNameSync("npc_dota_hero_invoker", context)
 
 end
 
