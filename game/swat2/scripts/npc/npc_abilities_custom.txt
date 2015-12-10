@@ -567,8 +567,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			
 		}
 	
 		// Casting
@@ -590,6 +590,17 @@
 	            "on_ability"    "cyborg_forcefield_off"
 	            "off_ability"    "cyborg_forcefield"
 			}
+				"FireSound"
+			{
+				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+				"Target"        "CASTER"  
+			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/items3_fx/lotus_orb_shield.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
 		}
 		"Modifiers"
 		{
@@ -597,12 +608,15 @@
 			{
 				"ThinkInterval" 	"1"
 				"OnIntervalThink"
+				
+				
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
 						"Function"		"ForcefieldThink"
 					}
+				
 				}
 				"OnCreated"
 				{
@@ -626,6 +640,9 @@
 	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
 	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
 	            }
+				
+				"EffectName"		"particles/items3_fx/lotus_orb_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
