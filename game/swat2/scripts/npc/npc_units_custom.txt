@@ -1253,7 +1253,7 @@
 		"SoundSet"					"Hero_leshrac"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
 		"Level"						"13"
-		"ModelScale"				"1.3"
+		"ModelScale"				".7"
 		//"UnitLabel"				"power_core" // saw this somewhere, unsure of effect
 	
 		"AttacksEnabled"			""
