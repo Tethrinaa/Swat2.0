@@ -66,7 +66,12 @@ function DebugGameChatCommand_LevelUp()
         -- Do something here for the player who called this command
         local playerInfo = g_PlayerManager:getPlayerInfoForPlayerId(playerID)
         if playerInfo then
-            playerInfo.hero:HeroLevelUp(true)
+            local exp = 1000 + math.max(0, playerInfo.hero:GetLevel() - 4) * 200
+            playerInfo.hero:AddExperience(
+                exp
+                , 0
+                , false
+                , false)
         end
       end
     end
@@ -111,6 +116,7 @@ end
 function DebugGameChatCommand_SpawnAllEnemyTypes()
     local location = GetRandomWarehouse()
     local es = g_EnemySpawner
+
     -- Zombies
     es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
     es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)

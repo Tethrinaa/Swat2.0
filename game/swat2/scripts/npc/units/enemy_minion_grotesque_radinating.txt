@@ -120,7 +120,7 @@
                 "Damage"              "1"
                 "UseAtHealthPercent"  "100"
             }
-            "Ability2"
+            "Ability3"
             {
                 "Name"                "enemy_grotesque_ensnare"
                 "Damage"              "1"
@@ -129,13 +129,20 @@
         }
         "DefensiveAbilities"
         {
-            "Ability3"
+            "Ability2"
+            {
+                "Name"                "enemy_common_radinating_regeneration"
+                "UseSelfishly"        "1"
+                "Heal"                 "1"
+                "UseAtHealthPercent"  "70"
+            }
+            "Ability4"
             {
                 "Name"                "enemy_common_radinating_rad_bolt"
                 "Damage"              "1"
                 "UseAtHealthPercent"  "100"
             }
-            "Ability4"
+            "Ability5"
             {
                 "Name"                "grotesque_ensnare"
                 "Damage"              "1"

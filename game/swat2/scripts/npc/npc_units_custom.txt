@@ -518,7 +518,7 @@
 	                "Damage"              "1"
 	                "UseAtHealthPercent"  "100"
 	            }
-	            "Ability2"
+	            "Ability3"
 	            {
 	                "Name"                "enemy_beast_blink"
 	                "Damage"              "1"
@@ -527,13 +527,20 @@
 	        }
 	        "DefensiveAbilities"
 	        {
-	            "Ability3"
+	            "Ability2"
+	            {
+	                "Name"                "enemy_common_radinating_regeneration"
+	                "UseSelfishly"        "1"
+	                "Heal"                 "1"
+	                "UseAtHealthPercent"  "70"
+	            }
+	            "Ability4"
 	            {
 	                "Name"                "enemy_common_radinating_rad_bolt"
 	                "Damage"              "1"
 	                "UseAtHealthPercent"  "100"
 	            }
-	            "Ability4"
+	            "Ability5"
 	            {
 	                "Name"                "enemy_beast_blink"
 	                "Damage"              "1"
@@ -1039,7 +1046,7 @@
 	                "Damage"              "1"
 	                "UseAtHealthPercent"  "100"
 	            }
-	            "Ability2"
+	            "Ability3"
 	            {
 	                "Name"                "enemy_grotesque_ensnare"
 	                "Damage"              "1"
@@ -1048,13 +1055,20 @@
 	        }
 	        "DefensiveAbilities"
 	        {
-	            "Ability3"
+	            "Ability2"
+	            {
+	                "Name"                "enemy_common_radinating_regeneration"
+	                "UseSelfishly"        "1"
+	                "Heal"                 "1"
+	                "UseAtHealthPercent"  "70"
+	            }
+	            "Ability4"
 	            {
 	                "Name"                "enemy_common_radinating_rad_bolt"
 	                "Damage"              "1"
 	                "UseAtHealthPercent"  "100"
 	            }
-	            "Ability4"
+	            "Ability5"
 	            {
 	                "Name"                "grotesque_ensnare"
 	                "Damage"              "1"
@@ -1081,7 +1095,7 @@
 	    "Ability1"  				"common_invulnerable"			// Ability 1.
 		"Ability2"					"common_no_health_bar"			// Ability 2.
 		"Ability3"					"common_unselectable"			// Ability 3.
-		"Ability4"					""			// Ability 4.
+		"Ability4"					"common_no_collision"			// Ability 4.
 		"Ability5"					""			// Ability 5.
 		"Ability6"					""			// Ability 6 - Extra.
 		"Ability7"					""			// Ability 7 - Extra.
@@ -1145,7 +1159,7 @@
 		//----------------------------------------------------------------------------------------------------------------------
 		"Creature"
 		{
-	            "DisableClumpingBehavior"   "1"
+	        "DisableClumpingBehavior"   "0"
 			"CanRespawn"				"0"
 	
 			//Basic AI State
@@ -1193,8 +1207,8 @@
 	
 	        // Abilities
 	        //----------------------------------------------------------------
-	        "Ability1"					"no_health_bar"			// Ability 1.
-	        "Ability2"					""			// Ability 2.
+	        "Ability1"					"common_no_health_bar"			// Ability 1.
+	        "Ability2"					"common_no_collision"			// Ability 2.
 	        "Ability3"					""			// Ability 3.
 	        "Ability4"					""			// Ability 4.
 	        "Ability5"					""			// Ability 5.
@@ -1260,7 +1274,7 @@
 	        //----------------------------------------------------------------------------------------------------------------------
 	        "Creature"
 	        {
-	            "DisableClumpingBehavior"   "1"
+	            "DisableClumpingBehavior"   "0"
 	            "CanRespawn"				"0"
 	
 	            //Basic AI State

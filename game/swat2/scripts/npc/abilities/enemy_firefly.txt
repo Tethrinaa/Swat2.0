@@ -59,12 +59,17 @@
                 "Target"			"CASTER"
             }
 
+            "Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "9000"  // Max Attack Speed
+			}
+
             "States"
             {
                 "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_NOT_ON_MINIMAP"    	"MODIFIER_STATE_VALUE_ENABLED"
                 "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "9001" // Max attack speed
+                "MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
             }
         }
     }

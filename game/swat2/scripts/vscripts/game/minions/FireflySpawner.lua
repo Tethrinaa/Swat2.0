@@ -160,7 +160,7 @@ function FireflySpawner:spawnFireflies(position, killer)
     Timers:CreateTimer(0.3, function()
         for _,unit in pairs(createdUnits) do
             if unit.targetUnit then
-                g_EnemyCommander:doMobAction(unit, unit.targetUnit)
+                ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_ATTACK_TARGET , TargetIndex = unit.targetUnit:GetEntityIndex() })
             else
                 print("DEBUG | NO TARGET UNIT")
             end

@@ -35,10 +35,6 @@ function DogSpawner:createNormal(position)
     local unit = CreateUnitByName( DogSpawner.DOG_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
     unit:FindAbilityByName("common_truesight"):SetLevel(1)
 
-    -- EnemySpawner will look for onDeathFunctions and call them
-    -- TODO: Use or remove
-    --unit.onDeathFunction = function(killedUnit, killerEntity, killerAbility) self:onDeath(killedUnit, killerEntity, killerAbility) end
-
     return unit
 end
 
@@ -49,9 +45,4 @@ function DogSpawner:createBurninating(position)
     unit:FindAbilityByName("enemy_common_burninating"):SetLevel(1)
 
     return unit
-end
-
--- Called when this unit dies
-function DogSpawner:onDeath(killedUnit, killerEntity, killerAbility)
-    -- TODO
 end

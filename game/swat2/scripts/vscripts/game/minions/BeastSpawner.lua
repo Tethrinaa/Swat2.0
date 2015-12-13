@@ -29,11 +29,11 @@ function BeastSpawner:spawnMinion(position, specialType)
         local x = math.max(specialType - 6, 0)
         if RandomInt(0, 8) < x then
             -- TODO: NM/Ext roll for double TNT
-            self:createTnt(position)
+            return self:createTnt(position)
         elseif RandomInt(0, 8) < x + 1 then
-            self:createToxic(position)
+            return self:createToxic(position)
         else
-            self:createBurninating(position)
+            return self:createBurninating(position)
         end
     elseif RandomInt(-1, 398) < math.min(1, g_RadiationManager.radiationLevel) then
         return self:createRadinating(position)
