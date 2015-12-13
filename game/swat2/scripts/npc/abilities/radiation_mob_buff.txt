@@ -52,6 +52,9 @@
 
         "modifier_rad_mob_buff_effect"
         {
+            "IsPurgable"            "0"
+            "IsHidden"              "1"
+
             "Properties"
             {
                 "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"     "%mana_regen"

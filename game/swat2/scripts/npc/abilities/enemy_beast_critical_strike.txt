@@ -1,0 +1,99 @@
+//=================================================================================================================
+// Ability: Critical Strike
+// Random chance to do multiplier-based damage
+//=================================================================================================================
+"enemy_beast_critical_strike"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "chaos_knight_chaos_strike"
+    "MaxLevel"	"1"
+
+    // Precache
+    //-------------------------------------------------------------------------------------------------------------
+    "precache"
+    {
+        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+        "particle"      "particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+    }
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "crit_damage"               "200"
+        }
+        "02"
+        {
+            "var_type"                  "FIELD_INTEGER"
+            "crit_chance"               "10"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_chaos_strike_datadriven"
+        {
+            "Passive"   "1"
+            "IsHidden"  "1"
+
+            "OnAttackStart"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_enemy_beast_critical_strike"
+                    "Target"        "CASTER"
+                }
+
+                "Random"
+                {
+                    "Chance"    "%crit_chance"
+                    "OnSuccess"
+                    {
+                        "FireSound"
+                        {
+                            "EffectName"    "Hero_ChaosKnight.ChaosStrike"
+                            "Target"        "CASTER"
+                        }
+
+                        "FireEffect"
+                        {
+                            "EffectName"        "particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+                            "EffectAttachType"  "attach_attack1"
+                            "Target"            "CASTER"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_enemy_beast_critical_strike"
+                            "Target"        "CASTER"
+                        }
+                    }
+                }
+            }
+        }
+
+        "modifier_enemy_beast_critical_strike"
+        {
+            "IsHidden"  "1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+            }
+
+            "OnAttackLanded"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_enemy_beast_critical_strike"
+                    "Target"        "CASTER"
+                }
+            }
+        }
+    }
+}

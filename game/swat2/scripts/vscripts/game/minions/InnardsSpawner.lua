@@ -71,20 +71,18 @@ function InnardsSpawner:rollForInnardsSpawn(position, targetUnit)
         self.innards = self.innards + 1
     end
     if self.innards > 0 and RandomInt(1, self.innards) < self.innardsChance then
-        self:spawnMinion(position, 1)
+        self:createInnard(position, targetUnit, false)
     end
 end
 
 -- Generic enemy creation method called by EnemySpawner
 -- @param position | the position to create the unit
--- @param specialType | a field that can be used to spawn special types of this minion
+-- @param targetUnit | the target the innard should attack towards
+-- @param reborn | boolean. States whether to create an initial or reborn innard
 -- returns the created unit
-function InnardsSpawner:spawnMinion(position, specialType, targetUnit)
-    --print("EnemySpawner | Spawning Zombie(" .. specialType .. ")")
-
-
+function InnardsSpawner:createInnard(position, targetUnit, reborn)
     local unit = nil
-    if specialType > 0 then
+    if not reborn then
         -- Spawn a normal innard
         -- EnemySpawner will look for onDeathFunctions and call them
         -- This will spawn more innards when it dies!
@@ -93,6 +91,7 @@ function InnardsSpawner:spawnMinion(position, specialType, targetUnit)
         local duration = 2 + RandomFloat(0.0, 1.0) + RandomFloat(0.0, 1.0)
         unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})
     else
+        -- Spawn a REBORN innard
         -- Spawn an invulnerable, timed life innard
         unit = CreateUnitByName( InnardsSpawner.INNARD_UNIT_NAME_SECOND, position, true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply a timed life to the unit
@@ -119,13 +118,13 @@ end
 -- Called when an special innard dies
 function InnardsSpawner:onDeath(killedUnit, killerEntity, killerAbility)
     -- Spawn another innard (that won't spawn more)
-    self:spawnMinion(killedUnit:GetOrigin(), 0, killerEntity)
+    self:createInnard(killedUnit:GetOrigin(), killerEntity, true)
     if g_GameManager.nightmareValue > 0 and g_PlayerManager.playerCount > 2 then
         -- Even more on Nightmare+
-        self:spawnMinion(killedUnit:GetOrigin(), 0, killerEntity)
+        self:createInnard(killedUnit:GetOrigin(), killerEntity, true)
         if RandomInt(g_PlayerManager.playerCount - 12, g_GameManager.nightmareValue) > 1 then
             -- Chance for even more on Extinction!!
-            self:spawnMinion(killedUnit:GetOrigin(), 0, killerEntity)
+            self:createInnard(killedUnit:GetOrigin(), killerEntity, true)
         end
     end
 end

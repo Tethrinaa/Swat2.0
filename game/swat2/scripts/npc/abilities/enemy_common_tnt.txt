@@ -16,7 +16,7 @@
         "01"
         {
             "var_type"			"FIELD_INTEGER"
-            "damage_full"		"600"
+            "damage_full"		"300"
         }
 
         "02"
@@ -28,7 +28,7 @@
         "03"
         {
             "var_type"			"FIELD_INTEGER"
-            "damage_partial"		"200"
+            "damage_partial"		"100"
         }
 
         "04"
@@ -51,6 +51,7 @@
         "modifier_enemy_common_tnt"
         {
             "Passive" "1"
+            "IsHidden"              "1"
 
             "EffectName"        "particles/units/heroes/hero_warlock/golem_ambient_fire_mane_smoke.vpcf"
             "EffectAttachType"  "follow_attack"
@@ -68,6 +69,12 @@
 					}
 				}
 
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_tnt"
+                }
 			}
 
             "OnDeath"

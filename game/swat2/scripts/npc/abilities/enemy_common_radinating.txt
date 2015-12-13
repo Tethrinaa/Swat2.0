@@ -48,6 +48,12 @@
                     "EffectAttachType"	"follow_overheard"
                     "Target"		"CASTER"
                 }
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_radinating"
+                }
             }
 
             "OnDeath"

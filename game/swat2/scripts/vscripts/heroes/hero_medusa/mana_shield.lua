@@ -19,7 +19,7 @@ function ManaShield( event )
 
 	-- If it doesnt then do the HP calculation
 	if health >= 1 then
-		print("Damage taken "..damage.." | Mana needed: "..mana_needed.." | Current Mana: "..caster_mana.." | absorption %" ..absorption_percent.." | armor_percent "..armor_percent)
+		--print("Damage taken "..damage.." | Mana needed: "..mana_needed.." | Current Mana: "..caster_mana.." | absorption %" ..absorption_percent.." | armor_percent "..armor_percent)
 
 		-- If the caster has enough mana, remove the necessary mana
 		if mana_needed <= caster_mana then
@@ -27,7 +27,7 @@ function ManaShield( event )
 
 			-- No longer need to change health, since the modifier with damage reduction makes health already correct
 			-- caster:SetHealth(oldHealth)
-			
+
 			-- Impact particle based on damage absorbed
 			local particleName = "particles/units/heroes/hero_medusa/medusa_mana_shield_impact.vpcf"
 			local particle = ParticleManager:CreateParticle(particleName, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -36,8 +36,8 @@ function ManaShield( event )
 		else
 			-- User doesn't have enough mana, remove all of their mana and damage them appropriately
 			caster:SpendMana(caster_mana, ability)
-			local hp_to_remove = (mana_needed - caster_mana) * damage_per_mana * (1 - armor_percent)
-         print("hp to remove:" ..hp_to_remove,mana_needed,caster_mana,damage_per_mana,armor_percent)
+            local hp_to_remove = (mana_needed - caster_mana) * damage_per_mana * (1 - armor_percent)
+         --print("hp to remove:" ..hp_to_remove,mana_needed,caster_mana,damage_per_mana,armor_percent)
 			if hp_to_remove < health then
 				local newHealth = health - hp_to_remove
 				caster:SetHealth(newHealth)
@@ -45,5 +45,5 @@ function ManaShield( event )
 				caster:ForceKill(false)
 			end
 		end
-	end	
+	end
 end

@@ -13,6 +13,7 @@ function SetUpDebugGameChatCommands()
         Convars:RegisterCommand( "swat_collect_em_up", DebugGameChatCommand_CollectEmUp, "Chat Command | Collect em up", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_spawn_rad", DebugGameChatCommand_SpawnRad, "Chat Command | Spawn Rad", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_kill_rad", DebugGameChatCommand_KillRad, "Chat Command | Kill Rad", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_spawn_all_enemy_types", DebugGameChatCommand_SpawnAllEnemyTypes, "Chat Command | Spawn All Enemy Types", FCVAR_CHEAT )
     end
 end
 
@@ -65,7 +66,12 @@ function DebugGameChatCommand_LevelUp()
         -- Do something here for the player who called this command
         local playerInfo = g_PlayerManager:getPlayerInfoForPlayerId(playerID)
         if playerInfo then
-            playerInfo.hero:HeroLevelUp(true)
+            local exp = 1000 + math.max(0, playerInfo.hero:GetLevel() - 4) * 200
+            playerInfo.hero:AddExperience(
+                exp
+                , 0
+                , false
+                , false)
         end
       end
     end
@@ -78,7 +84,7 @@ end
 
 function DebugGameChatCommand_SpawnRad()
     print("DEBUG | Calling SpawnRad")
-    g_RadiationManager:spawnRadFragment()
+    g_RadiationManager:spawnRadFragmentOnMap()
     g_RadiationManager:incrementRadCount()
 end
 
@@ -103,4 +109,35 @@ function DebugGameChatCommand_KillRad()
     end
     print("DEBUG | KillRad | <None to kill>")
 
+end
+
+-- Debug command that picks a room and spawns ALL non boss enemy types in it for debugging of enemy types
+-- Note: They will not move until a collectEmUp is called
+function DebugGameChatCommand_SpawnAllEnemyTypes()
+    local location = GetRandomWarehouse()
+    local es = g_EnemySpawner
+
+    -- Zombies
+    es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createToxic, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createTnt, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createLightenating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.zombieSpawner, es.zombieSpawner.createRadinating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    -- Beasts
+    es:spawnEnemy(es.beastSpawner, es.beastSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.beastSpawner, es.beastSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.beastSpawner, es.beastSpawner.createToxic, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.beastSpawner, es.beastSpawner.createTnt, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.beastSpawner, es.beastSpawner.createRadinating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    -- Grotesque
+    es:spawnEnemy(es.grotesqueSpawner, es.grotesqueSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.grotesqueSpawner, es.grotesqueSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.grotesqueSpawner, es.grotesqueSpawner.createToxic, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.grotesqueSpawner, es.grotesqueSpawner.createRadinating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    -- Dogs
+    es:spawnEnemy(es.dogSpawner, es.dogSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    es:spawnEnemy(es.dogSpawner, es.dogSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+    -- Mutants
+    es:spawnEnemy(es.mutantSpawner, es.mutantSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
 end

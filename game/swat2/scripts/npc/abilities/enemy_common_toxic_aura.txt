@@ -48,7 +48,7 @@
         {
             "Passive"               "1"
             "IsPurgable"            "0"
-            "IsHidden"              "0"
+            "IsHidden"              "1"
             "Aura"                  "modifier_common_toxic_aura_effect"
             "Aura_Radius"           "%aura_radius"
             "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -62,6 +62,12 @@
 					"EffectAttachType"	"follow_origin"
 					"Target"		"CASTER"
 				}
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_toxic"
+                }
 			}
 
 			"OnDestroy"

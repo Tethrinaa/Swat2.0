@@ -149,6 +149,7 @@ function RadiationManager:updateRadLevel()
             print("RadManager | The radiation level has changed to: " .. newRadLevel)
         end
 
+        g_EnemySpawner.mutantSpawner:updateMutantUpgrades() -- mutants abilities may have changed
         self:updateRadiationFog(newRadLevel)
         self:updateRadiationAuras(newRadLevel)
         self:playRadLevelChangedSound(newRadLevel)

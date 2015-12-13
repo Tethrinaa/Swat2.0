@@ -36,7 +36,7 @@ function PrintEntityFunctions(t)
 		print("Object has no metatable.")
 		return
 	end
-	
+
 	mt = mt.__index
 	if mt and mt ~= t then
 		ShallowPrintTable(mt)
@@ -51,4 +51,8 @@ end
 
 function bit(p)
     return 2 ^ (p - 1)  -- 1-based indexing
+end
+
+function distanceBetweenVectors(vectorA, vectorB)
+    return math.sqrt(math.pow(vectorA.x - vectorB.x, 2) + math.pow(vectorA.y - vectorB.y, 2))
 end

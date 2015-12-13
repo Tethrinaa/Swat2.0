@@ -16,10 +16,10 @@
 
         // Abilities
         //----------------------------------------------------------------
-        "Ability1"					"enemy_common_radinating_rad_bolt"			// Ability 1.
-        "Ability2"					"enemy_common_radinating"			// Ability 2.
-        "Ability3"					"enemy_zombie_brainlust"			// Ability 3.
-        "Ability4"					"enemy_zombie_regeneration"			// Ability 4.
+        "Ability1"					"enemy_common_radinating_rad_bolt"
+        "Ability2"					"enemy_common_radinating"
+        "Ability3"					"enemy_zombie_brainlust"
+        "Ability4"					"enemy_common_radinating_regeneration"
         "Ability5"					""			// Ability 5.
         "Ability6"					""			// Ability 6 - Extra.
         "Ability7"					""			// Ability 7 - Extra.
