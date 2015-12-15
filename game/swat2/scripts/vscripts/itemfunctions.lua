@@ -67,10 +67,10 @@ function RemoveItemModifierStats( event )
     local itemTable = GameMode.ItemInfoKV[itemName]
 	
 	-- if there is no subtable for this item, end this script
-    if itemTable == nil then
+    	if itemTable == nil then
 		print("no subtable for this item!")
-        return true
-    end	
+        	return true
+    	end	
 	
 	-- Check Int Restriction
 	if itemTable.intRequired then
@@ -81,12 +81,35 @@ function RemoveItemModifierStats( event )
 			--FireGameEvent( 'custom_error_show', { player_ID = pID, _error = "You need int "..itemTable.intRequired.." to use this." } )
 			--DropItem(Item, hero)						
 		else
-			print("removing data driven modifier")
-			event.ability:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersRemove, {duration=-1} )
-		end
-	end
+		  
+		  	--Check if the item is stacking and that the hero is dead
+			local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
+		  	if (hero:IsAlive() and itemName == "item_rapid_reload") then
+		    		print("dropped item is potentially stacking")
+		    		local duplicateItem = false
+		     
+		     	--Check for duplicate item
+		     
+			for itemSlot = 0, 5, 1 do
+          			local itemInSlot = hero:GetItemInSlot( itemSlot )
+          			if (itemInSlot ~= nil and itemName == itemInSlot:GetAbilityName()) then
+            				duplicateItem = true
+            				print("duplicate item detected")
+        			end
+			end
+        		if (duplicateItem == false) then
+        			print("no duplicate detected")
+        			print("removing data driven modifier")      
+        			modifier:Destroy()
+        		end
+		     
+		else
+			print("removing data driven modifier")			
+			modifier:Destroy()
+      		end
+    	end
+end
 		
 
 end
-
 
