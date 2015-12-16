@@ -116,7 +116,7 @@
     
     "item_belt"
     {
-        "intRequired" "100"
+        "intRequired" "1005"
 		"ModifiersAdd" "modifier_item_add_belt_datadriven"
     }
     
