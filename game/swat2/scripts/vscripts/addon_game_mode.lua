@@ -71,8 +71,7 @@ function Activate()
 
 	-- Disable respawning so you don't wind up in lab constantly
 	GameRules:SetHeroRespawnEnabled(false)
-
-	ListenToGameEvent( "dota_player_gained_level", HeroLeveledUp, self )
+	
 end
 
 -- Evaluate the state of the game
@@ -85,13 +84,6 @@ function GameMode:OnThink()
 	return 1
 end
 
-function HeroLeveledUp( keys )
-	--print( "Somebody leveled up!" )
-	local hero = PlayerResource:GetPlayer(keys.player-1):GetAssignedHero()
-	ItemCheck(hero)
-end
-
-
 function ItemCheck( hero )
     for itemSlot = 0, 5, 1 do
 	local Item = hero:GetItemInSlot( itemSlot )
@@ -100,7 +92,7 @@ function ItemCheck( hero )
 	    local itemTable = GameMode.ItemInfoKV[itemName]
 	    if itemTable.intRequired then
 		    if itemTable.intRequired > hero:GetIntellect() then
-			DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersRemove"))
+			DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersAdd"))
 			print("removing data driven modifier")
 			local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
 			modifier:Destroy()

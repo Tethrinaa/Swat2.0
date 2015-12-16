@@ -94,6 +94,31 @@ function GameMode:ModifyStatBonuses(unit)
 
 		-- INT
 		if intellect ~= hero.intellect then
+		
+		  -- Update usable items
+		  for itemSlot = 0, 5, 1 do
+        local Item = hero:GetItemInSlot( itemSlot )
+        
+        if (Item ~= nil) then
+          local itemName = Item:GetAbilityName()
+          local itemTable = GameMode.ItemInfoKV[itemName]
+          if itemTable.intRequired then
+          
+            if itemTable.intRequired > hero:GetIntellect() then
+              DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersRemove"))
+              print("removing data driven modifier")
+              local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
+              modifier:Destroy()
+              
+            elseif (hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero) == nil) then
+              DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersAdd"))
+              print("applying data driven modifier")
+              Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersAdd, {duration=-1} )
+              
+            end
+          end
+        end
+      end
 			
 			-- Mana Bonus
 			if not hero:HasModifier("modifier_mana_bonus") then

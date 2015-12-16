@@ -84,31 +84,32 @@ function RemoveItemModifierStats( event )
 		  
 		  	--Check if the item is stacking and that the hero is dead
 			local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
-		  	if (hero:IsAlive() and itemName == "item_rapid_reload") then
-		    		print("dropped item is potentially stacking")
-		    		local duplicateItem = false
+		  if (hero:IsAlive() and itemName == "item_rapid_reload") then
+		    print("dropped item is potentially stacking")
+		    local duplicateItem = false
 		     
-		     	--Check for duplicate item
+		    --Check for duplicate item
 		     
-			for itemSlot = 0, 5, 1 do
-          			local itemInSlot = hero:GetItemInSlot( itemSlot )
-          			if (itemInSlot ~= nil and itemName == itemInSlot:GetAbilityName()) then
-            				duplicateItem = true
-            				print("duplicate item detected")
-        			end
-			end
-        		if (duplicateItem == false) then
-        			print("no duplicate detected")
-        			print("removing data driven modifier")      
-        			modifier:Destroy()
-        		end
+			  for itemSlot = 0, 5, 1 do
+          local itemInSlot = hero:GetItemInSlot( itemSlot )
+          if (itemInSlot ~= nil and itemName == itemInSlot:GetAbilityName()) then
+            duplicateItem = true
+            print("duplicate item detected")
+        	end
+		    end
+		    
+        if (duplicateItem == false) then
+          print("no duplicate detected")
+          print("removing data driven modifier")      
+          modifier:Destroy()
+        end
 		     
-		else
-			print("removing data driven modifier")			
-			modifier:Destroy()
-      		end
-    	end
-end
+		  else
+			 print("removing data driven modifier")			
+			 modifier:Destroy()
+      end
+    end
+  end
 		
 
 end
