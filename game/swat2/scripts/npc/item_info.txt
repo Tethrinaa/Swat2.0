@@ -3,15 +3,132 @@
     "item_storage_cell" //change it to a custom items
     {
         "intRequired" "105" 
-		"ModifiersAdd" "modifier_item_add_storage_cell_datadriven"		
-		"ModifiersRemove" "modifier_item_remove_storage_cell_datadriven"			
+		"ModifiersAdd" "modifier_item_add_storage_cell_datadriven"				
     }
 
     "item_duo_cell" 
     {
         "intRequired" "115"
 		"ModifiersAdd" "modifier_item_add_duo_cell_datadriven"
-		"ModifiersRemove" "modifier_item_remove_duo_cell_datadriven"
     }
 	
+	"item_rapid_reload" 
+    {
+        "intRequired" "105"
+		"ModifiersAdd" "modifier_item_add_rapid_reload_datadriven"
+    }
+    
+    "item_rapid_reload_mkii" 
+    {
+        "intRequired" "130"
+		"ModifiersAdd" "modifier_item_add_rapid_reload_mkii_datadriven"
+    }
+    
+    "item_rapid_reload_mkiii" 
+    {
+        "intRequired" "150"
+		"ModifiersAdd" "modifier_item_add_rapid_reload_mkiii_datadriven"
+    }
+    
+    "item_mfg" 
+    {
+        "intRequired" "103"
+		"ModifiersAdd" "modifier_item_add_mfg_datadriven"
+    }
+    
+    "item_mfg_plus" 
+    {
+        "intRequired" "120"
+		"ModifiersAdd" "modifier_item_add_mfg_plus_datadriven"
+    }
+    
+    "item_mfg_mkii" 
+    {
+        "intRequired" "135"
+		"ModifiersAdd" "modifier_item_add_mfg_mkii_datadriven"
+    }
+    
+    "item_storage_generator"
+    {
+        "intRequired" "115"
+		"ModifiersAdd" "modifier_item_add_storage_generator_datadriven"
+    }
+    
+    "item_storage_generator_mkii"
+    {
+        "intRequired" "135"
+		"ModifiersAdd" "modifier_item_add_storage_generator_mkii_datadriven"
+    }
+    
+    "item_supercell"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_supercell_datadriven"
+    }
+    
+    "item_megagen"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_megagen_datadriven"
+    }
+    
+    "item_energy_field"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_energy_field_datadriven"
+    }
+    
+    "item_kevlar_vest"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_kevlar_vest_datadriven"
+    }
+    
+    "item_combat_vest"
+    {
+        "intRequired" "110"
+		"ModifiersAdd" "modifier_item_add_combat_vest_datadriven"
+    }
+    
+    "item_combat_vest_mkii"
+    {
+        "intRequired" "120"
+		"ModifiersAdd" "modifier_item_add_combat_vest_mkii_datadriven"
+    }
+    
+    "item_combat_vest_mkiii"
+    {
+        "intRequired" "150"
+		"ModifiersAdd" "modifier_item_add_combat_vest_mkiii_datadriven"
+    }
+    
+    "item_aegis_vest"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_aegis_vest_datadriven"
+    }
+    
+    "item_bionic_leg"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_bionic_leg_datadriven"
+    }
+    
+    "item_belt"
+    {
+        "intRequired" "100"
+		"ModifiersAdd" "modifier_item_add_belt_datadriven"
+    }
+    
+    "item_bionic_arm"
+    {
+        "intRequired" "103"
+		"ModifiersAdd" "modifier_item_add_bionic_arm_datadriven"
+    }
+    
+    "item_exosuit"
+    {
+        "intRequired" "115"
+		"ModifiersAdd" "modifier_item_add_exosuit_datadriven"
+    }
 }
