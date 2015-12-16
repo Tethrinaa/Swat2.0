@@ -5,24 +5,34 @@
 {
 	// General
 	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				      		"ability_datadriven"
-	"AbilityName"              			"Plasma Rounds"
-	"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-	"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-	"MaxLevel"                 			"16"
-	"LevelsBetweenUpgrades"    			"0"
-	"AbilityTextureName"       			"clinkz_searing_arrows"
-    "AbilityUnitTargetTeam"    			"DOTA_UNIT_TARGET_TEAM_BOTH"
-    "AbilityUnitTargetType"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-	"AbilityManaCost"                   "1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
-	"AbilityCooldown"					"0 0 0 0 .21 .21 .21 .21 .31 .31 .31 .31 .41 .41 .41 .41"
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BPTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	"MaxLevel"						"16"
+	"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+	"AbilityTextureName"			"clinkz_searing_arrows"
 
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"850"
+	"AbilityCastPoint"				"0"
+
+	// Time		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
 
 	// Special
 	//-------------------------------------------------------------------------------------------------------------
 	"AbilitySpecial"
 	{
-        "01"
+	    "01"
         {
            "var_type"					"FIELD_INTEGER"
            "splash_radius"				"24 96 120"
@@ -32,108 +42,83 @@
            "var_type"					"FIELD_INTEGER"
            "splash_damage_percent"		"100 90 15"
         }
-        "04"
+        "03"
 		{
 			"var_type"					"FIELD_INTEGER"
 			"bonus_damage"		      	"3 4 5 6 12 14 16 18 27 29 31 33 44 46 48 50"
 		}
-        "05"
+        "04"
         {
 			"var_type"					"FIELD_INTEGER"
 			"attack_speed_slow"			"-1 -1 -1 -1 -2 -2 -2 -2 -3 -3 -3 -3 -4 -4 -4 -4"
         }
-        "06"
+        "05"
         {
 			"var_type"					"FIELD_INTEGER"
 			"movement_speed_slow"		"-2 -2 -2 -2 -3 -3 -3 -3 -4 -4 -4 -4 -5 -5 -5 -5"
         }
-        "07"
+        "06"
         {
 			"var_type"					"FIELD_FLOAT"
 			"slow_duration"	      		".10 .10 .10 .10 .15 .15 .15 .15 .25 .25 .25 .25 .45 .45 .45 .45"
         }
-        "08"
-        {
-			"var_type"					"FIELD_INTEGER"
-			"mana_cost"	            	"1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
-        }
 	}
 
-    // Casting
-    //-------------------------------------------------------------------------------------------------------------
-    "AbilityCastRange"				"550"
-    "AbilityCastPoint"				"0.0"
 
-	"OnToggleOn" // TODO this doesn't like to manually single cast on an ally even though he is attackable
+
+	"precache"
 	{
-		"ApplyModifier"
-		{
-			"ModifierName" 					"modifier_plasma_rounds_active"
-			"Target" 						"CASTER"
-		}
+		"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+		"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 	}
-    "OnToggleOff"
-    {
-		"RemoveModifier"
-		{
-			"ModifierName" 					"modifier_plasma_rounds_active"
-			"Target" 						"CASTER"
-		}
-    }
 
 	"Modifiers"
 	{
-		"modifier_plasma_rounds_active"
+		"modifier_plasma_rounds_orb_mini"
 		{
+			"Passive"               "1"
 
-			"IsHidden"						"1"
+			"Orb"
+			{
+				"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+				"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+				"CastAttack"		"1"
+			}
 
-            "OnAttackLanded"
-            {
+			"OnOrbFire"
+			{
+				"SpendMana"
+				{
+					"Mana"    		"%AbilityManaCost"
+				}
+
+				"FireSound"
+				{
+					"EffectName"	"Hero_Clinkz.SearingArrows"
+					"Target"		"CASTER"
+				}
+			}
+			
+			"OnOrbImpact"
+			{
 				"RunScript"
 				{
 					"ScriptFile"			"scripts/vscripts/heroes/hero__marine/weapons.lua"
 					"Function"				"Splash"
 					"hits_player_units" 	"0"
-					"orb_modifier"			"modifier_plasma_slow_datadriven"
+					"orb_modifier"			"modifier_plasma_rounds_slow"
+					"orb_damage"			"%bonus_damage"
 				}
-            }
-            "Properties"
-            {
-				"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
-            }
-
-            "Orb"
-            {
-               "Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-               "ProjectileName"				"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
-               "CastAttack"					"1"
-            }
-            "OnOrbFire"
-            {
-				"SpendMana"
+				
+				"FireSound"
 				{
-					"Mana"					"%mana_cost"
+					"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
+					"Target"		"CASTER"
 				}
-            }
-			"OnOrbImpact"
-            {
-				"ApplyModifier"
-				{
-					"ModifierName" 			"modifier_plasma_slow_datadriven"
-					"Target"
-					{
-						"Center" 			"TARGET"
-						"Radius" 			"120"
-						"Teams" 			"DOTA_UNIT_TARGET_TEAM_BOTH"
-						"Types" 			"DOTA_UNIT_TARGET_ALL"
-					}
-					"Duration" 				"%slow_duration"
-				}
-            }
+			}
 		}
 
-        "modifier_plasma_slow_datadriven"
+        "modifier_plasma_rounds_slow"
         {
 			"IsDebuff" 						"1"
 			"Duration"						"%slow_duration"

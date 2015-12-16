@@ -1,34 +1,41 @@
 	//=================================================================================================================
-	// Ability: Droid Mobility (Minidroid)
+	// Ability: Droid Integrity (Minidroid)
 	//=================================================================================================================
-	"primary_minidroid_mobility"
+	"minidroid_integrity"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"1"
-		"AbilityTextureName"			"bounty_hunter_track"
+		"MaxLevel"                 		"3"
+		"AbilityTextureName"			"shredder_reactive_armor"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"move_speed"			"30"
+				"var_type"					"FIELD_INTEGER"
+				"health_regen"		        "1 2 3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction"			"-4 -8 -12"
 			}
 		}
 		"Modifiers"
 		{
-			"modifier_minidroid_mobility"
+			"modifier_minidroid_integrity"
 			{	
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 				"%move_speed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 				"%health_regen"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 			"%damage_reduction"
 				}
 			}
 		}
+		
 	}

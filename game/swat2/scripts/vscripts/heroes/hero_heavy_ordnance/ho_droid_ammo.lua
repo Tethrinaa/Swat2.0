@@ -2,7 +2,7 @@ function UpdateDroids(keys)
 	local ho = keys.caster
 	local minidroids = ho.sdata.minidroids
 	local ammo_buff_name = "modifier_minidroid_ammo"
-	local ammo_ability_name = "primary_minidroid_ammo"
+	local ammo_ability_name = "minidroid_ammo"
 	local new_level = keys.ability:GetLevel()
 	
 

@@ -52,6 +52,19 @@ function UpdateHOMinidroidAuras(ho, ability)
 	ho:RemoveModifierByName(all_def_matrix_bonus)
 end
 
+
+function CalculateMiniAbilityLevel(ho, ability, mini_ability_name, ho_ability_name)
+	print("Finding mini abil level:", mini_ability_name, ho_ability_name)
+	-- Calculate the ability level from the HO's ability
+	local ho_level = ho:FindAbilityByName(ho_ability_name):GetLevel()
+	local factor = ability:GetSpecialValueFor(mini_ability_name.."_factor")
+	local constant = ability:GetSpecialValueFor(mini_ability_name.."_constant")
+	local mini_level = math.floor(ho_level / factor) + constant
+	return mini_level, ho_level
+end
+
+require('heroes/hero_heavy_ordnance/minidroid_energy_beam')
+
 function SpinUpDroid(keys)
 	--TODO minidroidplasma state
 
@@ -61,15 +74,7 @@ function SpinUpDroid(keys)
 	local ho = keys.caster
     keys.ability:SetLevel(level)
 	
-	-- Set the minidroid level to half of the HO's rounded-down, but at least 1
-	local ho_hero_level = ho:GetLevel()
-	local ho_hero_level_factor = keys.ability:GetSpecialValueFor("hero_level_factor")
-	-- minidroid:SetLevel( math.max(math.floor(ho_hero_level / ho_hero_level_factor), 1 ) ) TODO I don't think this is actually necessary
-	
-	-- TODO Droid Integrity, Droid Ammo, Droid Movespeed
-	
-    
-    -- create the set of minidroids if it doesn't already exist
+	-- create the set of minidroids if it doesn't already exist
     if not ho.sdata.minidroids then
         ho.sdata.minidroids = {}
     end
@@ -77,17 +82,33 @@ function SpinUpDroid(keys)
 	-- TODO these need to pull from the players selections, not just from the current levels of the abilities
 	-- Set up the mini ability names that the HO abilities correlate with
 	local ability_map = {}
-	ability_map.weapon_plasma_rounds_mini = ho.sdata.weaponSkill
-	ability_map.primary_ho_plasma_shield = "primary_ho_plasma_shield"
-	ability_map.primary_minidroid_storage_cells = "primary_ho_storage_cells"
-	ability_map.primary_minidroid_ammo 		=	"primary_ho_droid_ammo"
-	ability_map.primary_minidroid_integrity =	"primary_ho_droid_integrity"
-	ability_map.primary_minidroid_mobility	 = 	"primary_ho_droid_mobility"
-	ability_map.primary_minidroid_energy_beam = "primary_ho_power_grid"
-	ability_map.nanites_standard = ho.sdata.nanitesSkill
+	table.insert(ability_map, {mini_ability_name = "weapon_plasma_rounds_mini" 		, ho_ability_name = ho.sdata.weaponSkill             	})
+	table.insert(ability_map, {mini_ability_name = "primary_ho_plasma_shield" 		, ho_ability_name = "primary_ho_plasma_shield"        	})
+	local cells_entry = {mini_ability_name = "primary_minidroid_storage_cells"		, ho_ability_name = "primary_ho_storage_cells" 			}
+	table.insert(ability_map, cells_entry)
+	table.insert(ability_map, {mini_ability_name = "minidroid_ammo" 				, ho_ability_name =	"primary_ho_droid_ammo"     		})
+	table.insert(ability_map, {mini_ability_name = "minidroid_integrity" 			, ho_ability_name =	"primary_ho_droid_integrity"		})
+	table.insert(ability_map, {mini_ability_name = "minidroid_mobility"	 			, ho_ability_name = "primary_ho_droid_mobility" 		})
+	table.insert(ability_map, {mini_ability_name = "primary_minidroid_energy_beam" 	, ho_ability_name = "primary_ho_power_grid"      		})
+	table.insert(ability_map, {mini_ability_name = "nanites_standard"				, ho_ability_name = ho.sdata.nanitesSkill				})
+	
+	for _, mapEntry in pairs(ability_map) do
+		local mini_ability_name = mapEntry.mini_ability_name
+		if not minidroid:HasAbility(mini_ability_name) then
+			print("Adding", mini_ability_name)
+			minidroid:AddAbility(mini_ability_name)
+		end
+	end
+	
+	-- Max mana has to be controlled via levels for creatures, so find and set the right level for this
+	local mini_cells_name = cells_entry.mini_ability_name
+	local ho_cells_name = cells_entry.ho_ability_name
+	local mini_upgrade_level = CalculateMiniAbilityLevel(ho, keys.ability, mini_cells_name, ho_cells_name)
+	minidroid:CreatureLevelUp(mini_upgrade_level)
 		
-	for mini_ability_name, ho_ability_name in pairs(ability_map) do
-		
+	for _, mapEntry in pairs(ability_map) do
+		local mini_ability_name = mapEntry.mini_ability_name
+		local ho_ability_name = mapEntry.ho_ability_name
 		if not minidroid:HasAbility(mini_ability_name) then
 			print("Adding", mini_ability_name)
 			minidroid:AddAbility(mini_ability_name)
@@ -96,11 +117,7 @@ function SpinUpDroid(keys)
 		
 		-- as long as the ability exists, try to set its level
 		if mini_ability then
-			-- Calculate the ability level from the HO's ability
-			local ho_level = ho:FindAbilityByName(ho_ability_name):GetLevel()
-			local factor = keys.ability:GetSpecialValueFor(mini_ability_name.."_factor")
-			local constant = keys.ability:GetSpecialValueFor(mini_ability_name.."_constant")
-			local mini_level = math.floor(ho_level / factor) + constant
+			local mini_level, ho_level = CalculateMiniAbilityLevel(ho, keys.ability, mini_ability_name, ho_ability_name)
 
             -- This is commented out because it starts at 0 when we add them dynamically above
 			-- -- Remove this buff so we can drop its level to 0 maybe
@@ -113,35 +130,27 @@ function SpinUpDroid(keys)
 			-- Special things for some abilities
 			if mini_ability_name == "primary_minidroid_storage_cells" then
 				-- Standard energy from levels in cells
-				local base_energy = keys.ability:GetSpecialValueFor("base_cells_energy")
-				local per_level_cells_energy = keys.ability:GetSpecialValueFor("per_level_cells_energy")
-                local initial_energy = base_energy + per_level_cells_energy * ho_level
-                print(base_energy, per_level_cells_energy, ho_level, initial_energy)
-				minidroid:SetMana(initial_energy)
+				minidroid:SetMana(keys.ability:GetLevelSpecialValueFor("cells_energy", ho_level + 1))
                 print(minidroid:GetMana())
 				
 			elseif mini_ability_name == "primary_minidroid_energy_beam" then
 				-- Free beam on birth as long as the ho is above 250
-				local base_beam_energy = keys.ability:GetSpecialValueFor("base_beam_energy")
-				local per_level_beam_energy = keys.ability:GetSpecialValueFor("per_level_beam_energy")
-				local ho_energy = ho:GetMana()
-				local transfer_energy = math.max(0, math.min(ho_energy - 250, base_beam_energy + per_level_beam_energy * mini_level))
-				
-				-- transfer the energy
-				ho:GiveMana(-1 * transfer_energy)
-				minidroid:GiveMana(transfer_energy)
+				local birth_energy_param = mini_level < 1 and "birth_energy_base" or "birth_energy"
+				print("Energy:", mini_level, keys.ability:GetLevelSpecialValueFor(birth_energy_param, mini_level - 1))
+				TransferEnergy(minidroid, ho, keys.ability:GetLevelSpecialValueFor(birth_energy_param, mini_level - 1), keys.ability:GetSpecialValueFor("birth_energy_reserve") )
 			elseif mini_ability_name == "nanites_standard" then -- TODO this needs a separate ability just for mini nanites so the standard one can't get overleveled. this goes to 24.
 				-- TODO Espionage
 				if true or ho:IsEspionage() then
 					mini_level = mini_level - 1
 				end
-				if true or IsExtinction() then -- TODO bonus nanites on NM+
+				if false then -- and IsExtinction() then -- TODO bonus nanites on NM+
 					mini_level = mini_level + 3
-				elseif true or IsNightmare() then
+				elseif false then -- and IsNightmare() then
 					mini_level = mini_level + 1
 				end
 				
 				-- capped by creator's level
+				local ho_hero_level = ho:GetLevel()
 				mini_level = math.min(ho_hero_level + 1, mini_level + (player_epics or 0) + 1) -- TODO player epics
 				
 				-- toggle nanites on automatically

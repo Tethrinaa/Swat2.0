@@ -20,28 +20,32 @@
 			}
 		}
 		
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
-				"Function"		"AdjustManaDown"
-			}
-		}
 		
-		"Modifiers"
-		{
-			"modifier_minidroid_storage_cells"
-			{	
-				"Passive"				"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
-						"Function"		"SetStorageBonus"
-					}
-                }
-			}
-		}
+		//"OnUpgrade"
+		//{
+		//	"RunScript"
+		//	{
+		//		"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
+		//		"Function"		"AdjustManaDown"
+		//	}
+		//	"RunScript"
+		//	{
+		//		"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
+		//		"Function"		"SetUnitLevelForUpgrade"
+		//	}
+		//}
+		
+		// In case dota changes so this works
+		//"Modifiers"
+		//{
+		//	"modifier_minidroid_storage_cells"
+		//	{	
+		//		"Passive"				"1"
+		//		
+		//		"Properties"
+		//		{
+		//			"MODIFIER_PROPERTY_MANA_BONUS"			"%storage"
+		//		}
+		//	}
+		//}
 	}

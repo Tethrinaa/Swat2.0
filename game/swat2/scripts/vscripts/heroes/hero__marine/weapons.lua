@@ -1,9 +1,19 @@
+function DamageAndOrbTarget(target, damage, damage_table, orb_modifier, orb_damage, ability)
+	local caster = damage_table.attacker
+	damage_table.victim = target
+	damage_table.damage = orb_damage and damage + orb_damage or damage
+	ApplyDamage(damage_table)
+	ability:ApplyDataDrivenModifier(caster, target, orb_modifier, {})
+end
+
+
 --[[Author: chirslotix/Pizzalol
 	Date: 10.01.2015.
 	Deals splash auto attack damage to nearby targets depending on distance]]
 function Splash( keys )
 	-- Variables
-	--print "start splash"
+	print "Starting Splash"
+	ShallowPrintTable(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -24,18 +34,19 @@ function Splash( keys )
 	local damage_table = {}
 	damage_table.attacker = caster
 	damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
-	damage_table.damage = caster:GetAttackDamage() * splash_damage_small
-
+	
+	-- Apply the orb damage and modifier to the primary target
+	DamageAndOrbTarget(target, 0, damage_table, keys.orb_modifier, keys.orb_damage, ability)
 
 	--loop for doing the splash damage while ignoring the original target
+	local damage = caster:GetAttackDamage() * splash_damage_small
 	for i,v in ipairs(splash_radius_small) do
 		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then 
-			damage_table.victim = v
-			ApplyDamage(damage_table)
-			ability:ApplyDataDrivenModifier(caster, v, keys.orb_modifier, {})
+			DamageAndOrbTarget(v, damage, damage_table, keys.orb_modifier, keys.orb_damage, ability)
 		end
 	end
 	--loop for doing the medium splash damage
+	damage = caster:GetAttackDamage() * splash_damage_medium
 	for i,v in ipairs(splash_radius_medium) do
 		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then
 			--loop for checking if the found target is in the splash_radius_small
@@ -47,10 +58,7 @@ function Splash( keys )
 			end
 			--if the target isn't in the splash_radius_small then do attack damage * splash_damage_medium
 			if not target_exists then
-				damage_table.damage = caster:GetAttackDamage() * splash_damage_medium
-				damage_table.victim = v
-				ApplyDamage(damage_table)
-				ability:ApplyDataDrivenModifier(caster, v, keys.orb_modifier, {})
+				DamageAndOrbTarget(v, damage, damage_table, keys.orb_modifier, keys.orb_damage, ability)
 			--resets the target check	
 			else
 				target_exists = false
@@ -58,6 +66,7 @@ function Splash( keys )
 		end
 	end
 	--loop for doing the damage if targets are found in the splash_damage_big but not in the splash_damage_medium
+	damage = caster:GetAttackDamage() * splash_damage_big
 	for i,v in ipairs(splash_radius_big) do
 		if v ~= target and v ~= caster and ( keys.hits_player_units ~= 0 or v:GetPlayerOwner() ~= caster:GetPlayerOwner() ) then
 			--loop for checking if the found target is in the splash_radius_medium
@@ -68,10 +77,7 @@ function Splash( keys )
 				end
 			end
 			if not target_exists then
-				damage_table.damage = caster:GetAttackDamage() * splash_damage_big
-				damage_table.victim = v
-				ApplyDamage(damage_table)
-				ability:ApplyDataDrivenModifier(caster, v, keys.orb_modifier, {})
+				DamageAndOrbTarget(v, damage, damage_table, keys.orb_modifier, keys.orb_damage, ability)
 			else
 				target_exists = false
 			end

@@ -13,7 +13,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AoeRadius"						"%unphased_radius"  // TODO this should be a lua ability so I can make this radius dynamic
+		"AoeRadius"						"%unphased_radius"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -156,11 +156,11 @@
 			"modifier_xlr8_phased_aura"
 			{
 				"IsHidden"					"1"
-				//"Aura"						"modifier_xlr8_attack_bonus"
-				//"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				//"Aura_Types"				"DOTA_UNIT_TARGET_BASIC" // TODO this really needs to target only minidroids
-				//"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				//"Aura_Radius" 				"%phased_radius"
+				"Aura"						"modifier_xlr8_attack_bonus"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC" // TODO this really needs to target only minidroids
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Aura_Radius" 				"%phased_radius"
 			}
 
 			"modifier_xlr8_attack_bonus"

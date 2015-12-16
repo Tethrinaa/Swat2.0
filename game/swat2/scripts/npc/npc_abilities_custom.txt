@@ -2457,42 +2457,42 @@
 			"17"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_ammo_constant"			"0"
+				"minidroid_ammo_constant"			"0"
 			}
 			"18"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_ammo_factor"				"1"
+				"minidroid_ammo_factor"				"1"
 			}
 			"19"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_integrity_constant"		"0"
+				"minidroid_integrity_constant"		"0"
 			}
 			"20"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_integrity_factor"		"1"
+				"minidroid_integrity_factor"		"1"
 			}
 			"21"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_mobility_constant"		"0"
+				"minidroid_mobility_constant"		"0"
 			}
 			"22"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_mobility_factor"			"1"
+				"minidroid_mobility_factor"			"1"
 			}
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"power_grid_constant"			    "0"
+				"primary_minidroid_energy_beam_constant"			    "0"
 			}
 			"08"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"power_grid_factor"				    "2"
+				"primary_minidroid_energy_beam_factor"				    "2"
 			}
 			"15"
 			{
@@ -2537,22 +2537,17 @@
 			"23"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"base_cells_energy"				    "50"
-			}
-			"24"
-			{			
-				"var_type"							"FIELD_INTEGER"
-				"per_level_cells_energy"			"25"
+				"cells_energy"				    	"50 75 100 125 150 175 200 225 250"
 			}
 			"25"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"base_beam_energy"				    "80"
+				"birth_energy_base"				    "80"
 			}
 			"26"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"per_level_beam_energy"    			"40"
+				"birth_energy"	    				"120 160 200 240 280 320 360 400"
 			}
 			"27"
 			{			
@@ -2628,6 +2623,7 @@
             
 			"modifier_defense_matrix_owner1"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner1_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -2644,6 +2640,7 @@
             
 			"modifier_defense_matrix_owner2"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner2_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -2660,6 +2657,7 @@
             
 			"modifier_defense_matrix_owner3"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner3_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -2676,6 +2674,7 @@
             
 			"modifier_defense_matrix_owner4"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner4_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -2692,6 +2691,7 @@
             
 			"modifier_defense_matrix_owner5"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner5_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -2708,6 +2708,7 @@
 			
 			"modifier_defense_matrix_all"
 			{
+				"IsHidden"              "1"
 				"Aura"						"modifier_defense_matrix_all_armor_bonus"
 				"Aura_Radius"				"%all_radius"
 				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -2740,7 +2741,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AoeRadius"						"%unphased_radius"  // TODO this should be a lua ability so I can make this radius dynamic
+		"AoeRadius"						"%unphased_radius"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -2883,11 +2884,11 @@
 			"modifier_xlr8_phased_aura"
 			{
 				"IsHidden"					"1"
-				//"Aura"						"modifier_xlr8_attack_bonus"
-				//"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				//"Aura_Types"				"DOTA_UNIT_TARGET_BASIC" // TODO this really needs to target only minidroids
-				//"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				//"Aura_Radius" 				"%phased_radius"
+				"Aura"						"modifier_xlr8_attack_bonus"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC" // TODO this really needs to target only minidroids
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Aura_Radius" 				"%phased_radius"
 			}
 
 			"modifier_xlr8_attack_bonus"
@@ -3560,6 +3561,153 @@
 						"ScriptFile"	"heroes/hero_medic/medic_mend_wounds.lua"
 						"Function"		"HealAutocast"
 					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: Droid Ammo (Minidroid)
+	//=================================================================================================================
+	"minidroid_ammo"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"4"
+		"AbilityTextureName"			"sniper_shrapnel"
+		
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_min"				"1 2 3 4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_max"				"5 10 15 20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"75 150 225 300"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_minidroid_ammo"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"AddBonusDamageDice"
+					}
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"AddAcquisitionRange"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"RemoveBonusDamageDice"
+					}
+                    "RunScript"
+					{
+						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
+						"Function"		"RemoveAcquisitionRange"
+					}
+				}
+			}
+		}
+		
+	}
+	//=================================================================================================================
+	// Ability: Droid Integrity (Minidroid)
+	//=================================================================================================================
+	"minidroid_integrity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"3"
+		"AbilityTextureName"			"shredder_reactive_armor"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_regen"		        "1 2 3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction"			"-4 -8 -12"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_minidroid_integrity"
+			{	
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 				"%health_regen"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 			"%damage_reduction"
+				}
+			}
+		}
+		
+	}
+	//=================================================================================================================
+	// Ability: Droid Mobility (Minidroid)
+	//=================================================================================================================
+	"minidroid_mobility"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"                 		"1"
+		"AbilityTextureName"			"bounty_hunter_track"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"30"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_minidroid_mobility"
+			{	
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 				"%move_speed"
 				}
 			}
 		}
@@ -5653,149 +5801,65 @@
 	        }
 	}
 	//=================================================================================================================
-	// Ability: Droid Ammo (Minidroid)
+	// Ability: Energy Beam (Minidroid)
 	//=================================================================================================================
-	"primary_minidroid_ammo"
-	{
+	"primary_minidroid_energy_beam"
+	    {
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"4"
-		"AbilityTextureName"			"sniper_shrapnel"
-		
-		
+		"AbilityName"           	    "Energy Beam"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	
+		"MaxLevel"                 	 	"8"
+		"LevelsBetweenUpgrades"  		"0"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"rubick_spell_steal"
+	
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+	
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"350"
+		"AbilityCastPoint"				"0"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_min"				"1 2 3 4"
+				"var_type"							"FIELD_INTEGER"
+				"energy_transferred"				"120 160 200 240 280 320 360 400"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_max"				"5 10 15 20"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"75 150 225 300"
-			}
-		}
-		"Modifiers"
-		{
-			"modifier_minidroid_ammo"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
-						"Function"		"AddBonusDamageDice"
-					}
-                    "RunScript"
-					{
-						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
-						"Function"		"AddAcquisitionRange"
-					}
-				}
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" "%range"
-				}
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
-						"Function"		"RemoveBonusDamageDice"
-					}
-                    "RunScript"
-					{
-						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
-						"Function"		"RemoveAcquisitionRange"
-					}
-				}
-			}
+	
 		}
 		
-	}
-	//=================================================================================================================
-	// Ability: Droid Integrity (Minidroid)
-	//=================================================================================================================
-	"primary_minidroid_integrity"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"3"
-		"AbilityTextureName"			"shredder_reactive_armor"
-		
-		"AbilitySpecial"
+		"OnSpellStart"
 		{
-			"01"
+			"FireSound"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"health_regen"		        "1 2 3"
+				"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star"
+				"Target"		"TARGET"
 			}
-			"02"
+			"RunScript"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"-4 -8 -12"
-			}
-		}
-		"Modifiers"
-		{
-			"modifier_minidroid_integrity"
-			{	
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 				"%health_regen"
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 			"%damage_reduction"
-				}
-			}
-		}
-		
-	}
-	//=================================================================================================================
-	// Ability: Droid Mobility (Minidroid)
-	//=================================================================================================================
-	"primary_minidroid_mobility"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"1"
-		"AbilityTextureName"			"bounty_hunter_track"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_speed"			"30"
-			}
-		}
-		"Modifiers"
-		{
-			"modifier_minidroid_mobility"
-			{	
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 				"%move_speed"
-				}
+				"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_energy_beam.lua"
+				"Function"		"TransferEnergyKeys"
 			}
 		}
 	}
@@ -5821,30 +5885,34 @@
 			}
 		}
 		
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
-				"Function"		"AdjustManaDown"
-			}
-		}
 		
-		"Modifiers"
-		{
-			"modifier_minidroid_storage_cells"
-			{	
-				"Passive"				"1"
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_ammo.lua"
-						"Function"		"SetStorageBonus"
-					}
-                }
-			}
-		}
+		//"OnUpgrade"
+		//{
+		//	"RunScript"
+		//	{
+		//		"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
+		//		"Function"		"AdjustManaDown"
+		//	}
+		//	"RunScript"
+		//	{
+		//		"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_storage_cells.lua"
+		//		"Function"		"SetUnitLevelForUpgrade"
+		//	}
+		//}
+		
+		// In case dota changes so this works
+		//"Modifiers"
+		//{
+		//	"modifier_minidroid_storage_cells"
+		//	{	
+		//		"Passive"				"1"
+		//		
+		//		"Properties"
+		//		{
+		//			"MODIFIER_PROPERTY_MANA_BONUS"			"%storage"
+		//		}
+		//	}
+		//}
 	}
 	//=================================================================================================================
 	// Ability: Radiation Damage Civ
@@ -6867,24 +6935,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				      		"ability_datadriven"
-		"AbilityName"              			"Plasma Rounds"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"                 			"16"
-		"LevelsBetweenUpgrades"    			"0"
-		"AbilityTextureName"       			"clinkz_searing_arrows"
-	    "AbilityUnitTargetTeam"    			"DOTA_UNIT_TARGET_TEAM_BOTH"
-	    "AbilityUnitTargetType"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityManaCost"                   "1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
-		"AbilityCooldown"					"0 0 0 0 .21 .21 .21 .21 .31 .31 .31 .31 .41 .41 .41 .41"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BPTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"						"16"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"clinkz_searing_arrows"
 	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"850"
+		"AbilityCastPoint"				"0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-	        "01"
+		    "01"
 	        {
 	           "var_type"					"FIELD_INTEGER"
 	           "splash_radius"				"24 96 120"
@@ -6894,108 +6972,83 @@
 	           "var_type"					"FIELD_INTEGER"
 	           "splash_damage_percent"		"100 90 15"
 	        }
-	        "04"
+	        "03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"		      	"3 4 5 6 12 14 16 18 27 29 31 33 44 46 48 50"
 			}
-	        "05"
+	        "04"
 	        {
 				"var_type"					"FIELD_INTEGER"
 				"attack_speed_slow"			"-1 -1 -1 -1 -2 -2 -2 -2 -3 -3 -3 -3 -4 -4 -4 -4"
 	        }
-	        "06"
+	        "05"
 	        {
 				"var_type"					"FIELD_INTEGER"
 				"movement_speed_slow"		"-2 -2 -2 -2 -3 -3 -3 -3 -4 -4 -4 -4 -5 -5 -5 -5"
 	        }
-	        "07"
+	        "06"
 	        {
 				"var_type"					"FIELD_FLOAT"
 				"slow_duration"	      		".10 .10 .10 .10 .15 .15 .15 .15 .25 .25 .25 .25 .45 .45 .45 .45"
 	        }
-	        "08"
-	        {
-				"var_type"					"FIELD_INTEGER"
-				"mana_cost"	            	"1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4"
-	        }
 		}
 	
-	    // Casting
-	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityCastRange"				"550"
-	    "AbilityCastPoint"				"0.0"
 	
-		"OnToggleOn" // TODO this doesn't like to manually single cast on an ally even though he is attackable
+	
+		"precache"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName" 					"modifier_plasma_rounds_active"
-				"Target" 						"CASTER"
-			}
+			"particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 		}
-	    "OnToggleOff"
-	    {
-			"RemoveModifier"
-			{
-				"ModifierName" 					"modifier_plasma_rounds_active"
-				"Target" 						"CASTER"
-			}
-	    }
 	
 		"Modifiers"
 		{
-			"modifier_plasma_rounds_active"
+			"modifier_plasma_rounds_orb_mini"
 			{
+				"Passive"               "1"
 	
-				"IsHidden"						"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_DEFAULT"
+					"ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+					"CastAttack"		"1"
+				}
 	
-	            "OnAttackLanded"
-	            {
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"    		"%AbilityManaCost"
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Clinkz.SearingArrows"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"OnOrbImpact"
+				{
 					"RunScript"
 					{
 						"ScriptFile"			"scripts/vscripts/heroes/hero__marine/weapons.lua"
 						"Function"				"Splash"
 						"hits_player_units" 	"0"
-						"orb_modifier"			"modifier_plasma_slow_datadriven"
+						"orb_modifier"			"modifier_plasma_rounds_slow"
+						"orb_damage"			"%bonus_damage"
 					}
-	            }
-	            "Properties"
-	            {
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
-	            }
-	
-	            "Orb"
-	            {
-	               "Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-	               "ProjectileName"				"particles/units/heroes/hero_viper/viper_poison_attack.vpcf"
-	               "CastAttack"					"1"
-	            }
-	            "OnOrbFire"
-	            {
-					"SpendMana"
+					
+					"FireSound"
 					{
-						"Mana"					"%mana_cost"
+						"EffectName"	"Hero_Clinkz.SearingArrows.Impact"
+						"Target"		"CASTER"
 					}
-	            }
-				"OnOrbImpact"
-	            {
-					"ApplyModifier"
-					{
-						"ModifierName" 			"modifier_plasma_slow_datadriven"
-						"Target"
-						{
-							"Center" 			"TARGET"
-							"Radius" 			"120"
-							"Teams" 			"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types" 			"DOTA_UNIT_TARGET_ALL"
-						}
-						"Duration" 				"%slow_duration"
-					}
-	            }
+				}
 			}
 	
-	        "modifier_plasma_slow_datadriven"
+	        "modifier_plasma_rounds_slow"
 	        {
 				"IsDebuff" 						"1"
 				"Duration"						"%slow_duration"

@@ -1,0 +1,63 @@
+//=================================================================================================================
+// Ability: Energy Beam (Minidroid)
+//=================================================================================================================
+"primary_minidroid_energy_beam"
+    {
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"           	    "Energy Beam"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+
+	"MaxLevel"                 	 	"8"
+	"LevelsBetweenUpgrades"  		"0"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityTextureName"			"rubick_spell_steal"
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"350"
+	"AbilityCastPoint"				"0"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"energy_transferred"				"120 160 200 240 280 320 360 400"
+		}
+
+	}
+	
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Dark_Seer.Ion_Shield_Star"
+			"Target"		"TARGET"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_heavy_ordnance/minidroid_energy_beam.lua"
+			"Function"		"TransferEnergyKeys"
+		}
+	}
+}

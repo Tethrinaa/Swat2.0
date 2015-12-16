@@ -1447,14 +1447,14 @@
 	
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"weapon_plasma_rounds_mini"
-		"Ability2"					"primary_ho_plasma_shield"
+		//"Ability1"					"weapon_plasma_rounds_mini"
+		//"Ability2"					"primary_ho_plasma_shield"
 		//"Ability3"					"primary_minidroid_storage_cells"
-		//"Ability4"					"primary_minidroid_ammo"
-		//"Ability5"					"primary_minidroid_integrity"
-		//"Ability6"					"primary_minidroid_mobility"
-		"Ability7"					"primary_minidroid_energy_beam"
-		"Ability8"					"nanites_standard"
+		//"Ability4"					"minidroid_ammo"
+		//"Ability5"					"minidroid_integrity"
+		//"Ability6"					"minidroid_mobility"
+		//"Ability7"					"primary_minidroid_energy_beam"
+		//"Ability8"					"nanites_standard"
 	
 		// Armor
 		//----------------------------------------------------------------
@@ -1505,6 +1505,14 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1400"
 		"VisionNighttimeRange"		"800"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"ManaGain"					"250"
+		}
 	}
 	"medic_mending_station"
 	{

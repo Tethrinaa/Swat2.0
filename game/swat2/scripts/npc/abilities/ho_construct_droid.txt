@@ -54,42 +54,42 @@
 			"17"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_ammo_constant"			"0"
+				"minidroid_ammo_constant"			"0"
 			}
 			"18"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_ammo_factor"				"1"
+				"minidroid_ammo_factor"				"1"
 			}
 			"19"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_integrity_constant"		"0"
+				"minidroid_integrity_constant"		"0"
 			}
 			"20"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_integrity_factor"		"1"
+				"minidroid_integrity_factor"		"1"
 			}
 			"21"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_mobility_constant"		"0"
+				"minidroid_mobility_constant"		"0"
 			}
 			"22"			
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"primary_minidroid_mobility_factor"			"1"
+				"minidroid_mobility_factor"			"1"
 			}
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"power_grid_constant"			    "0"
+				"primary_minidroid_energy_beam_constant"			    "0"
 			}
 			"08"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"power_grid_factor"				    "2"
+				"primary_minidroid_energy_beam_factor"				    "2"
 			}
 			"15"
 			{
@@ -134,22 +134,17 @@
 			"23"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"base_cells_energy"				    "50"
-			}
-			"24"
-			{			
-				"var_type"							"FIELD_INTEGER"
-				"per_level_cells_energy"			"25"
+				"cells_energy"				    	"50 75 100 125 150 175 200 225 250"
 			}
 			"25"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"base_beam_energy"				    "80"
+				"birth_energy_base"				    "80"
 			}
 			"26"
 			{			
 				"var_type"							"FIELD_INTEGER"
-				"per_level_beam_energy"    			"40"
+				"birth_energy"	    				"120 160 200 240 280 320 360 400"
 			}
 			"27"
 			{			
@@ -225,6 +220,7 @@
             
 			"modifier_defense_matrix_owner1"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner1_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -241,6 +237,7 @@
             
 			"modifier_defense_matrix_owner2"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner2_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -257,6 +254,7 @@
             
 			"modifier_defense_matrix_owner3"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner3_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -273,6 +271,7 @@
             
 			"modifier_defense_matrix_owner4"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner4_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -289,6 +288,7 @@
             
 			"modifier_defense_matrix_owner5"
 			{
+				"IsHidden"              "1"
 				"Aura"				        "modifier_defense_matrix_owner5_armor_bonus"
 				"Aura_Radius"				"%owner_radius"
                 "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -305,6 +305,7 @@
 			
 			"modifier_defense_matrix_all"
 			{
+				"IsHidden"              "1"
 				"Aura"						"modifier_defense_matrix_all_armor_bonus"
 				"Aura_Radius"				"%all_radius"
 				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"

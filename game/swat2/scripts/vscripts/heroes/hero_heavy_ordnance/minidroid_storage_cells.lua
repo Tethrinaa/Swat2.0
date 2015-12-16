@@ -1,7 +1,7 @@
 function AdjustManaDown( keys )
 	-- Grab the previous level if you can, otherwise, it was 0
 	local level = keys.ability:GetLevel()
-	local storage = keys.ability:GetLevelSpecialValueFor("storage", level - 1) and level > 1 or 0
+	local storage = level > 1 and keys.ability:GetLevelSpecialValueFor("storage", level - 1) or 0
 	local new_storage = keys.ability:GetSpecialValueFor("storage")
 	
 	
