@@ -1,7 +1,14 @@
--- Deals a percentage of damage per second
+-- Deals damage per second. This damage goes through all protections including nanites. Is fatal
 function modifier_enemy_toxic_damage(keys)
-    local damage_to_deal = keys.DamagePerSecond* keys.DamageInterval
-    ApplyDamage({victim = keys.target, attacker = keys.caster, damage = damage_to_deal, damage_type = DAMAGE_TYPE_MAGICAL,})
+    local damage_to_deal = keys.DamagePerSecond * keys.DamageInterval
+
+    -- Toxic damage is pure. We will just subtract the health
+    local newTargetHealth = keys.target:GetHealth() - damage_to_deal
+    if newTargetHealth >= 1 then
+        keys.target:SetHealth(newTargetHealth)
+    else
+        keys.target:Kill(keys.ability, keys.caster)
+    end
 end
 
 -- Drops a toxic rat at the caster's location

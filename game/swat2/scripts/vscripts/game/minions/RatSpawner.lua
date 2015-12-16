@@ -49,10 +49,16 @@ end
 -- Makes the rat "wander" around the position
 function RatSpawner:makeRatWander(unit, position)
     Timers:CreateTimer(RandomInt(RatSpawner.WANDER_DELAY_MIN, RatSpawner.WANDER_DELAY_MAX)
-                       , function()
-        local newPosition = position + RandomSizedVector(RatSpawner.WANDER_MAX_DISTANCE)
-        ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_MOVE_TO_POSITION , Position = newPosition, Queue = false})
+           , function()
+           -- First check to make sure rat is not dead
+           if unit:IsNull() == false then
+               -- Not dead. Go wander somewhere else rat.
+               local newPosition = position + RandomSizedVector(RatSpawner.WANDER_MAX_DISTANCE)
+               ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType =  DOTA_UNIT_ORDER_MOVE_TO_POSITION , Position = newPosition, Queue = false})
 
-        return RandomInt(RatSpawner.WANDER_DELAY_MIN, RatSpawner.WANDER_DELAY_MAX)
-    end)
+               -- Queue rat to wander again later
+               return RandomInt(RatSpawner.WANDER_DELAY_MIN, RatSpawner.WANDER_DELAY_MAX)
+           end
+       end
+   )
 end

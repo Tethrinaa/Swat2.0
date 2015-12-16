@@ -66,13 +66,13 @@ function AbominationSpawner:spawnAbomMinionGroup(warehouse)
         local position = warehouseCenter + RandomSizedVector(270)
         local unit = nil
         if j < 1 then
-            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_BEAST, position, 0, true)
+            unit = g_EnemySpawner:spawnEnemy(g_EnemySpawner.beastSpawner, EnemySpawner.beastSpawner.createNormal, position, true)
         elseif j < 2 then
-            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_GROTESQUE, position, 0, true)
+            unit = g_EnemySpawner:spawnEnemy(g_EnemySpawner.grotesqueSpawner, EnemySpawner.grotesqueSpawner.createNormal, position, true)
         elseif j < 4 then
-            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_DOG, position, 0, true)
+            unit = g_EnemySpawner:spawnEnemy(g_EnemySpawner.dogSpawner, EnemySpawner.dogSpawner.createNormal, position, true)
         else
-            unit = g_EnemySpawner:spawnEnemy(EnemySpawner.ENEMY_CODE_ZOMBIE, position, 0, true)
+            unit = g_EnemySpawner:spawnEnemy(g_EnemySpawner.zombieSpawner, EnemySpawner.zombieSpawner.createNormal, position, true)
         end
         if unit ~= nil then
             table.insert(spawnedUnits, unit)

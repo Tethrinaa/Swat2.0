@@ -39,7 +39,6 @@ function PrintEntityFunctions(t, all)
 		return
 	end
 
-	print("**********************Object methods**********************")	
 	mt = mt.__index
 	if mt and mt ~= t then
 		ShallowPrintTable(mt)
@@ -60,4 +59,8 @@ end
 
 function round(n)
   return math.floor((math.floor(n*2) + 1)/2)
+end
+
+function distanceBetweenVectors(vectorA, vectorB)
+    return math.sqrt(math.pow(vectorA.x - vectorB.x, 2) + math.pow(vectorA.y - vectorB.y, 2))
 end

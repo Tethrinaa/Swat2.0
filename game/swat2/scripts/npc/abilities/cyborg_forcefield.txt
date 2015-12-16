@@ -1,78 +1,95 @@
 //=================================================================================================================
 // Cyborg: Forcefield
 //=================================================================================================================
-"cyborg_forcefield"
-{
-	// General
-	//-------------------------------------------------------------------------------------------------------------
-	"BaseClass"				"ability_datadriven"
-	"AbilityTextureName"	"abaddon_aphotic_shield"
-	"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-	"AbilityManaCost"		"120"
-
-	// Precache
-	//-------------------------------------------------------------------------------------------------------------
-	"precache"
+	"cyborg_forcefield"
 	{
-		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-		"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
-	}
-
-	// Casting
-	//-------------------------------------------------------------------------------------------------------------
-	"AbilityCastPoint"				"0"
-	"AbilityCooldown"				"2"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"abaddon_aphotic_shield"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityManaCost"		"120"
 	
-	"OnSpellStart"
-	{
-		"ApplyModifier"
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
 		{
-			"ModifierName" 		"modifier_cyborg_forcefield"
-			"Target"			"CASTER"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			
 		}
-		"RunScript"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"2"
+		
+		"OnSpellStart"
 		{
-			"ScriptFile"	"util/SWATUtil.lua"
-			"Function"		"SwapAbilitiesDataDriven"
-            "on_ability"    "cyborg_forcefield_off"
-            "off_ability"    "cyborg_forcefield"
+			"ApplyModifier"
+			{
+				"ModifierName" 		"modifier_cyborg_forcefield"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"util/SWATUtil.lua"
+				"Function"		"SwapAbilitiesDataDriven"
+	            "on_ability"    "cyborg_forcefield_off"
+	            "off_ability"    "cyborg_forcefield"
+			}
+				"FireSound"
+			{
+				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+				"Target"        "CASTER"  
+			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/items3_fx/lotus_orb_shield.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_cyborg_forcefield"
+			{
+				"ThinkInterval" 	"1"
+				"OnIntervalThink"
+				
+				
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldThink"
+					}
+				
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldCreate"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+						"Function"		"ForcefieldDestroy"
+					}
+				}
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
+	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
+	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
+	            }
+				
+				"EffectName"		"particles/items3_fx/lotus_orb_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
 		}
 	}
-	"Modifiers"
-	{
-		"modifier_cyborg_forcefield"
-		{
-			"ThinkInterval" 	"1"
-			"OnIntervalThink"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-					"Function"		"ForcefieldThink"
-				}
-			}
-			"OnCreated"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-					"Function"		"ForcefieldCreate"
-				}
-			}
-			"OnDestroy"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-					"Function"		"ForcefieldDestroy"
-				}
-			}
-            "Properties"
-            {
-                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
-                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
-                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
-            }
-		}
-	}
-}

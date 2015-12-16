@@ -16,7 +16,7 @@
     "Ability1"  				"common_invulnerable"			// Ability 1.
 	"Ability2"					"common_no_health_bar"			// Ability 2.
 	"Ability3"					"common_unselectable"			// Ability 3.
-	"Ability4"					""			// Ability 4.
+	"Ability4"					"common_no_collision"			// Ability 4.
 	"Ability5"					""			// Ability 5.
 	"Ability6"					""			// Ability 6 - Extra.
 	"Ability7"					""			// Ability 7 - Extra.
@@ -80,7 +80,7 @@
 	//----------------------------------------------------------------------------------------------------------------------
 	"Creature"
 	{
-            "DisableClumpingBehavior"   "1"
+        "DisableClumpingBehavior"   "0"
 		"CanRespawn"				"0"
 
 		//Basic AI State

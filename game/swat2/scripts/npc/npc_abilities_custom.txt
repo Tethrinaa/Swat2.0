@@ -184,6 +184,32 @@
 	        }
 	    }
 	//=================================================================================================================
+	 // No collision
+	 //=================================================================================================================
+	"common_no_collision"
+	{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	    "AbilityTextureName"            "disruptor_glimpse"
+	
+	    // Modifiers
+	    //-------------------------------------------------------------------------------------------------------------
+	    "Modifiers"
+	    {
+	        "common_unselectable"
+	        {
+	            "Passive"                       "1"
+	
+	            "States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	        }
+	    }
+	}
+	//=================================================================================================================
 	    // No Health Bar
 	    //=================================================================================================================
 	    "common_no_health_bar"
@@ -240,7 +266,7 @@
 	// Aura that grants visibility to invisible units within a certain radius
 	// TODO: Look up all true sight values and put them as levels
 	//=================================================================================================================
-	"common_truesight_aura"
+	"common_truesight"
 	{
 	    // General
 	    //-------------------------------------------------------------------------------------------------------------
@@ -554,81 +580,98 @@
 	//=================================================================================================================
 	// Cyborg: Forcefield
 	//=================================================================================================================
-	"cyborg_forcefield"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityTextureName"	"abaddon_aphotic_shield"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityManaCost"		"120"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
+		"cyborg_forcefield"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"2"
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"				"ability_datadriven"
+			"AbilityTextureName"	"abaddon_aphotic_shield"
+			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+			"AbilityManaCost"		"120"
 		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
 			{
-				"ModifierName" 		"modifier_cyborg_forcefield"
-				"Target"			"CASTER"
+				"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+				
 			}
-			"RunScript"
+		
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastPoint"				"0"
+			"AbilityCooldown"				"2"
+			
+			"OnSpellStart"
 			{
-				"ScriptFile"	"util/SWATUtil.lua"
-				"Function"		"SwapAbilitiesDataDriven"
-	            "on_ability"    "cyborg_forcefield_off"
-	            "off_ability"    "cyborg_forcefield"
+				"ApplyModifier"
+				{
+					"ModifierName" 		"modifier_cyborg_forcefield"
+					"Target"			"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"util/SWATUtil.lua"
+					"Function"		"SwapAbilitiesDataDriven"
+		            "on_ability"    "cyborg_forcefield_off"
+		            "off_ability"    "cyborg_forcefield"
+				}
+					"FireSound"
+				{
+					"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+					"Target"        "CASTER"  
+				}
+				"FireEffect"
+				{
+					"EffectName"        "particles/items3_fx/lotus_orb_shield.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "CASTER"
+				}
+			}
+			"Modifiers"
+			{
+				"modifier_cyborg_forcefield"
+				{
+					"ThinkInterval" 	"1"
+					"OnIntervalThink"
+					
+					
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+							"Function"		"ForcefieldThink"
+						}
+					
+					}
+					"OnCreated"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+							"Function"		"ForcefieldCreate"
+						}
+					}
+					"OnDestroy"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+							"Function"		"ForcefieldDestroy"
+						}
+					}
+		            "Properties"
+		            {
+		                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
+		                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
+		                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
+		            }
+					
+					"EffectName"		"particles/items3_fx/lotus_orb_shield.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
 			}
 		}
-		"Modifiers"
-		{
-			"modifier_cyborg_forcefield"
-			{
-				"ThinkInterval" 	"1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-						"Function"		"ForcefieldThink"
-					}
-				}
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-						"Function"		"ForcefieldCreate"
-					}
-				}
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-						"Function"		"ForcefieldDestroy"
-					}
-				}
-	            "Properties"
-	            {
-	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
-	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
-	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
-	            }
-			}
-		}
-	}
 	"cyborg_forcefield_off"
 	{
 		// General
@@ -1058,6 +1101,194 @@
 	            }
 	    }
 	//=================================================================================================================
+	// Ability: Blink (Beastling)
+	// Beastling blinks to the targetted location
+	// This is an improved version of blink
+	//=================================================================================================================
+	"enemy_beastling_blink"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES "
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "antimage_blink"
+	    "MaxLevel"                      "1"
+	
+	    // Stats
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"              "1800"
+	    "AbilityCastPoint"              "0.0"
+	    "AbilityCooldown"               "1.0"
+	    "AbilityManaCost"               "1"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "max_blink_range"               "1800"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"            "abilities/enemy_beast_blink.lua"
+	            "Function"              "blink_on_spell_start"
+	            "Target"                "TARGET"
+	            "MaxBlinkRange"         "%max_blink_range"
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Blink
+	// Beast blinks to the targetted location
+	//=================================================================================================================
+	"enemy_beast_blink"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES "
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityTextureName"            "antimage_blink"
+	    "MaxLevel"                      "1"
+	
+	    // Stats
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"              "1200"
+	    "AbilityCastPoint"              "0.0"
+	    "AbilityCooldown"               "5.0"
+	    "AbilityManaCost"               "25"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "max_blink_range"               "1200"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"            "abilities/enemy_beast_blink.lua"
+	            "Function"              "blink_on_spell_start"
+	            "Target"                "TARGET"
+	            "MaxBlinkRange"         "%max_blink_range"
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Critical Strike
+	// Random chance to do multiplier-based damage
+	//=================================================================================================================
+	"enemy_beast_critical_strike"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "chaos_knight_chaos_strike"
+	    "MaxLevel"	"1"
+	
+	    // Precache
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_chaos_knight.vsndevts"
+	        "particle"      "particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+	    }
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "crit_damage"               "200"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "crit_chance"               "10"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_chaos_strike_datadriven"
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	
+	            "OnAttackStart"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_enemy_beast_critical_strike"
+	                    "Target"        "CASTER"
+	                }
+	
+	                "Random"
+	                {
+	                    "Chance"    "%crit_chance"
+	                    "OnSuccess"
+	                    {
+	                        "FireSound"
+	                        {
+	                            "EffectName"    "Hero_ChaosKnight.ChaosStrike"
+	                            "Target"        "CASTER"
+	                        }
+	
+	                        "FireEffect"
+	                        {
+	                            "EffectName"        "particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+	                            "EffectAttachType"  "attach_attack1"
+	                            "Target"            "CASTER"
+	                        }
+	
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_enemy_beast_critical_strike"
+	                            "Target"        "CASTER"
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	
+	        "modifier_enemy_beast_critical_strike"
+	        {
+	            "IsHidden"  "1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+	            }
+	
+	            "OnAttackLanded"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_enemy_beast_critical_strike"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
 	// Ability: Burninating (the country side...burninating the peasants...)
 	// Applies the "burninating" ability, which increases damage and applies a burning effect
 	//=================================================================================================================
@@ -1092,7 +1323,7 @@
 	        {
 	            "Passive"               "1"
 	            "IsPurgable"            "0"
-	            "IsHidden"              "0"
+	            "IsHidden"              "1"
 	
 	            "OnCreated"
 	            {
@@ -1101,6 +1332,12 @@
 	                    "EffectName"	"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
 	                    "EffectAttachType"	"follow_origin"
 	                    "Target"		"CASTER"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_burninating"
 	                }
 	            }
 	
@@ -1117,6 +1354,61 @@
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Lightenating
+	// Unit glows yellow and when it dies releases fireflies
+	//=================================================================================================================
+	"enemy_common_lightenating"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"wisp_spirits"
+	    "MaxLevel"	"1"
+	
+	    "precache"
+	    {
+	        "particle"	    "particles/radiant_fx2/good_ancient001_rotatingwisps.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_common_lightenating"
+	        {
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	
+	            "OnCreated"
+	            {
+	                // Not working :(
+	                "AttachEffect"
+	                {
+	                    "Target"                 "CASTER"
+	                    "EffectName"			"particles/radiant_fx2/good_ancient001_rotatingwisps.vpcf"
+						"EffectAttachType"			"follow_origin"
+						"EffectRadius"				"300"
+	                }
+	
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_lightenating"
+	                }
+	            }
+	
+	            "OnDeath"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "abilities/enemy_common_lightenating.lua"
+	                  "Function"   "lightenating_death"
+	               }
 	            }
 	        }
 	    }
@@ -1170,6 +1462,12 @@
 	                    "EffectName"	    "particles/econ/items/undying/undying_manyone/undying_tombstone_manyone_eye_rope.vpcf"
 	                    "EffectAttachType"	"follow_overheard"
 	                    "Target"		"CASTER"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_radinating"
 	                }
 	            }
 	
@@ -1240,7 +1538,7 @@
 	
 	    // Damage.
 	    //-------------------------------------------------------------------------------------------------------------
-	    "AbilityDamage"                 "200 500"
+	    "AbilityDamage"                 "100 250"
 	
 	    // Cost
 	    //-------------------------------------------------------------------------------------------------------------
@@ -1347,6 +1645,66 @@
 		}
 	}
 	//=================================================================================================================
+	// Ability: Radinating Regeneration
+	// Allows radinating units to self heal
+	// (Currently idential to zombie regeneration except for tooltip)
+	//=================================================================================================================
+	"enemy_common_radinating_regeneration"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"				        "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityTextureName"			"rubick_spell_steal"
+	    "MaxLevel"	"5"
+	
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"				"0"
+	    "AbilityCastPoint"				"0.45"
+	
+	    // Time
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"				"0 0 0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"				"30 30 20"
+	
+	    "precache"
+	    {
+	        "particle"	    "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodbath_heal.vpcf"
+	    }
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"			"FIELD_FLOAT"
+	            "heal"			"500 1000 3000"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "EffectName"       "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodbath_heal.vpcf"
+	            "EffectAttachType" "follow_origin"
+	            "Target"           "CASTER"
+	        }
+	
+	        "Heal"
+	        {
+	            "Target" 		"CASTER"
+	            "HealAmount"	"%heal"
+	        }
+	
+	    }
+	}
+	//=================================================================================================================
 	// Ability: TNT
 	// On death, unit explodes for massive damage
 	//=================================================================================================================
@@ -1364,7 +1722,7 @@
 	        "01"
 	        {
 	            "var_type"			"FIELD_INTEGER"
-	            "damage_full"		"600"
+	            "damage_full"		"300"
 	        }
 	
 	        "02"
@@ -1376,7 +1734,7 @@
 	        "03"
 	        {
 	            "var_type"			"FIELD_INTEGER"
-	            "damage_partial"		"200"
+	            "damage_partial"		"100"
 	        }
 	
 	        "04"
@@ -1399,6 +1757,7 @@
 	        "modifier_enemy_common_tnt"
 	        {
 	            "Passive" "1"
+	            "IsHidden"              "1"
 	
 	            "EffectName"        "particles/units/heroes/hero_warlock/golem_ambient_fire_mane_smoke.vpcf"
 	            "EffectAttachType"  "follow_attack"
@@ -1416,6 +1775,12 @@
 						}
 					}
 	
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_tnt"
+	                }
 				}
 	
 	            "OnDeath"
@@ -1540,7 +1905,7 @@
 	        {
 	            "Passive"               "1"
 	            "IsPurgable"            "0"
-	            "IsHidden"              "0"
+	            "IsHidden"              "1"
 	            "Aura"                  "modifier_common_toxic_aura_effect"
 	            "Aura_Radius"           "%aura_radius"
 	            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -1554,6 +1919,12 @@
 						"EffectAttachType"	"follow_origin"
 						"Target"		"CASTER"
 					}
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_toxic"
+	                }
 				}
 	
 				"OnDestroy"
@@ -1611,6 +1982,415 @@
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"  "%movespeed_percentage"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Firefly
+	// Just makes the firefly particle
+	//=================================================================================================================
+	"enemy_firefly"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"viper_corrosive_skin"
+	    "MaxLevel"	"1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	        // This modifier will convert the firefly to its phase 2 (invuln and life duration)
+	        // When it is attacked or attacks
+	        "modifier_enemy_firefly_conversion"
+	        {
+	            "Passive" "1"
+	            "IsHidden" "1"
+	
+	            // Convert the firefly when it takes damage
+	            "OnTakeDamage"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "abilities/enemy_firefly.lua"
+	                  "Function"   "convert_firefly"
+	               }
+	            }
+	
+	            // Convert the firefly when it attacks
+	            "OnAttack"
+	            {
+	               "RunScript"
+	               {
+	                  "ScriptFile" "abilities/enemy_firefly.lua"
+	                  "Function"   "convert_firefly"
+	               }
+	            }
+	        }
+	
+	        "modifier_enemy_firefly_passives"
+	        {
+	            "Passive" "1"
+	            "IsHidden" "1"
+	
+	            // Glow effect Not working :(
+	            "AttachEffect"
+	            {
+	                "EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+	                "EffectAttachType"	"follow_overhead"
+	                "Target"			"CASTER"
+	            }
+	
+	            "Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "9000"  // Max Attack Speed
+				}
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NOT_ON_MINIMAP"    	"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Grotesque Ensnare
+	// Ensnares a target, making them unable to move
+	//=================================================================================================================
+	"enemy_grotesque_ensnare"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             "ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"naga_siren_ensnare"
+	    "MaxLevel"	"1"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.65"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"10"
+	
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"net_speed"					"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fake_ensnare_distance"		"900"
+			}
+		}
+	
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+			"particle"					"particles/units/heroes/hero_siren/siren_net.vpcf"
+			"particle"					"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+		}
+	
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
+				"Dodgeable"				"1"
+				"ProvidesVision"		"1"
+				"VisionRadius"			"0"
+				"MoveSpeed"				"%net_speed"
+				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_NagaSiren.Ensnare.Cast"
+				"Target"				"CASTER"
+			}
+		}
+	
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"1"
+	
+			"FireSound"
+			{
+				"EffectName"			"Hero_NagaSiren.Ensnare.Target"
+				"Target"				"TARGET"
+			}
+	
+			"ApplyModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_ensnare_datadriven"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_ensnare_datadriven"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+	
+				"Duration"		"%duration"
+	
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+				}
+	
+				"EffectName"			"particles/units/heroes/hero_siren/siren_net.vpcf"
+				"EffectAttachType"		"follow_origin"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: Grotesque Evasion
+	// Chance to dodge an attack
+	// Levels are based on difficulty (Normal-Insane: 1, NM: 2, Ext: 3)
+	//=================================================================================================================
+	"enemy_grotesque_evasion"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"phantom_assassin_blur"
+	    "MaxLevel"	"3"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "evasion"           "20 50 75"
+	          }
+	      }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_grotesque_evasion"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Mutant Bash
+	// Chance to stun
+	// Should be level 1 for Normal-Insane, 2 for nightmare, and 3 for extinction
+	//=================================================================================================================
+	"enemy_mutant_bash"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"slardar_bash"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+		  "particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+		 }
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance"				"8 40 66"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.40 0.40 1.20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_creep"		"0.40 0.40 1.20"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_bash_stun_datadriven"
+			{
+				"IsDebuff" 		"1"
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+	
+				"EffectName" "particles/generic_gameplay/generic_stunned.vpcf"
+	        	"EffectAttachType" "follow_overhead"
+	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+	
+			"modifier_bash_datadriven"
+			{
+				"IsHidden"	"1"
+				"Passive"	"1"
+	
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"%chance"
+	
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_Slardar.Bash"
+								"Target"		"TARGET"
+							}
+	
+							"ApplyModifier"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_HERO"
+								}
+								"ModifierName"	"modifier_bash_stun_datadriven"
+								"Duration"		"%duration"
+							}
+	
+							"ApplyModifier"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Types"		"DOTA_UNIT_TARGET_BASIC"
+								}
+								"ModifierName"	"modifier_bash_stun_datadriven"
+								"Duration"		"%duration_creep"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Ability: Mutant Upgrades
+	// In warcraft 3, mutants used tech to be upgraded, but without that in dota 2, we'll just merge all of the upgrades
+	// into this one ability. So, this ability should be 1 level for every rad bracket (up to 60+)
+	// Additionally, 2 skills had 4 variants based on difficulty
+	// In order to save processing, all variants and brackets are merged here as well
+	// The level of this skill should be 4 * (1-(20-39),2-(40-59),3-(60-79),4-(80+)) + (1-normal, 2-hard, 3-insane, 4-NM+)
+	//                              (or 0 if the radiation level is < 1)
+	//=================================================================================================================
+	"enemy_mutant_upgrades"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"dragon_knight_dragon_blood"
+	    "MaxLevel"	"16"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_armor"           "6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6"
+	          }
+	          "02"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_damage"           "0 0 0 0 35 70 100 150 35 70 100 150 35 70 100 150"
+	          }
+	          "03"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_attack_speed"    "0 0 0 0 0 0 0 0 30 50 65 85 30 50 65 85"
+	          }
+	          "04"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_movement_speed"  "0 0 0 0 0 0 0 0 15 20 30 45 15 20 30 45"
+	          }
+	          "05"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "bonus_health_regen"    "0 0 0 0 0 0 0 0 0 0 0 0 20 20 20 20"
+	          }
+	      }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_mutant_upgrades"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+	                "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%bonus_movement_speed"
+	                "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
 	            }
 	        }
 	    }
@@ -4514,136 +5294,286 @@
 	// Cybrog: Cluster Rockets
 	//=================================================================================================================
 	"primary_cyborg_cluster_rockets"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_datadriven"
-		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets.lua"
-		"AbilityTextureName"		"gyrocopter_flak_cannon"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"MaxLevel"					"16"
-		"LevelsBetweenUpgrades"  	"0"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"  "0"
-		"AbilityCastRange"  "1000"
-	
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
-	
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		// "AbilityDamage"				"250" calculated by script mainly
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AoERadius"						"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
-	
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-	
-	
-		// Special
+		{
+			// General
 			//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                	"FIELD_INTEGER"
-				"total_damage_cap"          "1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000 3200 3400 3600 3800 4000"
-			}
-			"02"
-			{
-				"var_type"                	"FIELD_INTEGER"
-				"unit_damage_cap"          	"250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000"
-			}
-			"03"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"tick_rate"           		".08 .08 .08 .08 .08 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12"
-			}
-			"03" // I know this is derived information but it helps to have each natively available
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"ticks"           			"5"
-			}
-			"04"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"damage_duration"           ".33 .33 .33 .33 .33 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49"
-			}
-			"05"
-			{
-				"var_type"                	"FIELD_INTEGER"
-				"rockets"              		"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
-			}
-			"06"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"delay"                		"0.75"
-			}
-			"07"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
-			}
-			"07"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
-			}
-		}
+			"BaseClass"              	"ability_datadriven"
+			"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets.lua"
+			"AbilityTextureName"		"gyrocopter_flak_cannon"
+			"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+			"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+			"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"MaxLevel"					"16"
+			"LevelsBetweenUpgrades"  	"0"
+			"AoERadius" 				"%outer_radius"
 		
-		"OnSpellStart"
-		{
-			"DelayedAction"
-			{
-				"Delay"						"%delay"
-				"Action"
-				{
-					"CreateThinker"
-					{
-						"ModifierName"			"modifier_cyborg_cluster_rockets_thinker"
-						"Target"				"POINT"
-					}
-				}
-			}
-		}
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastPoint"  "0"
+			"AbilityCastRange"  "1000"
 		
-		"Modifiers"
-		{
-			"modifier_cyborg_cluster_rockets_thinker"
+			// Time
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCooldown"				"6"
+		
+			// Cost
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
+		
+			// Damage
+			//-------------------------------------------------------------------------------------------------------------
+			// "AbilityDamage"				"250" calculated by script mainly
+			"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+			"AoERadius"						"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+		
+		
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+		"precache"
 			{
-				"ThinkInterval"				"%tick_rate"
-				"Duration"					"%damage_duration"
-				"OnCreated"
+				"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+				"particle"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+				"soundfile"			"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+			}
+		
+			// Special
+				//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
 				{
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
-						"Function"		"ClusterThink"
-						"Target"		"POINT"
-					}
+					"var_type"                	"FIELD_INTEGER"
+					"total_damage_cap"          "1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000 3200 3400 3600 3800 4000"
 				}
-				"OnIntervalThink"
+				"02"
 				{
-					"RunScript"
+					"var_type"                	"FIELD_INTEGER"
+					"unit_damage_cap"          	"250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000"
+				}
+				"03"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"tick_rate"           		".08 .08 .08 .08 .08 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12"
+				}
+				"03" // I know this is derived information but it helps to have each natively available
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"ticks"           			"5"
+				}
+				"04"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"damage_duration"           ".33 .33 .33 .33 .33 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49"
+				}
+				"05"
+				{
+					"var_type"                	"FIELD_INTEGER"
+					"rockets"              		"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+				}
+				"06"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"delay"                		"0.75"
+				}
+				"07"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
+				}
+				"08"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+				}
+			}
+			
+		
+			
+			"OnSpellStart"
+			{
+			
+				"FireSound"
+				{
+					"EffectName"	"Hero_Invoker.ForgeSpirit"
+					"Target" 		"CASTER"
+				}
+			
+			
+				"DelayedAction"
+				{
+					"Delay"						"%delay"
+					"Action"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
-						"Function"		"ClusterThink"
-						"Target"		"POINT"
+						"CreateThinker"
+						{
+							"ModifierName"			"modifier_cyborg_cluster_rockets_thinker"
+							"Target"				"POINT"
+						}
+					
+					
+			
+					}
+					
+					
+					
+				}
+			}
+			
+			
+	
+					
+					"FireEffect"
+					{
+					"Target"			"TARGET"
+					"EffectName"			"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+					"EffectAttachType"		"attach_hitloc"
+					
+					}
+						
+					"FireSound"
+					{
+					"EffectName"			"Hero_Techies.LandMine.Detonate"
+					"Target"				"TARGET"
+					}
+			
+			
+		
+			"Modifiers"
+			{
+				"modifier_cyborg_cluster_rockets_thinker"
+				{
+				
+	
+					"ThinkInterval"				"%tick_rate"
+					"Duration"					"%damage_duration"
+	
+					
+		
+					"OnCreated"
+					{
+					
+					"FireEffect"
+					{
+					"Target"			"TARGET"
+					"EffectName"			"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+					"EffectAttachType"		"attach_hitloc"
+					"EffectRadius"			"%outer_radius"
+					}
+						
+					"FireSound"
+					{
+					"EffectName"			"Hero_Techies.LandMine.Detonate"
+					"Target"				"TARGET"
+					}
+					
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+							"Function"		"ClusterThink"
+							"Target"		"POINT"
+						}
+					}
+					"OnIntervalThink"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+							"Function"		"ClusterThink"
+							"Target"		"POINT"
+						}
 					}
 				}
 			}
 		}
-	}
+		//=================================================================================================================
+		// Ability: Organic Replacement(Cyborg)
+		//=================================================================================================================
+		   "primary_cyborg_organic_replacement"
+		   {
+		  	// General
+			//-------------------------------------------------------------------------------------------------------------
+			 "AbilityName"              "cyborg_organic_replacement"
+			"BaseClass"				"ability_datadriven"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			 "MaxLevel"                 "8"
+		
+			"AbilityTextureName"			"rattletrap_power_cogs"
+		
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
+			{
+				"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+				"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		
+		
+			}
+		
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"					"FIELD_INTEGER"
+					"bonus_evasion"				"7 13 19 24 29 33 37 40"
+				}
+		
+				"02"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"bonus_health"			"25 50 75 100 125 150 175 200"
+				}
+		
+			}
+		
+				"OnUpgrade"
+					{
+						"FireSound"
+						{
+							"Target"		"CASTER"
+							"EffectName"	"Hero_Tinker.Rearm"
+		
+						}
+						"AttachEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_meepo/meepo_poof.vpcf"
+							"EffectAttachType"	"attach_hitloc"
+							"Target"			"TARGET"
+		
+							"ControlPointEntities"
+							{
+								"TARGET"	"attach_hitloc"
+							}
+						}
+					}
+		
+		
+		
+		
+			"Modifiers"
+			{
+		
+		
+		
+				"modifier_blur_datadriven"
+				{
+		
+		
+		
+		
+		
+					"Passive"	"1"
+					"IsHidden"	"1"
+					"Properties"
+					{
+						"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
+					    "MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+					}
+				}
+			}
+		}
 	//=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
 	//=================================================================================================================
@@ -6105,6 +7035,9 @@
 	
 	        "modifier_rad_mob_buff_effect"
 	        {
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"     "%mana_regen"
