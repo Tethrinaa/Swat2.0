@@ -1,3 +1,6 @@
+-- Author: NmdSnprEnigma
+
+--- Replicates the upgrade functionality from WC3
 function UpdateDroids(keys)
 	local ho = keys.caster
 	local minidroids = ho.sdata.minidroids
@@ -5,17 +8,18 @@ function UpdateDroids(keys)
 	local ammo_ability_name = "minidroid_ammo"
 	local new_level = keys.ability:GetLevel()
 	
-
+	-- Iterate over each mini
+	-- if you don't, then the old buff keeps getting refreshed
     if minidroids then
         for _, minidroid in pairs(minidroids) do
-            print("Removing "..ammo_buff_name.." buff")
+			-- remove the buff so it doesn't get refreshed
             minidroid:RemoveModifierByName(ammo_buff_name)
             
-            print("Updating "..ammo_ability_name.." level")
+			-- level the ability for each mini when the ho ability is leveled
             local ammo_ability = minidroid:FindAbilityByName(ammo_ability_name)
             ammo_ability:SetLevel(new_level)
             
-            print("Reapplying "..ammo_buff_name.." buff") -- TODO not sure if needed, testing without first
+			-- reapply the buff that we tok off, now that the level is right
             ammo_ability:ApplyDataDrivenModifier(ho, minidroid, ammo_buff_name, {})
         end
     end

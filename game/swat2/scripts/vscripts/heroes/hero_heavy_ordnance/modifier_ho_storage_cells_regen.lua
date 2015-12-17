@@ -33,6 +33,7 @@ function modifier_ho_storage_cells_regen:OnRefresh( keys )
 	self:OnCreated(keys)
 end
 
+--- Informs the modifier of the functions that we intend to override
 function modifier_ho_storage_cells_regen:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,

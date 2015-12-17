@@ -3507,6 +3507,84 @@
 	}
         
 	//=================================================================================================================
+	// Ability: Heavy Ordnance Phased Droids
+	//=================================================================================================================
+	"ho_phased_droids"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_CHANNELLED "
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"pudge_dismember"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"20"
+		"AbilityCooldown"				"6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"AbilityCastRange"				"%phased_radius"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{			
+				"var_type"							"FIELD_INTEGER"
+				"phased_radius"						"900"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"scripts/vscripts/heroes/hero_heavy_ordnance/ho_phased_droids.lua"
+				"Function"					"RemoveModifierFromMinis"
+				"ModifierName"				"modifier_phased_droids"
+			}
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"scripts/vscripts/heroes/hero_heavy_ordnance/ho_phased_droids.lua"
+				"Function"					"ApplyModifierToMinis"
+				"ModifierName"				"modifier_phased_droids"
+				"Radius"					"%phased_radius"
+			}
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"hero_Crystal.freezingField.wind"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"scripts/vscripts/heroes/hero_heavy_ordnance/ho_phased_droids.lua"
+				"Function"					"RemoveModifierFromMinis"
+				"ModifierName"				"modifier_phased_droids"
+
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_droids"
+	        {
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+		}
+	}
+	//=================================================================================================================
 	// Ability: Heavy Ordnance XLR8
 	//=================================================================================================================
 	"ho_xlr8"
@@ -6796,6 +6874,9 @@
 	//=================================================================================================================
 	// Ability: Droid Mobility (Minidroid)
 	//=================================================================================================================
+	
+	
+	// This is unused for now because non-hero mana requires the creature to level up
 	"primary_minidroid_storage_cells"
 	{
 		// General

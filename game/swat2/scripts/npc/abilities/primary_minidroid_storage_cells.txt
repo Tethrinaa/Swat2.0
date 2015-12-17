@@ -1,6 +1,9 @@
 	//=================================================================================================================
 	// Ability: Droid Mobility (Minidroid)
 	//=================================================================================================================
+	
+	
+	// This is unused for now because non-hero mana requires the creature to level up
 	"primary_minidroid_storage_cells"
 	{
 		// General

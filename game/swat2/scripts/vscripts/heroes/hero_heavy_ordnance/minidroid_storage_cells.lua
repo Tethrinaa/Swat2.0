@@ -1,3 +1,6 @@
+
+--- 
+-- This is unused for now because non-hero mana requires the creature to level up
 function AdjustManaDown( keys )
 	-- Grab the previous level if you can, otherwise, it was 0
 	local level = keys.ability:GetLevel()

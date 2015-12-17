@@ -1,8 +1,7 @@
---[[
-	Author: Noya
-	Date: April 5, 2015
-	Get a point at a distance in front of the caster
-]]
+-- Author: NmdSnprEnigma
+
+--- Grabs a point in front of the caster
+
 function GetFrontPoint( keys )
 	local caster = keys.caster
 	local fv = caster:GetForwardVector()
@@ -24,26 +23,27 @@ function SetUnitsMoveForward( keys )
 	target:SetForwardVector(fv)
 end
 
+-- Upgrades the aura of exist minis to the right level when a mini is born or dies
 function UpdateHOMinidroidAuras(ho, ability)
 	local minidroids = ho.sdata.minidroids
 	local all_def_matrix = "modifier_defense_matrix_all"
 	local all_def_matrix_bonus = "modifier_defense_matrix_all_armor_bonus"
 	
-
+	-- 
 	for _, minidroid in pairs(minidroids) do
 		if not minidroid:IsNull() then
-			local which_def_matrix = "modifier_defense_matrix_owner"..minidroid.minidroid_id
-			local which_def_matrix_bonus = "modifier_defense_matrix_owner"..minidroid.minidroid_id.."_armor_bonus"
+			local which_def_matrix = "modifier_defense_matrix_owner"..minidroid.minidroid_id 
+			-- TODO you are supposed to be able to make a multiplier stack
+			local which_def_matrix_bonus = "modifier_defense_matrix_owner"..minidroid.minidroid_id.."_armor_bonus" 
 	
-			print("Removing auras")
+			-- Remove and replace the HO and all units aura so the right levels will apply
 			minidroid:RemoveModifierByName(all_def_matrix)
 			minidroid:RemoveModifierByName(which_def_matrix)
-			
-			print("Reapplying auras")
 			ability:ApplyDataDrivenModifier(ho, minidroid, which_def_matrix, {})
 			ability:ApplyDataDrivenModifier(ho, minidroid, all_def_matrix, {})
 			
-			print("Removing buffs")
+			-- Remove the buffs so they can be repopulated by the auras
+			-- Something about the self auras makes this necessary - the ho himself is fine without this
 			minidroid:RemoveModifierByName(all_def_matrix_bonus)
 			ho:RemoveModifierByName(which_def_matrix_bonus)
 		end
@@ -52,10 +52,9 @@ function UpdateHOMinidroidAuras(ho, ability)
 	ho:RemoveModifierByName(all_def_matrix_bonus)
 end
 
+--- Calculate the ability level from the HO's ability and return both
 
 function CalculateMiniAbilityLevel(ho, ability, mini_ability_name, ho_ability_name)
-	print("Finding mini abil level:", mini_ability_name, ho_ability_name)
-	-- Calculate the ability level from the HO's ability
 	local ho_level = ho:FindAbilityByName(ho_ability_name):GetLevel()
 	local factor = ability:GetSpecialValueFor(mini_ability_name.."_factor")
 	local constant = ability:GetSpecialValueFor(mini_ability_name.."_constant")
@@ -91,11 +90,11 @@ function SpinUpDroid(keys)
 	table.insert(ability_map, {mini_ability_name = "minidroid_mobility"	 			, ho_ability_name = "primary_ho_droid_mobility" 		})
 	table.insert(ability_map, {mini_ability_name = "primary_minidroid_energy_beam" 	, ho_ability_name = "primary_ho_power_grid"      		})
 	table.insert(ability_map, {mini_ability_name = "nanites_standard"				, ho_ability_name = ho.sdata.nanitesSkill				})
-	
+
+	-- Grant all the mini his abilities in the appropriate order, based on the list above
 	for _, mapEntry in pairs(ability_map) do
 		local mini_ability_name = mapEntry.mini_ability_name
 		if not minidroid:HasAbility(mini_ability_name) then
-			print("Adding", mini_ability_name)
 			minidroid:AddAbility(mini_ability_name)
 		end
 	end
@@ -105,7 +104,8 @@ function SpinUpDroid(keys)
 	local ho_cells_name = cells_entry.ho_ability_name
 	local mini_upgrade_level = CalculateMiniAbilityLevel(ho, keys.ability, mini_cells_name, ho_cells_name)
 	minidroid:CreatureLevelUp(mini_upgrade_level)
-		
+	
+	-- For each mini ability...
 	for _, mapEntry in pairs(ability_map) do
 		local mini_ability_name = mapEntry.mini_ability_name
 		local ho_ability_name = mapEntry.ho_ability_name
@@ -118,15 +118,7 @@ function SpinUpDroid(keys)
 		-- as long as the ability exists, try to set its level
 		if mini_ability then
 			local mini_level, ho_level = CalculateMiniAbilityLevel(ho, keys.ability, mini_ability_name, ho_ability_name)
-
-            -- This is commented out because it starts at 0 when we add them dynamically above
-			-- -- Remove this buff so we can drop its level to 0 maybe
-			-- print("Maybe removing "..mini_ability_name.." buff: ", mini_ability:GetIntrinsicModifierName())
-			-- if mini_ability:GetIntrinsicModifierName() then
-			-- 	print("Removing ", mini_ability:GetIntrinsicModifierName())
-			-- 	minidroid:RemoveModifierByName(mini_ability:GetIntrinsicModifierName())
-			-- end			
-			
+		
 			-- Special things for some abilities
 			if mini_ability_name == "primary_minidroid_storage_cells" then
 				-- Standard energy from levels in cells
@@ -138,6 +130,7 @@ function SpinUpDroid(keys)
 				local birth_energy_param = mini_level < 1 and "birth_energy_base" or "birth_energy"
 				print("Energy:", mini_level, keys.ability:GetLevelSpecialValueFor(birth_energy_param, mini_level - 1))
 				TransferEnergy(minidroid, ho, keys.ability:GetLevelSpecialValueFor(birth_energy_param, mini_level - 1), keys.ability:GetSpecialValueFor("birth_energy_reserve") )
+				
 			elseif mini_ability_name == "nanites_standard" then -- TODO this needs a separate ability just for mini nanites so the standard one can't get overleveled. this goes to 24.
 				-- TODO Espionage
 				if true or ho:IsEspionage() then
@@ -157,7 +150,6 @@ function SpinUpDroid(keys)
 				mini_ability:ToggleAbility()
 			end
 			
-			print(mini_ability_name,ho_ability_name,"->",mini_level)
 			mini_ability:SetLevel(mini_level)
 		end
 	end
@@ -175,7 +167,6 @@ function SpinUpDroid(keys)
     minidroids[minidroid.minidroid_id] = minidroid
     
     -- Update the auras on all the droids to reflect the new droid count
-	ShallowPrintTable(keys)
 	UpdateHOMinidroidAuras(ho, keys.ability)
 	minidroid:MoveToNPC(ho)
 end
