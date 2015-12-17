@@ -1,0 +1,70 @@
+//=================================================================================================================
+// Ability: Burninating (the country side...burninating the peasants...)
+// Applies the "burninating" ability, which increases damage and applies a burning effect
+//=================================================================================================================
+"enemy_common_burninating"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityTextureName"        	"invoker_exort"
+    "MaxLevel"	"2"
+
+      "AbilitySpecial"
+      {
+          "01"
+          {
+             "var_type"              "FIELD_INTEGER"
+             "bonus_damage"           "100 250"
+          }
+      }
+
+    "precache"
+    {
+        "particle"			"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+    }
+
+
+    "Modifiers"
+    {
+
+        "modifier_enemy_common_burninating"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "1"
+
+            "OnCreated"
+            {
+                "FireEffect"
+                {
+                    "EffectName"	"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+                    "EffectAttachType"	"follow_origin"
+                    "Target"		"CASTER"
+                }
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_burninating"
+                }
+            }
+
+            "OnDestroy"
+            {
+                "FireEffect"
+                {
+                    "EffectName"	"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+                    "EffectAttachType"	"follow_origin"
+                    "Target"		"CASTER"
+                }
+            }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" "%bonus_damage"
+            }
+        }
+    }
+}

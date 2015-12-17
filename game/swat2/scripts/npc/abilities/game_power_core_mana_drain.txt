@@ -1,0 +1,158 @@
+//=================================================================================================================
+// Ability: Mana_Drain (Power Core)
+//=================================================================================================================
+"game_power_core_mana_drain"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
+	"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+	"AbilityTextureName"			"lion_mana_drain"
+      "MaxLevel"                 "1"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"500"
+	"AbilityCastPoint"				"0.3"
+	"AbilityChannelTime"			"30.1"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0.5"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Stats
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityModifierSupportValue"	"5.0"	// better then the mana cost implies
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"duration"					"30.0"
+		}
+		"02"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"mana_per_second"			"60"
+		}
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"break_distance"			"650"
+		}
+		"04"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"tick_interval"			"0.25"
+		}
+	}
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_Lion.ManaDrain"
+			"Target"		   "TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_mana_drain"
+			"Target"			"TARGET"
+		}
+	}
+	"OnChannelInterrupted"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+			"Function"		"mana_drain_stop_sound"
+			"sound"			"Hero_Lion.ManaDrain"
+		}
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_mana_drain"
+			"Target"			"TARGET"
+		}
+	}
+	"OnChannelFinish"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+			"Function"		"mana_drain_stop_sound"
+			"sound"			"Hero_Lion.ManaDrain"
+		}
+		"RemoveModifier"
+		{
+			"ModifierName"	"modifier_mana_drain"
+			"Target"			"TARGET"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_mana_drain"
+		{
+			"IsHidden"	"1"
+            "IsDebuff"	"1"
+			"Duration"	"%duration"
+
+			"OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	      "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+					"EffectAttachType"	"start_at_customorigin"
+					"Target"		         "TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_hitloc"
+						"CASTER"	"attach_hitloc"
+					}
+				}
+			}
+			"ThinkInterval"	"%tick_interval"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+					"Function"		"mana_drain"
+				}
+			}
+		}
+         "modifier_mana_drain_autocast"
+         {
+            "Passive"   "1"
+            "IsHidden"  "1"
+            "ThinkInterval"   "1"
+            "OnIntervalThink"
+            {
+               "RunScript"
+               {
+                  "ScriptFile"   "scripts/vscripts/units/power_core/power_core_mana_drain.lua"
+                  "Function"     "auto_cast"
+               }
+            }
+         }
+	}
+}

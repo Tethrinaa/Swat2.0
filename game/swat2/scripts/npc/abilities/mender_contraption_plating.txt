@@ -1,0 +1,49 @@
+//=================================================================================================================
+// Ability: Contraption Plating (Mender)
+//=================================================================================================================
+"mender_contraption_plating"
+    {
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityName"           	    "Contraption Plating"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+	"MaxLevel"                 	 	"8"
+	"AbilityTextureName"			"tidehunter_kraken_shell"
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"bonus_armor"				"4 8 16 24 32 40 48 56 64"
+		}
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"damage_absorption"				"10 20 30 45 60 75 100 125"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_mender_contraption_plating"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+				"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK" "%damage_absorption"
+			}
+		}
+	}
+}

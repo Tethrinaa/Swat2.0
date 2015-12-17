@@ -1,0 +1,99 @@
+//=================================================================================================================
+// Ability: Zombie Brainlust
+// Increases zombie movement speed and attack speed temporarily
+//=================================================================================================================
+"enemy_zombie_brainlust"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"				        "ability_datadriven"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityTextureName"			"ogre_magi_bloodlust"
+    "MaxLevel"	"5"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"0"
+	"AbilityCastPoint"				"0.45"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"20 15 15 15 15"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"50 50 40 40 40"
+
+    "precache"
+    {
+        "particle"	    "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+        "particle"	    "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+    }
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_FLOAT"
+			"duration"			"15 20 20 20 20"
+		}
+
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement_speed"		"20 40 50 200 300"
+		}
+
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"50 150 200 200 200"
+		}
+	}
+
+    "OnSpellStart"
+	{
+		"FireEffect"
+	    {
+	        "EffectName"       "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_cast.vpcf"
+	        "EffectAttachType" "follow_customorigin"
+	        "Target"           "CASTER"
+	        "ControlPointEntities"
+	        {
+	            "CASTER" "attach_attack1" //Start
+	            "CASTER" "attach_origin"  //Velocity noise, not used
+	            "CASTER" "attach_attack2" //CASTER or TARGET?
+	            "CASTER" "attach_hitloc"  //Hit
+	        }
+	    }
+
+        "ApplyModifier"
+        {
+           "ModifierName" "modifier_enemy_zombie_brainlust"
+           "Target"       "CASTER"
+           "Duration"     "%duration"
+        }
+	}
+
+    "Modifiers"
+    {
+        "modifier_enemy_zombie_brainlust"
+        {
+            "IsBuff"                "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "0"
+            "Duration"              "%duration"
+
+            "EffectName"            "particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+            "EffectAttachType"      "follow_origin"
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed"
+                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+            }
+        }
+    }
+}

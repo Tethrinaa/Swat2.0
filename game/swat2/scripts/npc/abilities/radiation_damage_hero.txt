@@ -1,0 +1,69 @@
+//=================================================================================================================
+// Ability: Radiation Damage Hero
+// Levels of the skill correspond to postive radiation count rad levels (so level one is rads 1-19, two is 20-39...etc)
+//=================================================================================================================
+"radiation_damage_hero"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"		                "ability_datadriven"
+	"AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	"AbilityTextureName"        	"earth_spirit_petrify"
+    "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	"MaxLevel"	"6"
+
+      "AbilitySpecial"
+      {
+         "01"
+         {
+            "var_type"				"FIELD_FLOAT"
+            "damage_per_second"		"0.8 2.0 12.0 25.0"
+         }
+         "02"
+         {
+             "var_type"          "FIELD_INTEGER"
+             "global_radius"     "30000"
+         }
+         "03"
+         {
+             "var_type"                  "FIELD_INTEGER"
+             "aura_damage_interval"      "1"
+         }
+      }
+
+	"Modifiers"
+	{
+        "modifier_rad_damage_hero_aura"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "0"
+            "Aura"                  "modifier_rad_damage_hero_effect"
+            "Aura_Radius"           "%global_radius"
+            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_ENEMY"
+            "Aura_Types"            "DOTA_UNIT_TARGET_HERO"
+            "Aura_ApplyToCaster"    "0"
+        }
+
+		"modifier_rad_damage_hero_effect"
+		{
+            "Passive"           "0"
+            "IsHidden"          "0"
+            "IsBuff"            "0"
+            "IsDebuff"          "1"
+            "IsPurgable"        "0"
+
+            "ThinkInterval"         "%aura_damage_interval"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/game_radiation_damage.lua"
+                    "Function"              "modifier_game_radiation_damage"
+                    "RadiationDamage"       "%damage_per_second"
+                    "IsFatal"               "0"
+                }
+            }
+		}
+	}
+}

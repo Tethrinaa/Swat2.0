@@ -28,6 +28,7 @@
 					</Button>
 				</Panel>
 			</Panel>
+			<!--<Panel hittest="false" id="AbilityLevelContainer" />-->
 		</Panel>
 		<Panel id="Hotkey">
 			<Label id="HotkeyText" />

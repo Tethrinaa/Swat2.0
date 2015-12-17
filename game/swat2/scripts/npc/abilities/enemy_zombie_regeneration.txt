@@ -1,0 +1,59 @@
+//=================================================================================================================
+// Ability: Zombie Regeneration
+// Allows zombies to self heal
+//=================================================================================================================
+"enemy_zombie_regeneration"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"				        "ability_datadriven"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityTextureName"			"rubick_spell_steal"
+    "MaxLevel"	"5"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"				"0"
+    "AbilityCastPoint"				"0.45"
+
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"				"0 0 0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"				"30 30 20"
+
+    "precache"
+    {
+        "particle"	    "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodbath_heal.vpcf"
+    }
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"			"FIELD_FLOAT"
+            "heal"			"500 1000 3000"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "FireEffect"
+        {
+            "EffectName"       "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodbath_heal.vpcf"
+            "EffectAttachType" "follow_origin"
+            "Target"           "CASTER"
+        }
+
+        "Heal"
+        {
+            "Target" 		"CASTER"
+            "HealAmount"	"%heal"
+        }
+
+    }
+}

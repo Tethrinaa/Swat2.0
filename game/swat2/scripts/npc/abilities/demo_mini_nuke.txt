@@ -1,0 +1,153 @@
+//=================================================================================================================
+// Demolitions: Mini-Nuke
+//=================================================================================================================
+"demo_mini_nuke"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"              	"ability_datadriven"
+	"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityUnitDamageType"  	"DAMAGE_TYPE_PHYSICAL"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+	"AbilityTextureName"			"gyrocopter_homing_missile"
+	"MaxLevel"						"3"
+	"AoERadius" 				"%outer_radius"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"  "00"
+	"AbilityCastRange"  "65534"
+	"FightRecapLevel"				"1"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"0"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"600 550 500"
+
+	// Damage
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityDamage"					"6000"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+		"particle"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"outer_radius"              "1200 1400 1600"
+		}
+		"02"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"inner_radius"              "336 372 372"
+		}
+		"03"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"outer_damage"              "3000"
+		}
+		"04"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"inner_damage"              "6000"
+		}
+	}
+
+	"OnSpellStart"
+	{
+	
+		"FireSound"
+		{
+			"EffectName"	"Hero_VengefulSpirit.MagicMissile"
+			"Target" 		"CASTER"
+		}
+	
+	
+		"RunScript"
+		{
+			"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
+			"Function"          "OnSpellStart"
+			"Target"			"POINT"
+			"duration"			"%duration"
+			"inner_damage"		"%inner_damage"
+			"inner_radius"      "%inner_radius"
+			"outer_damage"      "%outer_damage"
+			"outer_radius"	    "%outer_radius"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_demo_mini_nuke_thinker"
+		{
+			"Duration" "%duration"
+
+			"OnDestroy"
+			{
+			
+			"FireEffect"
+			{
+			"Target"			"TARGET"
+			"EffectName"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+			"EffectAttachType"		"attach_hitloc"
+			"EffectRadius"			"%outer_radius"
+			}
+				
+			"FireSound"
+			{
+			"EffectName"			"Hero_Techies.Suicide"
+			"Target"				"TARGET"
+			}
+			
+			
+			
+				"RunScript"
+				{
+					"ScriptFile"        "heroes/hero_demo/mini-nuke.lua"
+					"Function"          "setActive"
+				}
+
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%outer_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+						"Types" 	"DOTA_UNIT_TARGET_ALL"
+					}
+					"Type"			"DAMAGE_TYPE_PHYSICAL"
+					"Damage"		"%outer_damage"
+				}
+
+				"Damage"
+				{
+					"Target"
+					{
+						"Center"  	"TARGET"
+						"Radius" 	"%inner_radius"
+						"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+						"Types" 	"DOTA_UNIT_TARGET_ALL"
+					}
+					"Type"			"DAMAGE_TYPE_PHYSICAL"
+					"Damage"		"%inner_damage"
+				}
+			}
+		}
+	}
+}

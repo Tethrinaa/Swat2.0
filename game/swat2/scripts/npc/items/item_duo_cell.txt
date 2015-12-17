@@ -1,0 +1,76 @@
+"item_duo_cell"
+    {
+        "ID"                            "1251" // anything above 1250 should be safe to use.
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_duo_cell"
+	
+	"ItemCost" "500"
+	"ItemKillable" "0" 
+	"ItemSellable" "1"
+	"ItemPurchasable" "0"
+	"ItemDroppable" "1"
+	
+	
+	"ItemStockMax" "0"
+	"ItemStockTime" "0"
+	"ItemStockInitial" "0"
+	
+	"ItemShareability" "ITEM_FULLY_SHAREABLE"
+	
+	"ItemAliases" "Duo Cell"
+	"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	
+	"OnEquip" 
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "ItemCheck"
+		}
+	}
+	
+	"OnUnequip"
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "RemoveItemModifierStats"
+		}
+	}
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"DropItemOnDeath"
+		}
+	}
+	
+	"Modifiers"
+	{
+		 
+		"modifier_item_add_duo_cell_datadriven"
+		{
+			"Passive"   "0"
+			"IsHidden"   "1"
+			"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS"  "500"
+			}
+		}
+		"modifier_item_remove_duo_cell_datadriven"
+		{
+			"Passive"   "0"
+			"IsHidden"   "1"
+			"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_BONUS"  "-500"
+			}
+		}
+	}
+
+	
+    }

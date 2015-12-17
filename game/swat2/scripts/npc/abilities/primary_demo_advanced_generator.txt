@@ -1,0 +1,53 @@
+//=================================================================================================================
+// Demolitions: Advanced Generator
+//=================================================================================================================
+"primary_demo_advanced_generator"
+{
+  	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"					"ability_datadriven"
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	"MaxLevel"                 "16"
+	"LevelsBetweenUpgrades"  	"0"
+	"AbilityTextureName"			"dark_seer_ion_shell"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_regen"				"1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16"
+		}
+	}
+
+	"OnUpgrade"
+	{
+		"LevelUpAbility"
+		{
+			"Target" "CASTER"
+			"AbilityName" "demo_biochemical_energy"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_demo_advanced_generator"
+		{
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+			}
+		}
+	}
+}

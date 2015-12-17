@@ -1,0 +1,89 @@
+//=================================================================================================================
+// Ability: Organic Replacement(Cyborg)
+//=================================================================================================================
+   "primary_cyborg_organic_replacement"
+   {
+  	// General
+	//-------------------------------------------------------------------------------------------------------------
+	 "AbilityName"              "cyborg_organic_replacement"
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	 "MaxLevel"                 "8"
+
+	"AbilityTextureName"			"rattletrap_power_cogs"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+
+
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"bonus_evasion"				"7 13 19 24 29 33 37 40"
+		}
+
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_health"			"25 50 75 100 125 150 175 200"
+		}
+
+	}
+
+		"OnUpgrade"
+			{
+				"FireSound"
+				{
+					"Target"		"CASTER"
+					"EffectName"	"Hero_Tinker.Rearm"
+
+				}
+				"AttachEffect"
+				{
+					"EffectName"		"particles/units/heroes/hero_meepo/meepo_poof.vpcf"
+					"EffectAttachType"	"attach_hitloc"
+					"Target"			"TARGET"
+
+					"ControlPointEntities"
+					{
+						"TARGET"	"attach_hitloc"
+					}
+				}
+			}
+
+
+
+
+	"Modifiers"
+	{
+
+
+
+		"modifier_blur_datadriven"
+		{
+
+
+
+
+
+			"Passive"	"1"
+			"IsHidden"	"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
+			    "MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+			}
+		}
+	}
+}

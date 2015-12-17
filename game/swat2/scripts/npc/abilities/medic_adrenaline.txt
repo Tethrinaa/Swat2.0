@@ -1,0 +1,169 @@
+//=================================================================================================================
+// Ability: Andrenaline (Medic)
+//=================================================================================================================
+
+"medic_adrenaline"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	"MaxLevel"						"1" 		//Needs to be chnaged for levels 51-55
+	"AbilityTextureName"			"huskar_berserkers_blood"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"120"
+	"AbilityCastPoint"				"0.05"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"60"		//Needs to be changed for levels 51-55
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"duration"			"20"
+		}
+
+		"02"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"modelscale"		"25"
+		}
+
+		"03"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"attack_speed_bonus_pct"	"300"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"rush_duration"			"10"
+		}
+		"04"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"rush_wait_duration"			"14"
+		}
+		"05"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"rush_check_duration"			"5"
+		}
+		"06"
+		{
+			"var_type"			"FIELD_INTEGER"
+			"rush_gap_duration"			"1"
+		}
+	}
+
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dark_seer.vsndevts"
+		"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+	}
+	
+	"OnAbilityPhaseStart"
+	{
+		"RunScript"
+		{
+               "ScriptFile"		"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnAbilityPhaseStart"
+            }
+	}
+	
+
+	"OnSpellStart"
+	{
+		"FireEffect"
+		{
+			"EffectName"        "particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"EffectAttachType"  "follow_origin"
+			"Target"            "TARGET"
+		}
+
+		"FireSound"
+		{
+			"EffectName"	"Hero_Dark_Seer.Surge"
+			"Target" 		"TARGET"
+		}
+
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_adrenaline"
+			"Target" 		"TARGET"
+			"Duration"		"%duration"
+		}
+		"RunScript"
+		{
+               "ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+               "Function"		"OnSpellStart"
+            }
+		"ApplyModifier"
+		{
+			"ModifierName"	"modifier_rush_waiter"
+			"Target" 		"TARGET"
+			"Duration"		"%rush_wait_duration"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_rush_waiter"
+		{
+			"IsHidden" "1"
+			"OnDestroy"
+			{
+				"ApplyModifier"
+				{
+					"ModifierName"	"modifier_rush_thinker"
+					"Target" 		"TARGET"
+					"Duration"		"%rush_duration"
+				}
+			}
+		}
+		"modifier_rush_thinker"
+		{
+			"IsHidden" "1"
+			"ThinkInterval" "%rush_check_duration"
+			"OnIntervalThink"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+					"Function"		"RushThink"
+				}
+			}
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/heroes/hero_medic/medic_adrenaline.lua"
+					"Function"		"RushThink"
+				}
+			}
+		}
+		"modifier_adrenaline"
+		{
+			"EffectName"		"particles/units/heroes/hero_clinkz/clinkz_strafe.vpcf"
+			"EffectAttachType"	"follow_origin"
+
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_speed_bonus_pct"
+			}
+		}
+	}
+}

@@ -1,0 +1,103 @@
+.SquadMemberPanel
+{
+	margin-top: 0px;
+	height: 50px;
+	width: 1000px;
+}
+
+.SquadMemberPanel Image
+{
+	opacity: 0;
+}
+
+
+#Index
+{
+	horizontal-align: left;
+	margin-left: 5px;
+	z-index: 2;
+}
+
+.PlayerPortrait
+{
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
+#ClassPortrait
+{
+	height: 50px;
+	width: 50px;
+	background-size: 100% 100%;
+	box-shadow: -2px -2px 8px 5px #FFFFFF;
+	opacity: 1;
+}
+
+#Rank
+{
+	margin-left: 40px;
+	margin-top: 3px;
+	background-color: #000000;
+	height: 12px;
+	width: 12px;
+	border: 1px solid black;
+	opacity: 1;
+}
+
+.HealthMeter
+{
+	margin-left: 60px;
+	margin-top: 25px;
+}
+
+#HealthBarBackground
+{
+	height: 10px;
+	width: 92px;
+	background-color: #404040;
+	opacity: 1;
+}
+
+#HealthBar
+{
+	opacity: 1;
+	margin-top: 1px;
+	margin-left: 1px;
+	height: 8px;
+	width: 90px;
+	background-color: gradient( radial, 50% -20%, 0% 0%, 80% 80%, from( #006500 ), to( #00C000 ) );
+}
+
+.ManaMeter
+{
+	margin-left: 60px;
+	margin-top: 35px;
+}
+
+#ManaBarBackground
+{
+	opacity: 1;
+	height: 10px;
+	width: 92px;
+	background-color: #404040;
+}
+
+#ManaBar
+{
+	opacity: 1;
+	margin-top: 1px;
+	margin-left: 1px;
+	height: 8px;
+	width: 90px;
+	background-color: gradient( radial, 50% -20%, 0% 0%, 80% 80%, from( #10468F ), to( #0378FF ) );
+}
+
+#PlayerName
+{
+	width: 100px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #FFFFFF;
+	horizontal-align: left;
+	margin-left: 62px;
+}

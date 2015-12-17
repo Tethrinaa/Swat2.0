@@ -1,0 +1,151 @@
+//=================================================================================================================
+// Ability: TNT
+// On death, unit explodes for massive damage
+//=================================================================================================================
+"enemy_common_tnt"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"                      "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "techies_remote_mines"
+    "MaxLevel"     "1"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "damage_full"		"300"
+        }
+
+        "02"
+        {
+            "var_type"		    "FIELD_INTEGER"
+            "radius_full"	        "120"
+        }
+
+        "03"
+        {
+            "var_type"			"FIELD_INTEGER"
+            "damage_partial"		"100"
+        }
+
+        "04"
+        {
+            "var_type"		    "FIELD_INTEGER"
+            "radius_partial"	        "230"
+        }
+    }
+
+    "precache"
+    {
+        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+        "particle"	    "particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_smoke.vpcf"
+        "particle"	    "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+    }
+
+    "Modifiers"
+    {
+
+        "modifier_enemy_common_tnt"
+        {
+            "Passive" "1"
+            "IsHidden"              "1"
+
+            "EffectName"        "particles/units/heroes/hero_warlock/golem_ambient_fire_mane_smoke.vpcf"
+            "EffectAttachType"  "follow_attack"
+
+            "OnCreated"
+			{
+				"AttachEffect"
+				{
+					"Target"				"CASTER"
+					"EffectName"			"particles/units/heroes/hero_ogre_magi/ogre_magi_ignite_debuff_smoke.vpcf"
+					"EffectAttachType"		"start_at_customorigin"
+					"ControlPointEntities"
+					{
+						"CASTER"			"attach_overhead"
+					}
+				}
+
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_tnt"
+                }
+			}
+
+            "OnDeath"
+            {
+
+                "FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+					"EffectAttachType"  "follow_hitloc"
+					"Target"
+					{
+						"Center"	"UNIT"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+
+                "FireSound"
+				{
+					"EffectName"	"Hero_Techies.RemoteMine.Detonate"
+					"Target"
+					{
+						"Center"	"CASTER"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+					}
+				}
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"   "UNIT"
+                        "Radius"   "%radius_full"
+                        "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+                        "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+
+                    "Action"
+                    {
+                        "RunScript"
+                        {
+                            "ScriptFile"            "abilities/enemy_common_tnt.lua"
+                            "Function"              "deal_raw_damage"
+                            "Damage"                "%damage_full"
+                        }
+                    }
+                }
+
+                "ActOnTargets"
+                {
+                    "Target"
+                    {
+                        "Center"   "UNIT"
+                        "Radius"   "%radius_partial"
+                        "Teams"    "DOTA_UNIT_TARGET_TEAM_BOTH"
+                        "Types"    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+                    }
+
+                    "Action"
+                    {
+                        "RunScript"
+                        {
+                            "ScriptFile"            "abilities/enemy_common_tnt.lua"
+                            "Function"              "deal_raw_damage"
+                            "Damage"                "%damage_partial"
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

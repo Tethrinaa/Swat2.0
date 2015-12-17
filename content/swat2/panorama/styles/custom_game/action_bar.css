@@ -1,24 +1,57 @@
 .AbilityOverlayRoot
 {
-	horizontal-align: center;
-	vertical-align: bottom;
-	margin-bottom: 220px;
+	position: 46.7% 88.6% 0px;
 	flow-children: down;
 }
 
-#ability_list
+.Background
+{
+    width: 453px;
+	height: 117px;
+	background-color: #000000;
+}
+ 
+.TopBar
+{
+	vertical-align: top;
+	margin-left: 5px;
+	flow-children: right;
+}
+
+.BottomBar
+{
+	margin-left: 5px;
+	vertical-align: bottom;
+	flow-children: right;
+}
+
+#weapon_list
 {
 	flow-children: right;
-	border: 2px solid black;
-	background-color: #272823;
+	/*border: 2px solid orange;*/
+	/*background-color: #6D7062;*/
+}
+
+#primary_ability_list
+{
+	flow-children: right;
+}
+#nanite_list
+{
+	flow-children: right;
+	/*border: 2px solid blue;*/
+	/*border-top: 2px solid blue;*/
+}
+
+#secondary_ability_list
+{
+	flow-children: right;
 }
 
 .AbilityPanel
 {
-	margin-left: 8px;
-	margin-right: 8px;
-	margin-top: 4px;
-	margin-bottom: 4px;
+	margin-left: 7px;
+	margin-right: 7px;
 }
 
 .AbilityPanel.no_ability
@@ -26,48 +59,6 @@
 	visibility: collapse;
 }
 
-#LevelUpButton
-{
-	border: 1px solid black;
-    background-color: #c4a529;
-	width: 114px;
-	height: 28px;
-	margin-bottom: 6px;
-	visibility: collapse;
-}
-
-.could_level_up #LevelUpButton
-{
-	visibility: visible;
-}
-
-#LevelUpButton:hover
-{
-    background-color: #9e8b2c;
-}
-
-#LevelUpButtonInset
-{
-	width: 100%;
-	height: 100%;
-	border: 2px solid black;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), color-stop( 0.1, #c4a529 ), color-stop( 0.75, #9e8b2c ), color-stop( 0.9, #c4a529 ), to( #ffffff ) );
-	margin: 1px;
-}
-
-#LevelUpButton:hover #LevelUpButtonInset
-{
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), color-stop( 0.2, #c4a529 ), color-stop( 0.75, #9e8b2c ), color-stop( 0.8, #c4a529 ), to( #ffffff ) );
-}
-
-#LevelUpButton Label
-{
-	text-transform: uppercase;
-	text-shadow: 0px 1px 3px 2.5 #000000;
-	color: white;
-	vertical-align: center;
-	horizontal-align: center;
-}
 
 #ButtonAndLevel
 {
@@ -76,8 +67,8 @@
 
 #AbilityButton
 {
-	width: 80px;
-	height: 80px;
+	width: 52px;
+	height: 52px;
 	border: 2px solid transparent;
 }
 
@@ -103,7 +94,7 @@
 
 #AbilityButton:active
 {
-	border: 4px solid white;
+	border: 2px solid white;
 }
 
 .no_level DOTAAbilityImage
@@ -131,12 +122,12 @@
 
 .auto_cast_enabled #AbilityStatusBorder
 {
-	border: 4px solid orange;
+	border: 2px solid orange;
 }
 
 .toggle_enabled #AbilityStatusBorder
 {
-	border: 4px solid green;
+	border: 2px solid green;
 }
 
 #AbilityLevelContainer
@@ -151,9 +142,7 @@
 	height: 12px;
 	margin-left: 1px;
 	margin-right: 1px;
-
 	border-radius: 3px;
-
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2e2716 ), to( #020302 ) );
 	border: 2px solid #ffffff05;
 }

@@ -1,0 +1,41 @@
+//=================================================================================================================
+// Cybrog: Pheromones
+//=================================================================================================================
+"cyborg_pheromones"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"				"ability_datadriven"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityTextureName"			"alchemist_unstable_concoction"
+	"AbilityManaCost"		"200"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"			"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+		"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+	}
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"				"0"
+	"AbilityCooldown"				"6"
+
+	"OnSpellStart"
+	{
+		"FireSound"
+		{
+			"EffectName"	"Hero_TrollWarlord.BerserkersRage.Toggle"
+			"Target" 		"CASTER"
+		}
+		"RunScript"
+		{
+			"ScriptFile"	"util/SWATUtil.lua"
+			"Function"		"SwapAbilitiesDataDriven"
+			"on_ability"		"cyborg_pheromones_off"
+			"off_ability"		"cyborg_pheromones"
+		}
+	}
+}

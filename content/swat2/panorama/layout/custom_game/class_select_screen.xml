@@ -1,0 +1,52 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/class_select_screen.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/class_select_screen.js" />
+	</scripts>
+	<Panel class="ClassSelectScreenRoot">
+		<Panel id="BaseHud" >
+			<Image id="BackgroundImage" />
+			<Panel class="CharacterPortrait" >
+				<DOTAHeroImage id="PyroImage" heroid="106" heroimagestyle="portrait" />
+				<DOTAHeroImage id="MedicImage" heroid="90" heroimagestyle="portrait" />
+				<DOTAHeroImage id="HoImage" heroid="77" heroimagestyle="portrait" />
+				<DOTAHeroImage id="TacticianImage" heroid="57" heroimagestyle="portrait" />
+				<DOTAHeroImage id="CyborgImage" heroid="51" heroimagestyle="portrait" />
+				<DOTAHeroImage id="MaverickImage" heroid="38" heroimagestyle="portrait" />
+				<DOTAHeroImage id="SniperImage" heroid="35" heroimagestyle="portrait" />
+				<DOTAHeroImage id="TechopsImage" heroid="34" heroimagestyle="portrait" />
+				<DOTAHeroImage id="PsychImage" heroid="23" heroimagestyle="portrait" />
+				<DOTAHeroImage id="DemoImage" heroid="2" heroimagestyle="portrait" />
+				<Label id="CharacterName" text=""/>
+			</Panel>	
+			<Panel class="AbilityPanel" >
+				<Panel id="ability_panel" />
+			</Panel>
+			<Panel class="ClassesPanel" >
+				<Label text="Class" />
+				<Panel id="class_button_list" />
+			</Panel>
+			<Panel class="WeaponsPanel" >
+				<Label text="Weapons" />
+				<Panel id="weapons_button_list" />
+			</Panel>
+			<Panel class="ArmorPanel" >
+				<Label text="Armor" />
+				<Panel id="armor_button_list" />
+			</Panel>
+			<Panel id="TraitsPanel" >
+				<Panel id="traits_button_list" />
+			</Panel>
+			<Panel id="SpecsPanel" >
+				<Panel id="specs_button_list" />
+			</Panel>
+			<Button id="ConfirmSelections" onactivate="ConfirmSelected()">
+				<Label text="Confirm Selections" />
+			</Button>
+		</Panel>
+	</Panel>
+</root>
+

@@ -1,0 +1,26 @@
+//=================================================================================================================
+ // No minimap
+ //=================================================================================================================
+    "common_no_minimap"
+    {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_datadriven"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+        "AbilityTextureName"            "disruptor_glimpse"
+
+        // Modifiers
+        //-------------------------------------------------------------------------------------------------------------
+        "Modifiers"
+        {
+            "common_unselectable"
+            {
+                "IsHidden"                      "1"
+                "Passive"                       "1"
+                    "States"
+                    {
+                        "MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+                    }
+            }
+        }
+    }
