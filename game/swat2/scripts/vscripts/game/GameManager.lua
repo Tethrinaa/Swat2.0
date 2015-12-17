@@ -7,6 +7,7 @@ SHOW_GAME_SYSTEM_LOGS = true
 
 -- Systems GameManager is responsible for
 require('game/Locations')
+require('game/LocationEvents')
 require('game/EnemyUpgrades')
 require('game/EnemySpawner')
 require('game/EnemyCommander')

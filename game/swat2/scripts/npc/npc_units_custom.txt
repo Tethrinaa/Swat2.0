@@ -10,7 +10,7 @@
 	        "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 	        "AbilityLayout"				"4"
 	        "Level"						"10"
-	        "Ability1"					"invulnerable_unselectable"
+	        "Ability1"					"dummy_passive"
 	    }
 	//=================================================================================
 	// Creature: ABOMINATION
@@ -807,7 +807,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"enemy_grotesque_ensnare"			// Ability 1.
-		"Ability2"					"enemy_grotesque_evasion"			// Ability 2.
+		"Ability2"					"enemy_common_evasion"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
 		"Ability5"					""			// Ability 5.
@@ -944,7 +944,7 @@
 	    "Ability2"					"enemy_common_radinating"
 	    "Ability3"					"enemy_common_radinating_regeneration"
 	    "Ability4"					"enemy_grotesque_ensnare"
-	    "Ability5"					"enemy_grotesque_evasion"
+	    "Ability5"					"enemy_common_evasion"
 	    "Ability6"					""			// Ability 6 - Extra.
 	    "Ability7"					""			// Ability 7 - Extra.
 	    "Ability8"					""			// Ability 8 - Extra.
@@ -1505,6 +1505,132 @@
 	    "Creature"
 	    {
 	        "CanRespawn"				"0"
+	    }
+	}
+	//=================================================================================
+	// Creature: Spider
+	//=================================================================================
+	"enemy_minion_spider"
+	{
+	    // General
+	    "BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+	    "Model"						"models/heroes/broodmother/spiderling.vmdl"	// Model.
+	    "SoundSet"					"Undying_Zombie"					// Name of sound set.
+	    "GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
+	    "ModelScale"				"0.185"
+	    "Level"						"1"
+	
+	    // Abilities
+	    //----------------------------------------------------------------
+	    "Ability1"					"common_truesight"			// Ability 1.
+	    "Ability2"					"enemy_spider_web"			// Ability 2.
+	    "Ability3"					"enemy_spider"			// Ability 3.
+	    "Ability4"					"enemy_common_evasion"			// Ability 4.
+	    "Ability5"					""			// Ability 5.
+	    "Ability6"					""			// Ability 6 - Extra.
+	    "Ability7"					""			// Ability 7 - Extra.
+	    "Ability8"					""			// Ability 8 - Extra.
+	
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"				"0"			// Physical protection.
+	    "ArmorType"                 "unarmored"
+	    "MagicalResistance"			"0"	   	// Magical protection.
+	
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"			"24"		// Damage range min.
+	    "AttackDamageMax"			"28"		// Damage range max.
+	    "AttackRate"				"0.40"		// Speed of attack.
+	    "AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
+	      "AttackType" "melee1"
+	    "AttackAcquisitionRange"	"1800"		// Range within a target can be acquired.
+	    "AttackRange"				"50"		// Range within a target can be attacked.
+	    "ProjectileModel"			""			// Particle system model for projectile.
+	    "ProjectileSpeed"			""			// Speed of projectile.
+	
+	    // Bounty
+	    //----------------------------------------------------------------
+	        "SwatXP"				"1"		// SWAT Custom Variable | Experience base value earned when killing enemy
+	    "BountyXP"					"0"		// Experience earn.
+	    "BountyGoldMin"				"0"		// Gold earned min.
+	    "BountyGoldMax"				"0"		// Gold earned max.
+	
+	    // Bounds
+	    //----------------------------------------------------------------
+	    "RingRadius"				"35"
+	    "HealthBarOffset"			"160"
+	    "BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+	    "MovementSpeed"				"280"		// Speed
+	    "MovementTurnRate"			"0.5"		// Turning rate.
+	
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"				"100"		// Base health.
+	    "StatusHealthRegen"			"0.15"		// Health regeneration rate.
+	    "StatusMana"				"0"			// Base mana.
+	    "StatusManaRegen"			"0"			// Mana regeneration rate.
+	
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"					"DOTA_TEAM_NEUTRALS"			// Team name.
+	    "CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+	    "CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+	    "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"		"1000"		// Range of vision during day light.
+	    "VisionNighttimeRange"		"1000"		// Range of vision at night time.
+	
+	    // Creature Data
+	    //----------------------------------------------------------------------------------------------------------------------
+	    "Creature"
+	    {
+	        "DisableClumpingBehavior"   "0"
+	        "CanRespawn"				"0"
+	
+	        //Basic AI State
+	        //-----------------------------------------------------------------
+	        "DefaultState"				"Invade"
+	
+	        "States"
+	        {
+	            "Invade"
+	            {
+	                    "Name"				"Invade"
+	                    "Aggression"		"100.0"
+	                    "Avoidance"			"0.0"
+	                    "Support"			"00.0"
+	            }
+	        }
+	
+	        //Level Up Parameters
+	        //-----------------------------------------------------------------
+	        "HPGain"					"0"
+	        "DamageGain"				"3"
+	        "ArmorGain"					"0"
+	        "MagicResistGain"			"0"
+	        "MoveSpeedGain"				"0"
+	        "BountyGain"				"0"
+	        "XPGain"					"0"
+	
+	        //Ability Usage Parameters
+	        //-----------------------------------------------------------------
+	        "OffensiveAbilities"
+	        {
+	            "Ability1"
+	            {
+	                "Name"                "enemy_spider_web"
+	                "Damage"              "1"
+	                "UseAtHealthPercent"  "100"
+	            }
+	        }
 	    }
 	}
 	//=================================================================================

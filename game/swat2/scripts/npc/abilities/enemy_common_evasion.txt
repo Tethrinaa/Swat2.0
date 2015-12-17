@@ -1,9 +1,10 @@
 //=================================================================================================================
-// Ability: Grotesque Evasion
+// Ability: Minion Evasion
 // Chance to dodge an attack
+// Used by grotesques and spiders
 // Levels are based on difficulty (Normal-Insane: 1, NM: 2, Ext: 3)
 //=================================================================================================================
-"enemy_grotesque_evasion"
+"enemy_common_evasion"
 {
     // General
     //-------------------------------------------------------------------------------------------------------------
@@ -24,7 +25,7 @@
     "Modifiers"
     {
 
-        "modifier_enemy_grotesque_evasion"
+        "modifier_enemy_common_evasion"
         {
             "Passive"               "1"
             "IsPurgable"            "0"
