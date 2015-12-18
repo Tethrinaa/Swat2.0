@@ -227,6 +227,56 @@
 	margin-top: 10px;
 }
 
+.SpecPanel
+{
+	width: 500px;
+	height: 360px;
+	margin-top: 630px;
+	margin-left: 1350px;
+}
+
+.SpecPanel Label
+{
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#spec_button_list
+{
+	horizontal-align: center;
+	margin-top: 80px;
+	flow-children: right-wrap;
+}
+
+.TraitPanel
+{
+	width: 500px;
+	height: 560px;
+	margin-top: 90px;
+	margin-left: 1350px;
+}
+
+.TraitPanel Label
+{
+	horizontal-align: center;
+	vertical-align: top;
+	color: #FFFFFF;
+	text-shadow: 2px 2px 8px 3.0 #333333b0;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#trait_button_list
+{
+	horizontal-align: center;
+	margin-top: 80px;
+	flow-children: right-wrap;
+}
+
 #ConfirmSelections
 {
 	border-radius: 2px;
