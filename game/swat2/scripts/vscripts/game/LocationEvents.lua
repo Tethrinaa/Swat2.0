@@ -1,16 +1,21 @@
 -- This method is called from the map itself from registered triggers
 -- It is used to alert the game of various events when units enter certain triggers
 --
-
--- Called when a unit enters a warehouse
+-- Passed in values to these methods
 -- Not sure what userdata is
 -- Relevant keys:
---      keys.activator = The unit entering the warehouse
---      keys.caller = The warehouse region
+--      keys.activator = The unit entering the trigger
+--      keys.caller = The region triggered
+
+-- Called when a unit enters a warehouse
 function UnitEntersWarehouse(userdata, keys)
     print("DEBUG Unit Entered Warehouse!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
+
+    -- Check if the unit is a player's hero or a "pet" (mini droids, cadet..etc)
+    -- (Old system values 3 and 4)
+    -- TODO: If not either of these, this method should DO NOTHING
 
     -- Check if the unit that entered was a pet
     -- We want to ignore this event if the pet is close its master
@@ -34,4 +39,17 @@ function UnitEntersWarehouse(userdata, keys)
     Timers:CreateTimer(25, function()
         g_EnemySpawner:setRecentlyEnteredBuilding(region)
     end)
+end
+
+-- Called when a unit enters the graveyard
+function UnitEntersGraveyard(keys)
+    print("DEBUG Unit Entered Graveyard!") -- TODO REMOVE
+    local unit = keys.activator
+
+    -- Check if the unit is a player's hero or a "pet" (mini droids, cadet..etc), civ (converted and non)
+    -- Don't allow things like sniper cams to trigger
+    -- (Old system values < 6)
+    -- TODO: If not either of these, this method should DO NOTHING
+
+    g_EnemySpawner:startGraveyardEncounter(unit)
 end
