@@ -145,6 +145,150 @@ function SetArmorButtonInfo( armor )
 	$("#SelectionButton").style.backgroundImage = url;
 }
 
+function SetSpecButtonInfo( spec )
+{
+	key = spec;
+	type = "specButton"
+	var label;
+	var url;
+	
+	if ( spec == "cybernetics" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/cybernetics.png')"; 
+		label = "Cybernetics"; 
+	}
+	else if ( spec == "energy_cells" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/energy_cells.png')"; 
+		label = "Energy Cells";
+	}
+	else if ( spec == "espionage" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/espionage.png')"; 
+		label = "Espionage";
+	}
+	else if ( spec == "leadership" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/leadership.png')"; 
+		label = "Leadership";
+	}
+	else if ( spec == "power_armor" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/power_armor.png')"; 
+		label = "Power Armor";
+	}
+	else if ( spec == "robotics" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/robotics.png')"; 
+		label = "Robotics";
+	}
+	else if ( spec == "triage" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/triage.png')"; 
+		label = "Triage";
+	}
+	else if ( spec == "weaponry" ) 
+	{ 
+		url = "url('file://{images}/spec_icons/weaponry.png')"; 
+		label = "Weaponry";
+	}
+	
+	$("#ButtonLabel").text = label;
+	$("#SelectionButton").style.backgroundImage = url;
+}
+
+function SetTraitButtonInfo( trait )
+{
+	key = trait;
+	type = "traitButton"
+	var label;
+	var url;
+	
+	if ( trait == "acrobat" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/acrobat.png')"; 
+		label = "Acrobat"; 
+	}
+	else if ( trait == "chem_reliant" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/chem_reliant.png')"; 
+		label = "Chem Reliant";
+	}
+	else if ( trait == "dragoon" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/dragoon.png')"; 
+		label = "Dragoon";
+	}
+	else if ( trait == "energizer" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/energizer.png')"; 
+		label = "Energizer";
+	}
+	else if ( trait == "engineer" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/engineer.png')"; 
+		label = "Engineer";
+	}
+	else if ( trait == "flower_child" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/flower_child.png')"; 
+		label = "Flower Child";
+	}
+	else if ( trait == "gadgeteer" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/gadgeteer.png')"; 
+		label = "Gadgeteer";
+	}
+	else if ( trait == "gifted" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/gifted.png')"; 
+		label = "Gifted";
+	}
+	else if ( trait == "healer" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/healer.png')"; 
+		label = "Healer";
+	}
+	else if ( trait == "pack_rat" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/pack_rat.png')"; 
+		label = "Pack Rat";
+	}
+	else if ( trait == "prowler" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/prowler.png')"; 
+		label = "Prowler";
+	}
+	else if ( trait == "rad_resistant" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/rad_resistant.png')"; 
+		label = "Rad Resistant";
+	}
+	else if ( trait == "reckless" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/reckless.png')"; 
+		label = "Reckless";
+	}
+	else if ( trait == "skilled" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/skilled.png')"; 
+		label = "Skilled";
+	}
+	else if ( trait == "survivalist" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/survivalist.png')"; 
+		label = "Survivalist";
+	}
+	else if ( trait == "swift_learner" ) 
+	{ 
+		url = "url('file://{images}/trait_icons/swift_learner.png')"; 
+		label = "Swift Learner";
+	}
+	
+	$("#ButtonLabel").text = label;
+	$("#SelectionButton").style.backgroundImage = url;
+}
+
 function GetKey()
 {
 	return key;
@@ -172,6 +316,18 @@ function Selected()
 		var b = a.GetParent();
 		b.data().ArmorSelected( key );
 	}
+	else if ( type == "specButton" )
+	{
+		var a = $.GetContextPanel();
+		var b = a.GetParent();
+		b.data().SpecSelected( key );
+	}
+	else if ( type == "traitButton" )
+	{
+		var a = $.GetContextPanel();
+		var b = a.GetParent();
+		b.data().TraitSelected( key );
+	}
 }
 
 (function()
@@ -179,5 +335,7 @@ function Selected()
 	$.GetContextPanel().data().SetClassButtonInfo = SetClassButtonInfo;
 	$.GetContextPanel().data().SetWeaponButtonInfo = SetWeaponButtonInfo;
 	$.GetContextPanel().data().SetArmorButtonInfo = SetArmorButtonInfo;
+	$.GetContextPanel().data().SetSpecButtonInfo = SetSpecButtonInfo;
+	$.GetContextPanel().data().SetTraitButtonInfo = SetTraitButtonInfo;
 	$.GetContextPanel().data().GetKey = GetKey;
 })();
