@@ -29,4 +29,9 @@ function UnitEntersWarehouse(userdata, keys)
 
     -- Check if we should spawn spiders
     g_EnemySpawner.spiderSpawner:rollForSpidersSpawn(region, unit)
+
+    -- Set this region as a recently entered building in some time
+    Timers:CreateTimer(25, function()
+        g_EnemySpawner:setRecentlyEnteredBuilding(region)
+    end)
 end

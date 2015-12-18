@@ -55,8 +55,9 @@ function EnemySpawner:new(o)
     -- Time between we roll for wave spawns
     self.waveGroupDelay = 6
 
-    -- Chance of spawning innards (higher == more chance)
-    self.innardsChance = 0
+    -- Stores location of last entered building (we will spawn minions there)
+    self.recentlyEnteredBuilding = nil -- Stores last building entered (there is a delay after the unit enters before this is set)
+    self.spawnedAtRecentlyEnteredBuilding = false -- Prevents spawning at lastBuildingEntered more than once in a row.
 
     -- Minion Spawners
     self.zombieSpawner = ZombieSpawner:new()
@@ -97,27 +98,21 @@ end
 function EnemySpawner:onDifficultySet(difficulty)
     if difficulty == "normal" then
         -- Normal mode
-        self.innardsChance = 1
         self.waveGroupDelay = 6
     elseif difficulty == "hard" then
         -- Hard mode
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     elseif difficulty == "insane" then
         -- Insane mode
-        self.innardsChance = 2
         self.waveGroupDelay = 5
     elseif difficulty == "survival" then
         -- Survival mode
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     elseif difficulty == "nightmare" then
         -- Nightmare mode  (should be set after another difficulty was set)
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     elseif difficulty == "extinction" then
         -- Extinction mode (should be set after another difficulty was set)
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     else
         -- Unknown? Error! (Shouldn't happen)
@@ -148,6 +143,14 @@ end
 
 function EnemySpawner:canSpawnMinion()
     return self.minionCount < EnemySpawner.MAX_MINIONS
+end
+
+-- Sets a building to be marked as recently entered. The next wave group will spawn here
+function EnemySpawner:setRecentlyEnteredBuilding(region)
+    if self.recentlyEnteredBuilding ~= region then
+        self.recentlyEnteredBuilding = region
+        self.spawnedAtRecentlyEnteredBuilding = false
+    end
 end
 
 
@@ -222,9 +225,9 @@ function EnemySpawner:spawnWave()
 
                     -- Figure out a location for the spawn group
                     local location = nil
-                    if g_GameManager.lastBuildingEntered ~= nil then
-                        location = g_GameManager.lastBuildingEntered
-                        g_GameManager.lastBuildingEntered = nil
+                    if self.spawnedAtRecentlyEnteredBuilding == false and self.recentlyEnteredBuilding ~= nil then
+                        location = self.recentlyEnteredBuilding
+                        self.spawnedAtRecentlyEnteredBuilding = true
                     else
                         location = GetRandomWarehouse()
                     end
