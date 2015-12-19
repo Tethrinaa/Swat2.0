@@ -53,3 +53,49 @@ function UnitEntersGraveyard(keys)
 
     g_EnemySpawner:startGraveyardEncounter(unit)
 end
+
+-- Called when a unit enters a bunker (or lab)
+function UnitEntersBunker(userdata, keys)
+    print("DEBUG Unit Entered Bunker!") -- TODO REMOVE
+    local unit = keys.activator
+    local region = keys.caller
+
+    -- Add the bunker status (rad immune)
+    unit:AddAbility("game_bunker_status")
+    unit:FindAbilityByName("game_bunker_status"):SetLevel(1)
+
+    -- Disable experience
+    if unit.playerInfo then
+        unit.playerInfo.experienceDisabled = unit.playerInfo.experienceDisabled + 1
+    end
+end
+
+-- Called when a unit leaves a bunker (or lab)
+function UnitLeavesBunker(userdata, keys)
+    print("DEBUG Unit Left Bunker!") -- TODO REMOVE
+    local unit = keys.activator
+    local region = keys.caller
+
+    -- Remove the bunker status (rad immune)
+    unit:RemoveModifierByName("modifier_game_bunker_status")
+    unit:RemoveAbility("game_bunker_status")
+
+    -- Enable experience
+    if unit.playerInfo then
+        unit.playerInfo.experienceDisabled = math.max(0, unit.playerInfo.experienceDisabled - 1)
+    end
+end
+
+-- Called when a unit enters a bunker (or lab)
+function UnitEntersLab(userdata, keys)
+    print("DEBUG Unit Entered Lab!") -- TODO REMOVE
+    local unit = keys.activator
+    local region = keys.caller
+end
+
+-- Called when a unit leaves the lab
+function UnitLeavesLab(userdata, keys)
+    print("DEBUG Unit Left Lab!") -- TODO REMOVE
+    local unit = keys.activator
+    local region = keys.caller
+end

@@ -2999,6 +2999,35 @@
 	    }
 	}
 	//=================================================================================================================
+	 // Bunker Status
+	 // Makes the unit immune to radiation (radiation auras and rad bolts)
+	 //=================================================================================================================
+	    "game_bunker_status"
+	    {
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "SpellImmunityType"             "SPELL_IMMUNITY_ALLIES_NO"
+	        "AbilityTextureName"            "omniknight_repel"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "modifier_game_bunker_status"
+	            {
+	                "IsBuff"                        "1"
+	                "Passive"                       "1"
+	
+	                "States"
+	                {
+	                    "MODIFIER_STATE_MAGIC_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
+	                }
+	            }
+	        }
+	    }
+	//=================================================================================================================
 	// Ability: Mana_Drain_Badly_Damaged (Power Core)
 	//=================================================================================================================
 	"game_power_core_badly_damaged"
