@@ -46,6 +46,9 @@ PLAYER_BUILDER_CONSTS.classes.tactician.Abilities = {"primary_tactician_weakpoin
 PLAYER_BUILDER_CONSTS.classes.psychologist.modifiers = {"modifier_awareness"}
 PLAYER_BUILDER_CONSTS.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}
 
+require("players/builders/TraitBuilder")
+require("players/builders/SpecBuilder")
+
 if PlayerBuilder == nil then
     PlayerBuilder = class({})
 end
@@ -57,6 +60,9 @@ function PlayerBuilder:new(o)
     self.__index = self
 
     PlayerBuilder = self
+
+    self.traitBuilder = TraitBuilder:new()
+    self.specBuilder = SpecBuilder:new()
 
     return o
 end
@@ -88,9 +94,29 @@ function PlayerBuilder:BuildMarine( event )
     -- Create the default hero
     --local hero = CreateHeroForPlayer("npc_dota_hero_sniper", ply)
 
+    -- We'll store the information here in this player info object
+    -- and pass that to PlayerManager so other systems can easily figure out information
+    -- about the players
+    local playerInfo = PlayerInfo:new()
+    playerInfo.playerId = event.playerId
+    playerInfo.playerIndex = event.playerId + 1
+    playerInfo.playerName = PlayerResource:GetPlayerName(event.playerId) or "Unknown"
+    playerInfo.hero = hero
+
+    playerInfo.className = event.class
+    playerInfo.weaponName = event.weapon
+    playerInfo.armorName = event.armor
+    playerInfo.traitName = event.trait
+    playerInfo.specName = event.spec
+
+    playerInfo.armorValue = PLAYER_BUILDER_CONSTS.armors[event.armor].index
+
     --Get hero instead TODO
     hero = ply:GetAssignedHero()
     hero:SetUnitName("npc_swat_hero_tactician")
+
+    -- Provide easy lookup of playerInfo
+    hero.playerInfo = playerInfo
 
     --Clean the hero up first
     RemoveAllSkills(hero)
@@ -176,28 +202,17 @@ function PlayerBuilder:BuildMarine( event )
 
     GameMode:ModifyStatBonuses(hero)
 
-    -- set trait TODO
+    -- set trait
+    PlayerBuilder.traitBuilder:applyTrait(hero, event.trait)
+
+    -- set spec
+    PlayerBuilder.specBuilder:applySpec(hero, event.spec)
+
     -- set maverick mutate TODO
-    -- set spec TODO
     -- set maverick dog TODO
     -- set modifiers TODO
 
     -----------------------------------------------------
-
-    -- We'll store the information here in this player info object
-    -- and pass that to PlayerManager so other systems can easily figure out information
-    -- about the players
-    local playerInfo = PlayerInfo:new()
-    playerInfo.playerId = event.playerId
-    playerInfo.playerIndex = event.playerId + 1
-	playerInfo.playerName = PlayerResource:GetPlayerName(event.playerId) or "Unknown"
-    playerInfo.hero = hero
-
-    playerInfo.className = event.class
-    playerInfo.weaponName = event.weapon
-    playerInfo.armorName = event.armor
-
-    playerInfo.armorValue = hero.sdata.armor_index
 
     g_PlayerManager:onPlayerLoadedSwatHero(playerInfo)
 end

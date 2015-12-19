@@ -580,98 +580,98 @@
 	//=================================================================================================================
 	// Cyborg: Forcefield
 	//=================================================================================================================
-	"cyborg_forcefield"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
-		"AbilityTextureName"	"abaddon_aphotic_shield"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityManaCost"		"120"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
+		"cyborg_forcefield"
 		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"2"
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"				"ability_datadriven"
+			"AbilityTextureName"	"abaddon_aphotic_shield"
+			"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+			"AbilityManaCost"		"120"
 		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
 			{
-				"ModifierName" 		"modifier_cyborg_forcefield"
-				"Target"			"CASTER"
+				"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+				
 			}
-			"RunScript"
+		
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastPoint"				"0"
+			"AbilityCooldown"				"2"
+			
+			"OnSpellStart"
 			{
-				"ScriptFile"	"util/SWATUtil.lua"
-				"Function"		"SwapAbilitiesDataDriven"
-	            "on_ability"    "cyborg_forcefield_off"
-	            "off_ability"    "cyborg_forcefield"
+				"ApplyModifier"
+				{
+					"ModifierName" 		"modifier_cyborg_forcefield"
+					"Target"			"CASTER"
+				}
+				"RunScript"
+				{
+					"ScriptFile"	"util/SWATUtil.lua"
+					"Function"		"SwapAbilitiesDataDriven"
+		            "on_ability"    "cyborg_forcefield_off"
+		            "off_ability"    "cyborg_forcefield"
+				}
+					"FireSound"
+				{
+					"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
+					"Target"        "CASTER"  
+				}
+				"FireEffect"
+				{
+					"EffectName"        "particles/items3_fx/lotus_orb_shield.vpcf"
+					"EffectAttachType"  "follow_origin"
+					"Target"            "CASTER"
+				}
 			}
-				"FireSound"
+			"Modifiers"
 			{
-				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
-				"Target"        "CASTER"  
-			}
-			"FireEffect"
-			{
-				"EffectName"        "particles/items3_fx/lotus_orb_shield.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "CASTER"
+				"modifier_cyborg_forcefield"
+				{
+					"ThinkInterval" 	"1"
+					"OnIntervalThink"
+					
+					
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+							"Function"		"ForcefieldThink"
+						}
+					
+					}
+					"OnCreated"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+							"Function"		"ForcefieldCreate"
+						}
+					}
+					"OnDestroy"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
+							"Function"		"ForcefieldDestroy"
+						}
+					}
+		            "Properties"
+		            {
+		                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
+		                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
+		                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
+		            }
+					
+					"EffectName"		"particles/items3_fx/lotus_orb_shield.vpcf"
+					"EffectAttachType"	"follow_origin"
+				}
 			}
 		}
-		"Modifiers"
-		{
-			"modifier_cyborg_forcefield"
-			{
-				"ThinkInterval" 	"1"
-				"OnIntervalThink"
-				
-				
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-						"Function"		"ForcefieldThink"
-					}
-				
-				}
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-						"Function"		"ForcefieldCreate"
-					}
-				}
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_cyborg/cyborg_forcefield.lua"
-						"Function"		"ForcefieldDestroy"
-					}
-				}
-	            "Properties"
-	            {
-	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"      "1"
-	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"     "1"
-	                "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"         "1"
-	            }
-				
-				"EffectName"		"particles/items3_fx/lotus_orb_shield.vpcf"
-				"EffectAttachType"	"follow_origin"
-			}
-		}
-	}
 	"cyborg_forcefield_off"
 	{
 		// General
@@ -4648,286 +4648,286 @@
 	// Cybrog: Cluster Rockets
 	//=================================================================================================================
 	"primary_cyborg_cluster_rockets"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_datadriven"
-		"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets.lua"
-		"AbilityTextureName"		"gyrocopter_flak_cannon"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"MaxLevel"					"16"
-		"LevelsBetweenUpgrades"  	"0"
-		"AoERadius" 				"%outer_radius"
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"  "0"
-		"AbilityCastRange"  "1000"
-	
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
-	
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		// "AbilityDamage"				"250" calculated by script mainly
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AoERadius"						"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
-	
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-	"precache"
 		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
-			"particle"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
-		}
-	
-		// Special
+			// General
 			//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                	"FIELD_INTEGER"
-				"total_damage_cap"          "1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000 3200 3400 3600 3800 4000"
-			}
-			"02"
-			{
-				"var_type"                	"FIELD_INTEGER"
-				"unit_damage_cap"          	"250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000"
-			}
-			"03"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"tick_rate"           		".08 .08 .08 .08 .08 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12"
-			}
-			"03" // I know this is derived information but it helps to have each natively available
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"ticks"           			"5"
-			}
-			"04"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"damage_duration"           ".33 .33 .33 .33 .33 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49"
-			}
-			"05"
-			{
-				"var_type"                	"FIELD_INTEGER"
-				"rockets"              		"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
-			}
-			"06"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"delay"                		"0.75"
-			}
-			"07"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
-			}
-			"08"
-			{
-				"var_type"                	"FIELD_FLOAT"
-				"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
-			}
-		}
+			"BaseClass"              	"ability_datadriven"
+			"ScriptFile"        		"heroes/hero_cyborg/primary_cyborg_cluster_rockets.lua"
+			"AbilityTextureName"		"gyrocopter_flak_cannon"
+			"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+			"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+			"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"MaxLevel"					"16"
+			"LevelsBetweenUpgrades"  	"0"
+			"AoERadius" 				"%outer_radius"
 		
-	
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastPoint"  "0"
+			"AbilityCastRange"  "1000"
 		
-		"OnSpellStart"
-		{
+			// Time
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCooldown"				"6"
 		
-			"FireSound"
-			{
-				"EffectName"	"Hero_Invoker.ForgeSpirit"
-				"Target" 		"CASTER"
-			}
+			// Cost
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityManaCost"				"50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200"
+		
+			// Damage
+			//-------------------------------------------------------------------------------------------------------------
+			// "AbilityDamage"				"250" calculated by script mainly
+			"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+			"AoERadius"						"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
 		
 		
-			"DelayedAction"
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+		"precache"
 			{
-				"Delay"						"%delay"
-				"Action"
+				"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+				"particle"			"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+				"soundfile"			"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+			}
+		
+			// Special
+				//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
 				{
-					"CreateThinker"
-					{
-						"ModifierName"			"modifier_cyborg_cluster_rockets_thinker"
-						"Target"				"POINT"
-					}
-				
-				
-		
+					"var_type"                	"FIELD_INTEGER"
+					"total_damage_cap"          "1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000 3200 3400 3600 3800 4000"
 				}
-				
-				
-				
+				"02"
+				{
+					"var_type"                	"FIELD_INTEGER"
+					"unit_damage_cap"          	"250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000"
+				}
+				"03"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"tick_rate"           		".08 .08 .08 .08 .08 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12 .12"
+				}
+				"03" // I know this is derived information but it helps to have each natively available
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"ticks"           			"5"
+				}
+				"04"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"damage_duration"           ".33 .33 .33 .33 .33 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49 .49"
+				}
+				"05"
+				{
+					"var_type"                	"FIELD_INTEGER"
+					"rockets"              		"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+				}
+				"06"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"delay"                		"0.75"
+				}
+				"07"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"stun_duration"          	".33 .33 .33 .33 .33 .66 .66 .66 .66 .66 1.0 1.0 1.0 1.0 1.0 1.33"
+				}
+				"08"
+				{
+					"var_type"                	"FIELD_FLOAT"
+					"radius"          			"275 290 305 320 335 350 365 380 395 410 425 440 455 470 485 500"
+				}
 			}
-		}
+			
 		
-		
-
-				
-				"FireEffect"
-				{
-				"Target"			"TARGET"
-				"EffectName"			"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
-				"EffectAttachType"		"attach_hitloc"
-				
-				}
-					
-				"FireSound"
-				{
-				"EffectName"			"Hero_Techies.LandMine.Detonate"
-				"Target"				"TARGET"
-				}
-		
-		
-	
-		"Modifiers"
-		{
-			"modifier_cyborg_cluster_rockets_thinker"
+			
+			"OnSpellStart"
 			{
 			
-
-				"ThinkInterval"				"%tick_rate"
-				"Duration"					"%damage_duration"
-
-				
-	
-				"OnCreated"
-				{
-				
-				"FireEffect"
-				{
-				"Target"			"TARGET"
-				"EffectName"			"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
-				"EffectAttachType"		"attach_hitloc"
-				"EffectRadius"			"%outer_radius"
-				}
-					
 				"FireSound"
 				{
-				"EffectName"			"Hero_Techies.LandMine.Detonate"
-				"Target"				"TARGET"
+					"EffectName"	"Hero_Invoker.ForgeSpirit"
+					"Target" 		"CASTER"
 				}
-				
-					"RunScript"
-					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
-						"Function"		"ClusterThink"
-						"Target"		"POINT"
-					}
-				}
-				"OnIntervalThink"
+			
+			
+				"DelayedAction"
 				{
-					"RunScript"
+					"Delay"						"%delay"
+					"Action"
 					{
-						"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
-						"Function"		"ClusterThink"
-						"Target"		"POINT"
+						"CreateThinker"
+						{
+							"ModifierName"			"modifier_cyborg_cluster_rockets_thinker"
+							"Target"				"POINT"
+						}
+					
+					
+			
 					}
+					
+					
+					
 				}
 			}
-		}
-	}
-	//=================================================================================================================
-	// Ability: Organic Replacement(Cyborg)
-	//=================================================================================================================
-	   "primary_cyborg_organic_replacement"
-	   {
-	  	// General
-		//-------------------------------------------------------------------------------------------------------------
-		 "AbilityName"              "cyborg_organic_replacement"
-		"BaseClass"				"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		 "MaxLevel"                 "8"
+			
+			
 	
-		"AbilityTextureName"			"rattletrap_power_cogs"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
-	
-	
-		}
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_evasion"				"7 13 19 24 29 33 37 40"
-			}
-	
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"25 50 75 100 125 150 175 200"
-			}
-	
-		}
-	
-			"OnUpgrade"
-				{
+					
+					"FireEffect"
+					{
+					"Target"			"TARGET"
+					"EffectName"			"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+					"EffectAttachType"		"attach_hitloc"
+					
+					}
+						
 					"FireSound"
 					{
-						"Target"		"CASTER"
-						"EffectName"	"Hero_Tinker.Rearm"
-	
+					"EffectName"			"Hero_Techies.LandMine.Detonate"
+					"Target"				"TARGET"
 					}
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_meepo/meepo_poof.vpcf"
-						"EffectAttachType"	"attach_hitloc"
-						"Target"			"TARGET"
+			
+			
+		
+			"Modifiers"
+			{
+				"modifier_cyborg_cluster_rockets_thinker"
+				{
+				
 	
-						"ControlPointEntities"
+					"ThinkInterval"				"%tick_rate"
+					"Duration"					"%damage_duration"
+	
+					
+		
+					"OnCreated"
+					{
+					
+					"FireEffect"
+					{
+					"Target"			"TARGET"
+					"EffectName"			"particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
+					"EffectAttachType"		"attach_hitloc"
+					"EffectRadius"			"%outer_radius"
+					}
+						
+					"FireSound"
+					{
+					"EffectName"			"Hero_Techies.LandMine.Detonate"
+					"Target"				"TARGET"
+					}
+					
+						"RunScript"
 						{
-							"TARGET"	"attach_hitloc"
+							"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+							"Function"		"ClusterThink"
+							"Target"		"POINT"
+						}
+					}
+					"OnIntervalThink"
+					{
+						"RunScript"
+						{
+							"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_cluster_rockets"
+							"Function"		"ClusterThink"
+							"Target"		"POINT"
 						}
 					}
 				}
-	
-	
-	
-	
-		"Modifiers"
-		{
-	
-	
-	
-			"modifier_blur_datadriven"
+			}
+		}
+		//=================================================================================================================
+		// Ability: Organic Replacement(Cyborg)
+		//=================================================================================================================
+		   "primary_cyborg_organic_replacement"
+		   {
+		  	// General
+			//-------------------------------------------------------------------------------------------------------------
+			 "AbilityName"              "cyborg_organic_replacement"
+			"BaseClass"				"ability_datadriven"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			 "MaxLevel"                 "8"
+		
+			"AbilityTextureName"			"rattletrap_power_cogs"
+		
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
 			{
-	
-	
-	
-	
-	
-				"Passive"	"1"
-				"IsHidden"	"1"
-				"Properties"
+				"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+				"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+		
+		
+			}
+		
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
 				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
-				    "MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+					"var_type"					"FIELD_INTEGER"
+					"bonus_evasion"				"7 13 19 24 29 33 37 40"
+				}
+		
+				"02"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"bonus_health"			"25 50 75 100 125 150 175 200"
+				}
+		
+			}
+		
+				"OnUpgrade"
+					{
+						"FireSound"
+						{
+							"Target"		"CASTER"
+							"EffectName"	"Hero_Tinker.Rearm"
+		
+						}
+						"AttachEffect"
+						{
+							"EffectName"		"particles/units/heroes/hero_meepo/meepo_poof.vpcf"
+							"EffectAttachType"	"attach_hitloc"
+							"Target"			"TARGET"
+		
+							"ControlPointEntities"
+							{
+								"TARGET"	"attach_hitloc"
+							}
+						}
+					}
+		
+		
+		
+		
+			"Modifiers"
+			{
+		
+		
+		
+				"modifier_blur_datadriven"
+				{
+		
+		
+		
+		
+		
+					"Passive"	"1"
+					"IsHidden"	"1"
+					"Properties"
+					{
+						"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%bonus_evasion"
+					    "MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+					}
 				}
 			}
 		}
-	}
 	//=================================================================================================================
 	// Ability: Organic Replacement(Cyborg)
 	//=================================================================================================================
@@ -6186,6 +6186,18 @@
 	            }
 	         }
 		}
+	}
+	//=================================================================================================================
+	// Trait: Skilled
+	//=================================================================================================================
+	"trait_skilled"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"skywrath_mage_ancient_seal"
+	    "MaxLevel"	"1"
 	}
 	//=================================================================================================================
 	// Ability: assault_rifleI // Mark 1 Assault Rifle skill
