@@ -4,11 +4,15 @@
 var m_ClassButtons = [];
 var m_WeaponButtons = [];
 var m_ArmorButtons = [];
+var m_SpecButtons = [];
+var m_TraitButtons = [];
 
 //contain player selection info
 var playerClass = "";
 var playerWeapon = "";
 var playerArmor = "";
+var playerSpec = "";
+var playerTrait = "";
 
 //table of all available classes
 var classes = [];
@@ -37,6 +41,36 @@ armor.push( "light" );
 armor.push( "medium" );
 armor.push( "heavy" );
 armor.push( "advanced" );
+
+//table of all available specs
+var specs = [];
+specs.push( "cybernetics" );
+specs.push( "energy_cells" );
+specs.push( "espionage") ;
+specs.push( "leadership" );
+specs.push( "power_armor" );
+specs.push( "robotics" );
+specs.push( "triage" );
+specs.push( "weaponry" );
+
+//table of all available traits
+var traits = [];
+traits.push( "acrobat" );	
+traits.push( "chem_reliant" );
+traits.push( "dragoon" );
+traits.push( "energizer" );
+traits.push( "engineer" );	
+traits.push( "flower_child" );
+traits.push( "gadgeteer" );
+traits.push( "gifted" );
+traits.push( "healer" );
+traits.push( "pack_rat" );
+traits.push( "prowler" );
+traits.push( "rad_resistant" );
+traits.push( "reckless" );
+traits.push( "skilled" );
+traits.push( "survivalist" );
+traits.push( "swift_learner" );														
 	
 function UpdateLists()
 {
@@ -52,6 +86,12 @@ function UpdateLists()
 		return;
 	var abilityList = $( "#ability_panel" );
 	if ( !abilityList )
+		return;
+	var specButtonList = $( "#spec_button_list" );
+	if ( !specButtonList )
+		return;
+	var traitButtonList = $( "#trait_button_list" );
+	if ( !traitButtonList )
 		return;
 	
 	//makes all class buttons
@@ -93,6 +133,28 @@ function UpdateLists()
 	abilityPanel.data().SetWeaponAbility( "" );
 	abilityPanel.data().SetArmorAbility( "" );
 	abilityPanel.data().SetPlayerAbilities( "" );
+	
+	//makes all specialization buttons
+	for ( var i = 0; i<specs.length; ++i )
+	{
+		var specButton = $.CreatePanel( "Panel", specButtonList, "" );
+		specButton.BLoadLayout( "file://{resources}/layout/custom_game/class_select_screen_button.xml", false, false );
+		specButton.data().SetSpecButtonInfo( specs[i] );
+		m_SpecButtons.push( specButton );
+		specButtonList.data().SpecSelected = SpecSelected;
+		specButton.visible = true;
+	}	
+	
+	//makes all trait buttons
+	for ( var i = 0; i<traits.length; ++i )
+	{
+		var traitButton = $.CreatePanel( "Panel", traitButtonList, "" );
+		traitButton.BLoadLayout( "file://{resources}/layout/custom_game/class_select_screen_button.xml", false, false );
+		traitButton.data().SetTraitButtonInfo( traits[i] );
+		m_TraitButtons.push( traitButton );
+		traitButtonList.data().TraitSelected = TraitSelected;
+		traitButton.visible = true;
+	}	
 }
 
 
@@ -336,6 +398,40 @@ function ArmorSelected( armor )
 	PlayerReady();
 }
 
+function SpecSelected( spec )
+{
+	//finds the button for that spec
+	for ( var i = 0; i < 8; ++i )
+	{	
+		var specButton = m_SpecButtons[ i ];
+		var specName = specButton.data().GetKey();
+		specButton.SetHasClass( "is_selected", false );
+		if ( specName == spec )
+		{
+			specButton.SetHasClass( "is_selected", true );
+			playerSpec = spec;
+		}
+	}
+	PlayerReady();
+}
+
+function TraitSelected( trait )
+{
+	//finds the button for that spec
+	for ( var i = 0; i < 16; ++i )
+	{	
+		var traitButton = m_TraitButtons[ i ];
+		var traitName = traitButton.data().GetKey();
+		traitButton.SetHasClass( "is_selected", false );
+		if ( traitName == trait )
+		{
+			traitButton.SetHasClass( "is_selected", true );
+			playerTrait = trait;
+		}
+	}
+	PlayerReady();
+}
+
 function SetPortrait( playerClass )
 {
 	$( "#PyroImage" ).visible = false;
@@ -396,7 +492,7 @@ function SetPortrait( playerClass )
 //sees if the player has selected all options, if so show confirm button
 function PlayerReady()
 {
-	if ( playerClass != "" && playerArmor != "" && playerWeapon != "" )
+	if ( playerClass != "" && playerArmor != "" && playerWeapon != "" && playerSpec != "" && playerTrait != "" )
 	{
 		$("#ConfirmSelections").visible = true;
 	}
@@ -409,7 +505,7 @@ function PlayerReady()
 function ConfirmSelected()
 {
 	var playerId = Players.GetLocalPlayer();
-	GameEvents.SendCustomGameEventToServer( "class_setup_complete", { playerId:playerId, class:playerClass, weapon:playerWeapon, armor:playerArmor, trait:"none", spec:"none" });
+	GameEvents.SendCustomGameEventToServer( "class_setup_complete", { playerId:playerId, class:playerClass, weapon:playerWeapon, armor:playerArmor, trait:playerTrait, spec:playerSpec });
 	//makes class select screen collapse
 	$.GetContextPanel().visible = false;
 	$.GetContextPanel().RemoveAndDeleteChildren();

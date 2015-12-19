@@ -37,11 +37,13 @@
 				<Label text="Armor" />
 				<Panel id="armor_button_list" />
 			</Panel>
-			<Panel id="TraitsPanel" >
-				<Panel id="traits_button_list" />
+			<Panel class="SpecPanel" >
+				<Label text="Specializations" />
+				<Panel id="spec_button_list" />
 			</Panel>
-			<Panel id="SpecsPanel" >
-				<Panel id="specs_button_list" />
+			<Panel class="TraitPanel" >
+				<Label text="Traits" />
+				<Panel id="trait_button_list" />
 			</Panel>
 			<Button id="ConfirmSelections" onactivate="ConfirmSelected()">
 				<Label text="Confirm Selections" />

@@ -22,7 +22,31 @@
 		<Image src="file://{images}/weapon_icons/chaingun.png" />
 		<Image src="file://{images}/weapon_icons/flamethrower.png" />
 		<Image src="file://{images}/weapon_icons/rocket.png" />
-		<Image src="file://{images}/weapon_icons/sniper_rifle.png" />	
+		<Image src="file://{images}/weapon_icons/sniper_rifle.png" />
+		<Image src="file://{images}/spec_icons/cybernetics.png" />
+		<Image src="file://{images}/spec_icons/energy_cells.png" />
+		<Image src="file://{images}/spec_icons/espionage.png" />
+		<Image src="file://{images}/spec_icons/leadership.png" />
+		<Image src="file://{images}/spec_icons/power_armor.png" />
+		<Image src="file://{images}/spec_icons/robotics.png" />
+		<Image src="file://{images}/spec_icons/triage.png" />
+		<Image src="file://{images}/spec_icons/weaponry.png" />
+		<Image src="file://{images}/trait_icons/acrobat.png" />
+		<Image src="file://{images}/trait_icons/chem_reliant.png" />
+		<Image src="file://{images}/trait_icons/dragoon.png" />
+		<Image src="file://{images}/trait_icons/energizer.png" />
+		<Image src="file://{images}/trait_icons/engineer.png" />
+		<Image src="file://{images}/trait_icons/flower_child.png" />
+		<Image src="file://{images}/trait_icons/gadgeteer.png" />
+		<Image src="file://{images}/trait_icons/gifted.png" />
+		<Image src="file://{images}/trait_icons/healer.png" />
+		<Image src="file://{images}/trait_icons/pack_rat.png" />
+		<Image src="file://{images}/trait_icons/prowler.png" />
+		<Image src="file://{images}/trait_icons/rad_resistant.png" />
+		<Image src="file://{images}/trait_icons/reckless.png" />
+		<Image src="file://{images}/trait_icons/skilled.png" />
+		<Image src="file://{images}/trait_icons/survivalist.png" />
+		<Image src="file://{images}/trait_icons/swift_learner.png" />
 	</Panel>	
 </root>
 

@@ -37,7 +37,6 @@ function PlayerInfo:new(o)
     self.experienceEpicModifier = 1.0 -- This will be reduced when the player reaches epic levels
     self.experienceRezModifier = 1.0 -- This will be reduced when the player dies (is higher based on how many times player has died)
     self.experienceHurtModifier = 1.0 -- This will be reduced when the player suffers certain injuries
-    self.experienceHurtModifier = 1.0 -- This will be reduced when the player suffers certain injuries
     self.experienceOverdoseModifier = 1.0 -- This will be reduced when the player is overdosing on drugs (Winners don't do that)
     self.experienceSwiftLearnerModifier = 1.0 -- This will be *increased* if the player loads the swift learner trait
     self.experienceDisabled = 0 -- If greater than 1, no experience is earned (allows compounding sources to increment / decrement this value)
