@@ -1,0 +1,46 @@
+//=================================================================================================================
+// Ability: Zombie Graveyard
+// Makes some effects when zombies spawn in the graveyard spawn
+//=================================================================================================================
+"enemy_zombie_graveyard"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"	    	"ability_datadriven"
+    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName" 	"viper_corrosive_skin"
+    "MaxLevel"	"1"
+
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
+        "particle"          "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+    }
+
+    "Modifiers"
+    {
+        "modifier_enemy_spider_passives"
+        {
+            "Passive" "1"
+            "IsHidden" "1"
+
+
+            "OnCreated"
+            {
+                // TODO: Make some sound (not working)
+                "FireSound"
+                {
+                    "EffectName"	"Hero_Undying.SpawnUndying"
+                    "Target" "CASTER"
+                }
+
+                "FireEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+                    "EffectAttachType"  "follow_origin"
+                    "Target" "CASTER"
+                }
+            }
+        }
+    }
+}

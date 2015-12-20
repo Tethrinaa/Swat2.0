@@ -116,11 +116,13 @@ function ExperienceManager:divideExperience(experience)
         end
 
         for _,playerInfo in pairs(g_PlayerManager.playersInfo) do
-            playerInfo.hero:AddExperience(
-                exp * playerInfo.experienceEpicModifier * playerInfo.experienceRezModifier * playerInfo.experienceHurtModifier * playerInfo.experienceHurtModifier * playerInfo.experienceOverdoseModifier * playerInfo.experienceSwiftLearnerModifier
-                , 0
-                , false
-                , false)
+            if playerInfo.experienceDisabled == 0 then
+                playerInfo.hero:AddExperience(
+                    exp * playerInfo.experienceEpicModifier * playerInfo.experienceRezModifier * playerInfo.experienceHurtModifier * playerInfo.experienceHurtModifier * playerInfo.experienceOverdoseModifier * playerInfo.experienceSwiftLearnerModifier
+                    , 0
+                    , false
+                    , false)
+            end
         end
     end
 end

@@ -19,6 +19,7 @@ require("game/minions/GrotesqueSpawner")
 require("game/minions/InnardsSpawner")
 require("game/minions/RatSpawner")
 require("game/minions/FireflySpawner")
+require("game/minions/SpiderSpawner")
 
 EnemySpawner.MAX_MINIONS = 200 -- The cap on minions that are allowed out before we add them to the minion queue
 EnemySpawner.MAX_MINIONS_WAVE_START = EnemySpawner.MAX_MINIONS / 3 -- If mobs over this amount when a wave wants to start, it waits (and buffs existing mobs)
@@ -26,6 +27,7 @@ EnemySpawner.MAX_GROUP_SIZE = 21 -- The largest size a minion group can be
 
 EnemySpawner.WAVE_SPAWN_DELAY = 30 -- The wait time from difficulty being set to when we start the wave spawning (note: the first wave will still take an additional 85-105 seconds)
 EnemySpawner.BOSS_SPAWN_DELAY = 45 -- The wait time from waves spawning before boss wave cycle begins (note: the first boss will still have an initial wait period)
+EnemySpawner.GRAVEYARD_SPAWN_DELAY = 180 -- The wait time between being able to spawn zombies at the graveyard
 
 -- At least one of these conditions needs to be met for a boss to spawn
 EnemySpawner.BOSS_CHECK_MINION_COUNT = EnemySpawner.MAX_MINIONS / 4 * 3 -- The current number of minions must be less than this
@@ -54,8 +56,12 @@ function EnemySpawner:new(o)
     -- Time between we roll for wave spawns
     self.waveGroupDelay = 6
 
-    -- Chance of spawning innards (higher == more chance)
-    self.innardsChance = 0
+    -- Stores location of last entered building (we will spawn minions there)
+    self.recentlyEnteredBuilding = nil -- Stores last building entered (there is a delay after the unit enters before this is set)
+    self.spawnedAtRecentlyEnteredBuilding = false -- Prevents spawning at lastBuildingEntered more than once in a row.
+
+    -- Set to false to temporarily disable spawning zombies at graveyard
+    self.canSpawnZombiesAtGraveyard = true
 
     -- Minion Spawners
     self.zombieSpawner = ZombieSpawner:new()
@@ -66,6 +72,7 @@ function EnemySpawner:new(o)
     self.innardsSpawner = InnardsSpawner:new()
     self.ratSpawner = RatSpawner:new()
     self.fireflySpawner = FireflySpawner:new()
+    self.spiderSpawner = SpiderSpawner:new()
 
     -- Boss parameters
     self.abomsCurrentlyAlive = 0
@@ -95,27 +102,21 @@ end
 function EnemySpawner:onDifficultySet(difficulty)
     if difficulty == "normal" then
         -- Normal mode
-        self.innardsChance = 1
         self.waveGroupDelay = 6
     elseif difficulty == "hard" then
         -- Hard mode
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     elseif difficulty == "insane" then
         -- Insane mode
-        self.innardsChance = 2
         self.waveGroupDelay = 5
     elseif difficulty == "survival" then
         -- Survival mode
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     elseif difficulty == "nightmare" then
         -- Nightmare mode  (should be set after another difficulty was set)
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     elseif difficulty == "extinction" then
         -- Extinction mode (should be set after another difficulty was set)
-        self.innardsChance = 1
         self.waveGroupDelay = 5
     else
         -- Unknown? Error! (Shouldn't happen)
@@ -132,7 +133,7 @@ end
 -- Called when the first player loads in and pregame has started
 function EnemySpawner:onPreGameStarted()
     -- Spawn some zombies in the graveyard
-    self:spawnZombiesInGraveyard()
+    self:spawnInitialZombiesInGraveyard()
 end
 
 -- Called when the horn blows and the game begins
@@ -146,6 +147,14 @@ end
 
 function EnemySpawner:canSpawnMinion()
     return self.minionCount < EnemySpawner.MAX_MINIONS
+end
+
+-- Sets a building to be marked as recently entered. The next wave group will spawn here
+function EnemySpawner:setRecentlyEnteredBuilding(region)
+    if self.recentlyEnteredBuilding ~= region then
+        self.recentlyEnteredBuilding = region
+        self.spawnedAtRecentlyEnteredBuilding = false
+    end
 end
 
 
@@ -220,9 +229,9 @@ function EnemySpawner:spawnWave()
 
                     -- Figure out a location for the spawn group
                     local location = nil
-                    if g_GameManager.lastBuildingEntered ~= nil then
-                        location = g_GameManager.lastBuildingEntered
-                        g_GameManager.lastBuildingEntered = nil
+                    if self.spawnedAtRecentlyEnteredBuilding == false and self.recentlyEnteredBuilding ~= nil then
+                        location = self.recentlyEnteredBuilding
+                        self.spawnedAtRecentlyEnteredBuilding = true
                     else
                         location = GetRandomWarehouse()
                     end
@@ -621,10 +630,10 @@ end
 
 -- Function called at the start of the game and when players enter the graveyard
 -- Creates some zombies in the graveyard
-function EnemySpawner:spawnZombiesInGraveyard()
+function EnemySpawner:spawnInitialZombiesInGraveyard()
     local zombiesToSpawn = RandomInt(24 / g_GameManager.difficultyValue, 50 - (8 * g_GameManager.difficultyValue))
     for i = 1,zombiesToSpawn do
-        self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInGraveyard(), shouldAddToMinionQueueIfFail)
+        self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInGraveyard(), true)
     end
 end
 
@@ -634,7 +643,7 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
     local zombiesToSpawn = RandomInt(-5, 4 - g_GameManager.difficultyValue)
     local units = {}
     for i = 1,zombiesToSpawn do
-        units[i] = self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInRegion(region), shouldAddToMinionQueueIfFail)
+        units[i] = self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInRegion(region), true)
     end
     Timers:CreateTimer(10.0, function()
         for _,unit in pairs(units) do
@@ -643,6 +652,53 @@ function EnemySpawner:spawnInitialZombiesInWarehouse(region)
             end
         end
     end)
+end
+
+-- A target has entered the graveyard. Let's greet them with zombies
+function EnemySpawner:startGraveyardEncounter(target)
+    if self.canSpawnZombiesAtGraveyard then
+        if SHOW_ENEMY_SPAWNER_LOGS then
+            print("Spawning Graveyard Zombies")
+        end
+
+        self.canSpawnZombiesAtGraveyard = false -- disable spawning at graveyard for awhile
+
+        local zombieGroupsToSpawn  = Round((RandomInt(20 - (2 * g_GameManager.difficultyValue)
+                                                     , 41 - (5 * g_GameManager.difficultyValue)) / 4.0)
+                                           + math.floor(g_EnemyUpgrades.minionUber / 10.0))
+
+        Timers:CreateTimer(7, function()
+            -- Spawn some zombies in graveyard
+            local zombies = {}
+            for j = 1,4 do
+                -- Send created zombies after the target
+                local unit = self:spawnEnemy(self.zombieSpawner, self.zombieSpawner.createNormal, GetRandomPointInGraveyard(), true)
+
+                -- Add an effect to make them look more like they're coming out of the ground
+                unit:AddAbility("enemy_zombie_graveyard")
+                unit:FindAbilityByName("enemy_zombie_graveyard"):SetLevel(1)
+
+                table.insert(zombies, unit)
+            end
+
+            -- Send created zombies after the target
+            Timers:CreateTimer(2.333, function()
+                for _,unit in pairs(zombies) do
+                    g_EnemyCommander:doMobAction(unit, target)
+                end
+            end)
+
+            zombieGroupsToSpawn = zombieGroupsToSpawn - 1
+            if zombieGroupsToSpawn > 0 then
+                return 2.333 -- summon another group after some time
+            else
+                -- Done spawning. Set timer to reenable graveyard encounter
+                Timers:CreateTimer(EnemySpawner.GRAVEYARD_SPAWN_DELAY, function()
+                    self.canSpawnZombiesAtGraveyard = true
+                end)
+            end
+        end)
+    end
 end
 
 function EnemySpawner:getAllMobs()

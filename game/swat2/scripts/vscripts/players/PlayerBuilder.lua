@@ -115,8 +115,9 @@ function PlayerBuilder:BuildMarine( event )
     hero = ply:GetAssignedHero()
     hero:SetUnitName("npc_swat_hero_tactician")
 
-    -- Provide easy lookup of playerInfo
+    -- Provide easy lookup of playerInfo <-> hero
     hero.playerInfo = playerInfo
+    playerInfo.hero = hero
 
     --Clean the hero up first
     RemoveAllSkills(hero)

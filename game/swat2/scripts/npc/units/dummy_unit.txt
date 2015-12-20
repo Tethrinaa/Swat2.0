@@ -8,5 +8,5 @@
         "MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
         "AbilityLayout"				"4"
         "Level"						"10"
-        "Ability1"					"invulnerable_unselectable"
+        "Ability1"					"dummy_passive"
     }

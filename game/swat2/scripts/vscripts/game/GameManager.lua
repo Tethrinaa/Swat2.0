@@ -7,6 +7,7 @@ SHOW_GAME_SYSTEM_LOGS = true
 
 -- Systems GameManager is responsible for
 require('game/Locations')
+require('game/LocationEvents')
 require('game/EnemyUpgrades')
 require('game/EnemySpawner')
 require('game/EnemyCommander')
@@ -69,10 +70,7 @@ function GameManager:new(o)
     self.nemesisStage = 0
 
 
-    -- Keeps track of the last building a player walked in
-    -- This should store the Entity Trigger itself, not an index!
-    -- TODO: Update this
-    self.lastBuildingEntered = nil
+
 
     -- Boot up the systems
     self:initializeSystems()

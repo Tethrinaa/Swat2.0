@@ -45,11 +45,6 @@
 			"var_type"					"FIELD_INTEGER"
 			"net_speed"					"1500"
 		}
-		"03"
-		{
-			"var_type"					"FIELD_INTEGER"
-			"fake_ensnare_distance"		"900"
-		}
 	}
 
 	// Data driven

@@ -1,6 +1,6 @@
 //=================================================================================================================
 // Ability: Firefly
-// Just makes the firefly particle
+// Just makes the firefly particle and attacks some onHit/onAttack functions
 //=================================================================================================================
 "enemy_firefly"
 {

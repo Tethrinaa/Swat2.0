@@ -1359,6 +1359,46 @@
 	    }
 	}
 	//=================================================================================================================
+	// Ability: Minion Evasion
+	// Chance to dodge an attack
+	// Used by grotesques and spiders
+	// Levels are based on difficulty (Normal-Insane: 1, NM: 2, Ext: 3)
+	//=================================================================================================================
+	"enemy_common_evasion"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"phantom_assassin_blur"
+	    "MaxLevel"	"3"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	             "var_type"              "FIELD_INTEGER"
+	             "evasion"           "20 50 75"
+	          }
+	      }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_enemy_common_evasion"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
 	// Ability: Lightenating
 	// Unit glows yellow and when it dies releases fireflies
 	//=================================================================================================================
@@ -1988,7 +2028,7 @@
 	}
 	//=================================================================================================================
 	// Ability: Firefly
-	// Just makes the firefly particle
+	// Just makes the firefly particle and attacks some onHit/onAttack functions
 	//=================================================================================================================
 	"enemy_firefly"
 	{
@@ -2109,11 +2149,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"net_speed"					"1500"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"fake_ensnare_distance"		"900"
-			}
 		}
 	
 		// Data driven
@@ -2182,45 +2217,6 @@
 				"EffectAttachType"		"follow_origin"
 			}
 		}
-	}
-	//=================================================================================================================
-	// Ability: Grotesque Evasion
-	// Chance to dodge an attack
-	// Levels are based on difficulty (Normal-Insane: 1, NM: 2, Ext: 3)
-	//=================================================================================================================
-	"enemy_grotesque_evasion"
-	{
-	    // General
-	    //-------------------------------------------------------------------------------------------------------------
-	    "BaseClass"		                "ability_datadriven"
-	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"        	"phantom_assassin_blur"
-	    "MaxLevel"	"3"
-	
-	      "AbilitySpecial"
-	      {
-	          "01"
-	          {
-	             "var_type"              "FIELD_INTEGER"
-	             "evasion"           "20 50 75"
-	          }
-	      }
-	
-	    "Modifiers"
-	    {
-	
-	        "modifier_enemy_grotesque_evasion"
-	        {
-	            "Passive"               "1"
-	            "IsPurgable"            "0"
-	            "IsHidden"              "1"
-	
-	            "Properties"
-	            {
-	                "MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion"
-	            }
-	        }
-	    }
 	}
 	//=================================================================================================================
 	// Ability: Mutant Bash
@@ -2514,6 +2510,188 @@
 	    }
 	}
 	//=================================================================================================================
+	// Ability: Spider
+	// Makes some effects when spiders spawn
+	//=================================================================================================================
+	"enemy_spider"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"	    	"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"viper_corrosive_skin"
+	    "MaxLevel"	"1"
+	
+	    "precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+	        "particle"          "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_enemy_spider_passives"
+	        {
+	            "Passive" "1"
+	            "IsHidden" "1"
+	
+	
+				"OnCreated"
+				{
+	                // TODO: Make some sound (not working)
+					"FireSound"
+					{
+						"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
+	                    "Target" "CASTER"
+					}
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+						"EffectAttachType"  "follow_origin"
+	                    "Target" "CASTER"
+					}
+	            }
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_NOT_ON_MINIMAP"    	"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Spidder web
+	// Webs a target, making them unable to move
+	//=================================================================================================================
+	"enemy_spider_web"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	    "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+	    "AbilityTextureName"			"naga_siren_ensnare"
+	    "MaxLevel"	"1"
+	
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"				"0.65"
+	
+	    // Time
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"				"8.0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"				"0"
+	
+	    // Cast Range
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"				"500"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"					"FIELD_FLOAT"
+	            "duration"					"4.0"
+	        }
+	        "02"
+	        {
+	            "var_type"					"FIELD_INTEGER"
+	            "net_speed"					"1500"
+	        }
+	    }
+	
+	    // Data driven
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+	        "soundfile"					"sounds/weapons/hero/broodmother/spiderling_cast.vsnd"
+	        "particle"					"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+	        "particle"					"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "TrackingProjectile"
+	        {
+	            "Target"				"TARGET"
+	            "EffectName"			"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+	            "Dodgeable"				"1"
+	            "ProvidesVision"		"1"
+	            "VisionRadius"			"0"
+	            "MoveSpeed"				"%net_speed"
+	            "SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+	        }
+	
+	        "FireSound"
+	        {
+	            "EffectName"			"Hero_Broodmother.SpinWebCast"
+	            "Target"				"CASTER"
+	        }
+	    }
+	
+	    "OnProjectileHitUnit"
+	    {
+	        "DeleteOnHit"	"1"
+	
+	        "FireSound"
+	        {
+	            "EffectName"			"Hero_NagaSiren.Ensnare.Target"
+	            "Target"				"TARGET"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "Target"				"TARGET"
+	            "ModifierName"			"modifier_ensnare_datadriven"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_ensnare_datadriven"
+	        {
+	            "IsHidden"		"0"
+	            "IsDebuff"		"1"
+	            "IsPurgable"	"0"
+	
+	            "Duration"		"%duration"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+	            }
+	
+	            "OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"TARGET"
+	
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"10 0 10"
+						}
+					}
+				}
+	        }
+	    }
+	}
+	//=================================================================================================================
 	// Ability: Zombie Brainlust
 	// Increases zombie movement speed and attack speed temporarily
 	//=================================================================================================================
@@ -2608,6 +2786,52 @@
 	            {
 	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed"
 	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Zombie Graveyard
+	// Makes some effects when zombies spawn in the graveyard spawn
+	//=================================================================================================================
+	"enemy_zombie_graveyard"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"	    	"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName" 	"viper_corrosive_skin"
+	    "MaxLevel"	"1"
+	
+	    "precache"
+	    {
+	        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
+	        "particle"          "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_enemy_spider_passives"
+	        {
+	            "Passive" "1"
+	            "IsHidden" "1"
+	
+	
+	            "OnCreated"
+	            {
+	                // TODO: Make some sound (not working)
+	                "FireSound"
+	                {
+	                    "EffectName"	"Hero_Undying.SpawnUndying"
+	                    "Target" "CASTER"
+	                }
+	
+	                "FireEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "Target" "CASTER"
+	                }
 	            }
 	        }
 	    }
@@ -2774,6 +2998,35 @@
 	
 	    }
 	}
+	//=================================================================================================================
+	 // Bunker Status
+	 // Makes the unit immune to radiation (radiation auras and rad bolts)
+	 //=================================================================================================================
+	    "game_bunker_status"
+	    {
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	        "BaseClass"                     "ability_datadriven"
+	        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	        "SpellImmunityType"             "SPELL_IMMUNITY_ALLIES_NO"
+	        "AbilityTextureName"            "omniknight_repel"
+	
+	        // Modifiers
+	        //-------------------------------------------------------------------------------------------------------------
+	        "Modifiers"
+	        {
+	            "modifier_game_bunker_status"
+	            {
+	                "IsBuff"                        "1"
+	                "Passive"                       "1"
+	
+	                "States"
+	                {
+	                    "MODIFIER_STATE_MAGIC_IMMUNE"       "MODIFIER_STATE_VALUE_ENABLED"
+	                }
+	            }
+	        }
+	    }
 	//=================================================================================================================
 	// Ability: Mana_Drain_Badly_Damaged (Power Core)
 	//=================================================================================================================
