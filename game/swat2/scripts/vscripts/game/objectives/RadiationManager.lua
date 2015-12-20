@@ -311,7 +311,7 @@ function RadiationManager:spawnInitialRadFragments()
     -- Spawn a guarenteed normal rad in the rooms
     for i = 1,INITIAL_RAD_COUNT do
         local room = rooms[i]
-        local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, room:GetAbsOrigin() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
+        local rad_frag = CreateUnitByName( RadiationManager.RAD_UNIT_NAME, room:GetCenter() + RandomSizedVector(480), true, nil, nil, DOTA_TEAM_BADGUYS )
         -- Apply rad modifier to unit to reduce rad count on death and update bracket
         rad_frag:SetRenderColor(50,205,50)
     end

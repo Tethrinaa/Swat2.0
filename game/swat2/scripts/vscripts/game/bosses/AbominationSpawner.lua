@@ -59,7 +59,7 @@ end
 -- Abomination spawns with a few units of his own
 function AbominationSpawner:spawnAbomMinionGroup(warehouse)
     local numberOfMinions = RandomInt(1, math.max(Round(g_EnemyUpgrades.minionUber / 10.0), 1))
-    local warehouseCenter = warehouse:GetAbsOrigin()
+    local warehouseCenter = warehouse:GetCenter()
     local spawnedUnits = {}
     for i = 1, numberOfMinions do
         local j = RandomInt(0, 9)

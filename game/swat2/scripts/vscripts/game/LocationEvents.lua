@@ -9,41 +9,53 @@
 
 -- Called when a unit enters a warehouse
 function UnitEntersWarehouse(userdata, keys)
-    print("DEBUG Unit Entered Warehouse!") -- TODO REMOVE
-    local unit = keys.activator
     local region = keys.caller
 
-    -- Check if the unit is a player's hero or a "pet" (mini droids, cadet..etc)
-    -- (Old system values 3 and 4)
-    -- TODO: If not either of these, this method should DO NOTHING
+    -- Check if powerplant
+    if Locations:isPowerPlant(region) then
+        UnitEntersPowerPlant(userdata, keys)
+    else
+        --print("DEBUG Unit Entered Warehouse!") -- TODO REMOVE
+        local unit = keys.activator
 
-    -- Check if the unit that entered was a pet
-    -- We want to ignore this event if the pet is close its master
-    -- TODO: Mark some units as "pets"
-    if unit.isPet then
-        local player = unit:GetPlayerOwner()
-        local playerHero = player:GetAssignedHero()
+        -- Check if the unit is a player's hero or a "pet" (mini droids, cadet..etc)
+        -- (Old system values 3 and 4)
+        -- TODO: If not either of these, this method should DO NOTHING
 
-        if playerHero:IsAlive() and distanceBetweenVectors(playerHero:GetAbsOrigin(), unit:GetAbsOrigin()) < 2900 then
-            -- The master is alive and the pet is close to the master that we should ignore this event
-            return
+        -- Check if the unit that entered was a pet
+        -- We want to ignore this event if the pet is close its master
+        -- TODO: Mark some units as "pets"
+        if unit.isPet then
+            local player = unit:GetPlayerOwner()
+            local playerHero = player:GetAssignedHero()
+
+            if playerHero:IsAlive() and distanceBetweenVectors(playerHero:GetAbsOrigin(), unit:GetAbsOrigin()) < 2900 then
+                -- The master is alive and the pet is close to the master that we should ignore this event
+                return
+            end
         end
+
+        -- The unit is not a pet or it is not close enough to its master
+
+        -- Check if we should spawn spiders
+        g_EnemySpawner.spiderSpawner:rollForSpidersSpawn(region, unit)
+
+        -- Set this region as a recently entered building in some time
+        Timers:CreateTimer(25, function()
+            g_EnemySpawner:setRecentlyEnteredBuilding(region)
+        end)
     end
+end
 
-    -- The unit is not a pet or it is not close enough to its master
-
-    -- Check if we should spawn spiders
-    g_EnemySpawner.spiderSpawner:rollForSpidersSpawn(region, unit)
-
-    -- Set this region as a recently entered building in some time
-    Timers:CreateTimer(25, function()
-        g_EnemySpawner:setRecentlyEnteredBuilding(region)
-    end)
+function UnitEntersPowerPlant(userdata, keys)
+    --print("DEBUG Unit Entered PowerPlant!") -- TODO REMOVE
+    local unit = keys.activator
+    local region = keys.caller
 end
 
 -- Called when a unit enters the graveyard
 function UnitEntersGraveyard(keys)
-    print("DEBUG Unit Entered Graveyard!") -- TODO REMOVE
+    --print("DEBUG Unit Entered Graveyard!") -- TODO REMOVE
     local unit = keys.activator
 
     -- Check if the unit is a player's hero or a "pet" (mini droids, cadet..etc), civ (converted and non)
@@ -56,7 +68,7 @@ end
 
 -- Called when a unit enters a bunker (or lab)
 function UnitEntersBunker(userdata, keys)
-    print("DEBUG Unit Entered Bunker!") -- TODO REMOVE
+    --print("DEBUG Unit Entered Bunker!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
 
@@ -72,7 +84,7 @@ end
 
 -- Called when a unit leaves a bunker (or lab)
 function UnitLeavesBunker(userdata, keys)
-    print("DEBUG Unit Left Bunker!") -- TODO REMOVE
+    --print("DEBUG Unit Left Bunker!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
 
@@ -88,14 +100,14 @@ end
 
 -- Called when a unit enters a bunker (or lab)
 function UnitEntersLab(userdata, keys)
-    print("DEBUG Unit Entered Lab!") -- TODO REMOVE
+    --print("DEBUG Unit Entered Lab!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
 end
 
 -- Called when a unit leaves the lab
 function UnitLeavesLab(userdata, keys)
-    print("DEBUG Unit Left Lab!") -- TODO REMOVE
+    --print("DEBUG Unit Left Lab!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
 end
