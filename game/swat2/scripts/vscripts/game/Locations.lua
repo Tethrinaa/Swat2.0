@@ -163,24 +163,36 @@ function Locations:createRooms()
     end
 end
 
+-- Returns true or false on whether the passed in region is a power plant
+function Locations:isPowerPlant(region)
+    local isPowerPlant = false
+    for _,powerplant in pairs(self.power_plants) do
+        print("IsPowerPlant: " .. tostring(powerplant) .. " == " .. tostring(region))
+        if powerplant == region then
+            isPowerPlant = true
+            break
+        end
+    end
+    return isPowerPlant
+end
+
 --function Locations:createPowerPlants(number)
     --for i = 1,number do
         --self.
 --end
 function GetCenterInRegion(region)
-    local bounds = region:GetBounds()
-    return region:GetAbsOrigin()
+    return region:GetCenter()
 end
 
 function GetRandomPointInRegion(region)
     local bounds = region:GetBounds()
-    return region:GetAbsOrigin() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
+    return region:GetCenter() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
 end
 
 function GetRandomPointInRegionGroup(region_group)
     local region = region_group[RandomInt(1, #region_group)]
     local bounds = region:GetBounds()
-    return region:GetAbsOrigin() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
+    return region:GetCenter() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
 end
 
 -- Returns a random warehouse entity (warehouses do not include power plants)
