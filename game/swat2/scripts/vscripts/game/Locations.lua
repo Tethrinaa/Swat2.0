@@ -75,7 +75,7 @@ function Locations:createRooms()
     local diff = g_GameManager.difficultyValue
     local survival = g_GameManager.survivalValue
     -- A modifier based on player count ([0-3 == 0, 4-6 == 1, 7=9 == 2])
-    local playerCountModifier = math.floor((g_PlayerManager.playerCount - 1)/ 3)
+    local playerCountModifier = math.floor((g_PlayerManager.playerCount - 1) / 3)
 
     -- We'll use these variables to pick out rooms
     -- We obviously don't want to assign a room more than one type

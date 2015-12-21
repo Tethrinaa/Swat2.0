@@ -14,5 +14,5 @@ end
 -- Drops a toxic rat at the caster's location
 function drop_rat(keys)
     local position = keys.caster:GetAbsOrigin()
-    g_EnemySpawner.ratSpawner:spawnMinion(position, RatSpawner.SPECIAL_TOXIC, nil) -- Spawn a toxic rat there
+    g_EnemySpawner.ratSpawner:createToxicRat(position) -- Spawn a toxic rat there
 end

@@ -446,13 +446,13 @@ function EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
         if killedUnit.experience ~= nil and killedUnit.experience > 0 then
             g_ExperienceManager:awardExperience(killedUnit.experience)
         end
+    end
 
-        -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
-        -- of the unit. Here the EnemySpawner will call that function
-        local onDeathFunction = killedUnit.onDeathFunction
-        if onDeathFunction ~= nil then
-            onDeathFunction(killedUnit, killerEntity, killerAbility)
-        end
+    -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter
+    -- of the unit. Here the EnemySpawner will call that function
+    local onDeathFunction = killedUnit.onDeathFunction
+    if onDeathFunction ~= nil then
+        onDeathFunction(killedUnit, killerEntity, killerAbility)
     end
 end
 

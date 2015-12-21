@@ -37,6 +37,12 @@ function Precache( context )
     PrecacheUnitByNameSync("enemy_minion_rat", context)
     PrecacheUnitByNameSync("enemy_minion_firefly", context)
 
+    -- Crates
+    PrecacheUnitByNameSync("game_crate", context)
+    -- TODO: Match these to ItemSpawningManager
+    PrecacheModel("models/props_debris/barrel002.vmdl", context)
+    PrecacheModel("models/heroes/techies/fx_techies_remotebomb.vmdl", context)
+
     PrecacheUnitByNameSync("npc_dota_create_rad_frag", context)
     PrecacheUnitByNameSync("npc_dota_hero_lina", context)
     PrecacheUnitByNameSync("npc_dota_hero_techies", context)
