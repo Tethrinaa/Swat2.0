@@ -167,7 +167,7 @@ function PlayerBuilder:BuildMarine( event )
     end
 
     --set armor stats
-    hero.sdata.armor_index = PLAYER_BUILDER_CONSTS.armors[event.armor].index
+    --hero.sdata.armor_index = PLAYER_BUILDER_CONSTS.armors[event.armor].index
     hero:SetBaseMoveSpeed(PLAYER_BUILDER_CONSTS.armors[event.armor].moveSpeed)
     print(hero:GetBaseMoveSpeed())
     hero:SetPhysicalArmorBaseValue(PLAYER_BUILDER_CONSTS.armors[event.armor].armor)

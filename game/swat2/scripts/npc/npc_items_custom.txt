@@ -5,41 +5,41 @@
 	        "ID"                            "1251" // anything above 1250 should be safe to use.
 	        "BaseClass"                     "item_datadriven"
 	        "AbilityTextureName"            "item_duo_cell"
-		
+
 		"ItemCost" "500"
-		"ItemKillable" "0" 
+		"ItemKillable" "0"
 		"ItemSellable" "1"
 		"ItemPurchasable" "0"
 		"ItemDroppable" "1"
-		
-		
+
+
 		"ItemStockMax" "0"
 		"ItemStockTime" "0"
 		"ItemStockInitial" "0"
-		
+
 		"ItemShareability" "ITEM_FULLY_SHAREABLE"
-		
+
 		"ItemAliases" "Duo Cell"
 		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
-		
-		"OnEquip" 
-		{   
+
+		"OnEquip"
+		{
 			"RunScript"
 			{
 				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
 				"Function"  "ItemCheck"
 			}
 		}
-		
+
 		"OnUnequip"
-		{   
+		{
 			"RunScript"
 			{
 				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
 				"Function"  "RemoveItemModifierStats"
 			}
 		}
-		
+
 		"OnOwnerDied"
 		{
 			"RunScript"
@@ -48,103 +48,93 @@
 				"Function"	"DropItemOnDeath"
 			}
 		}
-		
+
 		"Modifiers"
 		{
-			 
+
 			"modifier_item_add_duo_cell_datadriven"
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"
-				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_BONUS"  "500"
 				}
 			}
-			"modifier_item_remove_duo_cell_datadriven"
-			{
-				"Passive"   "0"
-				"IsHidden"   "1"
-				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"  "-500"
-				}
-			}
 		}
-	
-		
+
+
 	    }
 	"item_stat_modifier"
 	   {
 	      "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	      "BaseClass"						"item_datadriven"
-	
+
 	      "Modifiers"
 	      {
-	
+
 	         "modifier_health_bonus"
 	         {
-	            "IsHidden"			"1"  
+	            "IsHidden"			"1"
 	            //"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 	            "Properties"
 	            {
-	               
+
 	               "MODIFIER_PROPERTY_HEALTH_BONUS"	"-1"
 	            }
 	         }
-	
+
 	         "modifier_health_regen_constant"
 	         {
-	            "IsHidden"			"1"  
+	            "IsHidden"			"1"
 	            //"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 	            "Properties"
 	            {
-	               
+
 	               "MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"-0.01"
 	            }
 	         }
-	         
+
 	         "modifier_damage_constant"
 	         {
 	            "IsHidden" "1"
 	            //"Attributes" "MODIFIER_ATTRIBUTE_PERMANENT
 	            "Properties"
 	            {
-	               
+
 	               "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"-1"
 	            }
 	         }
-	
+
 	         "modifier_mana_bonus"
 	         {
-	            "IsHidden"			"1"  
+	            "IsHidden"			"1"
 	            //"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 	            "Properties"
 	            {
-	               
+
 	               "MODIFIER_PROPERTY_MANA_BONUS"	"-1"
 	            }
 	         }
-	
+
 	         "modifier_base_mana_regen"
 	         {
-	            "IsHidden"			"1"  
+	            "IsHidden"			"1"
 	            //"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 	            "Properties"
 	            {
-	               
+
 	               "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"-0.01"
 	            }
 	         }
 	         "modifier_attackspeed_bonus_constant"
 			{
-				"IsHidden"			"1"  
+				"IsHidden"			"1"
 				//"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 				"Properties"
 				{
-					
+
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-1"
 				}
 			}
@@ -155,41 +145,41 @@
 	        "ID"                            "1250" // anything above 1250 should be safe to use.
 	        "BaseClass"                     "item_datadriven"
 	        "AbilityTextureName"            "item_storage_cell"
-		
+
 		"ItemCost" "500"
-		"ItemKillable" "0" 
+		"ItemKillable" "0"
 		"ItemSellable" "1"
 		"ItemPurchasable" "1"
 		"ItemDroppable" "1"
-		
-		
+
+
 		"ItemStockMax" "10"
 		"ItemStockTime" "180"
 		"ItemStockInitial" "0"
-		
+
 		"ItemShareability" "ITEM_FULLY_SHAREABLE"
-		
+
 		"ItemAliases" "Storage Cell"
 		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
-		
-		"OnEquip" 
-		{   
+
+		"OnEquip"
+		{
 			"RunScript"
 			{
 				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
 				"Function"  "ItemCheck"
 			}
 		}
-		
+
 		"OnUnequip"
-		{   
+		{
 			"RunScript"
 			{
 				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
 				"Function"  "RemoveItemModifierStats"
 			}
 		}
-		
+
 		"OnOwnerDied"
 		{
 			"RunScript"
@@ -204,160 +194,1345 @@
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"
-				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_BONUS"  "250"
 				}
 			}
-			"modifier_item_remove_storage_cell_datadriven"
+		}
+
+
+	    }
+	"item_rapid_reload"
+	    {
+	        "ID"                            "1252"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Rapid Reload"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_rapid_reload_datadriven"
 			{
 				"Passive"   "0"
 				"IsHidden"   "1"
-				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+
+				"Aura"	"rapid_reload_effect"
+				"Aura_Radius"	"288"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+			}
+
+			"rapid_reload_effect"
+			{
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS"  "-250"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "25"
 				}
-			}
-		}
-	
-		
-	    }
-	    "item_dotes"
-	{
-		  
-	
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"item_datadriven"
-		"ID"                            "1271"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityTextureName"			"item_magic_stick"
-	
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
-			"particle"			"particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
-		}
-	
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-	
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900 900 900 900"
-		"AbilityCooldown"				"3"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-	
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"clarity"
-		"ItemStackable"					"10"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"10"
-	
-	
-	
-	
-	
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_units"				"100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_bonus"			"75 150"
-			}
-		}
-	
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.HolyPersuasionCast"
-				"Target" 		"CASTER"
-			}
-	
-			"FireSound"
-			{
-				"EffectName"	"Hero_Chen.HolyPersuasionEnemy"
-				"Target" 		"TARGET"
 			}
 
-	
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-	
-				"ControlPointEntities"
-				{
-					"TARGET"	"attach_origin"
-					"TARGET"	"attach_origin"
-				}
-			}
-	
+	    }
+
+	}
+
+	"item_rapid_reload_mkii"
+	    {
+	        "ID"                            "1253"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Rapid Reload_MkII"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
-				"Function"		"HolyPersuasion"
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
 			}
-	
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_holy_persuasion_datadriven"
-				"Target" 		"TARGET"
-			}
-										"SpendCharge"
-			{}
-
 		}
-	
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
 		"Modifiers"
 		{
-			"modifier_holy_persuasion_datadriven"
+			"modifier_item_add_rapid_reload_mkii_datadriven"
 			{
-				"IsBuff"		"1"
-	
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"heroes/hero_chen/holy_persuasion.lua"
-						"Function"		"HolyPersuasionRemove"
-					}
-				}
-	
-				"States"
-				{
-					"MODIFIER_STATE_DOMINATED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"Passive"   "0"
+				"IsHidden"   "1"
 
+				"Aura"	"rapid_reload_mkii_effect"
+				"Aura_Radius"	"288"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+			}
+
+			"rapid_reload_mkii_effect"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "45"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_rapid_reload_mkiii"
+	    {
+	        "ID"                            "1254"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Rapid Reload_MkIII"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
 			}
 		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_rapid_reload_mkiii_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Aura"	"rapid_reload_mkiii_effect"
+				"Aura_Radius"	"288"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+			}
+
+			"rapid_reload_mkiii_effect"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "65"
+				}
+			}
+
+	    }
+
 	}
-	    
-	    
-	    
-	    
-	    
+
+	"item_mfg"
+	    {
+	        "ID"                            "1255"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "1"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "10"
+		"ItemStockTime" "180"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Micro-fusion Generator"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_mfg_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "2"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_mfg_plus"
+	    {
+	        "ID"                            "1256"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Micro-fusion Generator Plus"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_mfg_plus_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "3"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_mfg_mkii"
+	    {
+	        "ID"                            "1257"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "1000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Micro-fusion Generator Mk II"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_mfg_mkii_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "6"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_storage_generator"
+	    {
+	        "ID"                            "1258"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "1000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Storage Generator"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_storage_generator_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "2"
+					"MODIFIER_PROPERTY_MANA_BONUS"	"250"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_storage_generator_mkii"
+	    {
+	        "ID"                            "1259"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "1000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Storage Generator Mk II"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_storage_generator_mkii_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "4"
+					"MODIFIER_PROPERTY_MANA_BONUS"	"500"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_supercell"
+	    {
+	        "ID"                            "1260"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "4000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "SuperCell"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_supercell_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "2"
+					"MODIFIER_PROPERTY_MANA_BONUS"	"1500"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_megagen"
+	    {
+	        "ID"                            "1261"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "4000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "MegaGen"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_megagen_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "8"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_energy_field"
+	    {
+	        "ID"                            "1262"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "4000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Energy Field"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_energy_field_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Aura"	"energy_field_effect"
+				"Aura_Radius"	"1800"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+			}
+
+			"energy_field_effect"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "2"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_kevlar_vest"
+	    {
+	        "ID"                            "1263"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "400"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Kevlar Vest"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_kevlar_vest_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"  "2"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_combat_vest"
+	    {
+	        "ID"                            "1264"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Combat Vest"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_combat_vest_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"  "6"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_combat_vest_mkii"
+	    {
+	        "ID"                            "1265"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Combat Vest Mk II"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_combat_vest_mkii_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"  "12"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_combat_vest_mkiii"
+	    {
+	        "ID"                            "1266"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "500"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Combat Vest Mk III"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_combat_vest_mkiii_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"  "25"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_aegis_vest"
+	    {
+	        "ID"                            "1267"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "4000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Aegis Vest"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_aegis_vest_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"  "25"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_bionic_leg"
+	    {
+	        "ID"                            "1268"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "400"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Bionic Leg"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_bionic_leg_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"  "25"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_belt"
+	    {
+	        "ID"                            "1269"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "400"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Belt"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_belt_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"  "1"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_bionic_arm"
+	    {
+	        "ID"                            "1270"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "400"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "Bionic Arm"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_bionic_arm_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"  "5"
+				}
+			}
+
+	    }
+
+	}
+
+	"item_exosuit"
+	    {
+	        "ID"                            "1271"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_storage_cell"
+
+		"ItemCost" "3000"
+		"ItemKillable" "0"
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+		"ItemAliases" "ExoSuit"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_exosuit_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"  "12"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"  "1"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"25"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"  "50"
+				}
+			}
+
+	    }
+
+	}
+
+
+
 }

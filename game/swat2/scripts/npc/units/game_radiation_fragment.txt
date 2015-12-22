@@ -51,7 +51,7 @@
 
 	// Status
 	//----------------------------------------------------------------
-	"StatusHealth"				"500"
+	"StatusHealth"				"1000"
 	"StatusHealthRegen"			"0"
 	"StatusMana"				"0"
 	"StatusManaRegen"			"0"
@@ -61,45 +61,10 @@
 	"TeamName"					"DOTA_TEAM_NEUTRALS"			// Team name.
 	"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 	"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-	"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+    "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_SIEGE"
 
 	// Vision
 	//----------------------------------------------------------------
-	"VisionDaytimeRange"		"1000"		// Range of vision during day light.
-	"VisionNighttimeRange"		"1000"		// Range of vision at night time.
-
-	// Creature Data
-	//----------------------------------------------------------------------------------------------------------------------
-	"Creature"
-	{
-		"CanRespawn"				"0"
-
-		//Basic AI State
-		//-----------------------------------------------------------------
-		"DefaultState"				"Invade"
-
-		"States"
-		{
-			"Invade"
-			{
-				"Name"				"Invade"
-				"Aggression"		"20.0"
-				"Avoidance"			"0.0"
-				"Support"			"0.0"
-			}
-		}
-
-		//Level Up Parameters
-		//-----------------------------------------------------------------
-		"HPGain"					"40"
-		"DamageGain"				"10"
-		"ArmorGain"					"1"
-		"MagicResistGain"			"1"
-		"MoveSpeedGain"				"1"
-		"BountyGain"				"5"
-		"XPGain"					"20"
-
-		//Ability Usage Parameters
-		//-----------------------------------------------------------------
-	}
+	"VisionDaytimeRange"		"0"		// Range of vision during day light.
+	"VisionNighttimeRange"		"0"		// Range of vision at night time.
 }
