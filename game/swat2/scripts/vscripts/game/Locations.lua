@@ -3,7 +3,7 @@ Locations = {}
 
 SHOW_LOCATIONS_LOGS = SHOW_GAME_SYSTEM_LOGS
 
-LOCATIONS_RANDOM_POINT_OFFSET = 40 -- to try and prevent things spawning inside/on walls or something
+LOCATIONS_RANDOM_POINT_OFFSET = 80 -- to try and prevent things spawning inside/on walls or something
 
 function Locations:new(o)
     o = o or {}
@@ -176,23 +176,19 @@ function Locations:isPowerPlant(region)
     return isPowerPlant
 end
 
---function Locations:createPowerPlants(number)
-    --for i = 1,number do
-        --self.
---end
 function GetCenterInRegion(region)
     return region:GetCenter()
 end
 
 function GetRandomPointInRegion(region)
     local bounds = region:GetBounds()
-    return region:GetCenter() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
+    return region:GetOrigin() + Vector(RandomFloat(bounds.Mins.x + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
 end
 
 function GetRandomPointInRegionGroup(region_group)
     local region = region_group[RandomInt(1, #region_group)]
     local bounds = region:GetBounds()
-    return region:GetCenter() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
+    return region:GetOrigin() + Vector(RandomFloat(bounds.Mins.x + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
 end
 
 -- Returns a random warehouse entity (warehouses do not include power plants)
