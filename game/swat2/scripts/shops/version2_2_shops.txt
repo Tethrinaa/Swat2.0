@@ -4,17 +4,34 @@
      //--------------------------
     "consumables"
     {
-        "item"      "ITEM_NAME"
+        "item"      "item_bandage"
+        "item"      "item_battery"
+        "item"      "item_antidotes"
+        "item"      "item_circuit_board_orange"
+        "item"      "item_circuit_board_green"
+        "item"      "item_circuit_board_purple"
     }
 
     "attributes"
     {
-        "item"      "ITEM_NAME"
+        "item"      "item_skillz"
+        "item"      "item_metabolic_synergizer"
+        "item"      "item_life_extension_plus"
+        "item"      "item_hermes"
+        "item"      "item_muscle_boost"
+        "item"      "item_reflex_assist"
+        "item"      "item_neuro_implant"
     }
 
     "weapons_armor"
     {
-        "item"      "ITEM_NAME"
+        "item"      "item_recall"
+        "item"      "item_grenade_launcher"
+        "item"      "item_flare_gun"
+        "item"      "item_freeze_ray"
+        "item"      "item_shield_capacitor"
+        "item"      "item_riot_shield"
+        "item"      "item_droid_remote"
     }
 
     "misc"

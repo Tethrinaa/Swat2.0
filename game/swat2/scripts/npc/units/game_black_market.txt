@@ -8,7 +8,8 @@
     "BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
     "Model"						"models/buildings/building_racks_melee_reference.vmdl"	// Model.
     "Level"						"1"
-        "IsAncient"                 "1" // Will not be controlled or acted upon by the Enemy systems
+    "ModelScale"				"0.8"
+    "IsAncient"                 "1" // Will not be controlled or acted upon by the Enemy systems
 
     // Abilities
     //----------------------------------------------------------------
