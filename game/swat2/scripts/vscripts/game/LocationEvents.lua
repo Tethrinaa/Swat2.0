@@ -14,6 +14,8 @@ function UnitEntersWarehouse(userdata, keys)
     -- Check if powerplant
     if Locations:isPowerPlant(region) then
         UnitEntersPowerPlant(userdata, keys)
+    elseif Locations:isBlackMark(region) then
+        UnitEntersBlackMarket(userdata, keys)
     else
         --print("DEBUG Unit Entered Warehouse!") -- TODO REMOVE
         local unit = keys.activator
@@ -48,7 +50,13 @@ function UnitEntersWarehouse(userdata, keys)
 end
 
 function UnitEntersPowerPlant(userdata, keys)
-    --print("DEBUG Unit Entered PowerPlant!") -- TODO REMOVE
+    print("DEBUG Unit Entered PowerPlant!") -- TODO REMOVE
+    local unit = keys.activator
+    local region = keys.caller
+end
+
+function UnitEntersBlackMarket(userdata, keys)
+    print("DEBUG Unit Entered BlackMarket!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
 end

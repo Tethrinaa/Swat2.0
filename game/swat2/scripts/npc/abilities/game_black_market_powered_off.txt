@@ -1,0 +1,24 @@
+//=================================================================================================================
+// Ability: Powered Off
+// Displays a tooltip indicating the abm is off and can't sell items.
+//=================================================================================================================
+"game_black_market_powered_off"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"	    	"ability_datadriven"
+    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"	"storm_spirit_electric_vortex"
+    "MaxLevel"	"1"
+
+    "Modifiers"
+    {
+        "modifier_black_market_powered_off"
+        {
+            "Passive" "1"
+
+            "StatusEffectName" 		"particles/status_fx/status_effect_alacrity.vpcf"
+            "StatusEffectPriority"  "10"
+        }
+    }
+}

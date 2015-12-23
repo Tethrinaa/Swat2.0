@@ -14,6 +14,7 @@ function SetUpDebugGameChatCommands()
         Convars:RegisterCommand( "swat_spawn_rad", DebugGameChatCommand_SpawnRad, "Chat Command | Spawn Rad", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_kill_rad", DebugGameChatCommand_KillRad, "Chat Command | Kill Rad", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_spawn_all_enemy_types", DebugGameChatCommand_SpawnAllEnemyTypes, "Chat Command | Spawn All Enemy Types", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_city_power", DebugGameChatCommand_CityPower, "Chat Command | Turns on city power", FCVAR_CHEAT )
     end
 end
 
@@ -140,4 +141,9 @@ function DebugGameChatCommand_SpawnAllEnemyTypes()
     es:spawnEnemy(es.dogSpawner, es.dogSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
     -- Mutants
     es:spawnEnemy(es.mutantSpawner, es.mutantSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+end
+
+function DebugGameChatCommand_CityPower()
+    print("DEBUG | Cheat | Turning on City Power")
+    g_PowerManager:onPowerRestored()
 end

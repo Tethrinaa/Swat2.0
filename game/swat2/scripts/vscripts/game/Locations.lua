@@ -98,6 +98,9 @@ function Locations:createRooms()
     while i > numOfType do
         table.insert(self.abms, self.all_rooms[i])
         i = i - 1
+
+        -- Don't allow enemies to spawn in ABMs
+        table.remove(self.warehouses, i)
     end
 
     -- atme (1min, 2max [only Insane+, Survival])
@@ -167,13 +170,24 @@ end
 function Locations:isPowerPlant(region)
     local isPowerPlant = false
     for _,powerplant in pairs(self.power_plants) do
-        print("IsPowerPlant: " .. tostring(powerplant) .. " == " .. tostring(region))
         if powerplant == region then
             isPowerPlant = true
             break
         end
     end
     return isPowerPlant
+end
+
+-- Returns true or false on whether the passed in region is a black market
+function Locations:isBlackMark(region)
+    local isAbm = false
+    for _,abm in pairs(self.abms) do
+        if abm == region then
+            isAbm = true
+            break
+        end
+    end
+    return isAbm
 end
 
 function GetCenterInRegion(region)
