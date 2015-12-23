@@ -12,12 +12,13 @@ function Locations:new(o)
 
     -- includes power_plants, abms, and warehouses
     self.all_rooms = nil
-    self.warehouses = {} -- all rooms that are not power plants (ABMs, crate rooms, ...etc are included!)
+    self.warehouses = {} -- all rooms that are not power plants or ABMs (crate rooms, ...etc are included!)
+                         -- These rooms do not prevent XP and enemies can spawn in them
 
     -- Special rooms
     -- Generated once difficulty is set (as the number of these depends on difficulty)
     self.power_plants = {} -- NOTE: Not included in self.warehouses (as nothing spawns there)
-    self.abms = {}
+    self.abms = {} -- NOTE: Not included in self.warehouses (as nothing spawns there)
     self.atme_rooms = {}
     self.clothing_rooms = {} -- "fake" ATME room
     self.chemical_plants = {} -- Brown Crate Room (spawns drugs and stuff)
@@ -87,20 +88,22 @@ function Locations:createRooms()
     numOfType = i - 6
     while i > numOfType do
         table.insert(self.power_plants, self.all_rooms[i])
-        i = i - 1
 
         -- Don't allow things to spawn in power plants
         table.remove(self.warehouses, i)
+
+        i = i - 1
     end
 
     -- ABMs (4min, 6max)
     numOfType = i - RandomInt(4, 6 - (3 - diff))
     while i > numOfType do
         table.insert(self.abms, self.all_rooms[i])
-        i = i - 1
 
         -- Don't allow enemies to spawn in ABMs
         table.remove(self.warehouses, i)
+
+        i = i - 1
     end
 
     -- atme (1min, 2max [only Insane+, Survival])
@@ -116,7 +119,6 @@ function Locations:createRooms()
         table.insert(self.clothing_rooms, self.all_rooms[i])
         i = i - 1
     end
-    i = i - 1
 
     -- chemical plants (2-3min, 3-5max)
     numOfType = i - RandomInt(3 - survival, 3 + playerCountModifier)
