@@ -17,6 +17,7 @@
                 "common_no_health_bar"
                 {
                     "Passive"                       "1"
+                    "IsHidden"                      "1"
                         "States"
                         {
                             "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
