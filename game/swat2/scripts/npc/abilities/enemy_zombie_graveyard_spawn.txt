@@ -19,7 +19,7 @@
 
     "Modifiers"
     {
-        "modifier_enemy_spider_passives"
+        "modifier_enemy_zombie_graveyard"
         {
             "Passive" "1"
             "IsHidden" "1"

@@ -3,8 +3,6 @@
 
 -- The way the current system of crates works is we will figure out all of the items immediately
 -- and attach an onDeathFunction to each crate that does the correct thing
-
--- The rate the clock should move during day and night respectively
 ItemSpawningManager = {}
 
 SHOW_ITEM_SPAWNING_LOGS = SHOW_GAME_SYSTEM_LOGS
@@ -46,6 +44,14 @@ end
 function ItemSpawningManager:spawnMapCrates()
     -- Modifies the chance of how many crates will spawn
     local playerCountModifier = math.floor((g_PlayerManager.playerCount - 1) / 3)
+
+    -- Black Market Crates
+    for _,room in pairs(Locations.abms) do
+        self:spawnCrate(room, ItemSpawningManager.CRATE_MODELS_BASIC, self:getTraitItemConsumable(), 0, 1)
+        self:spawnCrate(room, ItemSpawningManager.CRATE_MODELS_BASIC, self:getTraitItemConsumable(), 2 - playerCountModifier, 1)
+        self:spawnCrate(room, ItemSpawningManager.CRATE_MODELS_BASIC, self:getTraitItemConsumable(), 2, 1)
+        self:spawnCrate(room, ItemSpawningManager.CRATE_MODELS_BASIC, self:getTraitItemConsumable(), 5, 1)
+    end
 
     -- A.T.M.E Crates
     for _,room in pairs(Locations.atme_rooms) do

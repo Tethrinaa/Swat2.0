@@ -16,6 +16,7 @@
             "common_invulnerable"
             {
                 "Passive"                       "1"
+                "IsHidden"                      "1"
                     "States"
                     {
                         "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"

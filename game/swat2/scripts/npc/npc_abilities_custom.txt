@@ -122,6 +122,7 @@
 	            "common_invulnerable"
 	            {
 	                "Passive"                       "1"
+	                "IsHidden"                      "1"
 	                    "States"
 	                    {
 	                        "MODIFIER_STATE_INVULNERABLE"       "MODIFIER_STATE_VALUE_ENABLED"
@@ -201,6 +202,7 @@
 	        "common_unselectable"
 	        {
 	            "Passive"                       "1"
+	            "IsHidden"                      "1"
 	
 	            "States"
 				{
@@ -228,6 +230,7 @@
 	                "common_no_health_bar"
 	                {
 	                    "Passive"                       "1"
+	                    "IsHidden"                      "1"
 	                        "States"
 	                        {
 	                            "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -2811,7 +2814,7 @@
 	
 	    "Modifiers"
 	    {
-	        "modifier_enemy_spider_passives"
+	        "modifier_enemy_zombie_graveyard"
 	        {
 	            "Passive" "1"
 	            "IsHidden" "1"
@@ -2999,6 +3002,79 @@
 	    }
 	}
 	//=================================================================================================================
+	// Ability: Powered Off
+	// Displays a tooltip indicating the abm is off and can't sell items.
+	//=================================================================================================================
+	"game_black_market_powered_off"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"	    	"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"	"storm_spirit_electric_vortex"
+	    "MaxLevel"	"1"
+	
+	    "Modifiers"
+	    {
+	        "modifier_black_market_powered_off"
+	        {
+	            "Passive" "1"
+	
+	            "StatusEffectName" 		"particles/status_fx/status_effect_alacrity.vpcf"
+	            "StatusEffectPriority"  "10"
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Ability: Powered On
+	// Displays an effect when powered on
+	//=================================================================================================================
+	"game_black_market_powered_on"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"	    	"ability_datadriven"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"			"invoker_wex"
+	    "MaxLevel"	"1"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"particle"		"particles/status_fx/status_effect_alacrity.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_black_market_powered_on"
+			{
+	            "Passive" "1"
+	
+				"OnCreated"
+				{
+	            // TODO: This doesn't appear to be working =\
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "CASTER"
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "CASTER"
+					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
 	 // Bunker Status
 	 // Makes the unit immune to radiation (radiation auras and rad bolts)
 	 //=================================================================================================================
@@ -3129,9 +3205,9 @@
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.3"
-		"AbilityChannelTime"			"30.1"
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.0"
+		"AbilityChannelTime"			"5"
 	
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -3152,22 +3228,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"30.0"
+				"duration"					"5.0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"60"
+				"mana_per_second"			"100"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"break_distance"			"650"
+				"break_distance"			"400"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tick_interval"			"0.25"
+				"tick_interval"			    "0.25"
 			}
 		}
 		"OnSpellStart"

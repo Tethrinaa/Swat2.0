@@ -112,7 +112,9 @@ function PowerManager:onPowerRestored()
     if SHOW_POWER_MANAGER_LOGS then
         print("PowerManager | Power Restored!")
     end
-    -- TODO
+
+    -- Power the ABMs
+    g_ShopsManager:powerAbms()
 end
 
 function PowerManager:updatePowerDisplay()

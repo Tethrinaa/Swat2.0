@@ -1,0 +1,49 @@
+//=================================================================================================================
+// Ability: Powered On
+// Displays an effect when powered on
+//=================================================================================================================
+"game_black_market_powered_on"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"	    	"ability_datadriven"
+    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"			"invoker_wex"
+    "MaxLevel"	"1"
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+		"particle"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+		"particle"		"particles/status_fx/status_effect_alacrity.vpcf"
+	}
+
+	"Modifiers"
+	{
+		"modifier_black_market_powered_on"
+		{
+            "Passive" "1"
+
+			"OnCreated"
+			{
+            // TODO: This doesn't appear to be working =\
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_invoker/invoker_alacrity.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "CASTER"
+				}
+
+				"AttachEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+					"EffectAttachType"  "follow_overhead"
+					"Target"            "CASTER"
+				}
+			}
+		}
+	}
+}

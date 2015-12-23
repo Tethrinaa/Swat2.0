@@ -13,6 +13,7 @@ require('game/EnemySpawner')
 require('game/EnemyCommander')
 require('game/DayNightManager')
 require('game/ItemSpawningManager')
+require('game/ShopsManager')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
 require('game/DebugChatCommands')
@@ -25,6 +26,7 @@ g_EnemySpawner = {}
 g_EnemyCommander = {}
 g_DayNightManager = {}
 g_ItemSpawningManager = {}
+g_ShopsManager = {}
 
 function GameManager:new(o)
     o = o or {}
@@ -83,6 +85,7 @@ end
 function GameManager:initializeSystems()
     g_DayNightManager = DayNightManager:new()
     g_ItemSpawningManager = ItemSpawningManager:new()
+    g_ShopsManager = ShopsManager:new()
     g_RadiationManager = RadiationManager:new()
     g_PowerManager = PowerManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()
@@ -134,7 +137,7 @@ function GameManager:setDifficulty(difficulty)
         print("GameManager | UNKNOWN DIFFICULTY SET!: '" .. difficulty .. "'")
     end
 
-    -- Spawn creates, power plants, abms...etc
+    -- Spawn crates, power plants, abms...etc
     self:initializeBuildings()
 
     -- Now tell whoever needs to know about the difficulty changing
@@ -189,9 +192,8 @@ function GameManager:initializeBuildings()
     -- Create the various building types in the game
     Locations:createRooms()
 
-    -- TODO: Spawn Power Plants
-
-    -- TODO: Spawn ABMs
+    -- Spawn ABMs
+    g_ShopsManager:spawnUnpoweredAbms()
 
     -- Spawn Crates
     g_ItemSpawningManager:spawnMapCrates()
