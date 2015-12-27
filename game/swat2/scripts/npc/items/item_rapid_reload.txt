@@ -1,0 +1,72 @@
+"item_rapid_reload"
+    {
+        "ID"                            "1252"
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_rr"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"ItemCost" "500"
+	"ItemKillable" "0" 
+	"ItemSellable" "1"
+	"ItemPurchasable" "0"
+	"ItemDroppable" "1"
+	
+	"ItemStockMax" "0"
+	"ItemStockTime" "0"
+	"ItemStockInitial" "0"
+	
+	"ItemShareability" "ITEM_FULLY_SHAREABLE"
+	
+	"ItemAliases" "Rapid Reload"
+	"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	
+	"OnEquip" 
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "ItemCheck"
+		}
+	}
+	
+	"OnUnequip"
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "RemoveItemModifierStats"
+		}
+	}
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"DropItemOnDeath"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_item_add_rapid_reload_datadriven"
+		{
+			"Passive"   "0"
+			"IsHidden"   "1"
+			
+			"Aura"	"rapid_reload_effect"
+			"Aura_Radius"	"288"
+			"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+		}
+		
+		"rapid_reload_effect"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"  "25"
+			}
+		}
+		
+    }
+    
+}

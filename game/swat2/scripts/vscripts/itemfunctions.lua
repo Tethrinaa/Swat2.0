@@ -110,6 +110,31 @@ function RemoveItemModifierStats( event )
       end
     end
   end
+  
+
+function HazmatCheck( event )
+  local itemName = event.ability:GetAbilityName()
+  local hero = EntIndexToHScript( event.caster_entindex )
+  
+  if (hero:IsHero()) then
+  
+    --Check not already carrying hazmat
+    local hazmatNumber = 0
+    
+    for itemSlot = 0, 5, 1 do
+      local itemInSlot = hero:GetItemInSlot( itemSlot )
+      if (itemInSlot ~= nil and itemName == itemInSlot:GetAbilityName()) then
+        hazmatNumber = (hazmatNumber + 1)
+      end
+    end
+    
+    if (hazmatNumber ~= 1) then
+      local newItem = CreateItem(itemName, nil, nil)
+      CreateItemOnPositionSync(hero:GetOrigin(), newItem)
+      hero:RemoveItem(event.ability)
+    end
+  end
+end
 		
 
 end

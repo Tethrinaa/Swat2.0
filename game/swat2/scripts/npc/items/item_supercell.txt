@@ -1,0 +1,66 @@
+"item_supercell"
+    {
+        "ID"                            "1260"
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_storage_cell"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"ItemCost" "4000"
+	"ItemKillable" "0" 
+	"ItemSellable" "1"
+	"ItemPurchasable" "0"
+	"ItemDroppable" "1"
+	
+	"ItemStockMax" "0"
+	"ItemStockTime" "0"
+	"ItemStockInitial" "0"
+	
+	"ItemShareability" "ITEM_FULLY_SHAREABLE"
+	
+	"ItemAliases" "SuperCell"
+	"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	
+	"OnEquip" 
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "ItemCheck"
+		}
+	}
+	
+	"OnUnequip"
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "RemoveItemModifierStats"
+		}
+	}
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"DropItemOnDeath"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_item_add_supercell_datadriven"
+		{
+			"Passive"   "0"
+			"IsHidden"   "1"
+			
+			"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"  "2"
+				"MODIFIER_PROPERTY_MANA_BONUS"	"1500"
+			}
+		}
+					
+    }
+    
+}
