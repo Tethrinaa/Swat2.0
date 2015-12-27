@@ -1,0 +1,52 @@
+//=================================================================================================================
+// Ability: Spider
+// Makes some effects when spiders spawn
+//=================================================================================================================
+"enemy_spider"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"	    	"ability_datadriven"
+    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName" 	"viper_corrosive_skin"
+    "MaxLevel"	"1"
+
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
+        "particle"          "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+    }
+
+    "Modifiers"
+    {
+        "modifier_enemy_spider_passives"
+        {
+            "Passive" "1"
+            "IsHidden" "1"
+
+
+			"OnCreated"
+			{
+                // TODO: Make some sound (not working)
+				"FireSound"
+				{
+					"EffectName"	"Hero_Broodmother.SpawnSpiderlings"
+                    "Target" "CASTER"
+				}
+
+				"FireEffect"
+				{
+					"EffectName"        "particles/units/heroes/hero_undying/undying_zombie_spawn.vpcf"
+					"EffectAttachType"  "follow_origin"
+                    "Target" "CASTER"
+				}
+            }
+
+            "States"
+            {
+                "MODIFIER_STATE_NOT_ON_MINIMAP"    	"MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+}

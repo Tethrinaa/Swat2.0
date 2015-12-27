@@ -18,7 +18,7 @@
     "Ability2"					"enemy_common_radinating"
     "Ability3"					"enemy_common_radinating_regeneration"
     "Ability4"					"enemy_grotesque_ensnare"
-    "Ability5"					"enemy_grotesque_evasion"
+    "Ability5"					"enemy_common_evasion"
     "Ability6"					""			// Ability 6 - Extra.
     "Ability7"					""			// Ability 7 - Extra.
     "Ability8"					""			// Ability 8 - Extra.

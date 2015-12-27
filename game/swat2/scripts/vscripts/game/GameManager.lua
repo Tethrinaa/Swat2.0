@@ -7,10 +7,12 @@ SHOW_GAME_SYSTEM_LOGS = true
 
 -- Systems GameManager is responsible for
 require('game/Locations')
+require('game/LocationEvents')
 require('game/EnemyUpgrades')
 require('game/EnemySpawner')
 require('game/EnemyCommander')
 require('game/DayNightManager')
+require('game/ItemSpawningManager')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
 require('game/DebugChatCommands')
@@ -22,6 +24,7 @@ g_EnemyUpgrades = {}
 g_EnemySpawner = {}
 g_EnemyCommander = {}
 g_DayNightManager = {}
+g_ItemSpawningManager = {}
 
 function GameManager:new(o)
     o = o or {}
@@ -69,10 +72,7 @@ function GameManager:new(o)
     self.nemesisStage = 0
 
 
-    -- Keeps track of the last building a player walked in
-    -- This should store the Entity Trigger itself, not an index!
-    -- TODO: Update this
-    self.lastBuildingEntered = nil
+
 
     -- Boot up the systems
     self:initializeSystems()
@@ -82,6 +82,7 @@ end
 
 function GameManager:initializeSystems()
     g_DayNightManager = DayNightManager:new()
+    g_ItemSpawningManager = ItemSpawningManager:new()
     g_RadiationManager = RadiationManager:new()
     g_PowerManager = PowerManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()
@@ -192,7 +193,8 @@ function GameManager:initializeBuildings()
 
     -- TODO: Spawn ABMs
 
-    -- TODO: Spawn Crates
+    -- Spawn Crates
+    g_ItemSpawningManager:spawnMapCrates()
 
 end
 
