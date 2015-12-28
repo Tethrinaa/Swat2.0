@@ -1,0 +1,93 @@
+"item_antidotes"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"				"item_datadriven"
+    "ID"                            "1271"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CREEP"
+    "AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+    "AbilityTextureName"			"item_magic_stick"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastPoint"				"0.0"
+
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"				"900"
+    "AbilityCooldown"				"2"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"				"0"
+
+    // Item Info
+    //-------------------------------------------------------------------------------------------------------------
+
+    "ItemShopTags"					"consumable"
+    "ItemQuality"					"consumable"
+    "ItemAliases"					"clarity"
+    "ItemStackable"					"10"
+    "ItemPermanent"					"0"
+    "ItemInitialCharges"			"10"
+
+    "ItemCost" "0"
+    "ItemKillable" "0"
+    "ItemSellable" "0"
+    "ItemPurchasable" "1"
+    "ItemDroppable" "1"
+
+    "ItemStockMax" "12"
+    "ItemStockTime" "40"
+    "ItemStockInitial" "0"
+
+    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+    // Data driven
+    //-------------------------------------------------------------------------------------------------------------
+    "precache"
+    {
+        "soundfile"         "soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+        "soundfile"                 "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+        "particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+    }
+
+    "OnSpellStart"
+    {
+        "FireSound"
+        {
+            "EffectName"		"Hero_PhantomAssassin.Dagger.Cast"
+            "Target"			"CASTER"
+        }
+
+        "TrackingProjectile"
+        {
+                "Target"           "TARGET"
+                "EffectName"       "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+                "Dodgeable"        "1"
+                "ProvidesVision"   "1"
+                "VisionRadius"     "300"
+                "MoveSpeed"        "1800"
+                "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "FireSound"
+        {
+            "EffectName"		"Hero_PhantomAssassin.Dagger.Target"
+            "Target"			"TARGET"
+        }
+
+
+        "RunScript"
+        {
+            "ScriptFile"	"items/item_antidotes.lua"
+            "Function"		"unit_hit_with_antidote"
+        }
+
+    }
+}

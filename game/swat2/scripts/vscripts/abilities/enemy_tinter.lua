@@ -25,3 +25,13 @@ end
 function tint_lightenating(keys)
     keys.caster:SetRenderColor(255, 255, 0)
 end
+
+-- Tints the unit for evil civs
+function tint_evil_civ(keys)
+    keys.caster:SetRenderColor(100, 50, 50)
+end
+
+-- Tints the unit for blue zombies
+function tint_innoculated_zombie(keys)
+    keys.caster:SetRenderColor(100, 100, 233)
+end

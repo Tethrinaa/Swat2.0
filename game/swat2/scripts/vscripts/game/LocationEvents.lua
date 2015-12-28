@@ -53,12 +53,22 @@ function UnitEntersPowerPlant(userdata, keys)
     print("DEBUG Unit Entered PowerPlant!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
+
+    -- Disable experience
+    if unit.playerInfo then
+        unit.playerInfo.experienceDisabled = unit.playerInfo.experienceDisabled + 1
+    end
 end
 
 function UnitEntersBlackMarket(userdata, keys)
     print("DEBUG Unit Entered BlackMarket!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
+
+    -- Disable experience
+    if unit.playerInfo then
+        unit.playerInfo.experienceDisabled = unit.playerInfo.experienceDisabled + 1
+    end
 end
 
 -- Called when a unit enters the graveyard
@@ -80,13 +90,23 @@ function UnitEntersBunker(userdata, keys)
     local unit = keys.activator
     local region = keys.caller
 
-    -- Add the bunker status (rad immune)
-    unit:AddAbility("game_bunker_status")
-    unit:FindAbilityByName("game_bunker_status"):SetLevel(1)
+    local unitName = unit:GetUnitName()
+    if unitName == CivillianManager.APC_UNIT_NAME then
+        -- APC entered bunker
+        g_CivillianManager:onApcEntersBunker(unit)
 
-    -- Disable experience
-    if unit.playerInfo then
-        unit.playerInfo.experienceDisabled = unit.playerInfo.experienceDisabled + 1
+    -- Prevent Televacs from receiving the bunker buff
+    elseif unitName ~= CivillianManager.TELEVAC_UNIT_NAME then
+        if g_PowerManager.powerRestored then
+            -- Add the bunker status (rad immune)
+            unit:AddAbility("game_bunker_status")
+            unit:FindAbilityByName("game_bunker_status"):SetLevel(1)
+        end
+
+        -- Disable experience
+        if unit.playerInfo then
+            unit.playerInfo.experienceDisabled = unit.playerInfo.experienceDisabled + 1
+        end
     end
 end
 
@@ -118,4 +138,14 @@ function UnitLeavesLab(userdata, keys)
     --print("DEBUG Unit Left Lab!") -- TODO REMOVE
     local unit = keys.activator
     local region = keys.caller
+end
+
+-- Called when a unit enters an APC spawn region
+function UnitEntersApcSpawnRegion(userdata, keys)
+    local unit = keys.activator
+    local region = keys.caller
+
+    if unit:GetUnitName() == CivillianManager.APC_UNIT_NAME then
+        g_CivillianManager:onApcLeavesCity(unit, region)
+    end
 end

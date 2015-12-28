@@ -120,6 +120,11 @@ function DayNightManager:onMidnight()
         g_EnemyUpgrades:onFirstMidnight()
     end
 
+    -- TODO: Increase Boss Chance (see Trig_DayCounter_Actions )
+
+    -- Alert CivManager
+    g_CivillianManager:onNewDay()
+
     if g_GameManager.nightmareOrSurvivalValue > 0 then
         g_EnemyUpgrades:onTimeDifficultyIncreased()
     end

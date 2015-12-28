@@ -1,0 +1,76 @@
+//=================================================================================================================
+// Civillian Innoculated
+// Added to zombies when they are hit by antidotes
+//=================================================================================================================
+"civillian_innoculated"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"        	"slark_dark_pact"
+    "MaxLevel"	                    "1"
+
+    // Precache
+    //-------------------------------------------------------------------------------------------------------------
+    "precache"
+    {
+        "soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+        "particle"			"particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+    }
+
+    "Modifiers"
+    {
+
+        "modifier_civillian_innoculated"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "0"
+
+            "OnCreated"
+            {
+                "FireSound"
+                {
+                    "EffectName"	"Hero_Chen.HolyPersuasionCast"
+                    "Target" 		"CASTER"
+                }
+
+                "FireSound"
+                {
+                    "EffectName"	"Hero_Chen.HolyPersuasionEnemy"
+                    "Target" 		"TARGET"
+                }
+
+
+                "FireEffect"
+                {
+                    "EffectName"        "particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+                    "EffectAttachType"  "start_at_customorigin"
+
+                    "ControlPointEntities"
+                    {
+                        "TARGET"	"attach_origin"
+                        "TARGET"	"attach_origin"
+                    }
+                }
+
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_innoculated_zombie"
+                }
+            }
+
+            "States"
+            {
+                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+}

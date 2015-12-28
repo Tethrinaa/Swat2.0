@@ -1,0 +1,35 @@
+//=================================================================================================================
+// Televac: Power Surge
+//=================================================================================================================
+"televac_power_surge"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"					"ability_datadriven"
+    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "MaxLevel"                  "1"
+    "AbilityTextureName"	    "storm_spirit_ball_lightning"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"					"FIELD_INTEGER"
+            "bonus_regen"				"25.00"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_televac_power_surge"
+        {
+            "Passive"	"1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+            }
+        }
+    }
+}

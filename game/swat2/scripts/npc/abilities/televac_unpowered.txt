@@ -1,0 +1,37 @@
+//=================================================================================================================
+// Televac: Unpowered
+// Slowly drains the energy of televacs while city power is not restored
+//=================================================================================================================
+"televac_unpowered"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"					"ability_datadriven"
+    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "MaxLevel"                  "1"
+    "LevelsBetweenUpgrades"  	"0"
+    "AbilityTextureName"		"wisp_tether_break"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"					"FIELD_INTEGER"
+            "bonus_regen"				"-1.00"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_televac_unpowered"
+        {
+            "Passive"	"1"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+            }
+        }
+    }
+}
