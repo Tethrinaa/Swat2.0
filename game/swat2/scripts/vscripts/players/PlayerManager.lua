@@ -7,11 +7,13 @@ require('players/ExperienceManager')
 require('players/PlayerBuilder')
 require('players/PlayerInfo')
 require('players/PlayerHudManager')
+require('players/GoldManager')
 
 -- The systems instance stored as global variables
 g_ExperienceManager = {}
 g_PlayerBuilder = {}
 g_PlayerHudManager = {}
+g_GoldManager = {}
 
 PlayerManager = {}
 function PlayerManager:new(o)
@@ -35,6 +37,7 @@ function PlayerManager:initializeSystems()
     g_ExperienceManager = ExperienceManager:new()
     g_PlayerBuilder = PlayerBuilder:new()
     g_PlayerHudManager = PlayerHudManager:new()
+	g_GoldManager = GoldManager:new()
 end
 
 -- Called when the first player loads in and pregame has started
