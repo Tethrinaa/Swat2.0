@@ -1,0 +1,86 @@
+"item_battery"
+    {
+        "ID"                            "1273"
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_battery"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	
+	"ItemCost" "120"
+	"ItemKillable" "0" 
+	"ItemSellable" "1"
+	"ItemPurchasable" "1"
+	"ItemDroppable" "1"
+	
+	"ItemStockMax" "10"
+	"ItemStockTime" "180"
+	"ItemStockInitial" "0"
+	
+	"ItemInitialCharges"	"1"
+	"ItemRequiresCharges"	"1"
+	"ItemStackable"	"1"
+	"ItemPermanent"	"0"
+	
+	"ItemShareability" "ITEM_FULLY_SHAREABLE"
+	
+	"ItemAliases" "Battery"
+	"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	
+	"OnEquip" 
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "ItemCheck"
+		}
+	}
+	
+	"OnUnequip"
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "RemoveItemModifierStats"
+		}
+	}
+		
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"DropItemOnDeath"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"BatteryUse"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_add_battery_datadriven"
+		{
+			"Passive"   "0"
+			"IsHidden"   "1"
+			
+			"OnSpentMana"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+					"Function"	"BatteryAutoUse"
+				}
+			}
+		}
+					
+    }
+		
+}
+
+
+

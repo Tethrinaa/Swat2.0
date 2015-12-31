@@ -1,0 +1,34 @@
+"item_clothing"
+    {
+        "ID"                            "1272"
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_storage_cell"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"ItemCost" "1500"
+	"ItemKillable" "0" 
+	"ItemSellable" "1"
+	"ItemPurchasable" "0"
+	"ItemDroppable" "1"
+	
+	"ItemStockMax" "0"
+	"ItemStockTime" "0"
+	"ItemStockInitial" "0"
+	
+	"ItemShareability" "ITEM_FULLY_SHAREABLE"
+	
+	"ItemAliases" "Clothing"
+	"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"DropItemOnDeath"
+		}
+	} 
+}
+
+
+

@@ -94,27 +94,30 @@ function GameMode:ModifyStatBonuses(unit)
 
 		-- INT
 		if intellect ~= hero.intellect then
-		
 		  -- Update usable items
+		  -- Check each slot of an item
 		  for itemSlot = 0, 5, 1 do
         local Item = hero:GetItemInSlot( itemSlot )
         
+        -- Check there is an item in the slot that is being checked and that it has an intelligence prerequisite
         if (Item ~= nil) then
           local itemName = Item:GetAbilityName()
           local itemTable = GameMode.ItemInfoKV[itemName]
-          if itemTable.intRequired then
-          
-            if itemTable.intRequired > hero:GetIntellect() then
-              DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersRemove"))
-              print("removing data driven modifier")
-              local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
-              modifier:Destroy()
-              
-            elseif (hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero) == nil) then
-              DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersAdd"))
-              print("applying data driven modifier")
-              Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersAdd, {duration=-1} )
-              
+          if itemTable then
+            if itemTable.intRequired then
+            
+              -- Hero is not intelligent enough, so destroy modifier if it exists
+              if (itemTable.intRequired > hero:GetIntellect()) then
+                local modifier = hero:FindModifierByNameAndCaster(itemTable.Modifier, hero)
+                if modifier ~= nil then
+                  modifier:Destroy()
+                end
+                
+              -- Hero has enough intelligence, so if they don't already have modifier, then add it
+              elseif (hero:FindModifierByNameAndCaster(itemTable.Modifier, hero) == nil) then
+                Item:ApplyDataDrivenModifier( hero, hero, itemTable.Modifier, {duration=-1} )
+                
+              end
             end
           end
         end
