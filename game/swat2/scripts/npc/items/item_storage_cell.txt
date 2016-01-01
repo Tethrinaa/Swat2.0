@@ -3,6 +3,7 @@
         "ID"                            "1250" // anything above 1250 should be safe to use.
         "BaseClass"                     "item_datadriven"
         "AbilityTextureName"            "item_storage_cell"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	
 	"ItemCost" "500"
 	"ItemKillable" "0" 
@@ -56,16 +57,6 @@
 			"Properties"
 			{
 				"MODIFIER_PROPERTY_MANA_BONUS"  "250"
-			}
-		}
-		"modifier_item_remove_storage_cell_datadriven"
-		{
-			"Passive"   "0"
-			"IsHidden"   "1"
-			"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"	
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_MANA_BONUS"  "-250"
 			}
 		}
 	}

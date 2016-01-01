@@ -8,17 +8,17 @@ require('util/SWATUtil')
 require('stats')
 
 if GameMode == nil then
-	GameMode = class({})
+    GameMode = class({})
 end
 
 function Precache( context )
-	--[[
-		Precache things we know we'll use.  Possible file types include (but not limited to):
-			PrecacheResource( "model", "*.vmdl", context )
-			PrecacheResource( "soundfile", "*.vsndevts", context )
-			PrecacheResource( "particle", "*.vpcf", context )
-			PrecacheResource( "particle_folder", "particles/folder", context )
-	]]
+    --[[
+        Precache things we know we'll use.  Possible file types include (but not limited to):
+            PrecacheResource( "model", "*.vmdl", context )
+            PrecacheResource( "soundfile", "*.vsndevts", context )
+            PrecacheResource( "particle", "*.vpcf", context )
+            PrecacheResource( "particle_folder", "particles/folder", context )
+    ]]
     PrecacheUnitByNameSync("npc_dota_creature", context)
 
     -- Enemies
@@ -72,49 +72,20 @@ end
 
 -- Create the game mode when we activate
 function Activate()
-	GameRules.GameMode = GameMode()
-	GameRules.GameMode:InitGameMode()
+    GameRules.GameMode = GameMode()
+    GameRules.GameMode:InitGameMode()
 
-	-- Disable respawning so you don't wind up in lab constantly
-	GameRules:SetHeroRespawnEnabled(false)
+    -- Disable respawning so you don't wind up in lab constantly
+    GameRules:SetHeroRespawnEnabled(false)
 
-	ListenToGameEvent( "dota_player_gained_level", HeroLeveledUp, self )
 end
 
 -- Evaluate the state of the game
 function GameMode:OnThink()
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
-	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-		return nil
-	end
-	return 1
-end
-
-function HeroLeveledUp( keys )
-	--print( "Somebody leveled up!" )
-	local hero = PlayerResource:GetPlayer(keys.player-1):GetAssignedHero()
-	ItemCheck(hero)
-end
-
-
-function ItemCheck( hero )
-    for itemSlot = 0, 5, 1 do
-	local Item = hero:GetItemInSlot( itemSlot )
-	if (Item ~= nil) then
-            local itemName = Item:GetAbilityName()
-	    local itemTable = GameMode.ItemInfoKV[itemName]
-	    if itemTable.intRequired then
-		    if itemTable.intRequired > hero:GetIntellect() then
-			DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersRemove"))
-			print("removing data driven modifier")
-			Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersRemove, {duration=-1} )
-		    else
-			DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersAdd"))
-			print("applying data driven modifier")
-			Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersAdd, {duration=-1} )
-		    end
-	    end
-	end
+    if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        --print( "Template addon script is running." )
+    elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+        return nil
     end
+    return 1
 end
