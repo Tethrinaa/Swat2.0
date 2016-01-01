@@ -1,22 +1,9 @@
-if itemFunctions == nil then
-    print ( '[ItemFunctions] creating itemFunctions' )
-    itemFunctions = {} -- Creates an array to let us beable to index itemFunctions when creating new functions
-    itemFunctions.__index = itemFunctions
-end
-
-function itemFunctions:new() -- Creates the new class
-    print ( '[ItemFunctions] itemFunctions:new' )
-    o = o or {}
-    setmetatable( o, itemFunctions )
-    return o
-end
-
-function itemFunctions:start() -- Runs whenever the itemFunctions.lua is ran
-    print('[ItemFunctions] itemFunctions started!')
-end
+SHOW_ITEM_LOGS = SHOW_DEBUG_LOGS
 
 function DropItemOnDeath(keys) -- keys is the information sent by the ability
-    print( '[ItemFunctions] DropItemOnDeath Called' )
+    if SHOW_ITEM_LOGS then
+        print( 'ItemFunctions | DropItemOnDeath Called' )
+    end
     local killedUnit = EntIndexToHScript( keys.caster_entindex ) -- EntIndexToHScript takes the keys.caster_entindex, which is the number assigned to the entity that ran the function from the ability, and finds the actual entity from it.
     local itemName = tostring(keys.ability:GetAbilityName()) -- In order to drop only the item that ran the ability, the name needs to be grabbed. keys.ability gets the actual ability and then GetAbilityName() gets the configname of that ability such as juggernaut_blade_dance.
     if killedUnit:IsHero() or killedUnit:HasInventory() then -- In order to make sure that the unit that died actually has items, it checks if it is either a hero or if it has an inventory.
@@ -38,12 +25,16 @@ function ItemCheck( event )
     local itemName = event.ability:GetAbilityName()
     local hero = EntIndexToHScript( event.caster_entindex )
     local itemTable = GameMode.ItemInfoKV[itemName]
-    print("Checking Restrictions for "..itemName)
+    if SHOW_ITEM_LOGS then
+        print("ItemFunctions | Checking Restrictions for "..itemName)
+    end
     --DeepPrintTable(itemTable)
 
     -- if there is no subtable for this item, end this script
     if itemTable == nil then
-        print("no subtable for this item!")
+        if SHOW_ITEM_LOGS then
+            print("ItemFunctions | WARNING | no subtable for this item!")
+        end
         return true
     end
 
@@ -55,7 +46,9 @@ function ItemCheck( event )
         if itemTable.intRequired > hero:GetIntellect() then
 
         else
-            print("applying data driven modifier")
+            if SHOW_ITEM_LOGS then
+                print("ItemFunctions | DEBUG | applying data driven modifier")
+            end
             event.ability:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersAdd, {duration=-1} )
         end
     end
@@ -68,7 +61,9 @@ function RemoveItemModifierStats( event )
 
     -- if there is no subtable for this item, end this script
     if itemTable == nil then
-        print("no subtable for this item!")
+        if SHOW_ITEM_LOGS then
+            print("ItemFunctions | WARNING | no subtable for this item!")
+        end
         return true
     end
 
@@ -85,7 +80,9 @@ function RemoveItemModifierStats( event )
             --Check if the item is stacking and that the hero is dead
             local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
             if (hero:IsAlive() and itemName == "item_rapid_reload") then
-                print("dropped item is potentially stacking")
+                if SHOW_ITEM_LOGS then
+                    print("ItemFunctions | DEBUG | dropped item is potentially stacking")
+                end
                 local duplicateItem = false
 
                 --Check for duplicate item
@@ -94,18 +91,24 @@ function RemoveItemModifierStats( event )
                     local itemInSlot = hero:GetItemInSlot( itemSlot )
                     if (itemInSlot ~= nil and itemName == itemInSlot:GetAbilityName()) then
                         duplicateItem = true
-                        print("duplicate item detected")
+                        if SHOW_ITEM_LOGS then
+                            print("ItemFunctions | DEBUG | duplicate item detected")
+                        end
                     end
                 end
 
                 if (duplicateItem == false) then
-                    print("no duplicate detected")
-                    print("removing data driven modifier")
+                    if SHOW_ITEM_LOGS then
+                        print("ItemFunctions | DEBUG | no duplicate detected")
+                        print("ItemFunctions | DEBUG | Removing data driven modifier")
+                    end
                     modifier:Destroy()
                 end
 
             else
-                print("removing data driven modifier")
+                if SHOW_ITEM_LOGS then
+                    print("ItemFunctions | DEBUG | Removing data driven modifier")
+                end
                 modifier:Destroy()
             end
         end
@@ -114,6 +117,9 @@ end
 
 
 function HazmatCheck( event )
+    if SHOW_ITEM_LOGS then
+        print("ItemFunctions | DEBUG | Hazmat Check")
+    end
     local itemName = event.ability:GetAbilityName()
     local hero = EntIndexToHScript( event.caster_entindex )
 
