@@ -20,105 +20,130 @@ DEFAULT_DAMAGE_PER_PRIMARY = 1
 THINK_INTERVAL = 0.25
 
 function GameMode:ModifyStatBonuses(unit)
-	local hero = unit
-	local applier = CreateItem("item_stat_modifier", nil, nil)
+    local hero = unit
+    local applier = CreateItem("item_stat_modifier", nil, nil)
 
-	local hp_adjustment = HP_PER_STR - DEFAULT_HP_PER_STR
-	local hp_regen_adjustment = HP_REGEN_PER_STR - DEFAULT_HP_REGEN_PER_STR
-	local mana_adjustment = MANA_PER_INT - DEFAULT_MANA_PER_INT
-	local mana_regen_adjustment = MANA_REGEN_PER_INT - DEFAULT_MANA_REGEN_PER_INT
-	local armor_adjustment = ARMOR_PER_AGI - DEFAULT_ARMOR_PER_AGI
-	local attackspeed_adjustment = ATKSPD_PER_AGI - DEFAULT_ATKSPD_PER_AGI
-	local damage_adjustment = DAMAGE_PER_PRIMARY  - DEFAULT_DAMAGE_PER_PRIMARY 
+    local hp_adjustment = HP_PER_STR - DEFAULT_HP_PER_STR
+    local hp_regen_adjustment = HP_REGEN_PER_STR - DEFAULT_HP_REGEN_PER_STR
+    local mana_adjustment = MANA_PER_INT - DEFAULT_MANA_PER_INT
+    local mana_regen_adjustment = MANA_REGEN_PER_INT - DEFAULT_MANA_REGEN_PER_INT
+    local armor_adjustment = ARMOR_PER_AGI - DEFAULT_ARMOR_PER_AGI
+    local attackspeed_adjustment = ATKSPD_PER_AGI - DEFAULT_ATKSPD_PER_AGI
+    local damage_adjustment = DAMAGE_PER_PRIMARY  - DEFAULT_DAMAGE_PER_PRIMARY
 
-	print("Modifying Stats Bonus of hero "..hero:GetUnitName())
+    print("Modifying Stats Bonus of hero "..hero:GetUnitName())
 
-	Timers:CreateTimer(function()
+    Timers:CreateTimer(function()
 
-		if not IsValidEntity(hero) then
-         print("hero not valid")
-			return
-		end
+        if not IsValidEntity(hero) then
+            print("hero not valid")
+            return
+        end
 
-		-- Initialize value tracking
-		if not hero.custom_stats then
-			hero.custom_stats = true
-			hero.strength = 0
-			hero.agility = 0
-			hero.intellect = 0
-		end
+        -- Initialize value tracking
+        if not hero.custom_stats then
+            hero.custom_stats = true
+            hero.strength = 0
+            hero.agility = 0
+            hero.intellect = 0
+        end
 
-		-- Get player attribute values
-		local strength = hero:GetStrength()
-		local agility = hero:GetAgility()
-		local intellect = hero:GetIntellect()
-		
-		-- Adjustments
+        -- Get player attribute values
+        local strength = hero:GetStrength()
+        local agility = hero:GetAgility()
+        local intellect = hero:GetIntellect()
 
-		-- STR
-		if strength ~= hero.strength then
-			
-			-- HP Bonus
-			if not hero:HasModifier("modifier_health_bonus") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_bonus", {})
-			end
+        -- Adjustments
 
-			local neg_health_stacks = -1 * strength * hp_adjustment
-			hero:SetModifierStackCount("modifier_health_bonus", hero, neg_health_stacks)
+        -- STR
+        if strength ~= hero.strength then
 
-			-- HP Regen Bonus
-			if not hero:HasModifier("modifier_health_regen_constant") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_regen_constant", {})
-			end
+            -- HP Bonus
+            if not hero:HasModifier("modifier_health_bonus") then
+                applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_bonus", {})
+            end
 
-			local neg_health_regen_stacks = -1 * strength * hp_regen_adjustment * 100
-			hero:SetModifierStackCount("modifier_health_regen_constant", hero, neg_health_regen_stacks)
+            local neg_health_stacks = -1 * strength * hp_adjustment
+            hero:SetModifierStackCount("modifier_health_bonus", hero, neg_health_stacks)
+
+            -- HP Regen Bonus
+            if not hero:HasModifier("modifier_health_regen_constant") then
+                applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_regen_constant", {})
+            end
+
+            local neg_health_regen_stacks = -1 * strength * hp_regen_adjustment * 100
+            hero:SetModifierStackCount("modifier_health_regen_constant", hero, neg_health_regen_stacks)
 
 
-			-- Damage bonus, since strength is the primary attribute
-			if not hero:HasModifier("modifier_damage_constant") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_damage_constant", {})
-			end
+            -- Damage bonus, since strength is the primary attribute
+            if not hero:HasModifier("modifier_damage_constant") then
+                applier:ApplyDataDrivenModifier(hero, hero, "modifier_damage_constant", {})
+            end
 
-			local neg_damage_const = -1 * strength * damage_adjustment
-			hero:SetModifierStackCount("modifier_damage_constant", hero, neg_damage_const )
-		end
+            local neg_damage_const = -1 * strength * damage_adjustment
+            hero:SetModifierStackCount("modifier_damage_constant", hero, neg_damage_const )
+        end
 
-		-- AGI
-		if agility ~= hero.agility then
-			
-			-- Base Armor Bonus
-			local armor = agility * armor_adjustment
-			hero:SetPhysicalArmorBaseValue(armor)
-		end
+        -- AGI
+        if agility ~= hero.agility then
 
-		-- INT
-		if intellect ~= hero.intellect then
-			
-			-- Mana Bonus
-			if not hero:HasModifier("modifier_mana_bonus") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_mana_bonus", {})
-			end
+            -- Base Armor Bonus
+            local armor = agility * armor_adjustment
+            hero:SetPhysicalArmorBaseValue(armor)
+        end
 
-			local neg_mana_stacks = -1 * intellect * mana_adjustment
-			hero:SetModifierStackCount("modifier_mana_bonus", hero, neg_mana_stacks)
+        -- INT
+        if intellect ~= hero.intellect then
 
-			-- Mana Regen Bonus
-			if not hero:HasModifier("modifier_base_mana_regen") then
-				applier:ApplyDataDrivenModifier(hero, hero, "modifier_base_mana_regen", {})
-			end
+            -- Update usable items
+            for itemSlot = 0, 5, 1 do
+                local Item = hero:GetItemInSlot( itemSlot )
 
-			local neg_mana_regen_stacks = -1 * intellect * mana_regen_adjustment * 100
-			hero:SetModifierStackCount("modifier_base_mana_regen", hero, neg_mana_regen_stacks)
-		end
+                if (Item ~= nil) then
+                    local itemName = Item:GetAbilityName()
+                    local itemTable = GameMode.ItemInfoKV[itemName]
+                    if itemTable.intRequired then
 
-		-- Update the stored values for next timer cycle
-		hero.strength = strength
-		hero.agility = agility
-		hero.intellect = intellect
+                        if itemTable.intRequired > hero:GetIntellect() then
+                            DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersRemove"))
+                            print("removing data driven modifier")
+                            local modifier = hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero)
+                            modifier:Destroy()
 
-		hero:CalculateStatBonus()
-      
-		return THINK_INTERVAL
-	end)
+                        elseif (hero:FindModifierByNameAndCaster(itemTable.ModifiersAdd, hero) == nil) then
+                            DeepPrintTable(hero:FindModifierByName("itemTable.ModifiersAdd"))
+                            print("applying data driven modifier")
+                            Item:ApplyDataDrivenModifier( hero, hero, itemTable.ModifiersAdd, {duration=-1} )
+
+                        end
+                    end
+                end
+            end
+
+            -- Mana Bonus
+            if not hero:HasModifier("modifier_mana_bonus") then
+                applier:ApplyDataDrivenModifier(hero, hero, "modifier_mana_bonus", {})
+            end
+
+            local neg_mana_stacks = -1 * intellect * mana_adjustment
+            hero:SetModifierStackCount("modifier_mana_bonus", hero, neg_mana_stacks)
+
+            -- Mana Regen Bonus
+            if not hero:HasModifier("modifier_base_mana_regen") then
+                applier:ApplyDataDrivenModifier(hero, hero, "modifier_base_mana_regen", {})
+            end
+
+            local neg_mana_regen_stacks = -1 * intellect * mana_regen_adjustment * 100
+            hero:SetModifierStackCount("modifier_base_mana_regen", hero, neg_mana_regen_stacks)
+        end
+
+        -- Update the stored values for next timer cycle
+        hero.strength = strength
+        hero.agility = agility
+        hero.intellect = intellect
+
+        hero:CalculateStatBonus()
+
+        return THINK_INTERVAL
+    end)
 end
