@@ -1,0 +1,64 @@
+// This "item" immediately calls an APC when bought from the store. It does not take up inventory space
+"item_call_apc"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"				"item_datadriven"
+    "ID"                            "2001"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ALLIES"
+    "AbilityTextureName"			"item_flying_courier"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastPoint"				"0.0"
+
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"				"0"
+    "AbilityCooldown"				"0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"				"0"
+
+    // Item Info
+    //-------------------------------------------------------------------------------------------------------------
+
+    "ItemShopTags"					"consumable"
+    "ItemQuality"					"consumable"
+    "ItemAliases"					"clarity"
+    "ItemStackable"					"1"
+    "ItemPermanent"					"0"
+    "ItemInitialCharges"			"1"
+
+    "ItemCost" "0"
+    "ItemKillable" "0"
+    "ItemSellable" "0"
+    "ItemPurchasable" "1"
+    "ItemDroppable" "1"
+
+    "ItemStockMax" "1"
+    "ItemStockTime" "1440"
+    "ItemStockInitial" "1"
+
+    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+    // Data driven
+    //-------------------------------------------------------------------------------------------------------------
+    "OnEquip"
+    {
+        // TODO: (This didn't work)
+        "FireSound"
+        {
+            "EffectName"		"DOTA_Item.MoonShard.Activate"
+            "Target"			"TARGET"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"	"items/item_call_apc.lua"
+            "Function"		"call_apc"
+        }
+    }
+}

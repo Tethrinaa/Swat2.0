@@ -1,0 +1,27 @@
+//=================================================================================================================
+ // Low priorty (enemies won't attack this unit unless there are no higher priority targets nearby)
+ //=================================================================================================================
+"common_low_priority"
+{
+// General
+//-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "AbilityTextureName"            "disruptor_glimpse"
+
+    // Modifiers
+    //-------------------------------------------------------------------------------------------------------------
+    "Modifiers"
+    {
+        "common_low_priority"
+        {
+            "Passive"                       "1"
+            "IsHidden"                      "1"
+
+            "States"
+            {
+                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+}

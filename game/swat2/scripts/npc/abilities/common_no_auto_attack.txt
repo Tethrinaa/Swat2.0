@@ -1,0 +1,27 @@
+//=================================================================================================================
+ // Prevents the unit from auto attacking
+ //=================================================================================================================
+"common_no_auto_attack"
+{
+// General
+//-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+    "AbilityTextureName"            "disruptor_glimpse"
+
+    // Modifiers
+    //-------------------------------------------------------------------------------------------------------------
+    "Modifiers"
+    {
+        "common_no_auto_attack"
+        {
+            "Passive"                       "1"
+            "IsHidden"                      "1"
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"    "MODIFIER_STATE_VALUE_ENABLED"
+            }
+        }
+    }
+}

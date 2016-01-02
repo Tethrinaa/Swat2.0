@@ -108,7 +108,7 @@ function PowerCheck( keys )
    if caster:GetMana() >= 2990 and (not caster.filled) then
       caster.StatusManaRegen = "25"
 
-      g_PowerManager:onPowerPlantFilled(caster, ability)
+      g_PowerManager:onPowerPlantFilled(caster)
       caster.filled = true
       caster:RemoveAbility(ability:GetAbilityName())
       caster:RemoveModifierByName("modifier_mana_drain_autocast")

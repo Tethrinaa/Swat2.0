@@ -27,6 +27,9 @@ function Locations:new(o)
     self.cybernetic_facilities = {} -- Brown Crate Room (spawns permanent upgrades)
     self.empty_warehouses = {} -- A warehouse that has nothing
 
+    -- Others
+    self.apc_spawns = Entities:FindByName(nil, "apc_spawn"):GetChildren() -- Regions where APCs spawn
+    self.televac_spawns = Entities:FindByName(nil, "televac_spawn"):GetChildren() -- Entities (NOT regions) where televacs spawn
 
     self.bunkers = nil
     self.graveyard = nil -- there is only one graveyard region

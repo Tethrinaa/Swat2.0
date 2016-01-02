@@ -1,6 +1,274 @@
 "DOTAAbilities"
 {
 	//=================================================================================================================
+	// APC: An aura that is added to APCs when they are ready to board civillians
+	// Any civillian that enters the aura range will be boarded into the APC
+	//=================================================================================================================
+	"apc_civ_boarding"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"					"ability_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "MaxLevel"                  "1"
+	    "AbilityTextureName"	    "enigma_black_hole"
+	
+	    "Modifiers"
+	    {
+	        "modifier_apc_civ_boarding_aura"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	            "Aura"                  "modifier_apc_civ_boarding_effect"
+	            "Aura_Radius"           "300"
+	            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	            "Aura_Types"            "DOTA_UNIT_TARGET_BASIC"
+	
+	        }
+	
+	        "modifier_apc_civ_boarding_effect"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "IsPurgable"        "0"
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/apc_civ_boarding.lua"
+	                    "Function"              "unit_enters_boarding_aura"
+	                }
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Civillian Failed Cure - Cure failed on this civ and he is now evil, and powerful
+	//=================================================================================================================
+	"civillian_failed_cure"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"life_stealer_consume"
+	    "MaxLevel"	"1"
+	
+	      "AbilitySpecial"
+	      {
+	          "01"
+	          {
+	              "var_type"                  "FIELD_INTEGER"
+	              "crit_damage"               "1500"
+	          }
+	          "02"
+	          {
+	              "var_type"                  "FIELD_INTEGER"
+	              "crit_chance"               "15"
+	          }
+	      }
+	
+	    "precache"
+	    {
+	        "particle"			"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+	    }
+	
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_civillian_failed_cure"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_evil_civ"
+	                }
+	            }
+	
+	            "OnAttackStart"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_civillian_failed_cure_critical_strike"
+	                    "Target"        "CASTER"
+	                }
+	
+	                "Random"
+	                {
+	                    "Chance"    "%crit_chance"
+	                    "OnSuccess"
+	                    {
+	                        "FireSound"
+	                        {
+	                            "EffectName"    "Hero_ChaosKnight.ChaosStrike"
+	                            "Target"        "CASTER"
+	                        }
+	
+	                        "FireEffect"
+	                        {
+	                            "EffectName"        "particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+	                            "EffectAttachType"  "attach_attack1"
+	                            "Target"            "CASTER"
+	                        }
+	
+	                        "ApplyModifier"
+	                        {
+	                            "ModifierName"  "modifier_civillian_failed_cure_critical_strike"
+	                            "Target"        "CASTER"
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	
+	    "modifier_civillian_failed_cure_critical_strike"
+	    {
+	        "IsHidden"  "1"
+	        "Properties"
+	        {
+	            "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+	        }
+	
+	        "OnAttackLanded"
+	        {
+	            "RemoveModifier"
+	            {
+	                "ModifierName"  "modifier_civillian_failed_cure_critical_strike"
+	                "Target"        "CASTER"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Civillian Innoculated
+	// Added to zombies when they are hit by antidotes
+	//=================================================================================================================
+	"civillian_innoculated"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"        	"slark_dark_pact"
+	    "MaxLevel"	                    "1"
+	
+	    // Precache
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+	        "particle"			"particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+	    }
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_civillian_innoculated"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	
+	            "OnCreated"
+	            {
+	                "FireSound"
+	                {
+	                    "EffectName"	"Hero_Chen.HolyPersuasionCast"
+	                    "Target" 		"CASTER"
+	                }
+	
+	                "FireSound"
+	                {
+	                    "EffectName"	"Hero_Chen.HolyPersuasionEnemy"
+	                    "Target" 		"TARGET"
+	                }
+	
+	
+	                "FireEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_chen/chen_holy_persuasion.vpcf"
+	                    "EffectAttachType"  "start_at_customorigin"
+	
+	                    "ControlPointEntities"
+	                    {
+	                        "TARGET"	"attach_origin"
+	                        "TARGET"	"attach_origin"
+	                    }
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/enemy_tinter.lua"
+	                    "Function"              "tint_innoculated_zombie"
+	                }
+	            }
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"    "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Partial cure. This blue zombie will need to be re-doted
+	// If the buff expires naturally, the zombie is converted into an evil civllian
+	//=================================================================================================================
+	"civillian_partial_cure"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"		                "ability_datadriven"
+	    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"        	"life_stealer_infest"
+	    "MaxLevel"	                    "1"
+	
+	    "precache"
+	    {
+	        "particle"			"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+	    }
+	
+	
+	    "Modifiers"
+	    {
+	
+	        "modifier_civillian_partial_cure"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "0"
+	            "Duration"              "20"
+	
+	            "EffectName"	"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+	            "EffectAttachType"	"follow_origin"
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/civillian_partial_cure.lua"
+	                    "Function"              "partial_cure_destroyed"
+	                }
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
 	    // Ability: Armor Upgrade
 	    // Note: We need this to go past level 20, we will accomplish this with two abilities
 	    //       armor_upgrade_1 will cover values 1-20. armor_upgrade_20 will cover in increments of 20
@@ -105,6 +373,41 @@
 	        }
 	    }
 	//=================================================================================================================
+	// Invisible
+	//=================================================================================================================
+	"common_invisible"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "sandking_sand_storm"
+	
+	    "precache"
+	    {
+	        "particle"			"particles/generic_hero_status/status_invisibility_start.vpcf"
+	    }
+	
+	    // Modifiers
+	    //-------------------------------------------------------------------------------------------------------------
+	    "Modifiers"
+	    {
+	        "common_invisible"
+	        {
+	            "IsHidden"                       "1"
+	            "Passive"                        "1"
+	
+	            "EffectName"        "particles/generic_hero_status/status_invisibility_start.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
 	 // Invulnerability
 	 //=================================================================================================================
 	    "common_invulnerable"
@@ -131,6 +434,33 @@
 	        }
 	    }
 	//=================================================================================================================
+	 // Low priorty (enemies won't attack this unit unless there are no higher priority targets nearby)
+	 //=================================================================================================================
+	"common_low_priority"
+	{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	    "AbilityTextureName"            "disruptor_glimpse"
+	
+	    // Modifiers
+	    //-------------------------------------------------------------------------------------------------------------
+	    "Modifiers"
+	    {
+	        "common_low_priority"
+	        {
+	            "Passive"                       "1"
+	            "IsHidden"                      "1"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_LOW_ATTACK_PRIORITY"    "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
 	// Magic Immune
 	//=================================================================================================================
 	"common_magic_immune"
@@ -145,7 +475,7 @@
 	    //-------------------------------------------------------------------------------------------------------------
 	    "Modifiers"
 	    {
-	        "common_invulnerable"
+	        "common_magic_immune"
 	        {
 	            "IsHidden"                       "1"
 	                "Passive"                       "1"
@@ -184,6 +514,33 @@
 	            }
 	        }
 	    }
+	//=================================================================================================================
+	 // Prevents the unit from auto attacking
+	 //=================================================================================================================
+	"common_no_auto_attack"
+	{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	    "AbilityTextureName"            "disruptor_glimpse"
+	
+	    // Modifiers
+	    //-------------------------------------------------------------------------------------------------------------
+	    "Modifiers"
+	    {
+	        "common_no_auto_attack"
+	        {
+	            "Passive"                       "1"
+	            "IsHidden"                      "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK"    "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
 	//=================================================================================================================
 	 // No collision
 	 //=================================================================================================================
@@ -6515,6 +6872,181 @@
 	            }
 	         }
 		}
+	}
+	//=================================================================================================================
+	// Televac: Powered
+	// Mostly for tooltip
+	//=================================================================================================================
+	"televac_powered"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"					"ability_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "MaxLevel"                  "1"
+	    "AbilityTextureName"	    "wisp_tether"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"					"FIELD_INTEGER"
+	            "bonus_regen"				"0.00"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_televac_unpowered"
+	        {
+	            "Passive"	"1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Televac: Power Surge
+	//=================================================================================================================
+	"televac_power_surge"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"					"ability_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "MaxLevel"                  "1"
+	    "AbilityTextureName"	    "storm_spirit_ball_lightning"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"					"FIELD_INTEGER"
+	            "bonus_regen"				"25.00"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_televac_power_surge"
+	        {
+	            "Passive"	"1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// An aura that is added to televacs when they are ready to teleport civillians
+	// Any civillian that enters the aura range will be teleported to safety (if the televac has enough energy)
+	//=================================================================================================================
+	"televac_teleport"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"					"ability_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "MaxLevel"                  "1"
+	    "AbilityTextureName"	    "enigma_black_hole"
+	
+	    "precache"
+		{
+	        "particle"                  "particles/econ/courier/courier_trail_orbit/courier_trail_orbit.vpcf"
+		}
+	
+	    "Modifiers"
+	    {
+	        // Checks the televac to see if it has more/less than 250 mana and adds/removes the aura if so
+	        "modifier_televac_teleport_thinker"
+	        {
+	            "Passive"               "1"
+	            "IsPurgable"            "0"
+	            "IsHidden"              "1"
+	
+	            "ThinkInterval"         "1"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/televac_teleport.lua"
+	                    "Function"              "televac_check_mana"
+	                }
+	            }
+	        }
+	
+	        "modifier_televac_teleport_aura"
+	        {
+	            "IsPurgable"            "0"
+	            //"IsHidden"              "1"
+	            "Aura"                  "modifier_televac_teleport_effect"
+	            "Aura_Radius"           "300"
+	            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	            "Aura_Types"            "DOTA_UNIT_TARGET_BASIC"
+	
+	            "EffectName" "particles/econ/courier/courier_trail_orbit/courier_trail_orbit.vpcf"
+	            "EffectAttachType" "follow_origin"
+	        }
+	
+	        "modifier_televac_teleport_effect"
+	        {
+	            "IsHidden"          "1"
+	            "IsPurgable"        "0"
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "abilities/televac_teleport.lua"
+	                    "Function"              "unit_enters_televac_aura"
+	                }
+	            }
+	        }
+	    }
+	}
+	//=================================================================================================================
+	// Televac: Unpowered
+	// Slowly drains the energy of televacs while city power is not restored
+	//=================================================================================================================
+	"televac_unpowered"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"					"ability_datadriven"
+	    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "MaxLevel"                  "1"
+	    "LevelsBetweenUpgrades"  	"0"
+	    "AbilityTextureName"		"wisp_tether_break"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"					"FIELD_INTEGER"
+	            "bonus_regen"				"-1.00"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_televac_unpowered"
+	        {
+	            "Passive"	"1"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"%bonus_regen"
+	            }
+	        }
+	    }
 	}
 	//=================================================================================================================
 	// Trait: Skilled

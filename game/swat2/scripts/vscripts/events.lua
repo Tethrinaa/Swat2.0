@@ -260,6 +260,11 @@ function GameMode:OnEntityKilled( keys )
     g_EnemySpawner:onEnemyDies(killedUnit, killerEntity, killerAbility)
   elseif killedUnit:GetTeamNumber() == DOTA_TEAM_GOODGUYS and killedUnit:IsHero() then
 	g_PlayerManager:onHeroDies(killedUnit, killerEntity, killerAbility)
+  elseif killedUnit.onDeathFunction then
+      -- When enemies are spawned, they can add and onDeath function to the onDeathFunction parameter of the unit
+      -- This will be called when they die
+      local onDeathFunction = killedUnit.onDeathFunction
+      onDeathFunction(killedUnit, killerEntity, killerAbility)
   end
 end
 

@@ -16,11 +16,13 @@ require('game/ItemSpawningManager')
 require('game/ShopsManager')
 require('game/objectives/RadiationManager')
 require('game/objectives/PowerManager')
+require('game/objectives/CivillianManager')
 require('game/DebugChatCommands')
 
 -- The systems instances stored as global variables
 g_RadiationManager = {}
 g_PowerManager = {}
+g_CivillianManager = {}
 g_EnemyUpgrades = {}
 g_EnemySpawner = {}
 g_EnemyCommander = {}
@@ -88,6 +90,7 @@ function GameManager:initializeSystems()
     g_ShopsManager = ShopsManager:new()
     g_RadiationManager = RadiationManager:new()
     g_PowerManager = PowerManager:new()
+    g_CivillianManager = CivillianManager:new()
     g_EnemyUpgrades = EnemyUpgrades:new()
     g_EnemySpawner = EnemySpawner:new()
     g_EnemyCommander = EnemyCommander:new()
@@ -143,6 +146,7 @@ function GameManager:setDifficulty(difficulty)
     -- Now tell whoever needs to know about the difficulty changing
     g_RadiationManager:onDifficultySet(difficulty)
     g_PowerManager:onDifficultySet(difficulty)
+    g_CivillianManager:onDifficultySet(difficulty)
     g_EnemyUpgrades:onDifficultySet(difficulty)
     g_EnemySpawner:onDifficultySet(difficulty)
 
@@ -153,11 +157,11 @@ function GameManager:setDifficulty(difficulty)
     Timers:CreateTimer(5, function()
         g_RadiationManager:updateRadiationDisplay()
         g_PowerManager:updatePowerDisplay()
+        g_CivillianManager:updateCivillianDisplay()
 
-        if timesToUpdateDisplay > 0 then
+        timesToUpdateDisplay = timesToUpdateDisplay - 1
+        if timesToUpdateDisplay >= 0 then
             return 5
-        else
-            timesToUpdateDisplay = timesToUpdateDisplay - 1
         end
     end)
 end
