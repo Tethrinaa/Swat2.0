@@ -134,7 +134,7 @@ end
 function DayNightManager:onDayBegins()
     g_EnemyUpgrades:onTimeDifficultyIncreased()
 
-    -- TODO: Hazard Pay
+    g_GoldManager:distributeHazardPay()
 end
 
 -- Called when the time is 12:00 SWAT time. "Noon" (note: this is not 12:00 in dota)
@@ -148,5 +148,5 @@ end
 function DayNightManager:onNightBegins()
     g_EnemyUpgrades:onTimeDifficultyIncreased()
 
-    -- TODO: Hazard Pay
+    g_GoldManager:distributeHazardPay()
 end

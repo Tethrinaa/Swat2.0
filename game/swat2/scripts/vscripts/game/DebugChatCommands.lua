@@ -18,7 +18,8 @@ function SetUpDebugGameChatCommands()
         Convars:RegisterCommand( "swat_dotes", DebugGameChatCommand_Dotes, "Chat Command | Gives player dotes", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_apc", DebugGameChatCommand_SpawnApc, "Chat Command | Spawns an APC", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_power_surge", DebugGameChatCommand_PowerSurge, "Chat Command | Does a single power surge", FCVAR_CHEAT )
-    end
+		Convars:RegisterCommand( "swat_distribute_gold", DebugGameChatCommand_DistributeGold, "Chat Command | Distribute Gold", FCVAR_CHEAT )
+	end
 end
 
 -- This is an example console command
@@ -177,4 +178,9 @@ end
 
 function DebugGameChatCommand_PowerSurge()
     g_CivillianManager:powerSurgeTelevac()
+end
+
+function DebugGameChatCommand_DistributeGold()
+	print("DEBUG | Calling DistributeGold")
+	g_GoldManager:distributeGold(500, false)
 end
