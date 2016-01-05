@@ -1,0 +1,105 @@
+//=================================================================================================================
+// Civillian Failed Cure - Cure failed on this civ and he is now evil, and powerful
+//=================================================================================================================
+"civillian_failed_cure"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"        	"life_stealer_consume"
+    "MaxLevel"	"1"
+
+      "AbilitySpecial"
+      {
+          "01"
+          {
+              "var_type"                  "FIELD_INTEGER"
+              "crit_damage"               "1500"
+          }
+          "02"
+          {
+              "var_type"                  "FIELD_INTEGER"
+              "crit_chance"               "15"
+          }
+      }
+
+    "precache"
+    {
+        "particle"			"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+    }
+
+
+    "Modifiers"
+    {
+
+        "modifier_civillian_failed_cure"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "1"
+
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/enemy_tinter.lua"
+                    "Function"              "tint_evil_civ"
+                }
+            }
+
+            "OnAttackStart"
+            {
+                "RemoveModifier"
+                {
+                    "ModifierName"  "modifier_civillian_failed_cure_critical_strike"
+                    "Target"        "CASTER"
+                }
+
+                "Random"
+                {
+                    "Chance"    "%crit_chance"
+                    "OnSuccess"
+                    {
+                        "FireSound"
+                        {
+                            "EffectName"    "Hero_ChaosKnight.ChaosStrike"
+                            "Target"        "CASTER"
+                        }
+
+                        "FireEffect"
+                        {
+                            "EffectName"        "particles/units/heroes/hero_chaos_knight/chaos_knight_weapon_blur_critical.vpcf"
+                            "EffectAttachType"  "attach_attack1"
+                            "Target"            "CASTER"
+                        }
+
+                        "ApplyModifier"
+                        {
+                            "ModifierName"  "modifier_civillian_failed_cure_critical_strike"
+                            "Target"        "CASTER"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    "modifier_civillian_failed_cure_critical_strike"
+    {
+        "IsHidden"  "1"
+        "Properties"
+        {
+            "MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
+        }
+
+        "OnAttackLanded"
+        {
+            "RemoveModifier"
+            {
+                "ModifierName"  "modifier_civillian_failed_cure_critical_strike"
+                "Target"        "CASTER"
+            }
+        }
+    }
+}

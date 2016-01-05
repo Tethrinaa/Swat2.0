@@ -14,7 +14,12 @@ function SetUpDebugGameChatCommands()
         Convars:RegisterCommand( "swat_spawn_rad", DebugGameChatCommand_SpawnRad, "Chat Command | Spawn Rad", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_kill_rad", DebugGameChatCommand_KillRad, "Chat Command | Kill Rad", FCVAR_CHEAT )
         Convars:RegisterCommand( "swat_spawn_all_enemy_types", DebugGameChatCommand_SpawnAllEnemyTypes, "Chat Command | Spawn All Enemy Types", FCVAR_CHEAT )
-    end
+        Convars:RegisterCommand( "swat_city_power", DebugGameChatCommand_CityPower, "Chat Command | Turns on a random power plant", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_dotes", DebugGameChatCommand_Dotes, "Chat Command | Gives player dotes", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_apc", DebugGameChatCommand_SpawnApc, "Chat Command | Spawns an APC", FCVAR_CHEAT )
+        Convars:RegisterCommand( "swat_power_surge", DebugGameChatCommand_PowerSurge, "Chat Command | Does a single power surge", FCVAR_CHEAT )
+		Convars:RegisterCommand( "swat_distribute_gold", DebugGameChatCommand_DistributeGold, "Chat Command | Distribute Gold", FCVAR_CHEAT )
+	end
 end
 
 -- This is an example console command
@@ -140,4 +145,42 @@ function DebugGameChatCommand_SpawnAllEnemyTypes()
     es:spawnEnemy(es.dogSpawner, es.dogSpawner.createBurninating, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
     -- Mutants
     es:spawnEnemy(es.mutantSpawner, es.mutantSpawner.createNormal, GetRandomPointInRegion(location), shouldAddToMinionQueueIfFail)
+end
+
+function DebugGameChatCommand_CityPower()
+    print("DEBUG | Cheat | Turning on a power plant")
+    for _,powerPlant in pairs(g_PowerManager.powerPlants) do
+        if powerPlant:GetMana() < powerPlant:GetMaxMana() then
+            powerPlant:SetMana(powerPlant:GetMaxMana())
+            g_PowerManager:onPowerPlantFilled(powerPlant)
+            break
+        end
+    end
+end
+
+function DebugGameChatCommand_Dotes()
+    local cmdPlayer = Convars:GetCommandClient()
+    if cmdPlayer then
+      local playerID = cmdPlayer:GetPlayerID()
+      if playerID ~= nil and playerID ~= -1 then
+        -- Do something here for the player who called this command
+        local playerInfo = g_PlayerManager:getPlayerInfoForPlayerId(playerID)
+        if playerInfo then
+            playerInfo.hero:AddItemByName("item_antidotes")
+        end
+      end
+    end
+end
+
+function DebugGameChatCommand_SpawnApc()
+    g_CivillianManager:spawnApc(0)
+end
+
+function DebugGameChatCommand_PowerSurge()
+    g_CivillianManager:powerSurgeTelevac()
+end
+
+function DebugGameChatCommand_DistributeGold()
+	print("DEBUG | Calling DistributeGold")
+	g_GoldManager:distributeGold(500, false)
 end

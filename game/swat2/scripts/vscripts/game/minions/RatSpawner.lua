@@ -7,8 +7,6 @@ RatSpawner = {}
 
 RatSpawner.RAT_UNIT_NAME = "enemy_minion_rat"
 
-RatSpawner.SPECIAL_TOXIC = 1
-
 RatSpawner.WANDER_DELAY_MIN = 3 -- min time before moving
 RatSpawner.WANDER_DELAY_MAX = 6 -- max time before moving
 RatSpawner.WANDER_MAX_DISTANCE = 100 -- max distance from its initial position it will wander
@@ -25,23 +23,25 @@ end
 -- @param position | the position to create the unit
 -- @param specialType | a field that can be used to spawn special types of this minion
 -- returns the created unit
-function RatSpawner:spawnMinion(position, specialType, targetUnit)
+function RatSpawner:createRat(position)
 
     local unit = CreateUnitByName( RatSpawner.RAT_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
-    if specialType == 1 then
-        -- Toxic Rat!
+    local duration = 40 - math.max(0, RandomInt(-10, 30))
+    unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})
 
-        -- Give it the toxic aura ability
-        unit:AddAbility("enemy_rat_toxic_aura")
-        unit:FindAbilityByName("enemy_rat_toxic_aura"):SetLevel(1)
-        unit:SetRenderColor(107, 142, 35)
+    self:makeRatWander(unit, position)
 
-        local duration = 40 - math.max(0, RandomInt(-10, 30))
-        unit:AddNewModifier(caster, nil, "modifier_kill", {duration=duration})
+    return unit
+end
 
-        self:makeRatWander(unit, position)
-    end
+function RatSpawner:createToxicRat(position)
+    local unit = self:createRat(position)
+
+    -- Give it the toxic aura ability
+    unit:AddAbility("enemy_rat_toxic_aura")
+    unit:FindAbilityByName("enemy_rat_toxic_aura"):SetLevel(1)
+    unit:SetRenderColor(107, 142, 35)
 
     return unit
 end

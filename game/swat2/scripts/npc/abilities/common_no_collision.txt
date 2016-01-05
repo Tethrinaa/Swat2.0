@@ -16,6 +16,7 @@
         "common_unselectable"
         {
             "Passive"                       "1"
+            "IsHidden"                      "1"
 
             "States"
 			{

@@ -1,0 +1,44 @@
+//=================================================================================================================
+// APC: An aura that is added to APCs when they are ready to board civillians
+// Any civillian that enters the aura range will be boarded into the APC
+//=================================================================================================================
+"apc_civ_boarding"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"					"ability_datadriven"
+    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "MaxLevel"                  "1"
+    "AbilityTextureName"	    "enigma_black_hole"
+
+    "Modifiers"
+    {
+        "modifier_apc_civ_boarding_aura"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "1"
+            "Aura"                  "modifier_apc_civ_boarding_effect"
+            "Aura_Radius"           "300"
+            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+            "Aura_Types"            "DOTA_UNIT_TARGET_BASIC"
+
+        }
+
+        "modifier_apc_civ_boarding_effect"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "IsPurgable"        "0"
+
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/apc_civ_boarding.lua"
+                    "Function"              "unit_enters_boarding_aura"
+                }
+            }
+        }
+    }
+}

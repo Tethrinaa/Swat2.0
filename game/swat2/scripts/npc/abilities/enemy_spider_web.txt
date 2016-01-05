@@ -1,0 +1,130 @@
+//=================================================================================================================
+// Ability: Spidder web
+// Webs a target, making them unable to move
+//=================================================================================================================
+"enemy_spider_web"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"                     "ability_datadriven"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+    "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+    "AbilityTextureName"			"naga_siren_ensnare"
+    "MaxLevel"	"1"
+
+    // Casting
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastPoint"				"0.65"
+
+    // Time
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCooldown"				"8.0"
+
+    // Cost
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityManaCost"				"0"
+
+    // Cast Range
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"				"500"
+
+    // Special
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"					"FIELD_FLOAT"
+            "duration"					"4.0"
+        }
+        "02"
+        {
+            "var_type"					"FIELD_INTEGER"
+            "net_speed"					"1500"
+        }
+    }
+
+    // Data driven
+    //-------------------------------------------------------------------------------------------------------------
+    "precache"
+    {
+        "soundfile"					"soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
+        "soundfile"					"sounds/weapons/hero/broodmother/spiderling_cast.vsnd"
+        "particle"					"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+        "particle"					"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+    }
+
+    "OnSpellStart"
+    {
+        "TrackingProjectile"
+        {
+            "Target"				"TARGET"
+            "EffectName"			"particles/units/heroes/hero_broodmother/broodmother_web_cast.vpcf"
+            "Dodgeable"				"1"
+            "ProvidesVision"		"1"
+            "VisionRadius"			"0"
+            "MoveSpeed"				"%net_speed"
+            "SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+        }
+
+        "FireSound"
+        {
+            "EffectName"			"Hero_Broodmother.SpinWebCast"
+            "Target"				"CASTER"
+        }
+    }
+
+    "OnProjectileHitUnit"
+    {
+        "DeleteOnHit"	"1"
+
+        "FireSound"
+        {
+            "EffectName"			"Hero_NagaSiren.Ensnare.Target"
+            "Target"				"TARGET"
+        }
+
+        "ApplyModifier"
+        {
+            "Target"				"TARGET"
+            "ModifierName"			"modifier_ensnare_datadriven"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_ensnare_datadriven"
+        {
+            "IsHidden"		"0"
+            "IsDebuff"		"1"
+            "IsPurgable"	"0"
+
+            "Duration"		"%duration"
+
+            "States"
+            {
+                "MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+                "MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_DISABLED"
+            }
+
+            "OnCreated"
+			{
+				"AttachEffect"
+				{
+					"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_web.vpcf"
+					"EffectAttachType"	"attach_origin"
+					"Target"		"TARGET"
+
+					"ControlPoints"
+					{
+						"00"	"0 0 0"
+						"01"	"10 0 10"
+					}
+				}
+			}
+        }
+    }
+}

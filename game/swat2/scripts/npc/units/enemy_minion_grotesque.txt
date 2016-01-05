@@ -15,7 +15,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"enemy_grotesque_ensnare"			// Ability 1.
-	"Ability2"					"enemy_grotesque_evasion"			// Ability 2.
+	"Ability2"					"enemy_common_evasion"			// Ability 2.
 	"Ability3"					""			// Ability 3.
 	"Ability4"					""			// Ability 4.
 	"Ability5"					""			// Ability 5.

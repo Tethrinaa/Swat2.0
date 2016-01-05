@@ -43,7 +43,7 @@ function GrotesqueSpawner:createNormal(position)
     local unit = CreateUnitByName( GrotesqueSpawner.GROTESQUE_UNIT_NAME, position, true, nil, nil, DOTA_TEAM_BADGUYS )
 
     -- Evasion level is based on difficulty
-    unit:FindAbilityByName("enemy_grotesque_evasion"):SetLevel(g_GameManager.nightmareValue + 1)
+    unit:FindAbilityByName("enemy_common_evasion"):SetLevel(g_GameManager.nightmareValue + 1)
 
     unit:SetMana(0)
 

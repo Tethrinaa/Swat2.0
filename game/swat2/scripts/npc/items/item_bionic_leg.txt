@@ -1,0 +1,65 @@
+"item_bionic_leg"
+    {
+        "ID"                            "1268"
+        "BaseClass"                     "item_datadriven"
+        "AbilityTextureName"            "item_storage_cell"
+        "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	"ItemCost" "400"
+	"ItemKillable" "0" 
+	"ItemSellable" "1"
+	"ItemPurchasable" "0"
+	"ItemDroppable" "1"
+	
+	"ItemStockMax" "0"
+	"ItemStockTime" "0"
+	"ItemStockInitial" "0"
+	
+	"ItemShareability" "ITEM_FULLY_SHAREABLE"
+	
+	"ItemAliases" "Bionic Leg"
+	"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	
+	"OnEquip" 
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "ItemCheck"
+		}
+	}
+	
+	"OnUnequip"
+	{   
+		"RunScript"
+		{
+			"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+			"Function"  "RemoveItemModifierStats"
+		}
+	}
+	
+	"OnOwnerDied"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+			"Function"	"DropItemOnDeath"
+		}
+	}
+	"Modifiers"
+	{
+		"modifier_item_add_bionic_leg_datadriven"
+		{
+			"Passive"   "0"
+			"IsHidden"   "1"
+			"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"  "25"
+			}
+		}
+					
+    }
+    
+}

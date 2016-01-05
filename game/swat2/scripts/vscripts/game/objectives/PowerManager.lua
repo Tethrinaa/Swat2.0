@@ -4,7 +4,6 @@ SHOW_POWER_MANAGER_LOGS = SHOW_GAME_SYSTEM_LOGS
 
 PowerManager = {}
 
-PowerManager.POWER_PLANTS_FOR_CITY = 3
 PowerManager.POWER_CORE_UNIT_NAME = "game_power_core"
 
 function PowerManager:new(o)
@@ -12,8 +11,10 @@ function PowerManager:new(o)
     setmetatable(o, self)
     self.__index = self
 
+    self.powerPlants = {} -- List will contain all power plants
     self.powerPlantsFilled = 0
     self.powerPlantsNeeded = 0
+    self.powerPlantsToRestorePower = 2 -- Number of power plants to restore city power
     self.powerRestored = false
 
     return o
@@ -60,7 +61,7 @@ function PowerManager:spawnPower(damagedCount, badlyCount, severeCount, hasHidde
     for i = 1,6 do
         -- Spawn a power plant
         local room = powerPlantRooms[i]
-        local powerCore = CreateUnitByName(PowerManager.POWER_CORE_UNIT_NAME, room:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_GOODGUYS)
+        local powerCore = CreateUnitByName(PowerManager.POWER_CORE_UNIT_NAME, GetCenterInRegion(room), true, nil, nil, DOTA_TEAM_GOODGUYS)
         local degenAbility = nil
         if damagedCount > 0 then
             if SHOW_POWER_MANAGER_LOGS then
@@ -87,6 +88,8 @@ function PowerManager:spawnPower(damagedCount, badlyCount, severeCount, hasHidde
         powerCore:FindAbilityByName(degenAbility):SetLevel(1)
         powerCore:SetMana(0)
 
+        table.insert(self.powerPlants, powerCore)
+
         if hasHidden and (i % 2 == 0) then
             -- TODO: Hide this tor
         else
@@ -96,23 +99,32 @@ function PowerManager:spawnPower(damagedCount, badlyCount, severeCount, hasHidde
 
 end
 
-function PowerManager:onPowerPlantFilled(powerPlant, ability)
+function PowerManager:onPowerPlantFilled(powerPlant)
     self.powerPlantsFilled = self.powerPlantsFilled + 1
     if SHOW_POWER_MANAGER_LOGS then
         print("PowerManager | Power Plant Filled! (" .. self.powerPlantsFilled .. "/" .. self.powerPlantsNeeded ..")")
     end
     self:updatePowerDisplay()
 
-    if (not self.powerRestored) and self.powerPlantsFilled >= self.powerPlantsNeeded then
-        self:onPowerRestored()
+    -- Potentially restore power to city
+    if (not self.powerRestored) and self.powerPlantsFilled >= self.powerPlantsToRestorePower then
+        self:onCityPowerRestored()
     end
+
+    -- Alert civ system
+    g_CivillianManager:onPowerPlantFilled()
 end
 
-function PowerManager:onPowerRestored()
+-- Called to indicate city power has been restored (2 power plants)
+function PowerManager:onCityPowerRestored()
     if SHOW_POWER_MANAGER_LOGS then
         print("PowerManager | Power Restored!")
     end
-    -- TODO
+
+    self.powerRestored = true
+
+    -- Power the ABMs
+    g_ShopsManager:powerAbms()
 end
 
 function PowerManager:updatePowerDisplay()

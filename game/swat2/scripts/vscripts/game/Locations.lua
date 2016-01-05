@@ -3,7 +3,7 @@ Locations = {}
 
 SHOW_LOCATIONS_LOGS = SHOW_GAME_SYSTEM_LOGS
 
-LOCATIONS_RANDOM_POINT_OFFSET = 40 -- to try and prevent things spawning inside/on walls or something
+LOCATIONS_RANDOM_POINT_OFFSET = 80 -- to try and prevent things spawning inside/on walls or something
 
 function Locations:new(o)
     o = o or {}
@@ -12,12 +12,13 @@ function Locations:new(o)
 
     -- includes power_plants, abms, and warehouses
     self.all_rooms = nil
-    self.warehouses = {} -- all rooms that are not power plants (ABMs, crate rooms, ...etc are included!)
+    self.warehouses = {} -- all rooms that are not power plants or ABMs (crate rooms, ...etc are included!)
+                         -- These rooms do not prevent XP and enemies can spawn in them
 
     -- Special rooms
     -- Generated once difficulty is set (as the number of these depends on difficulty)
     self.power_plants = {} -- NOTE: Not included in self.warehouses (as nothing spawns there)
-    self.abms = {}
+    self.abms = {} -- NOTE: Not included in self.warehouses (as nothing spawns there)
     self.atme_rooms = {}
     self.clothing_rooms = {} -- "fake" ATME room
     self.chemical_plants = {} -- Brown Crate Room (spawns drugs and stuff)
@@ -26,6 +27,9 @@ function Locations:new(o)
     self.cybernetic_facilities = {} -- Brown Crate Room (spawns permanent upgrades)
     self.empty_warehouses = {} -- A warehouse that has nothing
 
+    -- Others
+    self.apc_spawns = Entities:FindByName(nil, "apc_spawn"):GetChildren() -- Regions where APCs spawn
+    self.televac_spawns = Entities:FindByName(nil, "televac_spawn"):GetChildren() -- Entities (NOT regions) where televacs spawn
 
     self.bunkers = nil
     self.graveyard = nil -- there is only one graveyard region
@@ -75,7 +79,7 @@ function Locations:createRooms()
     local diff = g_GameManager.difficultyValue
     local survival = g_GameManager.survivalValue
     -- A modifier based on player count ([0-3 == 0, 4-6 == 1, 7=9 == 2])
-    local playerCountModifier = math.floor((g_PlayerManager.playerCount - 1)/ 3)
+    local playerCountModifier = math.floor((g_PlayerManager.playerCount - 1) / 3)
 
     -- We'll use these variables to pick out rooms
     -- We obviously don't want to assign a room more than one type
@@ -87,16 +91,21 @@ function Locations:createRooms()
     numOfType = i - 6
     while i > numOfType do
         table.insert(self.power_plants, self.all_rooms[i])
-        i = i - 1
 
         -- Don't allow things to spawn in power plants
         table.remove(self.warehouses, i)
+
+        i = i - 1
     end
 
     -- ABMs (4min, 6max)
     numOfType = i - RandomInt(4, 6 - (3 - diff))
     while i > numOfType do
         table.insert(self.abms, self.all_rooms[i])
+
+        -- Don't allow enemies to spawn in ABMs
+        table.remove(self.warehouses, i)
+
         i = i - 1
     end
 
@@ -113,7 +122,6 @@ function Locations:createRooms()
         table.insert(self.clothing_rooms, self.all_rooms[i])
         i = i - 1
     end
-    i = i - 1
 
     -- chemical plants (2-3min, 3-5max)
     numOfType = i - RandomInt(3 - survival, 3 + playerCountModifier)
@@ -163,24 +171,43 @@ function Locations:createRooms()
     end
 end
 
---function Locations:createPowerPlants(number)
-    --for i = 1,number do
-        --self.
---end
+-- Returns true or false on whether the passed in region is a power plant
+function Locations:isPowerPlant(region)
+    local isPowerPlant = false
+    for _,powerplant in pairs(self.power_plants) do
+        if powerplant == region then
+            isPowerPlant = true
+            break
+        end
+    end
+    return isPowerPlant
+end
+
+-- Returns true or false on whether the passed in region is a black market
+function Locations:isBlackMark(region)
+    local isAbm = false
+    for _,abm in pairs(self.abms) do
+        if abm == region then
+            isAbm = true
+            break
+        end
+    end
+    return isAbm
+end
+
 function GetCenterInRegion(region)
-    local bounds = region:GetBounds()
-    return region:GetAbsOrigin()
+    return region:GetCenter()
 end
 
 function GetRandomPointInRegion(region)
     local bounds = region:GetBounds()
-    return region:GetAbsOrigin() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
+    return region:GetOrigin() + Vector(RandomFloat(bounds.Mins.x + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
 end
 
 function GetRandomPointInRegionGroup(region_group)
     local region = region_group[RandomInt(1, #region_group)]
     local bounds = region:GetBounds()
-    return region:GetAbsOrigin() + Vector(RandomFloat(bounds.Mins.x, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
+    return region:GetOrigin() + Vector(RandomFloat(bounds.Mins.x + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.x - LOCATIONS_RANDOM_POINT_OFFSET), RandomFloat(bounds.Mins.y + LOCATIONS_RANDOM_POINT_OFFSET, bounds.Maxs.y - LOCATIONS_RANDOM_POINT_OFFSET), 0)
 end
 
 -- Returns a random warehouse entity (warehouses do not include power plants)

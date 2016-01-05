@@ -1,0 +1,67 @@
+//=================================================================================================================
+// An aura that is added to televacs when they are ready to teleport civillians
+// Any civillian that enters the aura range will be teleported to safety (if the televac has enough energy)
+//=================================================================================================================
+"televac_teleport"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"					"ability_datadriven"
+    "AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "MaxLevel"                  "1"
+    "AbilityTextureName"	    "enigma_black_hole"
+
+    "precache"
+	{
+        "particle"                  "particles/econ/courier/courier_trail_orbit/courier_trail_orbit.vpcf"
+	}
+
+    "Modifiers"
+    {
+        // Checks the televac to see if it has more/less than 250 mana and adds/removes the aura if so
+        "modifier_televac_teleport_thinker"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "1"
+
+            "ThinkInterval"         "1"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/televac_teleport.lua"
+                    "Function"              "televac_check_mana"
+                }
+            }
+        }
+
+        "modifier_televac_teleport_aura"
+        {
+            "IsPurgable"            "0"
+            //"IsHidden"              "1"
+            "Aura"                  "modifier_televac_teleport_effect"
+            "Aura_Radius"           "300"
+            "Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+            "Aura_Types"            "DOTA_UNIT_TARGET_BASIC"
+
+            "EffectName" "particles/econ/courier/courier_trail_orbit/courier_trail_orbit.vpcf"
+            "EffectAttachType" "follow_origin"
+        }
+
+        "modifier_televac_teleport_effect"
+        {
+            "IsHidden"          "1"
+            "IsPurgable"        "0"
+
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/televac_teleport.lua"
+                    "Function"              "unit_enters_televac_aura"
+                }
+            }
+        }
+    }
+}

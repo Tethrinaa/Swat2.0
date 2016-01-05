@@ -1,0 +1,43 @@
+//=================================================================================================================
+// Partial cure. This blue zombie will need to be re-doted
+// If the buff expires naturally, the zombie is converted into an evil civllian
+//=================================================================================================================
+"civillian_partial_cure"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"		                "ability_datadriven"
+    "AbilityBehavior"	        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "AbilityTextureName"        	"life_stealer_infest"
+    "MaxLevel"	                    "1"
+
+    "precache"
+    {
+        "particle"			"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+    }
+
+
+    "Modifiers"
+    {
+
+        "modifier_civillian_partial_cure"
+        {
+            "Passive"               "1"
+            "IsPurgable"            "0"
+            "IsHidden"              "0"
+            "Duration"              "20"
+
+            "EffectName"	"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+            "EffectAttachType"	"follow_origin"
+
+            "OnDestroy"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"            "abilities/civillian_partial_cure.lua"
+                    "Function"              "partial_cure_destroyed"
+                }
+            }
+        }
+    }
+}
