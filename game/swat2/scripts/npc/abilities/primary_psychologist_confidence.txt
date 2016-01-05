@@ -1,0 +1,109 @@
+//=================================================================================================================
+// Ability: Confidence (Psy)
+//=================================================================================================================
+"primary_psychologist_confidence"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"						"ability_datadriven"
+    "AbilityName"              		"Confidence"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+
+    "MaxLevel"                 		"16"
+	"LevelsBetweenUpgrades"  		"0"
+    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+    "AbilityTextureName"			"omniknight_purification"
+
+
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"99999"
+	"AbilityCastPoint"				"0.05"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"3"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+
+		// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"agility"						"5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"agility_syn"					"2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"agility_self"					"4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"agility_syn_self"				"1.6 3.2 4.8 6.4 8 9.6 11.2 12.8 14.4 16.0 17.6 19.2 20.8 22.4 24.0 25.6"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"ApplyBuffAndSynergies"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"ApplyBuffAndSynergies"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"primary_psychologist_confidence" // The application of buffs assumes the base modifier name is the same as ability name
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%agility"
+			}
+		}
+		"primary_psychologist_confidence_syn"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%agility_syn"
+			}
+		}
+		"primary_psychologist_confidence_self"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%agility_self"
+			}
+		}
+		"primary_psychologist_confidence_syn_self"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%agility_syn_self"
+			}
+		}
+	}
+}

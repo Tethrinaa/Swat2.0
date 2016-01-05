@@ -1,0 +1,52 @@
+//=================================================================================================================
+// Ability: Respecialize (Psychologist)
+//=================================================================================================================
+"psychologist_respecialize"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"				    	"ability_datadriven"
+    "AbilityName"              		"Xtreme Combat Mode"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+    "MaxLevel"                 		"1"
+    "LevelsBetweenUpgrades"    		"0"
+    "AbilityTextureName"			"bristleback_warpath"
+
+    // Casting
+    "AbilityCastPoint"				"0.0"
+    "AbilityCooldown"				"0"
+    "AbilityManaCost"				"0"
+    
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"particle"	"models/heroes/wisp/wisp_overcharge.vmdl"
+		"soundfile"		"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+	}
+
+	// Special
+    //-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+    {
+       "01"
+       {
+          "var_type"				   "FIELD_FLOAT"
+          "min_time"				   "3"
+       }
+       "01"
+       {
+          "var_type"				   "FIELD_FLOAT"
+          "max_time"				   "20"
+       }
+    }
+		
+    "OnSpellStart"
+    {
+       "RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"Respecialize"
+		}
+    }
+}

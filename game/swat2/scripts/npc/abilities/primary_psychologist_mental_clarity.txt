@@ -1,0 +1,178 @@
+//=================================================================================================================
+// Ability: Mental Clarity (Psy)
+//=================================================================================================================
+"primary_psychologist_mental_clarity"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"						"ability_datadriven"
+    "AbilityName"              		"Mental Clarity"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "MaxLevel"                 		"16"
+	"LevelsBetweenUpgrades"  		"0"
+    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+    "AbilityTextureName"			"omniknight_purification"
+
+
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"99999"
+	"AbilityCastPoint"				"0.05"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"3"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+
+		// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"experience_rate"				"25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"experience_rate_syn"			"5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"experience_rate_self"			"20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80"
+		}
+		"04"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"experience_rate_syn_self"		"4 4.8 5.6 6.4 7.2 8 8.8 9.6 10.4 11.2 12.0 12.8 13.6 14.4 15.2 16.0"
+		}
+		"05"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"intellect"						"1 2 3 4 5 6 7 8 9 10 11 12 14 16 18 20"
+		}
+	}
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"ApplyBuffAndSynergies"
+		}
+	}
+		
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"ApplyBuffAndSynergies"
+		}
+	}
+	
+	
+	"Modifiers"
+	{
+		"primary_psychologist_mental_clarity_intellect"
+		{	
+			"Passive"				"1"
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%intellect" //TODO this provides green int instead of white
+			}
+		}
+		"primary_psychologist_mental_clarity"
+		{	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"AddMCBonus"
+					"experience_rate"	"%experience_rate"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"RemoveMCBonus"
+				}
+			}
+		}
+		"primary_psychologist_mental_clarity_syn"
+		{	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"AddMCBonus"
+					"experience_rate"	"%experience_rate_syn"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"RemoveMCBonus"
+				}
+			}
+		}
+		"primary_psychologist_mental_clarity_self"
+		{	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"AddMCBonus"
+					"experience_rate"	"%experience_rate_self"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"RemoveMCBonus"
+				}
+			}
+		}
+		"primary_psychologist_mental_clarity_syn_self"
+		{	
+			"OnCreated"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"AddMCBonus"
+					"experience_rate"	"%experience_rate_syn_self"
+				}
+			}
+			
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"heroes/hero_psychologist/psychologist_mental_clarity"
+					"Function"			"RemoveMCBonus"
+				}
+			}
+		}
+	}
+}

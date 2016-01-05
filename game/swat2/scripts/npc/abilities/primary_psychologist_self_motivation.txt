@@ -1,0 +1,112 @@
+//=================================================================================================================
+// Ability: Self-Motivation (Psy)
+//=================================================================================================================
+"primary_psychologist_self_motivation"
+{
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "BaseClass"						"ability_datadriven"
+    "AbilityName"              		"Self-Motivation"
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	//"ScriptFile"					"heroes/hero_psychologist/primary_psychologist_self_motivation"
+
+    "MaxLevel"                 		"8"
+	"LevelsBetweenUpgrades"  		"0"
+    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+    "AbilityTextureName"			"omniknight_purification"
+
+
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastRange"				"99999"
+	"AbilityCastPoint"				"0.05"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"3"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+
+		// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"movement_speed"				"16 28 40 52 64 76 88 100"
+		}
+		"02"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"movement_speed_syn"			"5 9 13 17 21 25 29 33"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"movement_speed_self"			"12.8 22.4 32 41.6 51.2 60.8 70.4 80"
+		}
+		"03"
+		{
+			"var_type"						"FIELD_FLOAT"
+			"movement_speed_syn_self"		"4 7.2 10.4 13.6 16.8 20 23.2 26.4"
+		}
+	}
+		
+	
+	"OnUpgrade"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"ApplyBuffAndSynergies"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"heroes/hero_psychologist/psychologist_focii"
+			"Function"		"ApplyBuffAndSynergies"
+		}
+	}
+	
+	
+	"Modifiers"
+	{
+		"primary_psychologist_self_motivation"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"				"%movement_speed"
+			}
+		}
+		"primary_psychologist_self_motivation_syn"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"				"%movement_speed_syn"
+			}
+		}
+		"primary_psychologist_self_motivation_self"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"				"%movement_speed_self"
+			}
+		}
+		"primary_psychologist_self_motivation_syn_self"
+		{	
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"				"%movement_speed_syn_self"
+			}
+		}
+	}
+}

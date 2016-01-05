@@ -1,0 +1,144 @@
+//=================================================================================================================
+// Psychologist: Mind Rot
+//=================================================================================================================
+"psychologist_mind_rot"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"              		"ability_datadriven"
+	"AbilityTextureName"			"gyrocopter_flak_cannon"
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+	"MaxLevel"						"8"
+	"AoERadius" 					"%radius"
+
+	// Casting
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCastPoint"  			"0"
+	"AbilityCastRange"  			"99999"
+
+	// Time
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"30 25 20 19 18 17 16 15"
+
+	// Cost
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityManaCost"				"0"
+
+
+	// Precache
+	//-------------------------------------------------------------------------------------------------------------
+	"precache"
+	{
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		"particle"					"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+	}
+
+	// Special
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"radius"          			"300 300 300 312 325 336 348 360"
+		}
+		"02"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"armor_redux"   	       	"-1 -2 -3 -3 -3 -3 -3 -3"
+		}
+		"03"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"ms_redux"           		"-100"
+		}
+		"04"
+		{
+			"var_type"                	"FIELD_INTEGER"
+			"hps"           			"-2"
+		}
+		"05"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"gt100_factor"           	"1"
+		}
+		"06"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"gt150_factor"           	".6"
+		}
+		"05"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"gt200_factor"           	".2"
+		}
+		"06"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"max_int"           		"550"
+		}
+		"06"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"max_int_seconds"           "38.25"
+		}
+		"06"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"base_duration"           	"3.75"
+		}
+		"06"
+		{
+			"var_type"                	"FIELD_FLOAT"
+			"miniboss_duration_factor"  ".25"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"					"heroes/hero_psychologist/psychologist_mind_rot"
+			"Function"						"MindRot"
+			"Target"						"POINT"
+			"Radius"						"%radius"
+			"gt100_factor"					"%gt100_factor"
+			"gt150_factor"					"%gt150_factor"
+			"gt200_factor"					"%gt200_factor"
+			"max_int"						"%max_int"
+			"max_int_seconds"				"%max_int_seconds"
+			"base_duration"					"%base_duration"
+			"miniboss_duration_factor"		"%miniboss_duration_factor"
+		}
+	}
+
+	"Modifiers"
+	{
+		"modifier_mind_rot_indefinite"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"  			"%armor_redux"
+				"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"  			"%hps"
+			}
+		}
+		"modifier_mind_rot_temporary"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"  		"%ms_redux"
+			}
+		}
+		"modifier_mind_rot_temporary_miniboss"
+		{
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"  		"%ms_redux"
+			}
+		}
+	}
+}
+	
