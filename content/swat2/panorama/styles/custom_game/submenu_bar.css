@@ -1,0 +1,149 @@
+.SubMenuRoot
+{
+	position: 76.7% 68.6% 0px;
+	flow-children: down;
+	visibility: collapse;
+}
+
+.Background
+{
+    border: 2px solid teal;
+	background-color: #000000;
+	flow-children: down;
+}
+ 
+.TopBar
+{
+	vertical-align: top;
+	margin: 10px 10px 10px 10px; 
+	flow-children: right;
+}
+
+.BottomBar
+{
+	margin: 5px 10px 10px 10px;
+	vertical-align: bottom;
+	flow-children: right;
+}
+
+#submenu_list
+{
+	flow-children: right;
+	/* border: 2px solid orange; */
+	/*background-color: #6D7062;*/
+}
+
+#submenu2nd_list
+{
+	flow-children: right;
+	border: 2px solid orange;
+	/*background-color: #6D7062;*/
+	visibility: collapse;
+}
+
+.AbilityPanel
+{
+	margin-left: 7px;
+	margin-right: 7px;
+}
+
+.AbilityPanel.no_ability
+{
+	visibility: collapse;
+}
+
+
+#ButtonAndLevel
+{
+	flow-children: down;
+}
+
+#AbilityButton
+{
+	width: 52px;
+	height: 52px;
+	border: 2px solid transparent;
+}
+
+.is_passive #AbilityButton
+{
+	border: 2px solid #00000000;
+}
+
+#UpgradeBorder
+{
+	background-color: transparent;
+}
+
+.learnable_ability #UpgradeBorder
+{
+   background-color: gradient( linear, 0% 0%, 0% 100%, from( #ffffff ), color-stop( 0.1, #c4a529 ), color-stop( 0.75, #9e8b2c ), color-stop( 0.9, #c4a529 ), to( #ffffff ) );
+}
+
+#AbilityButton:hover
+{
+	border: 2px solid white;
+}
+
+#AbilityButton:active
+{
+	border: 2px solid white;
+}
+
+.no_level DOTAAbilityImage
+{
+	saturation: 0;
+	wash-color: #303030;
+}
+
+.insufficient_mana DOTAAbilityImage
+{
+	saturation: 0;
+	wash-color: #1569be;
+}
+
+.potential_upgrade.no_level DOTAAbilityImage
+{
+	saturation: 1;
+	wash-color: white;
+}
+
+#AbilityStatusBorder
+{
+	border: 2px solid transparent;
+}
+
+.auto_cast_enabled #AbilityStatusBorder
+{
+	border: 2px solid orange;
+}
+
+.toggle_enabled #AbilityStatusBorder
+{
+	border: 2px solid green;
+}
+
+#AbilityLevelContainer
+{
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.LevelPanel
+{
+	width: 12px;
+	height: 12px;
+	margin-left: 1px;
+	margin-right: 1px;
+	border-radius: 3px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2e2716 ), to( #020302 ) );
+	border: 2px solid #ffffff05;
+}
+
+.active_level.LevelPanel
+{
+	background-color: #ceaa31;
+	border: 2px solid #734918;
+}
+
+

@@ -83,11 +83,11 @@ function SpinUpDroid(keys)
 	local ability_map = {}
 	table.insert(ability_map, {mini_ability_name = "weapon_plasma_rounds_mini" 		, ho_ability_name = ho.sdata.weaponSkill             	})
 	table.insert(ability_map, {mini_ability_name = "primary_ho_plasma_shield" 		, ho_ability_name = "primary_ho_plasma_shield"        	})
-	local cells_entry = {mini_ability_name = "primary_minidroid_storage_cells"		, ho_ability_name = "primary_ho_storage_cells" 			}
+	local cells_entry = {mini_ability_name = "primary_minidroid_storage_cells"		, ho_ability_name = "sub_ho_storage_cells" 			}
 	table.insert(ability_map, cells_entry)
-	table.insert(ability_map, {mini_ability_name = "minidroid_ammo" 				, ho_ability_name =	"primary_ho_droid_ammo"     		})
-	table.insert(ability_map, {mini_ability_name = "minidroid_integrity" 			, ho_ability_name =	"primary_ho_droid_integrity"		})
-	table.insert(ability_map, {mini_ability_name = "minidroid_mobility"	 			, ho_ability_name = "primary_ho_droid_mobility" 		})
+	table.insert(ability_map, {mini_ability_name = "minidroid_ammo" 				, ho_ability_name =	"sub_ho_droid_ammo"     			})
+	table.insert(ability_map, {mini_ability_name = "minidroid_integrity" 			, ho_ability_name =	"sub_ho_droid_integrity"			})
+	table.insert(ability_map, {mini_ability_name = "minidroid_mobility"	 			, ho_ability_name = "sub_ho_droid_mobility" 			})
 	table.insert(ability_map, {mini_ability_name = "primary_minidroid_energy_beam" 	, ho_ability_name = "primary_ho_power_grid"      		})
 	table.insert(ability_map, {mini_ability_name = "nanites_standard"				, ho_ability_name = ho.sdata.nanitesSkill				})
 

@@ -1,7 +1,7 @@
 	//=================================================================================================================
 	// Ability: Storage Cells (Heavy Ordnance)
 	//=================================================================================================================
-	"primary_ho_storage_cells"
+	"sub_ho_storage_cells"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 		// This is a lua ability so that I can apply the lua modifier for the regen buff so it's conditional on the current energy
 		"BaseClass"						"ability_lua"
 		"MaxLevel"                 		"8"
-		"ScriptFile"					"heroes/hero_heavy_ordnance/primary_ho_storage_cells"
+		"ScriptFile"					"heroes/hero_heavy_ordnance/sub_ho_storage_cells"
 		"AbilityTextureName"			"rattletrap_power_cogs"
 	
 	

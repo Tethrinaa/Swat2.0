@@ -17,6 +17,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/objectives.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/resource_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/action_bar.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/submenu_bar.xml" />
 		<!--  		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/inventory.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/buff_list.xml" /> -->
         <!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select.xml" />-->

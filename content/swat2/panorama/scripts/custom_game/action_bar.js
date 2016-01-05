@@ -120,7 +120,7 @@ function UpdateAbilityList()
 			nUsedPrimaryPanels++;
 		}
 
-		else {
+		else if (ability_type != "sub") {
 			if ( nUsedSecondaryPanels >= m_SecondaryAbilityPanels.length )
 			{
 				// create a new panel

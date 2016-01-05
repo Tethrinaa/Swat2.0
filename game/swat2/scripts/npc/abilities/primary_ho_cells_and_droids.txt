@@ -1,0 +1,34 @@
+//=================================================================================================================
+// Heavy Ordnance: Cells and Droids
+//=================================================================================================================
+	"primary_ho_cells_and_droids"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityTextureName"	"abaddon_aphotic_shield"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityManaCost"		"0"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"0"
+		
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "heroes/hero_heavy_ordnance/ho_cells_and_droids.lua"
+	        	"Function"      "OpenSubMenu"
+			}
+		}
+		"OnToggleOff"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "heroes/hero_heavy_ordnance/ho_cells_and_droids.lua"
+	        	"Function"      "CloseSubMenu"
+			}
+		}
+	}

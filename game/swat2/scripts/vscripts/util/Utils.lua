@@ -1,7 +1,7 @@
 -- Collection of some generic util functions
 --
 
--- Rounds the passed double to the nearest integer
+-- Rounds the passed positive double to the nearest integer
 function Round(x)
     return math.floor(x + 0.5)
 end
@@ -55,10 +55,6 @@ end
 
 function bit(p)
     return 2 ^ (p - 1)  -- 1-based indexing
-end
-
-function round(n)
-  return math.floor((math.floor(n*2) + 1)/2)
 end
 
 function distanceBetweenVectors(vectorA, vectorB)
