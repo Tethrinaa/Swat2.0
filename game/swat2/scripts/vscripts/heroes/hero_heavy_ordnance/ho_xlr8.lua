@@ -70,7 +70,7 @@ function ResetAbility(keys)
 	local rank = 4
 	
 	-- Convert the cooldown counter to an actual cooldown using the rank bonus
-	local cd = round( (keys.caster.sdata.xlr8_cooldown) / ({1.5356,2.1070,2.9226,3.9391})[rank] ) + 5
+	local cd = Round( (keys.caster.sdata.xlr8_cooldown) / ({1.5356,2.1070,2.9226,3.9391})[rank] ) + 5
 	
 	-- Reenable the ability and start the calculated cooldown
 	keys.ability:SetActivated(true)

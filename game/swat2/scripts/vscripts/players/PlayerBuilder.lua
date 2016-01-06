@@ -163,6 +163,12 @@ function PlayerBuilder:BuildMarine( event )
              end
          end
     end
+	
+	-- class specific initialization
+	
+	if event.class == "ho" then
+		hero:FindAbilityByName("ho_phased_droids"):SetLevel(0)
+	end
     
     -- add any abilities for testing but this should be emptied out each time
 

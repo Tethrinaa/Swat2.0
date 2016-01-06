@@ -2500,6 +2500,86 @@
 		"VisionDaytimeRange"		"0"		// Range of vision during day light.
 		"VisionNighttimeRange"		"0"		// Range of vision at night time.
 	}
+	"ho_minidroid"
+	{
+		// General
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/sniper/sniper.vmdl"	// Model.
+		"SoundSet"					"Hero_Sniper"					// Name of sound set.
+		"GameSoundsFile" 			"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+		"ModelScale"				"0.7"
+		"Level"						"1"
+		"IsMechanical"				"1"
+	
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"common_magic_immune"
+		//"Ability2"					"primary_ho_plasma_shield"
+		//"Ability3"					"primary_minidroid_storage_cells"
+		//"Ability4"					"minidroid_ammo"
+		//"Ability5"					"minidroid_integrity"
+		//"Ability6"					"minidroid_mobility"
+		//"Ability7"					"primary_minidroid_energy_beam"
+		//"Ability8"					"nanites_standard"
+	
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"ArmorType"              	"unarmored"
+	    "MagicalResistance"			"0"	   	// Magical protection.
+	
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"45.0"
+		"AttackDamageMax"			"52.0"
+		"AttackRate"				"0.62"
+		"AttackAnimationPoint"		"0.17"
+		"AttackAcquisitionRange"	"550"
+		"AttackRange"				"550"
+		"ProjectileModel"			"particles/econ/items/sniper/sniper_charlie/sniper_base_attack_charlie.vpcf"
+		"ProjectileSpeed"			"1900"
+	
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"35"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+	
+			// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+	
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"500"		// Base health.
+		"StatusHealthRegen"			"0.1"		// Health regeneration rate.
+		"StatusMana"				"500"			// Base mana.
+		"StatusManaRegen"			".25"			// Mana regeneration rate.
+	
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"ManaGain"					"250"
+		}
+	}
 	"medic_mending_station"
 	{
 		// General

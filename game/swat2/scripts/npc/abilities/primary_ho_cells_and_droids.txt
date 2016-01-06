@@ -9,6 +9,7 @@
 		"AbilityTextureName"	"abaddon_aphotic_shield"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityManaCost"		"0"
+		"LevelsBetweenUpgrades"  		"0"
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

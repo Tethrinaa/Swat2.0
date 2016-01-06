@@ -83,7 +83,7 @@ function SpinUpDroid(keys)
 	local ability_map = {}
 	table.insert(ability_map, {mini_ability_name = "weapon_plasma_rounds_mini" 		, ho_ability_name = ho.sdata.weaponSkill             	})
 	table.insert(ability_map, {mini_ability_name = "primary_ho_plasma_shield" 		, ho_ability_name = "primary_ho_plasma_shield"        	})
-	local cells_entry = {mini_ability_name = "primary_minidroid_storage_cells"		, ho_ability_name = "sub_ho_storage_cells" 			}
+	local cells_entry = {mini_ability_name = "primary_minidroid_storage_cells"		, ho_ability_name = "sub_ho_storage_cells" 				}
 	table.insert(ability_map, cells_entry)
 	table.insert(ability_map, {mini_ability_name = "minidroid_ammo" 				, ho_ability_name =	"sub_ho_droid_ammo"     			})
 	table.insert(ability_map, {mini_ability_name = "minidroid_integrity" 			, ho_ability_name =	"sub_ho_droid_integrity"			})
@@ -110,7 +110,6 @@ function SpinUpDroid(keys)
 		local mini_ability_name = mapEntry.mini_ability_name
 		local ho_ability_name = mapEntry.ho_ability_name
 		if not minidroid:HasAbility(mini_ability_name) then
-			print("Adding", mini_ability_name)
 			minidroid:AddAbility(mini_ability_name)
 		end
 		local mini_ability = minidroid:FindAbilityByName(mini_ability_name)
@@ -123,12 +122,10 @@ function SpinUpDroid(keys)
 			if mini_ability_name == "primary_minidroid_storage_cells" then
 				-- Standard energy from levels in cells
 				minidroid:SetMana(keys.ability:GetLevelSpecialValueFor("cells_energy", ho_level + 1))
-                print(minidroid:GetMana())
 				
 			elseif mini_ability_name == "primary_minidroid_energy_beam" then
 				-- Free beam on birth as long as the ho is above 250
 				local birth_energy_param = mini_level < 1 and "birth_energy_base" or "birth_energy"
-				print("Energy:", mini_level, keys.ability:GetLevelSpecialValueFor(birth_energy_param, mini_level - 1))
 				TransferEnergy(minidroid, ho, keys.ability:GetLevelSpecialValueFor(birth_energy_param, mini_level - 1), keys.ability:GetSpecialValueFor("birth_energy_reserve") )
 				
 			elseif mini_ability_name == "nanites_standard" then -- TODO this needs a separate ability just for mini nanites so the standard one can't get overleveled. this goes to 24.
@@ -169,12 +166,20 @@ function SpinUpDroid(keys)
     -- Update the auras on all the droids to reflect the new droid count
 	UpdateHOMinidroidAuras(ho, keys.ability)
 	minidroid:MoveToNPC(ho)
+	
+	-- Enable phase droids
+	ho:FindAbilityByName("ho_phased_droids"):SetLevel(1)
 end
 
 function SpinDownDroid(keys)
     -- Decrease the level of the construct droid ability to update the cost
     local level = math.max(keys.ability:GetLevel() - 1, 0)
     keys.ability:SetLevel(level)
+	
+	-- Disable phase droids if this is level 1 because it means no droids are out
+	if level <= 1 then
+		keys.caster:FindAbilityByName("ho_phased_droids"):SetLevel(0)
+	end
     
     keys.caster.sdata.minidroids[keys.target.minidroid_id] = nil
 	

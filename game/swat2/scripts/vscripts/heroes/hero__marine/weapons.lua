@@ -11,9 +11,7 @@ end
 	Date: 10.01.2015.
 	Deals splash auto attack damage to nearby targets depending on distance]]
 function Splash( keys )
-	-- Variables
-	print "Starting Splash"
-	ShallowPrintTable(keys)
+	-- Variables	
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability

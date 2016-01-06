@@ -414,7 +414,6 @@
 	            "ScriptFile"	"items/item_call_apc.lua"
 	            "Function"		"call_apc"
 	        }
-	
 	    }
 	}
 	"item_combat_vest"

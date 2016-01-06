@@ -3,7 +3,7 @@
 //table of classes and their abilities
 var cyborg = ["primary_cyborg_cluster_rockets_lua_ability","primary_cyborg_xtreme_combat_mode","primary_cyborg_organic_replacement","cyborg_pheromones","cyborg_emergency_power","cyborg_goliath_modification", "cyborg_forcefield_lua_ability" ];
 var demo = ["primary_demo_mirv","primary_demo_place_c4","primary_demo_advanced_generator", "demo_biochemical_energy","demo_gear_mod","demo_mini_nuke","demo_sma"];
-var ho = ["primary_ho_plasma_shield","primary_ho_storage_cells","ho_power_grid","ho_construct_droid","ho_xlr8","ho_recharge_battery"];
+var ho = ["primary_ho_plasma_shield","primary_ho_cells_and_droids","primary_ho_power_grid","ho_construct_droid","ho_xlr8","ho_phased_droids","ho_recharge_battery"];
 var maverick = ["primary_maverick_plasma_grenade","primary_maverick_robodog","primary_maverick_advanced_generator","maverick_nano_injection","maverick_reprogram"];
 var medic = ["primary_medic_nano_injection","primary_medic_mend_wounds","primary_medic_adrenaline_junkie","medic_adrenaline","medic_rapid_therapy","medic_mending_station","medic_revive"];
 var psychologist = ["primary_psychologist_mental_clarity","primary_psychologist_confidence","primary_psychologist_self_motivation", "psychologist_mind_slay","psychologist_mind_rot","psychologist_clairvoyance"];

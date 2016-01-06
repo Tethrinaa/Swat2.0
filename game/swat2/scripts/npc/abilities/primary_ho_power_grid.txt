@@ -9,6 +9,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"16"
 		"AbilityTextureName"			"pudge_dismember"
+		"LevelsBetweenUpgrades"  		"0"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

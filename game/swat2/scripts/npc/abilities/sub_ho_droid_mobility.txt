@@ -10,6 +10,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"                 		"1"
 		"AbilityTextureName"			"bounty_hunter_track"
+		"LevelsBetweenUpgrades"  		"0"
 		
 		"AbilitySpecial" //duplicated in primary_minidroid_xyz for display purposes
 		{

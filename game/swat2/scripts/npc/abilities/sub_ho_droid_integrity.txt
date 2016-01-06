@@ -10,6 +10,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"                 		"3"
 		"AbilityTextureName"			"shredder_reactive_armor"
+		"LevelsBetweenUpgrades"  		"0"
 		
 		"AbilitySpecial" //duplicated in primary_minidroid_xyz for display purposes
 		{

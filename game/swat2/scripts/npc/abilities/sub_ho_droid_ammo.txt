@@ -10,6 +10,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"                 		"4"
 		"AbilityTextureName"			"sniper_shrapnel"
+		"LevelsBetweenUpgrades"  		"0"
 		
 		"AbilitySpecial" //duplicated in primary_minidroid_xyz for display purposes
 		{

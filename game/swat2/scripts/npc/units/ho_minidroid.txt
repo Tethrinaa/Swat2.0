@@ -11,7 +11,7 @@
 
 	// Abilities
 	//----------------------------------------------------------------
-	//"Ability1"					"weapon_plasma_rounds_mini"
+	"Ability1"					"common_magic_immune"
 	//"Ability2"					"primary_ho_plasma_shield"
 	//"Ability3"					"primary_minidroid_storage_cells"
 	//"Ability4"					"minidroid_ammo"
