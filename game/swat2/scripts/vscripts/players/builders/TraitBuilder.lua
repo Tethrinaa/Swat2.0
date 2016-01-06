@@ -70,6 +70,9 @@ end
 -- Gifted
 function TraitBuilder:applyGifted(playerHero)
     -- TODO: Implement Gifted
+	playerHero:AddAbility("trait_gifted")
+    playerHero:FindAbilityByName("trait_gifted"):SetLevel(1)
+	
 end
 
 -- Survivalist
@@ -125,6 +128,9 @@ end
 -- Energizer
 function TraitBuilder:applyEnergizer(playerHero)
     -- TODO: Implement Energizer
+	playerHero:AddAbility("trait_energizer")
+    playerHero:FindAbilityByName("trait_energizer"):SetLevel(1)
+	
 end
 
 -- PackRat

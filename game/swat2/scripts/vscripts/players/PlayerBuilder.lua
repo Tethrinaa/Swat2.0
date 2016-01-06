@@ -41,7 +41,7 @@ PLAYER_BUILDER_CONSTS.classes.medic.abilities  = {"primary_medic_nano_injection"
 PLAYER_BUILDER_CONSTS.classes.psychologist.abilities = {"primary_psychologist_mental_clarity","primary_psychologist_confidence","primary_psychologist_self_motivation", "psychologist_mind_slay","psychologist_mind_rot","psychologist_respecialize","psychologist_clairvoyance"}
 --TODO Figure out how to handle the sniper_critical_shot for the UI
 PLAYER_BUILDER_CONSTS.classes.sniper.abilities = {"primary_sniper_concussion_grenade","primary_sniper_aim","primary_sniper_marksman","primary_sniper_critical_shot","sniper_item_teleport","sniper_construct_camera","sniper_sneak"}
-PLAYER_BUILDER_CONSTS.classes.tactician.Abilities = {"primary_tactician_weakpoint","primary_tactician_blitz","primary_tactician_endurance","tactician_pep_talk","tactician_ion_strike","tactician_recruit"}
+PLAYER_BUILDER_CONSTS.classes.tactician.abilities = {"primary_tactician_weakpoint","primary_tactician_blitz","primary_tactician_endurance","tactician_pep_talk","tactician_ion_strike","tactician_recruit"}
 
 PLAYER_BUILDER_CONSTS.classes.psychologist.modifiers = {"modifier_awareness"}
 PLAYER_BUILDER_CONSTS.classes.medic.modifiers = {"modifier_anti_personnel_rounds"}

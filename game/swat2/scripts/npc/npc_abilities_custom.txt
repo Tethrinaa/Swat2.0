@@ -5646,7 +5646,7 @@
 	//=================================================================================================================
 	// Ability: Aim (Covert Sniper)
 	//=================================================================================================================
-	   "primary_covert_sniper_aim"
+	   "primary_sniper_aim"
 	   {
 	      // General
 	      //-------------------------------------------------------------------------------------------------------------
@@ -5708,7 +5708,7 @@
 	//=================================================================================================================
 	// Ability: Concussion Grenade (Covert Sniper)
 	//=================================================================================================================
-	   "primary_covert_sniper_concussion_grenade"
+	   "primary_sniper_concussion_grenade"
 	   {
 	      // General
 	      //-------------------------------------------------------------------------------------------------------------
@@ -5838,7 +5838,7 @@
 	//=================================================================================================================
 	// Ability: Critical Shot (Covert Sniper)
 	//=================================================================================================================
-	   "primary_covert_sniper_critical_shot"
+	   "primary_sniper_critical_shot"
 	   {
 	      // General
 	      //-------------------------------------------------------------------------------------------------------------
@@ -5944,7 +5944,7 @@
 	//=================================================================================================================
 	// Ability: Marksman (Covert Sniper)
 	//=================================================================================================================
-	"primary_covert_sniper_marksman"
+	"primary_sniper_marksman"
 	{
 	// General
 	//-------------------------------------------------------------------------------------------------------------
@@ -9481,4 +9481,639 @@
 	         }
 		}
 	   }
+	   	//=================================================================================================================
+	// Traits: Gifted
+	//=================================================================================================================
+	"trait_gifted"
+	{
+			// General
+	//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				     "ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+
+		"AbilityTextureName"		"ancient_apparition_cold_feet"
+	
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+	
+	
+					"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+					"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+	
+
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
+		"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_strength"	"5"
+			}
+		"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"	"5"
+			}
+		"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_agility"	"5"
+			}
+				
+		"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement"		"30"
+			}
+			
+			
+			
+		}	
+		
+		
+	
+		"Modifiers"
+		{
+			"modifier_gifted"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agility"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement"
+					
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	//=================================================================================================================
+	// Traits: Energizer
+	//=================================================================================================================
+	"trait_energizer"
+	{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				     "ability_datadriven"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"		"abaddon_aphotic_shield"
+	
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+	
+	
+					"particle"			"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+					"soundfile"		"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+	
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"3.0"	// Value much higher than cost.
+	
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
+				"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana_regen_percentage"		"33"
+			}
+		
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_restore"			"500"
+			}
+		}
+		
+		
+		"Modifiers"
+		{
+			"modifier_item_sobi_mask_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_percentage"
+				}
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+				"Target"		"TARGET"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_keeper_of_the_light/keeper_chakra_magic.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+	
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"TARGET"	"follow_origin"
+				}
+	
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/heroes/hero_cyborg/cyborg_emergency_power"
+				"Function"		"RestoreMana"
+			}
+		}
+		
+		
+		
+		
+	}
+	//=================================================================================================================
+	// Tact: primary_tactician_weakpoint
+	//=================================================================================================================
+	"primary_tactician_weakpoint"
+	{
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"silencer_glaives_of_wisdom"
+		"MaxLevel"                 "16"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction"	"-1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 -13 -14 -15 -16"	
+			}
+
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"625 625 625 625 625 625 625 625 625 625 625 625 625 625 625 625"
+			}
+		}
+	
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+		}
+	
+		"Modifiers"
+		{
+			"modifier_degen_aura"
+			{
+				"Passive" 			"1"
+				"IsHidden" 			"1"
+				"IsDebuff"			"1"
+	
+				"Aura" 				"modifier_degen_aura_effect"
+				"Aura_Radius" 		"%radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 		 "DOTA_UNIT_TARGET_BASIC"
+			}
+
+	
+			"modifier_degen_aura_effect"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+				
+				"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%armor_reduction"
+				
+				}
+			}
+
+	
+	
+		}
+	
+	
+	}
+	
+	//=================================================================================================================
+	// Tact: primary_tactician_endurance
+	//=================================================================================================================
+	"primary_tactician_endurance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"			"spirit_breaker_empowering_haste"
+		"MaxLevel"                 "16"
+
+
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_move_speed"	"5 10 15 20 25 30 35 40"
+			}
+
+		}
+	
+		
+	
+	
+	
+		"Modifiers"
+		{
+			
+			"modifier_rabid"
+			{
+				"EffectName"		""
+				"EffectAttachType"	"follow_origin"
+				
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Aura"          	"modifier_inner_beast_buff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanical?
+				"Aura_Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ALLIES" //Needed?
+
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tact: primary_tactician_blitz
+	//=================================================================================================================
+	"primary_tactician_blitz"
+	{
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"			"magnataur_empower"
+		"MaxLevel"                 "8"
+		// Casting
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"15 25 35 45 55 65 75 85"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_inner_beast"
+			{
+				"EffectName"		"particles/units/heroes/hero_luna/luna_ambient_lunar_blessing.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Passive"			"1"
+				"IsHidden"			"1"
+		
+				"Aura"          	"modifier_inner_beast_buff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanical?
+				"Aura_Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ALLIES" //Needed?
+			}
+	
+			"modifier_inner_beast_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed"
+				}
+			}
+		}
+	}
+	"tactician_pep_talk"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"	"troll_warlord_battle_trance"
+		"MaxLevel"                 "8"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+			"particle"			"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+			"particle"			"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60"
+		"AbilityDuration"				"20 20 20 20 20 22 24 26 28 30"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"warcry_armor"		"1 2 3 4 5 5 5 5 5 5"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_modifier"	"10 15 20 25 30 32 34 36 38 40"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"warcry_radius"		"1900"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center" "CASTER"
+	                "Radius" "%warcry_radius"
+	                "Teams" "DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+	                "Types" "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+	
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_warcry_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Hero_Sven.WarCry"
+				"Target"		"CASTER"
+			}
+	
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"CASTER"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_warcry_datadriven"
+			{
+				"IsBuff"	"1"
+				"Duration"	"%AbilityDuration"
+	
+				"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_modifier"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%warcry_armor"
+				}
+			}
+		}
+	}	   
+	"tactician_ion_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"1"
+		"HotKeyOverride"				"T"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"tinker_laser"
+		"AOERadius"						"%area_of_effect"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
+		}
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"150"
+		"AbilityManaCost"				"0"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"264"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"7500"
+				"levelkey"				"exortlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_distance"		"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"4.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"CreateThinker"
+			{
+				"ModifierName"	"modifier_sun_strike_datadriven"
+				"Target" 		"POINT"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_sun_strike_datadriven"
+			{
+				"Duration"		"%delay"
+	
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target" 		"TARGET"
+						"Duration"		"%delay - 0.1" // This is so that the charge sound isnt heard
+					}
+	
+					"FireSound"
+					{
+						"EffectName"	"Hero_Invoker.SunStrike.Charge"
+						"Target" 		"TARGET"
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_invoker/sun_strike.lua"
+						"Function"		"sun_strike_charge"
+						"charge_particle"	"particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
+					}
+	
+					"DelayedAction"
+					{
+						"Delay"     "%delay"
+						"Action"    
+						{
+							"FireSound"
+							{
+								"EffectName"	"Hero_Invoker.SunStrike.Ignite"
+								"Target" 		"TARGET"
+							}
+	
+							"FireEffect"
+							{
+								"EffectName"        "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
+								"EffectAttachType"  "follow_origin"
+								"Target"            "TARGET"
+	
+								"ControlPoints"
+								{
+									"01"	"%area_of_effect 0 0"
+								}
+							}
+						"Damage"
+					{
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Radius" 	"%area_of_effect"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types" 	"DOTA_UNIT_TARGET_ALL"
+						}
+						"Type"			"DAMAGE_TYPE_PURE"
+						"Damage"		"%damage"
+					}
+	
+						}
+					}
+				}
+			}
+		}
+	}
 }
