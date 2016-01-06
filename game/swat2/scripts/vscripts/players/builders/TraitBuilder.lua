@@ -22,7 +22,7 @@ function TraitBuilder:new(o)
     self.methods.rad_resistant = self.applyRadResistant
     self.methods.gadgeteer = self.applyGadgeteer
     self.methods.prowler = self.applyProwler
-    self.methods.energizer = self.applyEngineer
+    self.methods.energizer = self.applyEnergizer
     self.methods.pack_rat = self.applyPackRat
     self.methods.engineer = self.applyEngineer
     self.methods.reckless = self.applyReckless
