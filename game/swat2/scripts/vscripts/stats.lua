@@ -21,6 +21,7 @@ THINK_INTERVAL = 0.25
 
 function GameMode:ModifyStatBonuses(unit)
     local hero = unit
+	local sdata = hero.sdata
     local applier = CreateItem("item_stat_modifier", nil, nil)
 
     local hp_adjustment = HP_PER_STR - DEFAULT_HP_PER_STR
@@ -41,11 +42,11 @@ function GameMode:ModifyStatBonuses(unit)
         end
 
         -- Initialize value tracking
-        if not hero.custom_stats then
-            hero.custom_stats = true
-            hero.strength = 0
-            hero.agility = 0
-            hero.intellect = 0
+        if not sdata.custom_stats then
+            sdata.custom_stats = true
+            sdata.strength = 0
+            sdata.agility = 0
+            sdata.intellect = 0
         end
 
         -- Get player attribute values
@@ -56,7 +57,7 @@ function GameMode:ModifyStatBonuses(unit)
         -- Adjustments
 
         -- STR
-        if strength ~= hero.strength then
+        if strength ~= sdata.strength then
 
             -- HP Bonus
             if not hero:HasModifier("modifier_health_bonus") then
@@ -85,7 +86,7 @@ function GameMode:ModifyStatBonuses(unit)
         end
 
         -- AGI
-        if agility ~= hero.agility then
+        if agility ~= sdata.agility then
 
             -- Base Armor Bonus
             local armor = agility * armor_adjustment
@@ -93,7 +94,7 @@ function GameMode:ModifyStatBonuses(unit)
         end
 
         -- INT
-        if intellect ~= hero.intellect then
+        if intellect ~= sdata.intellect then
 
             -- Update usable items
             for itemSlot = 0, 5, 1 do
@@ -138,9 +139,9 @@ function GameMode:ModifyStatBonuses(unit)
         end
 
         -- Update the stored values for next timer cycle
-        hero.strength = strength
-        hero.agility = agility
-        hero.intellect = intellect
+        sdata.strength = strength
+        sdata.agility = agility
+        sdata.intellect = intellect
 
         hero:CalculateStatBonus()
 
