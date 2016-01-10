@@ -4280,7 +4280,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
-		"AbilityTextureName"			"pudge_dismember"
+		"AbilityTextureName"			"legion_commander_overwhelming_odds"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -5188,11 +5188,11 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"3"
-		"AbilityTextureName"			"shredder_reactive_armor"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+		"BaseClass"							"ability_datadriven"
+		"MaxLevel"                 			"3"
+		"AbilityTextureName"				"shredder_reactive_armor"
 		
 		"AbilitySpecial"
 		{
@@ -5206,6 +5206,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction"			"-4 -8 -12"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"2 4 6"
+			}
 		}
 		"Modifiers"
 		{
@@ -5217,6 +5222,7 @@
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 				"%health_regen"
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 			"%damage_reduction"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 				"%bonus_armor"
 				}
 			}
 		}
@@ -6817,16 +6823,17 @@
 	   {
 	  	// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityName"               "primary_ho_plasma_shield"
-		"BaseClass"				    "ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
-		"MaxLevel"                  "8"
-	    "AbilityManaCost"		    "1 2 3 4 5 6 7 8"
-		"AbilityDamage"				"50 75 100 125 150 175 200 225"
-		"AbilityCastRange"			"%burn_radius"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-	    "LevelsBetweenUpgrades"  	"1"
-		"AbilityTextureName"		"rattletrap_power_cogs"
+		"AbilityName"               	"primary_ho_plasma_shield"
+		"BaseClass"				    	"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"MaxLevel"                  	"8"
+	    "AbilityManaCost"		    	"1 2 3 4 5 6 7 8"
+		"AbilityDamage"					"50 75 100 125 150 175 200 225"
+		"AbilityCastRange"				"%burn_radius"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+	    "LevelsBetweenUpgrades"  		"1"
+		"AbilityTextureName"			"shredder_chakram"
+			
 	
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -6925,7 +6932,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"16"
-		"AbilityTextureName"			"pudge_dismember"
+		"AbilityTextureName"			"disruptor_thunder_strike"
 		"LevelsBetweenUpgrades"  		"0"
 		
 		// Casting
@@ -7715,7 +7722,7 @@
 		
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"                 		"4"
-		"AbilityTextureName"			"sniper_shrapnel"
+		"AbilityTextureName"			"tinker_laser"
 		"LevelsBetweenUpgrades"  		"0"
 		
 		"AbilitySpecial" //duplicated in primary_minidroid_xyz for display purposes
@@ -7765,12 +7772,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_regen"		"1 2 3"
+				"health_regen"				"1 2 3"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction"			"-4 -8 -12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"2 4 6"
 			}
 		}
 	}

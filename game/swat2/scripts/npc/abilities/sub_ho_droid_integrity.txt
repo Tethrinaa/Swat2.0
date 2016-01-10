@@ -17,12 +17,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_regen"		"1 2 3"
+				"health_regen"				"1 2 3"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction"			"-4 -8 -12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"2 4 6"
 			}
 		}
 	}
