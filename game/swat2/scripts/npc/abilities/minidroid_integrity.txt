@@ -5,11 +5,11 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"                 		"3"
-		"AbilityTextureName"			"shredder_reactive_armor"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+		"BaseClass"							"ability_datadriven"
+		"MaxLevel"                 			"3"
+		"AbilityTextureName"				"shredder_reactive_armor"
 		
 		"AbilitySpecial"
 		{
@@ -23,6 +23,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction"			"-4 -8 -12"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"2 4 6"
+			}
 		}
 		"Modifiers"
 		{
@@ -34,6 +39,7 @@
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" 				"%health_regen"
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 			"%damage_reduction"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 				"%bonus_armor"
 				}
 			}
 		}
