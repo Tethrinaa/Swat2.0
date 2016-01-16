@@ -1538,4 +1538,1328 @@
 	    }
 	    
 	}
+		"item_exosuit"
+	    {
+	        "ID"                            "1271"
+	        "BaseClass"                     "item_datadriven"
+	        "AbilityTextureName"            "item_exosuit"
+		
+		"ItemCost" "3000"
+		"ItemKillable" "0" 
+		"ItemSellable" "1"
+		"ItemPurchasable" "0"
+		"ItemDroppable" "1"
+		
+		
+		"ItemStockMax" "0"
+		"ItemStockTime" "0"
+		"ItemStockInitial" "0"
+		"ItemAliases" "ExoSuit"
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+		
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+		
+		"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_add_exosuit_datadriven"
+			{
+				"Passive"   "0"
+				"IsHidden"   "1"
+				"Attributes"   "MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"  "12"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"  "1"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"25"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"  "50"
+				}
+			}
+						
+	    }
+	    
+	}
+	"item_recipe_stogen_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1301"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1"	
+		"ItemShopTags"					""
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_storage_generator"
+		"ItemRequirements"
+		{
+			"01"						"item_storage_cell;item_mfg;item_circuit_board_o"
+			"02"						"item_storage_cell;item_mfg;item_circuit_board_P"
+			"03"						"item_storage_cell;item_mfg;item_circuit_board_g"
+		}
+	}
+	"item_recipe_stogen_mkii_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1301"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_storage_generator_mkii"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemShareability" "ITEM_FULLY_SHAREABLE"
+		"ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+		"ItemRequirements"
+		{
+			"01"						"item_mfg;item_mfg;item_mfg;item_circuit_board_o"
+			"02"						"item_mfg;item_mfg;item_mfg;item_circuit_board_P"
+			"03"						"item_mfg;item_mfg;item_mfg;item_circuit_board_g"
+
+
+		}
+		
+		"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+	
+		"item_recipe_mfg_mkii_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1302"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1"	
+		"ItemShopTags"					""
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_mfg_mkii"
+		"ItemRequirements"
+		{
+			"01"						"item_mfg;item_storage_cell;item_storage_cell;item_mfg;item_circuit_board_o"
+			"02"						"item_mfg;item_storage_cell;item_storage_cell;item_mfg;item_circuit_board_P"
+			"03"						"item_mfg;item_storage_cell;item_storage_cell;item_mfg;item_circuit_board_g"
+		}
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+		"item_recipe_tesla_vest_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1303"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1"	
+		"ItemShopTags"					""
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_storage_generator_mkii"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemRequirements"
+		{
+			"01"						"item_combat_vest;item_mfg;item_mfg;item_circuit_board_o"
+			"02"						"item_combat_vest;item_mfg;item_mfg;item_circuit_board_P"
+			"03"						"item_combat_vest;item_mfg;item_mfg;item_circuit_board_g"
+		}
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+		"item_recipe_tesla_vestmkii_datadriven"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1304"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1"	
+		"ItemShopTags"					""
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_storage_generator_mkii"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemRequirements"
+		{
+			"01"						"item_combat_vest_mkii;item_mfg;item_mfg;item_mfg;item_circuit_board_o"
+			"02"						"item_combat_vest_mkii;item_mfg;item_mfg;item_mfg;item_circuit_board_P"
+			"03"						"item_combat_vest_mkii;item_mfg;item_mfg;item_mfg;item_circuit_board_g"
+		}
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+	
+			"item_recipe_activator"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1304"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_activator"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1"	
+		"ItemShopTags"					""
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_exosuit"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemRequirements"
+		{
+			"01"						"item_bionic_arm;item_bionic_arm;item_bionic_leg;item_bionic_leg;item_belt"
+		}
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+		"item_circuit_board_g"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1304"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"circuit_board_g"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"120"	
+		"ItemShopTags"					""
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+		"ItemRequirements"
+		{
+			"01"						"item_bionic_arm;item_bionic_arm;item_bionic_leg;item_bionic_leg;item_belt"
+		}
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+		"item_circuit_board_o"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1304"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"circuit_board_o"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"120"	
+		"ItemShopTags"					""
+	
+
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}	
+		"item_circuit_board_P"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1304"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"circuit_board_P"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"120"	
+		"ItemShopTags"					""
+	
+
+			"OnEquip" 
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "ItemCheck"
+			}
+		}
+		
+		"OnUnequip"
+		{   
+			"RunScript"
+			{
+				"ScriptFile"    "scripts/vscripts/itemfunctions.lua"
+				"Function"  "RemoveItemModifierStats"
+			}
+		}
+		
+		"OnOwnerDied"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/itemfunctions.lua"
+				"Function"	"DropItemOnDeath"
+			}
+		}
+	}
+		"item_fray"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1304"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_freeze_ray"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"120"	
+		"ItemShopTags"					""
+	// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0 5.0 5.0 5.0"
+		"AbilityDuration"				"40.0 40.0 40.0 40.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 50 50 50"
+	
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.3"	// Easy to spam 
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_bonus"			"0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"20"
+			}
+
+				"03"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"speed_bonus"			"-10 -18 -26 -34"
+			}
+				"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_bonus_tooltip"	"-10 -18 -26 -34"
+			}
+						"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"550"
+			}
+
+	
+			// Extra values to control the Autocast AI
+
+		}
+	
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+			"particle"	"particles/status_fx/status_effect_frost_armor.vpcf"
+			"particle"	"particles/status_fx/status_effect_frost.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_track_aura_datadriven"
+				"Target"		"TARGET"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_track_datadriven"
+				"Target"		"TARGET"
+			}
+	}
+	"Modifiers"
+		{
+		
+			"modifier_track_aura_datadriven"
+			{
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+			"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+	
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_hitloc"
+						}
+					}
+	
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+						"EffectAttachType"  "follow_overhead"
+						"Target"            "TARGET"
+					}
+				}
+				"Aura" 			"modifier_degen_aura_effect"
+				"Aura_Radius" 	"%radius"
+				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"	"1"
+	
+				"ThinkInterval"  "0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_track_reveal_datadriven"
+						"Target" 		"TARGET"
+					}
+	
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_track_reveal_datadriven"
+						"Target" 		"TARGET"
+						"Duration"		"0.5"
+					}
+				}
+				}		
+				
+		"modifier_degen_aura"
+			{
+				"Passive" 			"1"
+				"IsHidden" 			"1"
+				"IsBuff"			"1"
+	
+				"Aura" 				"modifier_degen_aura_effect"
+				"Aura_Radius" 		"%radius"
+				"Aura_Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+			}
+	
+			"modifier_degen_aura_effect"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_bonus"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_bonus_tooltip"
+				}
+			}
+
+	
+
+		}
+	}
+		"item_recall"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1305"  //Valve's version of this item uses the ID "207".
+		"Model"							"models/props_gameplay/recipe.mdl"
+		"AbilityTextureName"			"item_recall"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"              "0"
+		"AbilityCooldown"				"55.0"
+		"AbilityManaCost"				"35"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1450"
+		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"mana;mb;arcane boots"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemAlertable"					"1"
+		
+			"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_delay"				".5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"return_time"				"20"
+			}
+			// Extra variables
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"destroy_tree_radius"		"300"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_radius"				"64"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"extra_tether_duration"		"2.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Wisp.Relocate"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"		"heroes/hero_wisp/relocate.lua"
+				"Function"			"CastRelocate"
+				"Target"			"POINT"
+				
+				"tether_ability"				"wisp_tether_datadriven"
+				"tether_modifier"				"modifier_tether_caster_datadriven"
+				"tether_ally_property_name"		"tether_ally"		// We can access the tethered ally through "tether_ability[tether_ally_property_name]"
+				"tether_ally_modifier"			"modifier_tether_ally_datadriven"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_relocate_channel_datadriven"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_relocate_channel_datadriven"
+			{
+				"Duration"	"%cast_delay"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"CreateMarkerEndpoint"
+						
+						"endpoint_particle"		"particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+						
+						"vision_radius"			"%vision_radius"
+						"vision_duration"		"%cast_delay"
+					}
+				}
+				
+				"OnStateChanged"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/relocate.lua"
+						"Function"			"CheckToInterrupt"
+						
+						"channel_modifier"	"modifier_relocate_channel_datadriven"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"DestroyMarkerEndpoint"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"TryToTeleport"
+						
+						"timer_modifier"	"modifier_relocate_timer_datadriven"
+					}
+				}
+			}
+			
+			"modifier_relocate_return_datadriven"
+			{
+				// Visible from otheres as compared with modifier_relocate_timer_datadriven
+			}
+			
+			"modifier_relocate_timer_datadriven"
+			{
+				"IsHidden"	"1"
+				"Duration"	"%return_time"		// Timer should be hidden
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_relocate_return_datadriven"
+						"Target"		"TARGET"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"Teleportation_PreDestroyTree"
+						
+						"tether_ability"				"wisp_tether_datadriven"
+						"tether_modifier"				"modifier_tether_caster_datadriven"
+						"tether_ally_property_name"		"tether_ally"
+						"tether_ally_modifier"			"modifier_tether_ally_datadriven"
+						"tether_duration"				"%return_time + %extra_tether_duration"
+						
+						"teleport_particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+					}
+					
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"Teleportation_PostDestroyTree"
+						
+						"return_time"		"%return_time"
+						
+						"marker_particle"	"particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+						"timer_particle"	"particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"	"Hero_Wisp.ReturnCounter"
+						"Target"		"CASTER"
+					}
+				}
+				
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"UpdateTimer"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"TryReturningTeleportation"
+						
+						"returning_modifier"	"modifier_relocate_returning_teleport_datadriven"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"		"heroes/hero_wisp/relocate.lua"
+						"Function"			"StopSound"
+						"Target"			"CASTER"
+						"sound_name"		"Hero_Wisp.ReturnCounter"
+					}
+					
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_relocate_return_datadriven"
+						"Target"		"TARGET"
+					}
+				}
+			}
+			
+			"modifier_relocate_returning_teleport_datadriven"
+			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"ReturningTeleportation_PreDestroyTree"
+						
+						"tether_ability"				"wisp_tether_datadriven"
+						"tether_modifier"				"modifier_tether_caster_datadriven"
+						"tether_ally_property_name"		"tether_ally"
+						
+						"teleport_particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+					}
+					
+					"DestroyTrees"
+					{
+						"Target"		"CASTER"
+						"Radius"		"%destroy_tree_radius"
+					}
+					
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_wisp/relocate.lua"
+						"Function"		"ReturningTeleportation_PostDestroyTree"
+					}
+					
+					"FireSound"
+					{
+						"EffectName"	"Hero_Wisp.Return"
+						"Target"		"CASTER"
+					}
+					
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_relocate_returning_teleport_datadriven"
+						"Target"		"CASTER"
+					}
+				}
+			}
+		}
+	}
+	"item_riot_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1306"  //Valve's version of this item uses the ID "187".
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"CastFilterRejectCaster" 		"1"
+		"AbilityTextureName"			"item_riot_shield"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1400"
+		"ItemShopTags"					"armor"
+		"ItemQuality"					"component"
+		"ItemAliases"					"platemail"
+		"ItemStackable"					"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemInitialCharges" "1" //How many charges should the item start with - Tango x3 
+		"ItemDisplayCharges" "1" //Hide the charges of the item - Aegis 
+		"ItemRequiresCharges" "1" //The active ability needs charges to be used - Urn
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"10"
+			}
+				
+				"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_bonus"			"10"
+			}
+			
+			
+			
+		}
+		
+			"OnSpellStart"
+		{
+
+				"ApplyModifier"
+			{
+				"ModifierName"	"modifier_item_platemail2_datadriven"
+				"Target" 		"TARGET"
+			}
+			"SpendCharge" {}
+
+		}
+		"Modifiers"
+		{
+			"modifier_item_platemail_datadriven"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+			}
+			"modifier_item_platemail2_datadriven"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_bonus"
+				}
+			}
+		}
+	}
+	"item_claymore"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"ID"							"1309"  //Valve's version of this item uses the ID "187".
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"CastFilterRejectCaster" 		"1"
+		"AbilityTextureName"			"item_claymore"
+		"AOERadius"						"%small_radius"
+		    // Item Info
+	    //-------------------------------------------------------------------------------------------------------------
+	
+	    "ItemShopTags"					"consumable"
+	    "ItemQuality"					"consumable"
+	    "ItemAliases"					"clarity"
+
+	    "ItemInitialCharges"			"15"
+	
+	    "ItemCost" "0"
+	    "ItemKillable" "1"
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+		"ItemStockMax" "12"
+	    "ItemStockTime" "40"
+	    "ItemStockInitial" "0"
+		"ItemStackable"					"1"
+	    "ItemPermanent"					"0"
+	    
+	
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+		
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"		
+			"particle"		"particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+			"particle"		"particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+			"model"			"models/heroes/techies/fx_techiesfx_mine.vmdl"	
+		}
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+	"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"small_radius"				"2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_radius"				"500"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_time"			".2"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_mines"					"20"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"explode_delay"				"0.3"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"2.0"
+			}
+			// Extra
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_radius"				"300"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"1.0"
+			}
+		}
+	
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_Techies.LandMine.Plant"
+				"Target" 		"CASTER"
+			}
+	
+			"RunScript"
+			{
+				"ScriptFile"	"heroes/hero_techies/land_mines.lua"
+				"Function"		"LandMinesPlant"
+				"Target"		"POINT"
+				"modifier_land_mine"	"modifier_land_mine_datadriven"
+				"modifier_tracker"		"modifier_land_mine_tracker_datadriven"
+				"modifier_caster"		"modifier_land_mine_caster_datadriven"
+				
+			}
+			"SpendCharge" {}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_land_mine_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"OnDeath"
+				{
+					"CreateThinker"
+					{
+						"ModifierName"	"modifier_land_mine_thinker"
+						"Target" 		"UNIT"
+					}				
+	
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
+						"EffectAttachType"  "follow_hitloc"
+						"Target"
+						{
+							"Center"	"UNIT"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"UNIT"
+							"Radius" 	"%small_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
+								"Type"			"DAMAGE_TYPE_PHYSICAL"
+								"Damage"		"%damage / 2"
+							}
+						}
+					}
+	
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"  	"UNIT"
+							"Radius" 	"%big_radius"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					
+						"Action"    
+						{
+							"Damage"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+								}
+								"Type"			"DAMAGE_TYPE_PHYSICAL"
+								"Damage"		"%damage / 2"
+							}
+						}					
+					}
+	
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/land_mines.lua"
+						"Function"		"LandMinesDeath"
+						"modifier_caster"	"modifier_land_mine_caster_datadriven"
+					}
+				}
+	
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_land_mine_tracker_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"EffectName"	"particles/units/heroes/hero_techies/techies_land_mine.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"heroes/hero_techies/land_mines.lua"
+						"Function"		"LandMinesTracker"
+					}
+				}
+			}
+	
+			"modifier_land_mine_caster_datadriven"
+			{
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
+			}
+	
+			"modifier_land_mine_invisibility_datadriven"
+			{
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+	
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	
+			"modifier_land_mine_thinker"
+			{
+				"Duration"	"0.03"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Techies.LandMine.Detonate"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 }
