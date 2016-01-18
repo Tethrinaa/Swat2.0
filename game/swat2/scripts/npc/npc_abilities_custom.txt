@@ -3472,6 +3472,14 @@
 	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
 	      "MaxLevel"                 "1"
+		  
+		  	
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+			"particle"			"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+		}
+		  
 	      // Special
 	      //-------------------------------------------------------------------------------------------------------------
 	      "AbilitySpecial"
@@ -3488,6 +3496,9 @@
 	      {
 	         "modifier_game_power_core_degen"
 	         {
+				"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
 	            "Passive"				"1"
 	            "IsPurgable"			"0"
 	            "IsHidden"				"0"
@@ -3512,7 +3523,14 @@
 	      "MaxLevel"                 "1"
 	      // Special
 	      //-------------------------------------------------------------------------------------------------------------
-	      "AbilitySpecial"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+
+		}	     
+
+
+		 "AbilitySpecial"
 	      {
 	         "01"
 	         {
@@ -3526,6 +3544,9 @@
 	      {
 	         "modifier_game_power_core_degen"
 	         {
+				"EffectName"		"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"		"CASTER"
 	            "Passive"				"1"
 	            "IsPurgable"			"0"
 	            "IsHidden"				"0"
@@ -3562,9 +3583,11 @@
 	
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300"
+		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.0"
-		"AbilityChannelTime"			"5"
+		"AbilityChannelTime"			"30.1"
+		"AnimationIgnoresModelScale"    "0"
+		"AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"
 	
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -3585,22 +3608,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0"
+				"duration"					"30.0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"100"
+				"mana_per_second"			"60"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"break_distance"			"400"
+				"break_distance"			"650"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tick_interval"			    "0.25"
+				"tick_interval"			"0.25"
 			}
 		}
 		"OnSpellStart"
@@ -3706,6 +3729,16 @@
 	      "AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	      "AbilityTextureName"			"crystal_maiden_brilliance_aura"
 	      "MaxLevel"                 "1"
+		  
+		  
+		"precache"
+		{
+			"soundfile"         "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_pulse_nova.vpcf"
+			"particle"			"particles/units/heroes/hero_leshrac/leshrac_pulse_nova_ambient.vpcf"
+		}
+	
+		  
 	      // Special
 	      //-------------------------------------------------------------------------------------------------------------
 	      "AbilitySpecial"
@@ -3716,12 +3749,20 @@
 	            "mana_regen"		"-55"
 	         }
 	      }
+		  
+		  
+
 	      // Data driven
 	      //-------------------------------------------------------------------------------------------------------------
 	      "Modifiers"
 	      {
 	         "modifier_game_power_core_degen"
 	         {
+					"EffectName"	"particles/units/heroes/hero_leshrac/leshrac_pulse_nova_ambient.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"		"CASTER"
+			 
+			 
 	            "Passive"				"1"
 	            "IsPurgable"			"0"
 	            "IsHidden"				"0"
