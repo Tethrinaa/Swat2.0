@@ -1,0 +1,140 @@
+.BaseHud
+{
+    horizontal-align: right;
+	vertical-align: bottom;
+	margin-bottom: 7px;
+}
+
+.Background
+{
+    width: 214px;
+    height: 155px;
+	background-image: url("file://{images}/objectives_background.png");
+}
+
+.Background Image {
+	opacity: 0;
+}
+
+
+#RadLevel {
+	color: white;
+    font-size: 18px;
+    font-weight: bold;
+	horizontal-align: center;
+	margin-top: 19px;
+}
+
+#Fallout {
+	color: white;
+    font-size: 18px;
+    font-weight: bold;
+	horizontal-align: center;
+	margin-top: 95px;
+}
+
+#RadLight {
+	width: 8px;
+	height: 8px;
+	margin-top: 57px;
+	margin-left: 45px;
+	opacity: .5;
+	box-shadow: -2px -2px 7px 5px red;
+}
+
+#RadLightIncomplete{
+	width: 11px;
+	height: 11px;
+	margin-top: 57px;
+	margin-left: 44px;
+	background-image: url("file://{images}/obj_incomplete.png");
+	opacity: 0;
+}
+
+#RadLightComplete{
+	width: 11px;
+	height: 11px;
+	margin-top: 57px;
+	margin-left: 44px;
+	background-image: url("file://{images}/obj_complete.png");
+	opacity: 0;
+}
+
+#RadLightPerfect{
+	width: 11px;
+	height: 11px;
+	margin-top: 57px;
+	margin-left: 44px;
+	background-image: url("file://{images}/obj_perfect.png");
+	opacity: 0;
+}
+
+.FalloutBar
+{
+    width: 164px;
+    height: 10px;
+    background-color: grey;
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-bottom: 20px;
+	
+}
+ 
+#FalloutLvl
+{
+	color: #FFFFFF;
+    font-size: 10px;
+	margin-top: 17px;
+    margin-left: 5px;
+    text-align: left;
+	width: 154px;
+}
+
+.RadObjective
+{
+	width: 130px;
+	height: 40px;background-image: url("file://{images}/objectives_box.png");
+	background-size: 100% 100%;
+	margin-top: 45px;
+	margin-left: 65px;  
+}
+
+.RadObjective Label
+{
+	color: white;
+    font-size: 18px;
+	vertical-align: center;
+	font-family: "Bank Gothic", "Futura", "Arial";
+	
+}
+
+#RadCount
+{
+	margin-left: 12px;
+}
+
+#RadNeeded
+{
+	margin-left: 47px;
+}
+
+#HazMatIconOn {
+	width: 11px;
+	height: 14px;
+	margin-top: 55px;
+	margin-left: 18px;
+	background-image: url("file://{images}/haz_materials_on.png");
+	opacity: 0;
+	box-shadow: -2px -2px 7px 5px green;
+}
+
+#HazMatIconOff {
+	width: 11px;
+	height: 14px;
+	margin-top: 55px;
+	margin-left: 18px;
+	background-image: url("file://{images}/haz_materials_off.png");
+	opacity: 0;
+}
+
+

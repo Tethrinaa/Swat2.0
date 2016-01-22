@@ -1,0 +1,30 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/rad_manager.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/rad_manager.js" /> 
+	</scripts>
+	<Panel hittest="false" class="BaseHud">
+		<Panel hittest="false" class="Background" >
+			<Label id="RadLevel" text="RAD LEVEL"/>
+			<Label id="Fallout" text="FALLOUT"/>
+			<Panel hittest="false" class="FalloutBar" >
+				<Label id="FalloutLvl" text="|"/>
+			</Panel>	
+			<Panel hittest="false" class="RadObjective">
+				<Label id="RadCount" text="0"/>
+				<Label id="RadNeeded" text="0"/>
+			</Panel>	
+			<Image id="RadLight"/>
+			<Image id="HazMatIconOn" src="file://{images}/haz_materials_on.png" />
+			<Image id="HazMatIconOff" src="file://{images}/haz_materials_off.png" />
+			<Image src="file://{images}/objectives_background.png" />
+			<Image src="file://{images}/objectives_box.png" />
+			<Image id="RadLightIncomplete" src="file://{images}/obj_incomplete.png" />
+			<Image id="RadLightComplete" src="file://{images}/obj_complete.png" />
+			<Image id="RadLightPerfect" src="file://{images}/obj_perfect.png" />	
+		</Panel>	
+	</Panel>
+</root>

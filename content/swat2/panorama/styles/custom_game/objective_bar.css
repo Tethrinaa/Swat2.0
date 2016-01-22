@@ -1,0 +1,66 @@
+.BaseHud
+{
+    flow-children: right;
+	vertical-align: top;
+	horizontal-align: right;
+	margin-right: 200px;
+}
+
+.BaseHud Label
+{
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.CivObjective
+{
+    width: 100px;
+    height: 40px;
+    background-image: url("file://{images}/objective_bar_background.png");
+    background-size: 100%;
+	margin-top: 1px;
+}
+
+
+.PowObjective
+{
+    width: 100px;
+    height: 40px;
+    background-image: url("file://{images}/objective_bar_background.png");
+    background-size: 100%;
+	margin-top: 1px;
+}
+
+
+#CivCount
+{
+   margin-top: 13px;
+   margin-left: 5px;
+   text-align: right;
+   width: 30px;
+}
+
+#CivNeeded
+{
+    margin-top: 13px;
+    margin-left: 40px;
+    text-align: right;
+    width: 30px;
+}
+
+#PowCount
+{
+    margin-top: 13px;
+    margin-left: 5px;
+    text-align: right;
+    width: 30px;
+}
+
+#PowNeeded
+{
+    margin-top: 13px;
+    margin-left: 40px;
+    text-align: right;
+    width: 30px;
+}

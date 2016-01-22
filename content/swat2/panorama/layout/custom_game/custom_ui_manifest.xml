@@ -14,7 +14,8 @@
 	<Panel>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/class_select_screen.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/squad_status.xml" />
-        <!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/objectives.xml" />-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/rad_manager.xml" />
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/objective_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/resource_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/action_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/submenu_bar.xml" />
